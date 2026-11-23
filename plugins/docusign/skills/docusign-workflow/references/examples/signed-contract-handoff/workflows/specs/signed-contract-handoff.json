@@ -1,0 +1,42 @@
+{
+  "id": "signed-contract-handoff",
+  "name": "Signed Contract to Customer Onboarding",
+  "summary": "When the order form sent from a Sales Contract Request is fully signed, Accounts Receivable is told to set up billing and Customer Success to start onboarding.",
+  "description": "Started by the Agreement Desk event Envelope Completed on a Fontara · Sales Contract Request (or one sent from Salesforce): the customer's order form, sent from the request, was signed by everyone. Only customer sales contracts start it: an NDA, an HR document or a vendor's paper never does. Accounts Receivable gets a request message, with the signed documents attached, to set up the billing account, and Fontara's VP of Customer Success (Ines Haldorsen, an account user) is asked to open the New Customer Intake request for the account, with the rep who submitted the request copied, so onboarding starts the day the contract is signed rather than when someone notices. Account-bound: the user is looked up in the target account's directory at deploy (a person the account lacks becomes the importing user). Pattern: an Agreement Desk envelopeCompleted start, Send Request Message to an email address and to an account user, with the request's documents attached.",
+  "trigger": {
+    "request": [
+      "sales-contract-request",
+      "sales-contract-request-from-salesforce"
+    ],
+    "on": "envelopeCompleted"
+  },
+  "steps": [
+    {
+      "message": {
+        "to": [
+          {
+            "email": "fontara.ar@example.com"
+          }
+        ],
+        "subject": "Signed order form: set up billing — {{TicketTitle}}",
+        "body": "The order form for {{TicketTitle}} is fully signed in Docusign.\nSet up the billing account and confirm the invoicing contact within two business days.",
+        "attachDocuments": true
+      }
+    },
+    {
+      "message": {
+        "to": [
+          {
+            "user": "fontara.ines.haldorsen@example.com"
+          }
+        ],
+        "cc": [
+          "submitter"
+        ],
+        "subject": "Start onboarding — {{TicketTitle}}",
+        "body": "The order form for {{TicketTitle}} is fully signed. Open a New Customer Intake request for the account today so onboarding starts now; the signed documents are on this request.",
+        "attachDocuments": true
+      }
+    }
+  ]
+}

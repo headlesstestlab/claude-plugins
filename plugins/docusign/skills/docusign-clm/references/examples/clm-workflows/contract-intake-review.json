@@ -1,0 +1,75 @@
+{
+  "id": "contract-intake-review",
+  "name": "Contract Intake Review",
+  "description": "A new contract is checked before it is filed. The requester picks the reviewer (Choose Users, one user, into a user variable), then a Review Data task asks for the document type (required), the party and the dates, with the result in an XML variable; a Logger line names the reviewer.",
+  "variables": [
+    {
+      "name": "Reviewer",
+      "type": "user"
+    },
+    {
+      "name": "Reviewed",
+      "type": "xml"
+    },
+    "ChooseComments"
+  ],
+  "steps": [
+    {
+      "id": "choose",
+      "name": "Pick the reviewer",
+      "kind": "chooseUsers",
+      "assignee": "submitter",
+      "choose": "any",
+      "output": "Reviewer",
+      "commentsTo": "ChooseComments",
+      "instructions": "Pick who reviews this contract's data, then complete the task.",
+      "subject": "Pick a reviewer",
+      "comments": "Yes",
+      "on": {
+        "completed": "review",
+        "rejected": "finish",
+        "failure": "finish"
+      }
+    },
+    {
+      "id": "review",
+      "name": "Review the contract data",
+      "kind": "reviewData",
+      "assignee": "submitter",
+      "review": [
+        {
+          "attribute": "Document Type",
+          "required": true
+        },
+        {
+          "attribute": "Party"
+        },
+        {
+          "attribute": "Effective Date"
+        },
+        {
+          "attribute": "Expiration Date"
+        }
+      ],
+      "output": "Reviewed",
+      "instructions": "Check the document type, party and dates; fix any that are wrong, then complete the review.",
+      "subject": "Review the contract data",
+      "on": {
+        "success": "log",
+        "failure": "finish"
+      }
+    },
+    {
+      "id": "log",
+      "name": "Log the review",
+      "kind": "logger",
+      "message": "Data reviewed; reviewer picked: <%#Variable.Reviewer.Name%>",
+      "next": "finish"
+    },
+    {
+      "id": "finish",
+      "name": "Finish",
+      "kind": "finish"
+    }
+  ]
+}

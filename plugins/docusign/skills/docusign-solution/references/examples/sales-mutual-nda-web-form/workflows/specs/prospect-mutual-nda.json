@@ -1,0 +1,53 @@
+{
+  "id": "prospect-mutual-nda",
+  "name": "Prospect Mutual NDA",
+  "description": "A prospect opens the NDA link on the website, fills in the request form, and Fontara's mutual NDA is generated from it with no one typing. The prospect's signer signs first, then the general counsel countersigns.",
+  "participants": [
+    {
+      "role": "Prospect signer",
+      "name": "prospect-mutual-nda-request.signer_name",
+      "email": "prospect-mutual-nda-request.signer_email"
+    },
+    {
+      "role": "General counsel",
+      "name": "General Counsel",
+      "email": "general.counsel@example.com"
+    }
+  ],
+  "steps": [
+    {
+      "form": "prospect-mutual-nda-request"
+    },
+    {
+      "generate": "mutual-nda",
+      "hideForm": true,
+      "fill": {
+        "effective": "run.startDate",
+        "counterparty": "prospect-mutual-nda-request.company",
+        "counterparty_entity": "prospect-mutual-nda-request.entity_type",
+        "counterparty_address": "prospect-mutual-nda-request.street",
+        "counterparty_city": "prospect-mutual-nda-request.city",
+        "counterparty_region": "prospect-mutual-nda-request.region",
+        "counterparty_postal": "prospect-mutual-nda-request.postal",
+        "purpose": "prospect-mutual-nda-request.purpose",
+        "fontara_entity": "prospect-mutual-nda-request.fontara_entity",
+        "disclosure_period": "prospect-mutual-nda-request.disclosure_period",
+        "confidentiality_period": "prospect-mutual-nda-request.confidentiality_period"
+      }
+    },
+    {
+      "sign": {
+        "Counterparty": "Prospect signer",
+        "Fontara": "General counsel"
+      },
+      "subject": "Mutual NDA with Fontara",
+      "message": "Please review and sign the mutual NDA. Fontara's general counsel countersigns after you."
+    },
+    {
+      "confirm": {
+        "title": "Your NDA is on its way",
+        "description": "Check your email: the signer you named receives the NDA to sign. We countersign right after."
+      }
+    }
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "id": "vendor-eform-fullpage",
+  "name": "Vendor eForm Full Page",
+  "description": "The same vendor intake with the eForm full page (no document beside it): Full Page Fill Form, then Full Page Edit Form on the filled eForm.",
+  "variables": [
+    {
+      "name": "Filled",
+      "type": "document"
+    }
+  ],
+  "steps": [
+    {
+      "id": "fill",
+      "name": "Fill the vendor form",
+      "kind": "fullPageFillForm",
+      "assignee": "submitter",
+      "form": {
+        "name": "Vendor Onboarding"
+      },
+      "output": "Filled",
+      "displayName": "Fill the vendor form full page",
+      "on": {
+        "completed": "edit",
+        "failure": "finish"
+      }
+    },
+    {
+      "id": "edit",
+      "name": "Correct the vendor form",
+      "kind": "fullPageEditForm",
+      "assignee": "submitter",
+      "documents": {
+        "var": "Filled"
+      },
+      "on": {
+        "completed": "finish",
+        "failure": "finish"
+      }
+    },
+    {
+      "id": "finish",
+      "kind": "finish"
+    }
+  ]
+}

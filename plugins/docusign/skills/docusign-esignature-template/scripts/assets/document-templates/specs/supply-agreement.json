@@ -1,0 +1,480 @@
+{
+  "id": "supply-agreement",
+  "name": "Supply Agreement",
+  "description": "Ongoing supply of parts: product schedule, forecasts and take-or-pay, index pricing, quality, warranty and recall, conduct, liability and end of life.",
+  "agreementType": "Purchase",
+  "fields": {
+    "fontara_entity": {
+      "label": "Fontara contracting entity",
+      "type": "select",
+      "options": [
+        "Fontara, Inc.",
+        "Fontara UK Ltd",
+        "Fontara Europe Ltd"
+      ],
+      "optionValues": {
+        "Fontara, Inc.": "Fontara, Inc., a Delaware corporation with its principal place of business at 1500 Harbor Boulevard, Suite 1200, San Francisco, CA 94111",
+        "Fontara UK Ltd": "Fontara UK Ltd, a company registered in England and Wales with its registered office at 48 Ashcombe Street, London EC2A 4NE, United Kingdom",
+        "Fontara Europe Ltd": "Fontara Europe Ltd, a company registered in Ireland with its registered office at 3 Riverside Quay, Dublin 2, D02 X285, Ireland"
+      },
+      "required": true,
+      "description": "Prints the entity’s full legal description and address"
+    },
+    "currency": {
+      "label": "Currency",
+      "type": "select",
+      "options": [
+        "US$",
+        "£",
+        "€"
+      ],
+      "required": true,
+      "description": "The signing entity’s: US$ for Fontara, Inc., £ for Fontara UK Ltd, € for Fontara Europe Ltd"
+    },
+    "effective": {
+      "bind": {
+        "provision": "EffectiveDate"
+      },
+      "required": true
+    },
+    "supplier": {
+      "bind": {
+        "provision": "AgreementParty"
+      },
+      "required": true,
+      "description": "Supplier legal name"
+    },
+    "supplier_entity": {
+      "label": "Supplier entity type",
+      "required": true,
+      "description": "For example: a Delaware corporation"
+    },
+    "supplier_address": {
+      "label": "Supplier street address",
+      "required": true
+    },
+    "supplier_city": {
+      "label": "Supplier city",
+      "required": true
+    },
+    "supplier_region": {
+      "label": "Supplier state",
+      "required": true
+    },
+    "supplier_postal": {
+      "label": "Supplier ZIP code",
+      "required": true
+    },
+    "products": {
+      "label": "Products",
+      "required": true
+    },
+    "position": {
+      "label": "Negotiated position",
+      "type": "select",
+      "options": [
+        "Balanced",
+        "Favours Fontara",
+        "Favours the counterparty"
+      ],
+      "required": true,
+      "description": "For the clauses most often negotiated"
+    },
+    "initial_term": {
+      "label": "Initial term",
+      "type": "select",
+      "options": [
+        "1 year",
+        "2 years",
+        "3 years"
+      ],
+      "required": true
+    },
+    "expiration": {
+      "bind": {
+        "provision": "ExpirationDate"
+      },
+      "required": true
+    },
+    "payment_terms": {
+      "label": "Payment terms",
+      "type": "select",
+      "options": [
+        "net 30 days",
+        "net 45 days",
+        "net 60 days",
+        "net 90 days"
+      ],
+      "required": true
+    }
+  },
+  "signers": [
+    "Supplier",
+    "Fontara"
+  ],
+  "body": [
+    {
+      "title": "SUPPLY AGREEMENT"
+    },
+    {
+      "p": "This Supply Agreement (this \"Agreement\") is entered into as of {{effective}} (the \"Effective Date\") between {{fontara_entity}} (\"Buyer\"), and **{{supplier}}**, {{supplier_entity}} with its principal place of business at {{supplier_address}}, {{supplier_city}}, {{supplier_region}} {{supplier_postal}} (\"Supplier\"), for the supply of {{products}} (the \"Products\"), listed with their annual volumes, prices, material weights and shortfall fees in the product schedule in Schedule A (the \"Product Schedule\")."
+    },
+    {
+      "h": "1. Term"
+    },
+    {
+      "p": "This Agreement begins on the Effective Date and continues for an initial term of {{initial_term}}, ending on {{expiration}}, and then renews for successive one-year periods unless either party gives 180 days' written notice of non-renewal. Either party may terminate it for the other's material breach not cured within 30 days after written notice. Purchase orders issued before termination are fulfilled on their terms."
+    },
+    {
+      "h": "2. Rolling Forecast and Firm Orders"
+    },
+    {
+      "if": {
+        "field": "position",
+        "is": "Balanced"
+      },
+      "then": [
+        {
+          "p": "Buyer provides a 12-month rolling forecast each month. Months 1–2 are firm: purchase orders in that window may not be cancelled or rescheduled. In months 3–4 Buyer may change quantities by up to 15% up or down, and Supplier accepts increases within that range. Months 5–12 are non-binding planning figures. If Buyer reduces a forecast, Buyer pays for finished goods in the firm zone and for non-cancellable, non-returnable materials Supplier bought within standard lead times to meet the forecast, net of reasonable mitigation."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "position",
+        "is": "Favours Fontara"
+      },
+      "then": [
+        {
+          "p": "Buyer's forecasts are good-faith estimates for planning only and create no obligation to purchase. Purchase orders bind on Supplier's acceptance, which is deemed given if Supplier does not reject within 2 business days. Buyer may reschedule or cancel any order more than 14 days before its delivery date without charge. Supplier accepts orders up to 130% of the latest forecast and holds safety stock of at least 4 weeks of forecast demand at its own cost."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "position",
+        "is": "Favours the counterparty"
+      },
+      "then": [
+        {
+          "p": "Buyer issues an 18-month rolling forecast. The first 3 months are firm and binding, and months 4–6 bind at no less than 80% of the forecast quantity. Supplier may buy materials against the full forecast to its standard lead times, and Buyer is liable for all such materials and work in process if the forecast falls, whatever the reason. Supplier need not accept purchase orders that exceed the forecast by more than 10%."
+        }
+      ]
+    },
+    {
+      "h": "3. Take-or-Pay Minimum Purchase"
+    },
+    {
+      "p": "Buyer will purchase at least 80% of the annual volume in the Product Schedule in each contract year. If Buyer falls short, Supplier may invoice Buyer after the end of the contract year for the shortfall units multiplied by the shortfall fee in the Product Schedule, which reflects Supplier's lost contribution margin. Shortfalls caused by Supplier's late delivery, quality holds or force majeure are excluded, and Buyer may carry up to 10% of a shortfall into the next year's minimum."
+    },
+    {
+      "h": "4. Raw Material Price Adjustment"
+    },
+    {
+      "p": "The material portion of each unit price is the material weight in the Product Schedule multiplied by the average of the agreed published index for the prior calendar quarter. Prices are adjusted quarterly, up or down, when that average moves more than 5% from the base period, and the adjustment applies to purchase orders issued after the adjustment date. The conversion portion is fixed for each contract year. Tariffs first imposed after the effective date are passed through at cost with supporting documents."
+    },
+    {
+      "h": "5. Prices and Payment"
+    },
+    {
+      "p": "Unit prices are those in the Product Schedule, adjusted only under the Raw Material Price Adjustment section. Supplier invoices each delivery, and Buyer pays undisputed amounts {{payment_terms}} after receiving a correct invoice."
+    },
+    {
+      "h": "6. Incoterms Delivery and Risk of Loss"
+    },
+    {
+      "p": "Supplier delivers each Product FCA Supplier's named plant (Incoterms 2020), loaded on the carrier Buyer nominates. Risk of loss passes to Buyer on delivery to the carrier, and title passes at the same time. Supplier handles export clearance; Buyer is importer of record and pays import duties. Delivery dates are measured at the delivery point, and Supplier notifies Buyer within 1 business day of any expected delay."
+    },
+    {
+      "h": "7. Supply Shortage Allocation"
+    },
+    {
+      "p": "If Supplier cannot meet total demand for a Product or its key inputs, Supplier will notify Buyer within 5 business days, provide a recovery plan, and allocate available supply among its customers no less favorably to Buyer than pro rata to each customer's purchases over the prior 6 months. Supplier will not favor its affiliates or new customers. During the shortage Buyer may buy the shortfall elsewhere without breaching any exclusivity or minimum-purchase commitment, and those purchases count toward the minimum."
+    },
+    {
+      "p": "Initials acknowledging Section 7 (Supply Shortage Allocation) — Supplier: [[initials:Supplier]]   Fontara: [[initials:Fontara]]"
+    },
+    {
+      "h": "8. Last-Time Buy and End of Life"
+    },
+    {
+      "p": "Supplier will give Buyer at least 6 months' written notice before discontinuing any Product. Buyer may place a last-time buy order within 6 months after the notice, at the then-current price, for delivery over up to 12 months after the last-time buy date. Supplier will support Buyer's qualification of a replacement and supply service parts for 3 years after the last production delivery, at prices adjusted by the agreed index."
+    },
+    {
+      "h": "9. PPAP and First Article Approval"
+    },
+    {
+      "p": "Supplier submits a Level 3 PPAP, or an AS9102 First Article Inspection for aerospace parts, for each new part and on any change that needs Buyer's approval under the Process Change Notification section, before shipping production quantities. Buyer approves or rejects within 10 business days and may grant interim approval with a written deviation and time limit. Samples and submission costs are included in the piece price; Buyer pays for additional runs it requests for its own testing."
+    },
+    {
+      "h": "10. Process Change Notification"
+    },
+    {
+      "p": "Supplier will give Buyer at least 90 days' written notice before any change to materials, manufacturing process, equipment, tooling, site, sub-tier supplier of a critical component, or test method affecting an approved part. Changes that may affect form, fit, function, reliability or regulatory status need Buyer's written approval and a new PPAP before shipment. Supplier pays for its own requalification; Buyer pays for its own validation testing unless the change is solely for Supplier's benefit."
+    },
+    {
+      "h": "11. Nonconformance and Containment"
+    },
+    {
+      "if": {
+        "field": "position",
+        "is": "Balanced"
+      },
+      "then": [
+        {
+          "p": "Supplier will meet a target of 50 defective parts per million or fewer. On notice of a nonconformance, Supplier contains all suspect stock at its site, in transit and at Buyer within 24 hours, sorting at Buyer's site by its own staff or a third party at its cost. Two incidents on the same part within 6 months place Supplier on controlled shipping until 3 months pass without a defect. Supplier reimburses Buyer's documented sorting, rework, premium freight and line-stoppage costs caused by the nonconformance, up to the annual cap in the Limitation of Liability section."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "position",
+        "is": "Favours Fontara"
+      },
+      "then": [
+        {
+          "p": "The target is zero defects. For each nonconformance Supplier pays a {{currency}}500 administration fee plus all costs Buyer incurs, including sorting, rework, premium freight, overtime, customer chargebacks and line-stoppage costs, which the parties agree are direct damages outside any liability cap. Buyer may place Supplier on third-party controlled shipping at Supplier's cost after a single incident and keep it there until Buyer accepts the corrective action."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "position",
+        "is": "Favours the counterparty"
+      },
+      "then": [
+        {
+          "p": "Supplier's obligation for nonconforming parts is to replace or credit them, at its option, if Buyer notifies Supplier within 30 days of delivery and returns the parts. Supplier may sort suspect stock itself within 3 business days. Buyer may not charge sorting, administration or line-stoppage costs, which are consequential losses excluded by this Agreement."
+        }
+      ]
+    },
+    {
+      "h": "12. Lot Traceability and Record Retention"
+    },
+    {
+      "p": "Supplier maintains lot traceability from raw-material batch to shipment for every part, labels each container with lot and date code, and answers a traceability request within 24 hours. Quality records, including PPAP files, inspection and test results and process records, are kept for the active production and service life of the part plus one calendar year, and made available to Buyer on request."
+    },
+    {
+      "h": "13. Warranty"
+    },
+    {
+      "p": "Supplier warrants that each Product, for 24 months after delivery, will conform to its specifications and approved samples, be free from defects in materials and workmanship and, to the extent Supplier is responsible for it, in design, and be manufactured in compliance with applicable law. Buyer's remedies for breach are repair, replacement or credit at Buyer's option, together with the costs set out in the Nonconformance and Containment section."
+    },
+    {
+      "h": "14. Product Recall"
+    },
+    {
+      "p": "If a Product must be recalled because of a defect for which Supplier is responsible, or because a regulator requires it, Supplier shall reimburse Buyer's reasonable documented costs of the recall, including notification, retrieval, replacement and disposal, and the parties shall cooperate on the recall and any regulatory filing."
+    },
+    {
+      "h": "15. Forced Labor Import Compliance"
+    },
+    {
+      "p": "Supplier warrants that no forced, prison, indentured or child labor is used to make the goods or their materials, and that no goods or inputs originate in a region or from an entity subject to a US import ban or presumption. Supplier maintains supply-chain maps to raw-material origin and, within 10 business days of Buyer's request or a customs detention, provides the tracing documents customs requires. If goods are detained because of Supplier's breach, Supplier bears the resulting costs and Buyer may cancel affected orders without liability."
+    },
+    {
+      "h": "16. Restricted Substances Compliance"
+    },
+    {
+      "p": "Supplier warrants that the products comply with Buyer's restricted substances list as updated from time to time, REACH, RoHS and equivalent laws in the markets Buyer identifies. Supplier provides a material declaration for each part before first shipment and notifies Buyer within 30 days if a substance newly added to the REACH Candidate List is present above 0.1% by weight. Supplier has 12 months, or any shorter legal deadline, to comply with additions to Buyer's list, and the cost of required changes is shared as the parties agree."
+    },
+    {
+      "h": "17. Confidentiality"
+    },
+    {
+      "p": "Each party shall keep confidential the other's non-public information received under this Agreement, including pricing, forecasts and specifications, use it only to perform this Agreement, and protect it with reasonable care, during the term and for 3 years after it ends."
+    },
+    {
+      "h": "18. Insurance"
+    },
+    {
+      "p": "Supplier shall maintain commercial general liability insurance, including products and completed operations, of at least {{currency}}5,000,000 per occurrence, and product recall insurance of at least {{currency}}2,000,000, and shall provide a certificate of insurance on signing and on each renewal of the policies."
+    },
+    {
+      "p": "Supplier certificate of insurance: [[attach:Supplier:Certificate of insurance]]"
+    },
+    {
+      "h": "19. Limitation of Liability"
+    },
+    {
+      "p": "Neither party is liable for indirect, incidental or consequential damages or lost profits, except for breach of confidentiality, recall costs, or fraud or willful misconduct. Each party's total liability in a contract year is capped at the amounts paid and payable under this Agreement in that year, and Supplier's reimbursement of nonconformance costs is capped at {{currency}}500,000 in each contract year (the \"annual cap\")."
+    },
+    {
+      "h": "20. Relationship of the Parties"
+    },
+    {
+      "p": "The parties are independent contractors. Nothing in this Agreement creates a partnership, joint venture, agency, fiduciary or employment relationship between them, and neither party may make any commitment binding the other."
+    },
+    {
+      "h": "21. Notices"
+    },
+    {
+      "p": "Notices under this Agreement must be in writing and delivered by hand, by recognized overnight courier or by email to the addresses stated in this Agreement or later notified in writing. A notice is effective on confirmed delivery or, for email, when the recipient acknowledges it. Notices of breach, termination or a legal claim must be sent by courier, with a copy by email."
+    },
+    {
+      "h": "22. Assignment"
+    },
+    {
+      "p": "Neither party may assign or transfer this Agreement without the other party's prior written consent, which may not be unreasonably withheld, except that either party may assign it on written notice to an affiliate, or to a successor to all or substantially all of the business or assets to which it relates that assumes it in writing. Any other attempted assignment is void. This Agreement binds and benefits the parties and their permitted successors and assigns."
+    },
+    {
+      "h": "23. Force Majeure"
+    },
+    {
+      "p": "Neither party is liable for a delay or failure to perform, other than an obligation to pay money, caused by events beyond its reasonable control, including natural disasters, epidemics, war, terrorism, civil unrest, government action and widespread failures of the internet or public utilities. The affected party shall notify the other within 5 business days and use reasonable efforts to resume performance. If the event continues for more than 60 days, either party may terminate the affected performance under this Agreement on written notice without liability."
+    },
+    {
+      "h": "24. Governing Law and Disputes"
+    },
+    {
+      "if": {
+        "field": "fontara_entity",
+        "is": "Fontara, Inc."
+      },
+      "then": [
+        {
+          "p": "This Agreement is governed by the laws of the State of Delaware, without regard to its conflict-of-laws rules. The parties shall first try to resolve any dispute arising out of or relating to this Agreement by good-faith negotiation between senior executives for 30 days. A dispute not resolved in that time shall be finally settled by binding arbitration administered by the American Arbitration Association under its Commercial Arbitration Rules, before a single arbitrator, seated in San Francisco, California, and judgment on the award may be entered in any court of competent jurisdiction. Either party may seek injunctive relief from a court to protect its confidential information or intellectual property."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "fontara_entity",
+        "is": "Fontara UK Ltd"
+      },
+      "then": [
+        {
+          "p": "This Agreement, and any non-contractual obligation arising out of or in connection with it, is governed by the law of England and Wales. The parties shall first try to resolve any dispute arising out of or in connection with this Agreement by good-faith negotiation between senior executives for 30 days. A dispute not resolved in that time shall be referred to and finally resolved by arbitration under the LCIA Rules, which are incorporated by reference into this section, before a sole arbitrator, with the seat of arbitration in London and English as the language of the arbitration. Either party may seek urgent injunctive relief from a court."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "fontara_entity",
+        "is": "Fontara Europe Ltd"
+      },
+      "then": [
+        {
+          "p": "This Agreement, and any non-contractual obligation arising out of or in connection with it, is governed by the laws of Ireland. The parties shall first try to resolve any dispute arising out of or in connection with this Agreement by good-faith negotiation between senior executives for 30 days, after which the courts of Ireland have exclusive jurisdiction to settle it."
+        }
+      ]
+    },
+    {
+      "h": "25. Entire Agreement and Amendment"
+    },
+    {
+      "p": "This Agreement, including its schedules, is the entire agreement of the parties on its subject and supersedes all prior proposals, negotiations, representations and understandings about it. Each party confirms that in entering into it, it has not relied on any statement not set out in it. This Agreement may be amended only in a writing signed by authorized representatives of both parties."
+    },
+    {
+      "h": "26. Survival"
+    },
+    {
+      "p": "Any provision of this Agreement that by its nature is intended to survive its termination or expiration survives it, including the Warranty, Product Recall, Lot Traceability, Confidentiality and Limitation of Liability sections, together with any payment obligation accrued before termination."
+    },
+    {
+      "h": "27. General"
+    },
+    {
+      "p": "If any provision of this Agreement is held invalid or unenforceable, it is enforced to the maximum extent permitted and the rest of this Agreement continues in full force. No failure or delay in exercising a right is a waiver of it, and a waiver is effective only if it is in writing and signed. No person other than the parties and their permitted successors and assigns has any right to enforce any term of this Agreement. This Agreement may be signed in counterparts and by electronic signature, each of which is an original and all of which together are one instrument."
+    },
+    {
+      "p": "IN WITNESS WHEREOF, the parties have signed this Agreement by their authorized representatives as of the Effective Date."
+    },
+    {
+      "sign": "Supplier",
+      "title": true,
+      "company": true
+    },
+    {
+      "sign": "Fontara",
+      "title": true,
+      "company": true
+    },
+    {
+      "h": "Schedule A — Product Schedule"
+    },
+    {
+      "lineItems": {
+        "name": "ProductSchedule",
+        "label": "Product Schedule",
+        "columns": [
+          {
+            "key": "part_no",
+            "label": "Part No."
+          },
+          {
+            "key": "description",
+            "label": "Description"
+          },
+          {
+            "key": "annual_volume",
+            "label": "Annual Volume"
+          },
+          {
+            "key": "unit_price",
+            "label": "Unit Price"
+          },
+          {
+            "key": "material_weight",
+            "label": "Material Weight"
+          },
+          {
+            "key": "shortfall_fee",
+            "label": "Shortfall Fee"
+          }
+        ]
+      }
+    }
+  ],
+  "examples": [
+    {
+      "values": {
+        "effective": "01/01/2027",
+        "supplier": "Discrete Quantum Mechanics",
+        "supplier_entity": "a Delaware corporation",
+        "supplier_address": "775 Technology Drive, Suite 400",
+        "products": "edge compute appliances and replacement power modules",
+        "initial_term": "3 years",
+        "expiration": "12/31/2029",
+        "payment_terms": "net 60 days",
+        "fontara_entity": "Fontara, Inc.",
+        "currency": "US$",
+        "position": "Balanced",
+        "supplier_city": "San Mateo",
+        "supplier_region": "CA",
+        "supplier_postal": "94404"
+      },
+      "tables": {
+        "ProductSchedule": [
+          [
+            "DQ-EDG-4",
+            "Edge appliance",
+            "6,000",
+            "1,850.00",
+            "4.2 kg",
+            "220.00"
+          ],
+          [
+            "DQ-PSU-1",
+            "Power module",
+            "12,000",
+            "95.00",
+            "0.6 kg",
+            "12.00"
+          ]
+        ]
+      },
+      "expect": [
+        "at least 80% of the annual volume",
+        "DQ-EDG-4",
+        "Schedule A",
+        "American Arbitration Association",
+        "product recall insurance"
+      ],
+      "absent": [
+        "LCIA"
+      ]
+    }
+  ],
+  "source": "vault: Contracts/Clauses/Supply"
+}

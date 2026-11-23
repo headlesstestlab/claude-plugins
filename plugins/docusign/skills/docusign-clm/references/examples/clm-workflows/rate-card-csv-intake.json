@@ -1,0 +1,148 @@
+{
+  "id": "rate-card-csv-intake",
+  "name": "Rate Card CSV Intake",
+  "description": "Procurement keeps a vendor's rate card as a CSV beside the incoming contract and reads it back as data. Write Text Document writes the rate card (a header row and two rates) under /Parties/ into a new Document variable; Append Text Document adds a third rate; Create Variable from CSV reads the CSV into an XML variable; Find Attachments checks the contract for related documents (one Logger per answer); the vendor's JSON rates from Params go through Convert Json to Xml into an XML variable, and the CSV data back to a JSON string.",
+  "variables": [
+    {
+      "name": "RateCard",
+      "type": "document"
+    },
+    {
+      "name": "Rates",
+      "type": "xml"
+    },
+    {
+      "name": "Related",
+      "type": "document"
+    },
+    "Json",
+    {
+      "name": "RatesXml",
+      "type": "xml"
+    },
+    "RatesAsJson"
+  ],
+  "paramsSchema": "<Params><Documents><Document><Id/><Name/></Document></Documents><VendorName/><RatesJson/></Params>",
+  "steps": [
+    {
+      "id": "write",
+      "name": "Write the rate card",
+      "kind": "writeTextDocument",
+      "text": "Code,Description,Rate\nA1,Review hour,100\nB2,Drafting hour,200",
+      "documentName": "<%#XmlVariables.Params.VendorName%> rate card.csv",
+      "folder": {
+        "path": "/Parties/"
+      },
+      "output": "RateCard",
+      "on": {
+        "success": "append",
+        "failure": "logFailed"
+      }
+    },
+    {
+      "id": "append",
+      "name": "Add the filing rate",
+      "kind": "appendTextDocument",
+      "documents": {
+        "var": "RateCard"
+      },
+      "text": "\nC3,Filing,300",
+      "output": "RateCard",
+      "on": {
+        "success": "read",
+        "failure": "logFailed"
+      }
+    },
+    {
+      "id": "read",
+      "name": "Read the rate card",
+      "kind": "createVariableFromCsv",
+      "documents": {
+        "var": "RateCard"
+      },
+      "delimiter": ",",
+      "output": "Rates",
+      "on": {
+        "success": "related",
+        "failure": "logFailed"
+      }
+    },
+    {
+      "id": "related",
+      "name": "Find related documents",
+      "kind": "findAttachments",
+      "documents": "params",
+      "output": "Related",
+      "on": {
+        "hasAttachments": "logRelated",
+        "noAttachments": "logNoRelated",
+        "failure": "logFailed"
+      }
+    },
+    {
+      "id": "logRelated",
+      "name": "Log has related documents",
+      "kind": "logger",
+      "message": "The contract has related documents",
+      "next": "json"
+    },
+    {
+      "id": "logNoRelated",
+      "name": "Log no related documents",
+      "kind": "logger",
+      "message": "The contract has no related documents",
+      "next": "json"
+    },
+    {
+      "id": "json",
+      "name": "Vendor rates JSON",
+      "kind": "setVariable",
+      "set": {
+        "Json": "<%#XmlVariables.Params.RatesJson%>"
+      },
+      "next": "toXml"
+    },
+    {
+      "id": "toXml",
+      "name": "Vendor rates to XML",
+      "kind": "convertJsonToXml",
+      "direction": "jsonToXml",
+      "from": "Json",
+      "output": "RatesXml",
+      "on": {
+        "success": "toJson",
+        "failure": "logFailed"
+      }
+    },
+    {
+      "id": "toJson",
+      "name": "Rate card to JSON",
+      "kind": "convertJsonToXml",
+      "direction": "xmlToJson",
+      "from": "Rates",
+      "output": "RatesAsJson",
+      "on": {
+        "success": "logDone",
+        "failure": "logFailed"
+      }
+    },
+    {
+      "id": "logDone",
+      "name": "Log rate card read",
+      "kind": "logger",
+      "message": "Rate card read: <%#Variable.RatesAsJson%>",
+      "next": "finish"
+    },
+    {
+      "id": "logFailed",
+      "name": "Log failed",
+      "kind": "logger",
+      "message": "Failed: the rate card was not read",
+      "next": "finish"
+    },
+    {
+      "id": "finish",
+      "kind": "finish"
+    }
+  ]
+}

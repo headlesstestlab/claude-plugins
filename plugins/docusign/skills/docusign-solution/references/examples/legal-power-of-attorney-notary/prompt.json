@@ -1,0 +1,80 @@
+{
+  "id": "legal-power-of-attorney-notary",
+  "prompt": "A power of attorney needs to be notarized. The principal signs in a remote online notarization session.",
+  "industry": "financial services",
+  "department": "legal",
+  "variation_tags": {
+    "start": [
+      "manual"
+    ],
+    "routing": [
+      "single-signer"
+    ],
+    "approvals": [
+      "none"
+    ],
+    "data_source": [
+      "none"
+    ],
+    "locale": [
+      "en-US"
+    ],
+    "currency": [
+      "USD"
+    ],
+    "platform": "iam",
+    "ai": [
+      "none"
+    ],
+    "documents": [
+      "uploaded"
+    ],
+    "logic": [
+      "none"
+    ],
+    "notifications": [
+      "email"
+    ],
+    "identity": [
+      "notary"
+    ],
+    "payment": false,
+    "agreement_desk": false
+  },
+  "expected_assets": [
+    {
+      "kind": "esign-template",
+      "purpose": "POA with notary",
+      "features": [
+        "notary recipient",
+        "notary seal/journal"
+      ]
+    }
+  ],
+  "acceptance": [
+    "the template includes a notary recipient",
+    "the bundle lists Notary on the account as a prerequisite"
+  ],
+  "hard_parts": [
+    "remote online notarization is not modelled in any compiler; flag a gap"
+  ],
+  "clarifying_questions": [
+    {
+      "question": "Which state?",
+      "default": "the principal's state; Docusign Notary must support it"
+    }
+  ],
+  "capabilities": [
+    "esign-template.setting.upload-json",
+    "esign-template.setting.email-subject",
+    "esign-template.setting.email-message",
+    "esign-template.recipient.signer-role",
+    "esign-template.tab.sign-here",
+    "esign-template.tab.full-name",
+    "esign-template.tab.date-signed",
+    "esign-template.tab-setting.anchor",
+    "esign-template.tab-setting.required",
+    "esign-template.tab-setting.owner",
+    "esign-template.setting.from-new-document"
+  ]
+}

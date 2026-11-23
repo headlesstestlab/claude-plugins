@@ -1,0 +1,105 @@
+{
+  "id": "business-loan-agreement-kba",
+  "from": {
+    "name": "Business Loan Agreement",
+    "description": "A small business loan: principal, APR, term and payment schedule.",
+    "fields": {
+      "borrower": {
+        "label": "Borrower legal name",
+        "required": true
+      },
+      "principal": {
+        "label": "Principal (USD)",
+        "type": "number",
+        "money": true,
+        "required": true
+      },
+      "apr": {
+        "label": "Annual percentage rate (%)",
+        "type": "number",
+        "numberFormat": "1,234.56",
+        "required": true
+      },
+      "term": {
+        "label": "Term (months)",
+        "type": "number",
+        "required": true
+      },
+      "schedule": {
+        "label": "Payment schedule",
+        "type": "select",
+        "options": [
+          "Monthly",
+          "Quarterly"
+        ],
+        "required": true
+      },
+      "effective": {
+        "required": true,
+        "label": "Effective"
+      }
+    },
+    "signers": [
+      "Borrower",
+      "Lender"
+    ],
+    "body": [
+      {
+        "title": "BUSINESS LOAN AGREEMENT"
+      },
+      {
+        "p": "This Business Loan Agreement is made as of {{effective}} between Larkspire Bank (the \"Lender\") and **{{borrower}}** (the \"Borrower\")."
+      },
+      {
+        "h": "1. Loan"
+      },
+      {
+        "p": "The Lender lends the Borrower a principal amount of US$ {{principal}} at an annual percentage rate of {{apr}}%, for {{term}} months."
+      },
+      {
+        "h": "2. Repayment"
+      },
+      {
+        "p": "The Borrower repays principal and interest in equal {{schedule}} installments over the term, starting one period after the date above. The Borrower may prepay without penalty."
+      },
+      {
+        "h": "3. Default"
+      },
+      {
+        "p": "If a payment is more than 15 days late, or the Borrower becomes insolvent, the Lender may declare the whole loan due at once."
+      },
+      {
+        "h": "4. Governing law"
+      },
+      {
+        "p": "This Agreement is governed by the laws of the State of New York."
+      },
+      {
+        "sign": "Borrower",
+        "title": false,
+        "company": true
+      },
+      {
+        "sign": "Lender",
+        "title": true,
+        "company": false
+      }
+    ]
+  },
+  "name": "Business Loan Agreement (KBA)",
+  "summary": "The small business loan agreement: each borrower passes knowledge-based authentication (IDV US KBA) before signing; the bank officer countersigns last. The loan system's values fill the terms.",
+  "owners": {
+    "default": "Lender"
+  },
+  "auth": {
+    "Borrower": {
+      "idv": "IDV (US KBA)"
+    }
+  },
+  "emailSubject": "Your business loan agreement",
+  "emailBlurb": "Please verify your identity and sign your loan agreement.",
+  "variant": {
+    "schedule": "Monthly"
+  },
+  "variantLabel": "monthly payments"
+}

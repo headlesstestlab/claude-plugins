@@ -1,0 +1,6845 @@
+{
+ "$comment": "Cell templates per CLM activity, harvested read-only 2026-10-29 from the lab account's own workflows (Export JSON shape) and sanitized: free text blanked, participants emptied, account-specific variables unset. DocLauncherActivity is built from the designer's presentation (no export had one). CopyMoveDocumentActivity and UpdateDocumentMetadataActivity added 2026-10-31 the same way (the account's Contract - * and Example workflows; Copy settings from the presentation, no export had a copy). outputs = the designer's link output values per activity (getDesignerPresentation). ChoiceActivity and FindDocumentActivity added 2026-10-31 from the account's Example Workflow (Legal Review) and Document Version Workflow exports, sanitized the same way (options emptied, the task group assignment reset to a user); EditDocumentsActivity is the Approve cell without Approve's own settings (checkoutDocuments, assignedUsersInOrder, approveText, rejectText, requiredApprovalCount; no export had one), every remaining key checked against the presentation's EditDocumentsActivity props. A task group assignment (assigneeType workerpool, assignedWorkerPools Guid, assignedWorkerPoolUsers) was read from the same Choice and from xVISUALx's Approve. FindFolderActivity, FindOrCreateEOSFolderActivity and UpdateVariableFromXMLActivity added 2026-10-31 (gap-prep) from the designer presentation alone (model, icon, outputs; no export had one), shaped like the harvested FindDocumentActivity cell: compiled, unproven until an import. CreateFolderActivity added 2026-11-01 (gap-prep-4) from the account's Contract - Internal Paper export (five Contract - * / Example / xVISUALx exports have one; parentFolder there is a path String such as \"/Parties/\" or a Guid), sanitized the same way. RoutingActivity added 2026-11-01 from the designer presentation alone (no export had one): the Choice cell with Routing's own settings (options, a StringCollection, instead of outputs; outputRoute) [inferred: the StringCollection's stored items], every key checked against the presentation's RoutingActivity props: compiled, unproven until an import. Added 2026-11-01 (clm-prep): RenameDocumentActivity, UpdateDocumentKeywordActivity, ScheduleDocumentReminderActivity, AddWatchedDocumentsActivity, SetWorkflowScopeNameActivity, FindPartyActivity, EditClmAgreementAttributesActivity, ChooseUsersActivity and DataReviewActivity from the account's Contract - * and Example Workflow exports, sanitized the same way (attributes to review emptied, EditClm's parentDocument emptied, waitForNextStep false); RemoveWatchedDocumentsActivity, DeleteDocumentReminderActivity, CheckOutDocumentActivity, CheckOutDocumentCancelActivity, FindDocumentsByFolderActivity and LogActivity from the designer presentation alone (model, icon, outputs; no export had one; the compiler writes each prop of the presentation): compiled, unproven until an import. UpdateFolderDescriptionActivity, CreateLinkActivity, CopyFolderActivity, GetPathActivity, SearchActivity, WriteTextDocumentActivity, AppendTextDocumentActivity, UpdateXMLVariableFromCSVActivity and ConvertJsonToXmlActivity added 2026-11-02 (clm-prep-2) from the designer presentation alone; UpdateStatusActivity (the Contract - * exports) and GetDocumentAttachmentsActivity (Example Workflow) have the look the presentation gives too, and their props as those exports store them: compiled, unproven until a lab run. MergePdfDocumentActivity, WatermarkDocumentActivity, SplitDocumentActivity, CompareDocumentsActivity and CheckInDocumentActivity added 2026-11-02 (clm-prep-2) from the designer presentation alone; CompareDocumentVersionsActivity with the look the presentation gives and its props as the account's Contract - Amendment export stores them: compiled, unproven until a lab run. FindUserActivity, ResourceVariableActivity, EvaluateDocumentText, SimpleDelayActivity and HttpClientActivity added 2026-11-02 (clm-prep-2) from the designer presentation alone: compiled, unproven until a lab run. FindEOSParentFolderActivity and FindDocumentsByMetadataActivity added 2026-11-02 (clm-prep-2) from the designer presentation alone (Find Documents by Metadata's attribute rows as Update Document Metadata Value's, which the same catalogue types MetadataUpdate): compiled, unproven until a lab run. ExtractPdfFieldsActivity and XmlMergeDocumentActivity added 2026-11-02 (clm-prep-2) from the designer presentation alone; AutofillAnalysisActivity (Use Docusign AI) with the look the presentation gives and its props as the account's Contract - * and rwf Docusign AI exports store them: compiled, unproven until a lab run. SendForExternalReviewNewActivity added 2026-11-02 (clm-prep-2) with the look the presentation gives and its props as the account's xVISUALx and Example Workflow exports store them (the recipient a Text variable with the email): compiled, unproven until a lab run. ForLoopActivity, XPathForEachLoopActivity, NextLoopActivity, UpdateParentVariableActivity, UpdateVariableFromCSVActivity, WaitForSignal and the canvas boxes GroupBoxActivity, PoolActivity and LaneActivity added 2026-11-02 (clm-prep-2) from clm-live-2's designer harvest (ZZ Lab - harvest loops, read back, deleted), names blanked. AddPartyActivity (props as the account's Contract - * exports store them) and EditPartyActivity (the designer presentation alone) added 2026-11-02 (clm-prep-2). ChooseDocumentsActivity, UpdateFolderMetadataActivity and CancelElectronicSignatureActivity added 2026-11-02 (clm-prep-2) from clm-live-2's designer harvest B (ZZ Lab - harvest settings, read back, deleted), names blanked. FillFormActivity, EditFormActivity, FullPageFillFormActivity and FullPageEditFormActivity added 2026-11-02 (clm-prep-2) from clm-live-2's designer harvest C (ZZ Lab - harvest forms, read back, deleted), names blanked. GetTrackedContentActivity, MergeTrackedContentActivity and CompareTrackedContentActivity added 2026-11-04 from b5-live's designer harvest D (B9-5, ZZ Lab - harvest tracked content), sanitized the same way; they have one unlabelled output link. TriggerOrchestrationActivity (Maestro Workflow) added 2026-11-04 from b10-live's designer harvest E (one output link). UseObligationDataActivity added 2026-11-21 from Fontara IAM + CLM's designer presentation (CLM 250077; the step needs an IAM plan, no export had one): the AutofillAnalysisActivity shell with its activity name; props documents (Document) and outputXml (a CustomXml variable). UseNavigatorAIActivity (Use AI Data Insights) added 2026-11-21 from a designer-built sample on Fontara IAM + CLM (ZZ Lab - AI insights sample: Document = Params, output a new CustomXml variable), its outputs from that site's designer presentation.",
+ "recipient": {
+  "type": "ESignatureRecipient",
+  "value": {
+   "recipient": {
+    "type": "Variable"
+   },
+   "recipientAuthenticationType": {
+    "type": "String",
+    "value": "None"
+   },
+   "recipientAuthenticationPhoneNumber": {
+    "type": "String",
+    "value": ""
+   },
+   "recipientAuthenticationAccessCode": {
+    "type": "String",
+    "value": ""
+   },
+   "allowRecipientToProvidePhoneNumber": {
+    "type": "Bool",
+    "value": false
+   },
+   "recipientType": {
+    "type": "String",
+    "value": "Signer"
+   },
+   "authenticationType": "None",
+   "templateRole": {
+    "type": "String",
+    "value": "Signer 1"
+   },
+   "signingOrder": {
+    "type": "Number",
+    "value": 1
+   }
+  }
+ },
+ "cells": {
+  "ApproveDocumentsActivity": {
+   "size": {
+    "width": 100,
+    "height": 100
+   },
+   "content": "",
+   "type": "springcm.Step",
+   "angle": 0,
+   "activityName": "ApproveDocumentsActivity",
+   "group": "engineActivities",
+   "icon": {
+    "path": "approve_documents.svg#Dark",
+    "color": "#29bdbe"
+   },
+   "activityDisplayName": {
+    "type": "String",
+    "value": ""
+   },
+   "stageName": {
+    "type": "String",
+    "value": ""
+   },
+   "documents": {
+    "type": "Document",
+    "value": [
+     {
+      "type": "Variable",
+      "value": {
+       "type": "Xml",
+       "value": "Params"
+      }
+     }
+    ]
+   },
+   "checkoutDocuments": {
+    "type": "Bool",
+    "value": false
+   },
+   "compareVersion": {
+    "type": "Bool",
+    "value": false
+   },
+   "assigneeType": {
+    "type": "String",
+    "value": "user"
+   },
+   "requiredCompletion": {
+    "type": "Number",
+    "value": 1
+   },
+   "assignedUsersInOrder": {
+    "type": "Bool",
+    "value": false
+   },
+   "instructions": {
+    "type": "String",
+    "value": ""
+   },
+   "approveText": {
+    "type": "String",
+    "value": ""
+   },
+   "rejectText": {
+    "type": "String",
+    "value": ""
+   },
+   "addCustomAction": {
+    "type": "Bool",
+    "value": false
+   },
+   "allowComment": {
+    "type": "String",
+    "value": "Yes"
+   },
+   "waitForNextStep": {
+    "type": "Bool",
+    "value": false
+   },
+   "notificationFromAddress": {
+    "type": "Participant",
+    "value": []
+   },
+   "notificationSubject": {
+    "type": "String",
+    "value": ""
+   },
+   "notificationBody": {
+    "type": "String",
+    "value": ""
+   },
+   "timeout": {
+    "type": "Timers",
+    "value": []
+   },
+   "timeoutWarningFromStepExecution": {
+    "type": "Bool",
+    "value": false
+   },
+   "timers": {
+    "type": "Timers",
+    "value": []
+   },
+   "outputComments": {
+    "type": "Variable"
+   },
+   "requiredApprovalCount": {
+    "type": "Number",
+    "value": 1
+   },
+   "assignedUsers": {
+    "type": "Participant",
+    "value": []
+   },
+   "attrs": {
+    ".steptext": {
+     "ref-y": ".66",
+     "y-alignment": "middle",
+     "text": "",
+     "lineHeight": "1.4em"
+    },
+    ".description": {
+     "opacity": 0,
+     "ref": ".step-container",
+     "ref-x": 0.5,
+     "ref-dy": 0
+    },
+    ".descriptionbox": {
+     "width": 0,
+     "height": 0,
+     "rx": 0,
+     "ry": 0,
+     "x": 0,
+     "y": 0
+    },
+    ".descriptiontext": {
+     "text": ""
+    },
+    "use": {
+     "xlink:href": "/clm/atlassupport/scripts/jointjs/svg/approve_documents.svg#Dark"
+    },
+    "svg": {
+     "color": "#29bdbe",
+     "fill": "#fff"
+    },
+    "rect": {
+     "fill": "#29bdbe"
+    },
+    ".step-container": {
+     "data-error-state": false
+    }
+   }
+  },
+  "DecisionActivity": {
+   "size": {
+    "width": 93,
+    "height": 93
+   },
+   "type": "springcm.Diamond",
+   "content": "",
+   "angle": 0,
+   "activityName": "DecisionActivity",
+   "group": "engineActivities",
+   "icon": {
+    "path": "rule.svg#Dark",
+    "color": "#29bdbe"
+   },
+   "decisions": {
+    "type": "Decisions",
+    "value": {
+     "decisions": [],
+     "elseOutput": {
+      "type": "Output",
+      "value": {
+       "name": "Else",
+       "referenceKey": ""
+      }
+     }
+    }
+   },
+   "outputDecision": {
+    "type": "Variable"
+   },
+   "attrs": {
+    ".step-container": {
+     "data-error-state": false
+    },
+    ".steptext": {
+     "ref-y": ".66",
+     "y-alignment": "middle",
+     "text": "",
+     "lineHeight": "1.4em"
+    },
+    ".description": {
+     "opacity": 0,
+     "ref": ".step-container",
+     "ref-x": 0.5,
+     "ref-dy": 0
+    },
+    ".descriptionbox": {
+     "width": 0,
+     "height": 0,
+     "rx": 0,
+     "ry": 0,
+     "x": 0,
+     "y": 0
+    },
+    ".descriptiontext": {
+     "text": ""
+    },
+    "use": {
+     "xlink:href": "/clm/atlassupport/scripts/jointjs/svg/rule.svg#Dark"
+    },
+    "svg": {
+     "color": "#29bdbe",
+     "fill": "#fff"
+    },
+    "rect": {
+     "fill": "#29bdbe"
+    }
+   }
+  },
+  "SendForSignatureActivity": {
+   "size": {
+    "width": 100,
+    "height": 100
+   },
+   "content": "",
+   "type": "springcm.Step",
+   "angle": 0,
+   "activityName": "SendForSignatureActivity",
+   "group": "engineActivities",
+   "icon": {
+    "path": "send_for_signature.svg#Dark",
+    "color": "#1b9d1d"
+   },
+   "stageName": {
+    "type": "String",
+    "value": ""
+   },
+   "sender": {
+    "type": "Participant",
+    "value": []
+   },
+   "esignatureRecipients": {
+    "type": "ESignatureParticipant",
+    "value": []
+   },
+   "signatureSubject": {
+    "type": "String",
+    "value": ""
+   },
+   "message": {
+    "type": "String",
+    "value": ""
+   },
+   "useDSTemplates": {
+    "type": "String",
+    "value": "document"
+   },
+   "document": {
+    "type": "Document",
+    "value": [
+     {
+      "type": "Variable"
+     }
+    ]
+   },
+   "esignatureTemplates": {
+    "type": "ESignatureTemplates",
+    "value": []
+   },
+   "expirationDays": {
+    "type": "String",
+    "value": ""
+   },
+   "password": {
+    "type": "String",
+    "value": ""
+   },
+   "signaturesOrdered": {
+    "type": "Bool",
+    "value": false
+   },
+   "writtenRequired": {
+    "type": "Bool",
+    "value": false
+   },
+   "senderSignsToo": {
+    "type": "Bool",
+    "value": false
+   },
+   "signatureAuditEventsText": {
+    "type": "String",
+    "value": "None, Sent, Viewed, Signed, Rejected, Delegated, EmailBounced, Sealed"
+   },
+   "timeoutWarningFromStepExecution": {
+    "type": "Bool",
+    "value": false
+   },
+   "timers": {
+    "type": "Timers",
+    "value": []
+   },
+   "signatureAuditInfoXmlVariable": {
+    "type": "Variable"
+   },
+   "attrs": {
+    ".steptext": {
+     "ref-y": ".66",
+     "y-alignment": "middle",
+     "text": "",
+     "lineHeight": "1.4em"
+    },
+    ".description": {
+     "opacity": 0,
+     "ref": ".step-container",
+     "ref-x": 0.5,
+     "ref-dy": 0
+    },
+    ".descriptionbox": {
+     "width": 0,
+     "height": 0,
+     "rx": 0,
+     "ry": 0,
+     "x": 0,
+     "y": 0
+    },
+    ".descriptiontext": {
+     "text": ""
+    },
+    "use": {
+     "xlink:href": "/clm/atlassupport/scripts/jointjs/svg/send_for_signature.svg#Dark"
+    },
+    "svg": {
+     "color": "#1b9d1d",
+     "fill": "#fff"
+    },
+    "rect": {
+     "fill": "#1b9d1d"
+    },
+    ".step-container": {
+     "data-error-state": false
+    }
+   }
+  },
+  "WaitForSignatureActivity": {
+   "size": {
+    "width": 100,
+    "height": 100
+   },
+   "content": "",
+   "type": "springcm.Step",
+   "angle": 0,
+   "activityName": "WaitForSignatureActivity",
+   "group": "engineActivities",
+   "icon": {
+    "path": "wait_for_signature.svg#Dark",
+    "color": "#1b9d1d"
+   },
+   "stageName": {
+    "type": "String",
+    "value": ""
+   },
+   "waitType": {
+    "type": "String",
+    "value": "document"
+   },
+   "sender": {
+    "type": "Participant",
+    "value": []
+   },
+   "document": {
+    "type": "Document",
+    "value": [
+     {
+      "type": "Variable",
+      "value": {
+       "type": "Xml",
+       "value": "Params"
+      }
+     }
+    ]
+   },
+   "signatureAuditEventsText": {
+    "type": "String",
+    "value": "None, Sent, Viewed, Signed, Rejected, Delegated, EmailBounced, Sealed"
+   },
+   "timers": {
+    "type": "Timers",
+    "value": []
+   },
+   "signatureAuditInfoXmlVariable": {
+    "type": "Variable"
+   },
+   "attrs": {
+    ".steptext": {
+     "ref-y": ".66",
+     "y-alignment": "middle",
+     "text": "",
+     "lineHeight": "1.4em"
+    },
+    ".description": {
+     "opacity": 0,
+     "ref": ".step-container",
+     "ref-x": 0.5,
+     "ref-dy": 0
+    },
+    ".descriptionbox": {
+     "width": 0,
+     "height": 0,
+     "rx": 0,
+     "ry": 0,
+     "x": 0,
+     "y": 0
+    },
+    ".descriptiontext": {
+     "text": ""
+    },
+    "use": {
+     "xlink:href": "/clm/atlassupport/scripts/jointjs/svg/wait_for_signature.svg#Dark"
+    },
+    "svg": {
+     "color": "#1b9d1d",
+     "fill": "#fff"
+    },
+    "rect": {
+     "fill": "#1b9d1d"
+    },
+    ".step-container": {
+     "data-error-state": false
+    }
+   }
+  },
+  "ReviewAndSendForSignatureActivity": {
+   "size": {
+    "width": 100,
+    "height": 100
+   },
+   "content": "",
+   "type": "springcm.Step",
+   "angle": 0,
+   "activityName": "ReviewAndSendForSignatureActivity",
+   "group": "engineActivities",
+   "icon": {
+    "path": "review_and_send_for_signature.svg#Dark",
+    "color": "#ecb900"
+   },
+   "activityDisplayName": {
+    "type": "String",
+    "value": ""
+   },
+   "stageName": {
+    "type": "String",
+    "value": ""
+   },
+   "sender": {
+    "type": "Participant",
+    "value": []
+   },
+   "esignatureRecipients": {
+    "type": "ESignatureParticipant",
+    "value": []
+   },
+   "signatureSubject": {
+    "type": "String",
+    "value": ""
+   },
+   "message": {
+    "type": "String",
+    "value": ""
+   },
+   "useDSTemplates": {
+    "type": "String",
+    "value": "document"
+   },
+   "document": {
+    "type": "Document",
+    "value": [
+     {
+      "type": "Variable",
+      "value": {
+       "type": "Xml",
+       "value": "Params"
+      }
+     }
+    ]
+   },
+   "esignatureTemplates": {
+    "type": "ESignatureTemplates",
+    "value": []
+   },
+   "assigneeType": {
+    "type": "String",
+    "value": "user"
+   },
+   "instructions": {
+    "type": "String",
+    "value": ""
+   },
+   "expirationDays": {
+    "type": "String",
+    "value": "7"
+   },
+   "password": {
+    "type": "String",
+    "value": ""
+   },
+   "rejectText": {
+    "type": "String",
+    "value": ""
+   },
+   "signaturesOrdered": {
+    "type": "Bool",
+    "value": true
+   },
+   "writtenRequired": {
+    "type": "Bool",
+    "value": false
+   },
+   "allowComment": {
+    "type": "String",
+    "value": "Yes"
+   },
+   "waitForNextStep": {
+    "type": "Bool",
+    "value": false
+   },
+   "notificationFromAddress": {
+    "type": "Participant",
+    "value": []
+   },
+   "notificationSubject": {
+    "type": "String",
+    "value": ""
+   },
+   "notificationBody": {
+    "type": "String",
+    "value": ""
+   },
+   "timeout": {
+    "type": "Timers",
+    "value": [
+     {
+      "initial": {
+       "type": "Period",
+       "value": {
+        "months": 0,
+        "weeks": 0,
+        "days": 7,
+        "hours": 0,
+        "minutes": 0,
+        "seconds": 0
+       }
+      },
+      "calendar": {
+       "type": "String",
+       "value": ""
+      },
+      "recurring": "",
+      "testReminder": "",
+      "output": {
+       "type": "Output",
+       "value": {
+        "name": "Timeout - Action",
+        "referenceKey": "a08e07a5-911c-44ce-a74a-05d566dd9589"
+       }
+      }
+     }
+    ]
+   },
+   "timeoutWarningFromStepExecution": {
+    "type": "Bool",
+    "value": false
+   },
+   "timers": {
+    "type": "Timers",
+    "value": []
+   },
+   "outputComments": {
+    "type": "Variable"
+   },
+   "assignedUsers": {
+    "type": "Participant",
+    "value": []
+   },
+   "attrs": {
+    ".steptext": {
+     "ref-y": ".66",
+     "y-alignment": "middle",
+     "text": "",
+     "lineHeight": "1.4em"
+    },
+    ".description": {
+     "opacity": 0,
+     "ref": ".step-container",
+     "ref-x": 0.5,
+     "ref-dy": 0
+    },
+    ".descriptionbox": {
+     "width": 0,
+     "height": 0,
+     "rx": 0,
+     "ry": 0,
+     "x": 0,
+     "y": 0
+    },
+    ".descriptiontext": {
+     "text": ""
+    },
+    "use": {
+     "xlink:href": "/clm/atlassupport/scripts/jointjs/svg/review_and_send_for_signature.svg#Dark"
+    },
+    "svg": {
+     "color": "#ecb900",
+     "fill": "#fff"
+    },
+    "rect": {
+     "fill": "#ecb900"
+    },
+    ".step-container": {
+     "data-error-state": false
+    }
+   }
+  },
+  "WorkflowActivity": {
+   "size": {
+    "width": 100,
+    "height": 100
+   },
+   "content": "",
+   "type": "springcm.Step",
+   "angle": 0,
+   "activityName": "WorkflowActivity",
+   "group": "engineActivities",
+   "icon": {
+    "path": "generic.svg#Dark",
+    "color": "#757575"
+   },
+   "workflow": {
+    "type": "Definition",
+    "value": {
+     "name": ""
+    }
+   },
+   "variables": {
+    "type": "Variable"
+   },
+   "parameterVariableName": {
+    "type": "Variable",
+    "value": {
+     "type": "Xml",
+     "value": "Params"
+    }
+   },
+   "waitForChildWorkflow": {
+    "type": "Bool",
+    "value": false
+   },
+   "outputs": {
+    "type": "Outputs",
+    "value": []
+   },
+   "attrs": {
+    ".steptext": {
+     "ref-y": ".66",
+     "y-alignment": "middle",
+     "text": "",
+     "lineHeight": "1.4em"
+    },
+    ".description": {
+     "opacity": 0,
+     "ref": ".step-container",
+     "ref-x": 0.5,
+     "ref-dy": 0
+    },
+    ".descriptionbox": {
+     "width": 0,
+     "height": 0,
+     "rx": 0,
+     "ry": 0,
+     "x": 0,
+     "y": 0
+    },
+    ".descriptiontext": {
+     "text": ""
+    },
+    "use": {
+     "xlink:href": "/clm/atlassupport/scripts/jointjs/svg/generic.svg#Dark"
+    },
+    "svg": {
+     "color": "#757575",
+     "fill": "#fff"
+    },
+    "rect": {
+     "fill": "#757575"
+    },
+    ".step-container": {
+     "data-error-state": false
+    }
+   }
+  },
+  "CreateDocumentActivity": {
+   "size": {
+    "width": 100,
+    "height": 100
+   },
+   "content": "",
+   "type": "springcm.Step",
+   "angle": 0,
+   "activityName": "CreateDocumentActivity",
+   "group": "engineActivities",
+   "icon": {
+    "path": "generic.svg#Dark",
+    "color": "#29bdbe"
+   },
+   "activityDisplayName": {
+    "type": "String",
+    "value": ""
+   },
+   "stageName": {
+    "type": "String",
+    "value": ""
+   },
+   "assigneeType": {
+    "type": "String",
+    "value": "user"
+   },
+   "requiredCompletion": {
+    "type": "Number",
+    "value": 1
+   },
+   "configurationName": {
+    "type": "String",
+    "value": ""
+   },
+   "configTemplateName": {
+    "type": "String",
+    "value": ""
+   },
+   "dataSource": {
+    "type": "Variable"
+   },
+   "sourceType": {
+    "type": "String",
+    "value": "SpringCM"
+   },
+   "trackingDocuments": {
+    "type": "Document",
+    "value": []
+   },
+   "waitForNextStep": {
+    "type": "Bool",
+    "value": false
+   },
+   "notificationFromAddress": {
+    "type": "Participant",
+    "value": []
+   },
+   "notificationSubject": {
+    "type": "String",
+    "value": ""
+   },
+   "notificationBody": {
+    "type": "String",
+    "value": ""
+   },
+   "timeout": {
+    "type": "Timers",
+    "value": []
+   },
+   "timeoutWarningFromStepExecution": {
+    "type": "Bool",
+    "value": false
+   },
+   "timers": {
+    "type": "Timers",
+    "value": []
+   },
+   "outputDocuments": {
+    "type": "Variable"
+   },
+   "assignedUsers": {
+    "type": "Participant",
+    "value": []
+   },
+   "path": {
+    "type": "String",
+    "value": ""
+   },
+   "attrs": {
+    ".steptext": {
+     "ref-y": ".66",
+     "y-alignment": "middle",
+     "text": "",
+     "lineHeight": "1.4em"
+    },
+    ".description": {
+     "opacity": 0,
+     "ref": ".step-container",
+     "ref-x": 0.5,
+     "ref-dy": 0
+    },
+    ".descriptionbox": {
+     "width": 0,
+     "height": 0,
+     "rx": 0,
+     "ry": 0,
+     "x": 0,
+     "y": 0
+    },
+    ".descriptiontext": {
+     "text": ""
+    },
+    "use": {
+     "xlink:href": "/clm/atlassupport/scripts/jointjs/svg/generic.svg#Dark"
+    },
+    "svg": {
+     "color": "#29bdbe",
+     "fill": "#fff"
+    },
+    "rect": {
+     "fill": "#29bdbe"
+    },
+    ".step-container": {
+     "data-error-state": false
+    }
+   }
+  },
+  "EvaluateXPathActivity": {
+   "size": {
+    "width": 100,
+    "height": 100
+   },
+   "content": "",
+   "type": "springcm.Step",
+   "angle": 0,
+   "activityName": "EvaluateXPathActivity",
+   "group": "engineActivities",
+   "icon": {
+    "path": "evaluate_xpath.svg#Dark",
+    "color": "#d13393"
+   },
+   "inputXMLVariable": {
+    "type": "Variable",
+    "value": {
+     "type": "Xml",
+     "value": "Params"
+    }
+   },
+   "xPath": {
+    "type": "String",
+    "value": ""
+   },
+   "outputXmlVariable": {
+    "type": "Variable"
+   },
+   "attrs": {
+    ".steptext": {
+     "ref-y": ".66",
+     "y-alignment": "middle",
+     "text": "",
+     "lineHeight": "1.4em"
+    },
+    ".description": {
+     "opacity": 0,
+     "ref": ".step-container",
+     "ref-x": 0.5,
+     "ref-dy": 0
+    },
+    ".descriptionbox": {
+     "width": 0,
+     "height": 0,
+     "rx": 0,
+     "ry": 0,
+     "x": 0,
+     "y": 0
+    },
+    ".descriptiontext": {
+     "text": ""
+    },
+    "use": {
+     "xlink:href": "/clm/atlassupport/scripts/jointjs/svg/evaluate_xpath.svg#Dark"
+    },
+    "svg": {
+     "color": "#d13393",
+     "fill": "#fff"
+    },
+    "rect": {
+     "fill": "#d13393"
+    },
+    ".step-container": {
+     "data-error-state": false
+    }
+   }
+  },
+  "DocLauncherActivity": {
+   "size": {
+    "width": 100,
+    "height": 100
+   },
+   "content": "",
+   "type": "springcm.Step",
+   "angle": 0,
+   "group": "engineActivities",
+   "attrs": {
+    ".steptext": {
+     "ref-y": ".66",
+     "y-alignment": "middle",
+     "text": "",
+     "lineHeight": "1.4em"
+    },
+    ".description": {
+     "opacity": 0,
+     "ref": ".step-container",
+     "ref-x": 0.5,
+     "ref-dy": 0
+    },
+    ".descriptionbox": {
+     "width": 0,
+     "height": 0,
+     "rx": 0,
+     "ry": 0,
+     "x": 0,
+     "y": 0
+    },
+    ".descriptiontext": {
+     "text": ""
+    },
+    "use": {
+     "xlink:href": "/clm/atlassupport/scripts/jointjs/svg/doc_launcher.svg#Dark"
+    },
+    "svg": {
+     "color": "#29bdbe",
+     "fill": "#fff"
+    },
+    "rect": {
+     "fill": "#29bdbe"
+    },
+    ".step-container": {
+     "data-error-state": false
+    }
+   },
+   "activityName": "DocLauncherActivity",
+   "icon": {
+    "path": "doc_launcher.svg#Dark",
+    "color": "#29bdbe"
+   },
+   "docLauncherConfigName": {
+    "type": "String",
+    "value": ""
+   },
+   "configTemplateName": {
+    "type": "String",
+    "value": ""
+   },
+   "objectId": {
+    "type": "String",
+    "value": ""
+   },
+   "entityType": {
+    "type": "String",
+    "value": "xml"
+   },
+   "dataSource": {
+    "type": "Variable"
+   },
+   "outputXmlDocument": {
+    "type": "Variable"
+   },
+   "outputDocumentName": {
+    "type": "String",
+    "value": ""
+   },
+   "outputXmlVariable": {
+    "type": "Variable"
+   }
+  },
+  "CopyMoveDocumentActivity": {
+   "size": {
+    "width": 100,
+    "height": 100
+   },
+   "content": "",
+   "type": "springcm.Step",
+   "angle": 0,
+   "activityName": "CopyMoveDocumentActivity",
+   "group": "engineActivities",
+   "icon": {
+    "path": "copy_move_document.svg#Dark",
+    "color": "#f7b618"
+   },
+   "action": {
+    "type": "String",
+    "value": "move"
+   },
+   "sourceDocument": {
+    "type": "Document",
+    "value": [
+     {
+      "type": "Variable",
+      "value": {
+       "type": "Xml",
+       "value": "Params"
+      }
+     }
+    ]
+   },
+   "targetFolder": {
+    "type": "Folder",
+    "value": []
+   },
+   "outputDocuments": {
+    "type": "Variable"
+   },
+   "attrs": {
+    ".steptext": {
+     "ref-y": ".66",
+     "y-alignment": "middle",
+     "text": "",
+     "lineHeight": "1.4em"
+    },
+    ".description": {
+     "opacity": 0,
+     "ref": ".step-container",
+     "ref-x": 0.5,
+     "ref-dy": 0
+    },
+    ".descriptionbox": {
+     "width": 0,
+     "height": 0,
+     "rx": 0,
+     "ry": 0,
+     "x": 0,
+     "y": 0
+    },
+    ".descriptiontext": {
+     "text": ""
+    },
+    "use": {
+     "xlink:href": "/clm/atlassupport/scripts/jointjs/svg/copy_move_document.svg#Dark"
+    },
+    "svg": {
+     "color": "#f7b618",
+     "fill": "#fff"
+    },
+    "rect": {
+     "fill": "#f7b618"
+    },
+    ".step-container": {
+     "data-error-state": false
+    }
+   }
+  },
+  "UpdateDocumentMetadataActivity": {
+   "size": {
+    "width": 100,
+    "height": 100
+   },
+   "content": "",
+   "type": "springcm.Step",
+   "angle": 0,
+   "activityName": "UpdateDocumentMetadataActivity",
+   "group": "engineActivities",
+   "icon": {
+    "path": "update_metadata.svg#Dark",
+    "color": "#CC3791"
+   },
+   "documents": {
+    "type": "Document",
+    "value": [
+     {
+      "type": "Variable",
+      "value": {
+       "type": "Xml",
+       "value": "Params"
+      }
+     }
+    ]
+   },
+   "metadata": {
+    "type": "MetadataUpdate",
+    "value": []
+   },
+   "attrs": {
+    ".steptext": {
+     "ref-y": ".66",
+     "y-alignment": "middle",
+     "text": "",
+     "lineHeight": "1.4em"
+    },
+    ".description": {
+     "opacity": 0,
+     "ref": ".step-container",
+     "ref-x": 0.5,
+     "ref-dy": 0
+    },
+    ".descriptionbox": {
+     "width": 0,
+     "height": 0,
+     "rx": 0,
+     "ry": 0,
+     "x": 0,
+     "y": 0
+    },
+    ".descriptiontext": {
+     "text": ""
+    },
+    "use": {
+     "xlink:href": "/clm/atlassupport/scripts/jointjs/svg/update_metadata.svg#Dark"
+    },
+    "svg": {
+     "color": "#CC3791",
+     "fill": "#fff"
+    },
+    "rect": {
+     "fill": "#CC3791"
+    },
+    ".step-container": {
+     "data-error-state": false
+    }
+   }
+  },
+  "ChoiceActivity": {
+   "size": {
+    "width": 100,
+    "height": 100
+   },
+   "content": "",
+   "type": "springcm.Step",
+   "angle": 0,
+   "activityName": "ChoiceActivity",
+   "group": "engineActivities",
+   "icon": {
+    "path": "approve_documents.svg#Dark",
+    "color": "#29bdbe"
+   },
+   "activityDisplayName": {
+    "type": "String",
+    "value": ""
+   },
+   "stageName": {
+    "type": "String",
+    "value": ""
+   },
+   "documents": {
+    "type": "Document",
+    "value": [
+     {
+      "type": "Variable",
+      "value": {
+       "type": "Xml",
+       "value": "Params"
+      }
+     }
+    ]
+   },
+   "compareVersion": {
+    "type": "Bool",
+    "value": false
+   },
+   "assigneeType": {
+    "type": "String",
+    "value": "user"
+   },
+   "requiredCompletion": {
+    "type": "Number",
+    "value": 1
+   },
+   "instructions": {
+    "type": "String",
+    "value": ""
+   },
+   "outputs": {
+    "type": "Outputs",
+    "value": []
+   },
+   "addCustomAction": {
+    "type": "Bool",
+    "value": false
+   },
+   "allowComment": {
+    "type": "String",
+    "value": "Yes"
+   },
+   "waitForNextStep": {
+    "type": "Bool",
+    "value": false
+   },
+   "notificationFromAddress": {
+    "type": "Participant",
+    "value": []
+   },
+   "notificationSubject": {
+    "type": "String",
+    "value": ""
+   },
+   "notificationBody": {
+    "type": "String",
+    "value": ""
+   },
+   "timeout": {
+    "type": "Timers",
+    "value": []
+   },
+   "timeoutWarningFromStepExecution": {
+    "type": "Bool",
+    "value": false
+   },
+   "timers": {
+    "type": "Timers",
+    "value": []
+   },
+   "outputComments": {
+    "type": "Variable"
+   },
+   "assignedUsers": {
+    "type": "Participant",
+    "value": []
+   },
+   "attrs": {
+    ".steptext": {
+     "ref-y": ".66",
+     "y-alignment": "middle",
+     "text": "",
+     "lineHeight": "1.4em"
+    },
+    ".description": {
+     "opacity": 0,
+     "ref": ".step-container",
+     "ref-x": 0.5,
+     "ref-dy": 0
+    },
+    ".descriptionbox": {
+     "width": 0,
+     "height": 0,
+     "rx": 0,
+     "ry": 0,
+     "x": 0,
+     "y": 0
+    },
+    ".descriptiontext": {
+     "text": ""
+    },
+    "use": {
+     "xlink:href": "/clm/atlassupport/scripts/jointjs/svg/approve_documents.svg#Dark"
+    },
+    "svg": {
+     "color": "#29bdbe",
+     "fill": "#fff"
+    },
+    "rect": {
+     "fill": "#29bdbe"
+    },
+    ".step-container": {
+     "data-error-state": false
+    }
+   }
+  },
+  "EditDocumentsActivity": {
+   "size": {
+    "width": 100,
+    "height": 100
+   },
+   "content": "",
+   "type": "springcm.Step",
+   "angle": 0,
+   "activityName": "EditDocumentsActivity",
+   "group": "engineActivities",
+   "icon": {
+    "path": "edit_document.svg#Dark",
+    "color": "#29bdbe"
+   },
+   "activityDisplayName": {
+    "type": "String",
+    "value": ""
+   },
+   "stageName": {
+    "type": "String",
+    "value": ""
+   },
+   "documents": {
+    "type": "Document",
+    "value": [
+     {
+      "type": "Variable",
+      "value": {
+       "type": "Xml",
+       "value": "Params"
+      }
+     }
+    ]
+   },
+   "compareVersion": {
+    "type": "Bool",
+    "value": false
+   },
+   "assigneeType": {
+    "type": "String",
+    "value": "user"
+   },
+   "requiredCompletion": {
+    "type": "Number",
+    "value": 1
+   },
+   "instructions": {
+    "type": "String",
+    "value": ""
+   },
+   "addCustomAction": {
+    "type": "Bool",
+    "value": false
+   },
+   "allowComment": {
+    "type": "String",
+    "value": "Yes"
+   },
+   "waitForNextStep": {
+    "type": "Bool",
+    "value": false
+   },
+   "notificationFromAddress": {
+    "type": "Participant",
+    "value": []
+   },
+   "notificationSubject": {
+    "type": "String",
+    "value": ""
+   },
+   "notificationBody": {
+    "type": "String",
+    "value": ""
+   },
+   "timeout": {
+    "type": "Timers",
+    "value": []
+   },
+   "timeoutWarningFromStepExecution": {
+    "type": "Bool",
+    "value": false
+   },
+   "timers": {
+    "type": "Timers",
+    "value": []
+   },
+   "outputComments": {
+    "type": "Variable"
+   },
+   "assignedUsers": {
+    "type": "Participant",
+    "value": []
+   },
+   "attrs": {
+    ".steptext": {
+     "ref-y": ".66",
+     "y-alignment": "middle",
+     "text": "",
+     "lineHeight": "1.4em"
+    },
+    ".description": {
+     "opacity": 0,
+     "ref": ".step-container",
+     "ref-x": 0.5,
+     "ref-dy": 0
+    },
+    ".descriptionbox": {
+     "width": 0,
+     "height": 0,
+     "rx": 0,
+     "ry": 0,
+     "x": 0,
+     "y": 0
+    },
+    ".descriptiontext": {
+     "text": ""
+    },
+    "use": {
+     "xlink:href": "/clm/atlassupport/scripts/jointjs/svg/edit_document.svg#Dark"
+    },
+    "svg": {
+     "color": "#29bdbe",
+     "fill": "#fff"
+    },
+    "rect": {
+     "fill": "#29bdbe"
+    },
+    ".step-container": {
+     "data-error-state": false
+    }
+   }
+  },
+  "FindDocumentActivity": {
+   "size": {
+    "width": 100,
+    "height": 100
+   },
+   "content": "",
+   "type": "springcm.Step",
+   "angle": 0,
+   "activityName": "FindDocumentActivity",
+   "group": "engineActivities",
+   "icon": {
+    "path": "find_document.svg#Dark",
+    "color": "#2BBCB6"
+   },
+   "documents": {
+    "type": "Document",
+    "value": [
+     {
+      "type": "Variable",
+      "value": {
+       "type": "Xml",
+       "value": "Params"
+      }
+     }
+    ]
+   },
+   "outputDocuments": {
+    "type": "Variable"
+   },
+   "attrs": {
+    ".steptext": {
+     "ref-y": ".66",
+     "y-alignment": "middle",
+     "text": "",
+     "lineHeight": "1.4em"
+    },
+    ".description": {
+     "opacity": 0,
+     "ref": ".step-container",
+     "ref-x": 0.5,
+     "ref-dy": 0
+    },
+    ".descriptionbox": {
+     "width": 0,
+     "height": 0,
+     "rx": 0,
+     "ry": 0,
+     "x": 0,
+     "y": 0
+    },
+    ".descriptiontext": {
+     "text": ""
+    },
+    "use": {
+     "xlink:href": "/clm/atlassupport/scripts/jointjs/svg/find_document.svg#Dark"
+    },
+    "svg": {
+     "color": "#2BBCB6",
+     "fill": "#fff"
+    },
+    "rect": {
+     "fill": "#2BBCB6"
+    },
+    ".step-container": {
+     "data-error-state": false
+    }
+   }
+  },
+  "FindFolderActivity": {
+   "size": {
+    "width": 100,
+    "height": 100
+   },
+   "content": "",
+   "type": "springcm.Step",
+   "angle": 0,
+   "activityName": "FindFolderActivity",
+   "group": "engineActivities",
+   "icon": {
+    "path": "find_folder.svg#Dark",
+    "color": "#E98824"
+   },
+   "attrs": {
+    ".steptext": {
+     "ref-y": ".66",
+     "y-alignment": "middle",
+     "text": "",
+     "lineHeight": "1.4em"
+    },
+    ".description": {
+     "opacity": 0,
+     "ref": ".step-container",
+     "ref-x": 0.5,
+     "ref-dy": 0
+    },
+    ".descriptionbox": {
+     "width": 0,
+     "height": 0,
+     "rx": 0,
+     "ry": 0,
+     "x": 0,
+     "y": 0
+    },
+    ".descriptiontext": {
+     "text": ""
+    },
+    "use": {
+     "xlink:href": "/clm/atlassupport/scripts/jointjs/svg/find_folder.svg#Dark"
+    },
+    "svg": {
+     "color": "#E98824",
+     "fill": "#fff"
+    },
+    "rect": {
+     "fill": "#E98824"
+    },
+    ".step-container": {
+     "data-error-state": false
+    }
+   }
+  },
+  "FindOrCreateEOSFolderActivity": {
+   "size": {
+    "width": 100,
+    "height": 100
+   },
+   "content": "",
+   "type": "springcm.Step",
+   "angle": 0,
+   "activityName": "FindOrCreateEOSFolderActivity",
+   "group": "engineActivities",
+   "icon": {
+    "path": "find_or_create_eos_folder.svg#Dark",
+    "color": "#f7b618"
+   },
+   "attrs": {
+    ".steptext": {
+     "ref-y": ".66",
+     "y-alignment": "middle",
+     "text": "",
+     "lineHeight": "1.4em"
+    },
+    ".description": {
+     "opacity": 0,
+     "ref": ".step-container",
+     "ref-x": 0.5,
+     "ref-dy": 0
+    },
+    ".descriptionbox": {
+     "width": 0,
+     "height": 0,
+     "rx": 0,
+     "ry": 0,
+     "x": 0,
+     "y": 0
+    },
+    ".descriptiontext": {
+     "text": ""
+    },
+    "use": {
+     "xlink:href": "/clm/atlassupport/scripts/jointjs/svg/find_or_create_eos_folder.svg#Dark"
+    },
+    "svg": {
+     "color": "#f7b618",
+     "fill": "#fff"
+    },
+    "rect": {
+     "fill": "#f7b618"
+    },
+    ".step-container": {
+     "data-error-state": false
+    }
+   }
+  },
+  "UpdateVariableFromXMLActivity": {
+   "size": {
+    "width": 100,
+    "height": 100
+   },
+   "content": "",
+   "type": "springcm.Step",
+   "angle": 0,
+   "activityName": "UpdateVariableFromXMLActivity",
+   "group": "engineActivities",
+   "icon": {
+    "path": "update_xml_variable_from_csv.svg#Dark",
+    "color": "#d13393"
+   },
+   "attrs": {
+    ".steptext": {
+     "ref-y": ".66",
+     "y-alignment": "middle",
+     "text": "",
+     "lineHeight": "1.4em"
+    },
+    ".description": {
+     "opacity": 0,
+     "ref": ".step-container",
+     "ref-x": 0.5,
+     "ref-dy": 0
+    },
+    ".descriptionbox": {
+     "width": 0,
+     "height": 0,
+     "rx": 0,
+     "ry": 0,
+     "x": 0,
+     "y": 0
+    },
+    ".descriptiontext": {
+     "text": ""
+    },
+    "use": {
+     "xlink:href": "/clm/atlassupport/scripts/jointjs/svg/update_xml_variable_from_csv.svg#Dark"
+    },
+    "svg": {
+     "color": "#d13393",
+     "fill": "#fff"
+    },
+    "rect": {
+     "fill": "#d13393"
+    },
+    ".step-container": {
+     "data-error-state": false
+    }
+   }
+  },
+  "CreateFolderActivity": {
+   "size": {
+    "width": 100,
+    "height": 100
+   },
+   "content": "",
+   "type": "springcm.Step",
+   "angle": 0,
+   "activityName": "CreateFolderActivity",
+   "group": "engineActivities",
+   "icon": {
+    "path": "create_folder.svg#Dark",
+    "color": "#e98824"
+   },
+   "newFolder": {
+    "type": "String",
+    "value": ""
+   },
+   "description": {
+    "type": "String",
+    "value": ""
+   },
+   "parentFolder": {
+    "type": "Folder",
+    "value": []
+   },
+   "returnExisting": {
+    "type": "Bool",
+    "value": false
+   },
+   "inheritLimitedAttributeGroups": {
+    "type": "Bool",
+    "value": false
+   },
+   "outputFolders": {
+    "type": "Variable"
+   },
+   "limitedAttributeGroups": {
+    "type": "MetadataGroup"
+   },
+   "attrs": {
+    ".steptext": {
+     "ref-y": ".66",
+     "y-alignment": "middle",
+     "text": "",
+     "lineHeight": "1.4em"
+    },
+    ".description": {
+     "opacity": 0,
+     "ref": ".step-container",
+     "ref-x": 0.5,
+     "ref-dy": 0
+    },
+    ".descriptionbox": {
+     "width": 0,
+     "height": 0,
+     "rx": 0,
+     "ry": 0,
+     "x": 0,
+     "y": 0
+    },
+    ".descriptiontext": {
+     "text": ""
+    },
+    "use": {
+     "xlink:href": "/clm/atlassupport/scripts/jointjs/svg/create_folder.svg#Dark"
+    },
+    "svg": {
+     "color": "#e98824",
+     "fill": "#fff"
+    },
+    "rect": {
+     "fill": "#e98824"
+    },
+    ".step-container": {
+     "data-error-state": false
+    }
+   }
+  },
+  "RoutingActivity": {
+   "size": {
+    "width": 100,
+    "height": 100
+   },
+   "content": "",
+   "type": "springcm.Step",
+   "angle": 0,
+   "activityName": "RoutingActivity",
+   "group": "engineActivities",
+   "icon": {
+    "path": "approve_documents.svg#Dark",
+    "color": "#29bdbe"
+   },
+   "activityDisplayName": {
+    "type": "String",
+    "value": ""
+   },
+   "stageName": {
+    "type": "String",
+    "value": ""
+   },
+   "documents": {
+    "type": "Document",
+    "value": [
+     {
+      "type": "Variable",
+      "value": {
+       "type": "Xml",
+       "value": "Params"
+      }
+     }
+    ]
+   },
+   "compareVersion": {
+    "type": "Bool",
+    "value": false
+   },
+   "assigneeType": {
+    "type": "String",
+    "value": "user"
+   },
+   "requiredCompletion": {
+    "type": "Number",
+    "value": 1
+   },
+   "instructions": {
+    "type": "String",
+    "value": ""
+   },
+   "options": {
+    "type": "StringCollection",
+    "value": []
+   },
+   "addCustomAction": {
+    "type": "Bool",
+    "value": false
+   },
+   "allowComment": {
+    "type": "String",
+    "value": "Yes"
+   },
+   "waitForNextStep": {
+    "type": "Bool",
+    "value": false
+   },
+   "notificationFromAddress": {
+    "type": "Participant",
+    "value": []
+   },
+   "notificationSubject": {
+    "type": "String",
+    "value": ""
+   },
+   "notificationBody": {
+    "type": "String",
+    "value": ""
+   },
+   "timeout": {
+    "type": "Timers",
+    "value": []
+   },
+   "timeoutWarningFromStepExecution": {
+    "type": "Bool",
+    "value": false
+   },
+   "timers": {
+    "type": "Timers",
+    "value": []
+   },
+   "outputComments": {
+    "type": "Variable"
+   },
+   "outputRoute": {
+    "type": "Variable"
+   },
+   "assignedUsers": {
+    "type": "Participant",
+    "value": []
+   },
+   "attrs": {
+    ".steptext": {
+     "ref-y": ".66",
+     "y-alignment": "middle",
+     "text": "",
+     "lineHeight": "1.4em"
+    },
+    ".description": {
+     "opacity": 0,
+     "ref": ".step-container",
+     "ref-x": 0.5,
+     "ref-dy": 0
+    },
+    ".descriptionbox": {
+     "width": 0,
+     "height": 0,
+     "rx": 0,
+     "ry": 0,
+     "x": 0,
+     "y": 0
+    },
+    ".descriptiontext": {
+     "text": ""
+    },
+    "use": {
+     "xlink:href": "/clm/atlassupport/scripts/jointjs/svg/approve_documents.svg#Dark"
+    },
+    "svg": {
+     "color": "#29bdbe",
+     "fill": "#fff"
+    },
+    "rect": {
+     "fill": "#29bdbe"
+    },
+    ".step-container": {
+     "data-error-state": false
+    }
+   }
+  },
+  "RenameDocumentActivity": {
+   "size": {
+    "width": 100,
+    "height": 100
+   },
+   "content": "",
+   "type": "springcm.Step",
+   "angle": 0,
+   "activityName": "RenameDocumentActivity",
+   "group": "engineActivities",
+   "icon": {
+    "path": "generic.svg#Dark",
+    "color": "#f7b618"
+   },
+   "attrs": {
+    ".steptext": {
+     "ref-y": ".66",
+     "y-alignment": "middle",
+     "text": "",
+     "lineHeight": "1.4em"
+    },
+    ".description": {
+     "opacity": 0,
+     "ref": ".step-container",
+     "ref-x": 0.5,
+     "ref-dy": 0
+    },
+    ".descriptionbox": {
+     "width": 0,
+     "height": 0,
+     "rx": 0,
+     "ry": 0,
+     "x": 0,
+     "y": 0
+    },
+    ".descriptiontext": {
+     "text": ""
+    },
+    "use": {
+     "xlink:href": "/clm/atlassupport/scripts/jointjs/svg/generic.svg#Dark"
+    },
+    "svg": {
+     "color": "#f7b618",
+     "fill": "#fff"
+    },
+    "rect": {
+     "fill": "#f7b618"
+    },
+    ".step-container": {
+     "data-error-state": false
+    }
+   },
+   "documents": {
+    "type": "Document",
+    "value": [
+     {
+      "type": "Variable",
+      "value": {
+       "type": "Xml",
+       "value": "Params"
+      }
+     }
+    ]
+   },
+   "newDocumentName": {
+    "type": "String",
+    "value": ""
+   }
+  },
+  "UpdateDocumentKeywordActivity": {
+   "size": {
+    "width": 100,
+    "height": 100
+   },
+   "content": "",
+   "type": "springcm.Step",
+   "angle": 0,
+   "activityName": "UpdateDocumentKeywordActivity",
+   "group": "engineActivities",
+   "icon": {
+    "path": "copy_move_document.svg#Dark",
+    "color": "#f7b618"
+   },
+   "attrs": {
+    ".steptext": {
+     "ref-y": ".66",
+     "y-alignment": "middle",
+     "text": "",
+     "lineHeight": "1.4em"
+    },
+    ".description": {
+     "opacity": 0,
+     "ref": ".step-container",
+     "ref-x": 0.5,
+     "ref-dy": 0
+    },
+    ".descriptionbox": {
+     "width": 0,
+     "height": 0,
+     "rx": 0,
+     "ry": 0,
+     "x": 0,
+     "y": 0
+    },
+    ".descriptiontext": {
+     "text": ""
+    },
+    "use": {
+     "xlink:href": "/clm/atlassupport/scripts/jointjs/svg/copy_move_document.svg#Dark"
+    },
+    "svg": {
+     "color": "#f7b618",
+     "fill": "#fff"
+    },
+    "rect": {
+     "fill": "#f7b618"
+    },
+    ".step-container": {
+     "data-error-state": false
+    }
+   },
+   "documents": {
+    "type": "Document",
+    "value": [
+     {
+      "type": "Variable",
+      "value": {
+       "type": "Xml",
+       "value": "Params"
+      }
+     }
+    ]
+   },
+   "keywords": {
+    "type": "String",
+    "value": ""
+   }
+  },
+  "ScheduleDocumentReminderActivity": {
+   "size": {
+    "width": 100,
+    "height": 100
+   },
+   "content": "",
+   "type": "springcm.Step",
+   "angle": 0,
+   "activityName": "ScheduleDocumentReminderActivity",
+   "group": "engineActivities",
+   "icon": {
+    "path": "schedule_doc_reminder.svg#Dark",
+    "color": "#99ca3c"
+   },
+   "attrs": {
+    ".steptext": {
+     "ref-y": ".66",
+     "y-alignment": "middle",
+     "text": "",
+     "lineHeight": "1.4em"
+    },
+    ".description": {
+     "opacity": 0,
+     "ref": ".step-container",
+     "ref-x": 0.5,
+     "ref-dy": 0
+    },
+    ".descriptionbox": {
+     "width": 0,
+     "height": 0,
+     "rx": 0,
+     "ry": 0,
+     "x": 0,
+     "y": 0
+    },
+    ".descriptiontext": {
+     "text": ""
+    },
+    "use": {
+     "xlink:href": "/clm/atlassupport/scripts/jointjs/svg/schedule_doc_reminder.svg#Dark"
+    },
+    "svg": {
+     "color": "#99ca3c",
+     "fill": "#fff"
+    },
+    "rect": {
+     "fill": "#99ca3c"
+    },
+    ".step-container": {
+     "data-error-state": false
+    }
+   },
+   "documents": {
+    "type": "Document",
+    "value": [
+     {
+      "type": "Variable",
+      "value": {
+       "type": "Xml",
+       "value": "Params"
+      }
+     }
+    ]
+   },
+   "reminderName": {
+    "type": "String",
+    "value": ""
+   },
+   "reminderDate": {
+    "type": "String",
+    "value": ""
+   },
+   "reminderTime": {
+    "type": "String",
+    "value": ""
+   },
+   "sender": {
+    "type": "Participant",
+    "value": []
+   },
+   "recipients": {
+    "type": "Participant",
+    "value": []
+   },
+   "subject": {
+    "type": "String",
+    "value": ""
+   },
+   "body": {
+    "type": "String",
+    "value": ""
+   }
+  },
+  "AddWatchedDocumentsActivity": {
+   "size": {
+    "width": 100,
+    "height": 100
+   },
+   "content": "",
+   "type": "springcm.Step",
+   "angle": 0,
+   "activityName": "AddWatchedDocumentsActivity",
+   "group": "engineActivities",
+   "icon": {
+    "path": "add_documents_to_watchlist.svg#Dark",
+    "color": "#757575"
+   },
+   "attrs": {
+    ".steptext": {
+     "ref-y": ".66",
+     "y-alignment": "middle",
+     "text": "",
+     "lineHeight": "1.4em"
+    },
+    ".description": {
+     "opacity": 0,
+     "ref": ".step-container",
+     "ref-x": 0.5,
+     "ref-dy": 0
+    },
+    ".descriptionbox": {
+     "width": 0,
+     "height": 0,
+     "rx": 0,
+     "ry": 0,
+     "x": 0,
+     "y": 0
+    },
+    ".descriptiontext": {
+     "text": ""
+    },
+    "use": {
+     "xlink:href": "/clm/atlassupport/scripts/jointjs/svg/add_documents_to_watchlist.svg#Dark"
+    },
+    "svg": {
+     "color": "#757575",
+     "fill": "#fff"
+    },
+    "rect": {
+     "fill": "#757575"
+    },
+    ".step-container": {
+     "data-error-state": false
+    }
+   },
+   "documents": {
+    "type": "Document",
+    "value": [
+     {
+      "type": "Variable",
+      "value": {
+       "type": "Xml",
+       "value": "Params"
+      }
+     }
+    ]
+   },
+   "users": {
+    "type": "Participant",
+    "value": []
+   }
+  },
+  "SetWorkflowScopeNameActivity": {
+   "size": {
+    "width": 100,
+    "height": 100
+   },
+   "content": "",
+   "type": "springcm.Step",
+   "angle": 0,
+   "activityName": "SetWorkflowScopeNameActivity",
+   "group": "engineActivities",
+   "icon": {
+    "path": "set_workflow_process_name.svg#Dark",
+    "color": "#e98824"
+   },
+   "attrs": {
+    ".steptext": {
+     "ref-y": ".66",
+     "y-alignment": "middle",
+     "text": "",
+     "lineHeight": "1.4em"
+    },
+    ".description": {
+     "opacity": 0,
+     "ref": ".step-container",
+     "ref-x": 0.5,
+     "ref-dy": 0
+    },
+    ".descriptionbox": {
+     "width": 0,
+     "height": 0,
+     "rx": 0,
+     "ry": 0,
+     "x": 0,
+     "y": 0
+    },
+    ".descriptiontext": {
+     "text": ""
+    },
+    "use": {
+     "xlink:href": "/clm/atlassupport/scripts/jointjs/svg/set_workflow_process_name.svg#Dark"
+    },
+    "svg": {
+     "color": "#e98824",
+     "fill": "#fff"
+    },
+    "rect": {
+     "fill": "#e98824"
+    },
+    ".step-container": {
+     "data-error-state": false
+    }
+   },
+   "scopeName": {
+    "type": "String",
+    "value": ""
+   }
+  },
+  "FindPartyActivity": {
+   "size": {
+    "width": 100,
+    "height": 100
+   },
+   "content": "",
+   "type": "springcm.Step",
+   "angle": 0,
+   "activityName": "FindPartyActivity",
+   "group": "engineActivities",
+   "icon": {
+    "path": "find_party.svg#Dark",
+    "color": "#6600bb"
+   },
+   "attrs": {
+    ".steptext": {
+     "ref-y": ".66",
+     "y-alignment": "middle",
+     "text": "",
+     "lineHeight": "1.4em"
+    },
+    ".description": {
+     "opacity": 0,
+     "ref": ".step-container",
+     "ref-x": 0.5,
+     "ref-dy": 0
+    },
+    ".descriptionbox": {
+     "width": 0,
+     "height": 0,
+     "rx": 0,
+     "ry": 0,
+     "x": 0,
+     "y": 0
+    },
+    ".descriptiontext": {
+     "text": ""
+    },
+    "use": {
+     "xlink:href": "/clm/atlassupport/scripts/jointjs/svg/find_party.svg#Dark"
+    },
+    "svg": {
+     "color": "#6600bb",
+     "fill": "#fff"
+    },
+    "rect": {
+     "fill": "#6600bb"
+    },
+    ".step-container": {
+     "data-error-state": false
+    }
+   },
+   "partyName": {
+    "type": "String",
+    "value": ""
+   },
+   "docuSignPartyID": {
+    "type": "String",
+    "value": ""
+   },
+   "externalID": {
+    "type": "String",
+    "value": ""
+   },
+   "businessType": {
+    "type": "String",
+    "value": ""
+   },
+   "businessContactName": {
+    "type": "String",
+    "value": ""
+   },
+   "businessPhoneNumber": {
+    "type": "String",
+    "value": ""
+   },
+   "outputXml": {
+    "type": "Variable"
+   }
+  },
+  "EditClmAgreementAttributesActivity": {
+   "size": {
+    "width": 100,
+    "height": 100
+   },
+   "content": "",
+   "type": "springcm.Step",
+   "angle": 0,
+   "activityName": "EditClmAgreementAttributesActivity",
+   "group": "engineActivities",
+   "icon": {
+    "path": "edit_clm_agreement_attributes.svg#Dark",
+    "color": "#6600BB"
+   },
+   "attrs": {
+    ".steptext": {
+     "ref-y": ".66",
+     "y-alignment": "middle",
+     "text": "",
+     "lineHeight": "1.4em"
+    },
+    ".description": {
+     "opacity": 0,
+     "ref": ".step-container",
+     "ref-x": 0.5,
+     "ref-dy": 0
+    },
+    ".descriptionbox": {
+     "width": 0,
+     "height": 0,
+     "rx": 0,
+     "ry": 0,
+     "x": 0,
+     "y": 0
+    },
+    ".descriptiontext": {
+     "text": ""
+    },
+    "use": {
+     "xlink:href": "/clm/atlassupport/scripts/jointjs/svg/edit_clm_agreement_attributes.svg#Dark"
+    },
+    "svg": {
+     "color": "#6600BB",
+     "fill": "#fff"
+    },
+    "rect": {
+     "fill": "#6600BB"
+    },
+    ".step-container": {
+     "data-error-state": false
+    }
+   },
+   "documents": {
+    "type": "Document",
+    "value": [
+     {
+      "type": "Variable",
+      "value": {
+       "type": "Xml",
+       "value": "Params"
+      }
+     }
+    ]
+   },
+   "partyId": {
+    "type": "String",
+    "value": ""
+   },
+   "documentType": {
+    "type": "String",
+    "value": ""
+   },
+   "effectiveDate": {
+    "type": "String",
+    "value": ""
+   },
+   "expirationDate": {
+    "type": "String",
+    "value": ""
+   },
+   "totalContractValue": {
+    "type": "String",
+    "value": ""
+   },
+   "requestorName": {
+    "type": "String",
+    "value": ""
+   },
+   "renewalTermCount": {
+    "type": "String",
+    "value": ""
+   },
+   "renewalTermUnit": {
+    "type": "String",
+    "value": ""
+   },
+   "noticePeriodCount": {
+    "type": "String",
+    "value": ""
+   },
+   "noticePeriodUnit": {
+    "type": "String",
+    "value": ""
+   },
+   "renewalNoticePeriodCount": {
+    "type": "String",
+    "value": ""
+   },
+   "renewalNoticePeriodUnit": {
+    "type": "String",
+    "value": ""
+   },
+   "paymentTerms": {
+    "type": "String",
+    "value": ""
+   },
+   "paymentDurationCount": {
+    "type": "String",
+    "value": ""
+   },
+   "paymentDurationUnit": {
+    "type": "String",
+    "value": ""
+   },
+   "paymentLateFees": {
+    "type": "String",
+    "value": ""
+   },
+   "limitationOfLiability": {
+    "type": "String",
+    "value": ""
+   },
+   "assignable": {
+    "type": "String",
+    "value": ""
+   },
+   "indemnity": {
+    "type": "String",
+    "value": ""
+   },
+   "terminationCause": {
+    "type": "String",
+    "value": ""
+   },
+   "terminationConvenience": {
+    "type": "String",
+    "value": ""
+   },
+   "parentDocument": {
+    "type": "Document",
+    "value": []
+   }
+  },
+  "ChooseUsersActivity": {
+   "size": {
+    "width": 100,
+    "height": 100
+   },
+   "content": "",
+   "type": "springcm.Step",
+   "angle": 0,
+   "activityName": "ChooseUsersActivity",
+   "group": "engineActivities",
+   "icon": {
+    "path": "choose_users.svg#Dark",
+    "color": "#29bdbe"
+   },
+   "attrs": {
+    ".steptext": {
+     "ref-y": ".66",
+     "y-alignment": "middle",
+     "text": "",
+     "lineHeight": "1.4em"
+    },
+    ".description": {
+     "opacity": 0,
+     "ref": ".step-container",
+     "ref-x": 0.5,
+     "ref-dy": 0
+    },
+    ".descriptionbox": {
+     "width": 0,
+     "height": 0,
+     "rx": 0,
+     "ry": 0,
+     "x": 0,
+     "y": 0
+    },
+    ".descriptiontext": {
+     "text": ""
+    },
+    "use": {
+     "xlink:href": "/clm/atlassupport/scripts/jointjs/svg/choose_users.svg#Dark"
+    },
+    "svg": {
+     "color": "#29bdbe",
+     "fill": "#fff"
+    },
+    "rect": {
+     "fill": "#29bdbe"
+    },
+    ".step-container": {
+     "data-error-state": false
+    }
+   },
+   "activityDisplayName": {
+    "type": "String",
+    "value": ""
+   },
+   "stageName": {
+    "type": "String",
+    "value": ""
+   },
+   "assigneeType": {
+    "type": "String",
+    "value": "user"
+   },
+   "requiredCompletion": {
+    "type": "Number",
+    "value": 1
+   },
+   "instructions": {
+    "type": "String",
+    "value": ""
+   },
+   "documents": {
+    "type": "Document",
+    "value": [
+     {
+      "type": "Variable",
+      "value": {
+       "type": "Xml",
+       "value": "Params"
+      }
+     }
+    ]
+   },
+   "limittogroups": {
+    "type": "Group",
+    "value": []
+   },
+   "allowedchoices": {
+    "type": "String",
+    "value": "ZeroOrMore"
+   },
+   "enableActionRejectedButton": {
+    "type": "Bool",
+    "value": false
+   },
+   "addCustomAction": {
+    "type": "Bool",
+    "value": false
+   },
+   "allowComment": {
+    "type": "String",
+    "value": "Yes"
+   },
+   "waitForNextStep": {
+    "type": "Bool",
+    "value": false
+   },
+   "compareVersion": {
+    "type": "Bool",
+    "value": false
+   },
+   "notificationFromAddress": {
+    "type": "Participant",
+    "value": []
+   },
+   "notificationSubject": {
+    "type": "String",
+    "value": ""
+   },
+   "notificationBody": {
+    "type": "String",
+    "value": ""
+   },
+   "timeout": {
+    "type": "Timers",
+    "value": []
+   },
+   "timeoutWarningFromStepExecution": {
+    "type": "Bool",
+    "value": false
+   },
+   "timers": {
+    "type": "Timers",
+    "value": []
+   },
+   "outputUsers": {
+    "type": "Variable"
+   },
+   "outputComments": {
+    "type": "Variable"
+   },
+   "assignedUsers": {
+    "type": "Participant",
+    "value": []
+   }
+  },
+  "DataReviewActivity": {
+   "size": {
+    "width": 100,
+    "height": 100
+   },
+   "content": "",
+   "type": "springcm.Step",
+   "angle": 0,
+   "activityName": "DataReviewActivity",
+   "group": "engineActivities",
+   "icon": {
+    "path": "find_documents_by_metadata.svg#Dark",
+    "color": "#e98824"
+   },
+   "attrs": {
+    ".steptext": {
+     "ref-y": ".66",
+     "y-alignment": "middle",
+     "text": "",
+     "lineHeight": "1.4em"
+    },
+    ".description": {
+     "opacity": 0,
+     "ref": ".step-container",
+     "ref-x": 0.5,
+     "ref-dy": 0
+    },
+    ".descriptionbox": {
+     "width": 0,
+     "height": 0,
+     "rx": 0,
+     "ry": 0,
+     "x": 0,
+     "y": 0
+    },
+    ".descriptiontext": {
+     "text": ""
+    },
+    "use": {
+     "xlink:href": "/clm/atlassupport/scripts/jointjs/svg/find_documents_by_metadata.svg#Dark"
+    },
+    "svg": {
+     "color": "#e98824",
+     "fill": "#fff"
+    },
+    "rect": {
+     "fill": "#e98824"
+    },
+    ".step-container": {
+     "data-error-state": false
+    }
+   },
+   "activityDisplayName": {
+    "type": "String",
+    "value": ""
+   },
+   "stageName": {
+    "type": "String",
+    "value": ""
+   },
+   "documents": {
+    "type": "Document",
+    "value": [
+     {
+      "type": "Variable",
+      "value": {
+       "type": "Xml",
+       "value": "Params"
+      }
+     }
+    ]
+   },
+   "documentAttributes": {
+    "type": "DocumentAttribute",
+    "value": []
+   },
+   "assigneeType": {
+    "type": "String",
+    "value": "user"
+   },
+   "requiredCompletion": {
+    "type": "Number",
+    "value": 1
+   },
+   "instructions": {
+    "type": "String",
+    "value": ""
+   },
+   "allowComment": {
+    "type": "String",
+    "value": "Yes"
+   },
+   "waitForNextStep": {
+    "type": "Bool",
+    "value": false
+   },
+   "notificationFromAddress": {
+    "type": "Participant",
+    "value": []
+   },
+   "notificationSubject": {
+    "type": "String",
+    "value": ""
+   },
+   "notificationBody": {
+    "type": "String",
+    "value": ""
+   },
+   "timeout": {
+    "type": "Timers",
+    "value": []
+   },
+   "timeoutWarningFromStepExecution": {
+    "type": "Bool",
+    "value": false
+   },
+   "timers": {
+    "type": "Timers",
+    "value": []
+   },
+   "outputXML": {
+    "type": "Variable"
+   },
+   "assignedUsers": {
+    "type": "Participant",
+    "value": []
+   }
+  },
+  "RemoveWatchedDocumentsActivity": {
+   "size": {
+    "width": 100,
+    "height": 100
+   },
+   "content": "",
+   "type": "springcm.Step",
+   "angle": 0,
+   "activityName": "RemoveWatchedDocumentsActivity",
+   "group": "engineActivities",
+   "icon": {
+    "path": "generic.svg#Dark",
+    "color": "#757575"
+   },
+   "attrs": {
+    ".steptext": {
+     "ref-y": ".66",
+     "y-alignment": "middle",
+     "text": "",
+     "lineHeight": "1.4em"
+    },
+    ".description": {
+     "opacity": 0,
+     "ref": ".step-container",
+     "ref-x": 0.5,
+     "ref-dy": 0
+    },
+    ".descriptionbox": {
+     "width": 0,
+     "height": 0,
+     "rx": 0,
+     "ry": 0,
+     "x": 0,
+     "y": 0
+    },
+    ".descriptiontext": {
+     "text": ""
+    },
+    "use": {
+     "xlink:href": "/clm/atlassupport/scripts/jointjs/svg/generic.svg#Dark"
+    },
+    "svg": {
+     "color": "#757575",
+     "fill": "#fff"
+    },
+    "rect": {
+     "fill": "#757575"
+    },
+    ".step-container": {
+     "data-error-state": false
+    }
+   }
+  },
+  "DeleteDocumentReminderActivity": {
+   "size": {
+    "width": 100,
+    "height": 100
+   },
+   "content": "",
+   "type": "springcm.Step",
+   "angle": 0,
+   "activityName": "DeleteDocumentReminderActivity",
+   "group": "engineActivities",
+   "icon": {
+    "path": "generic.svg#Dark",
+    "color": "#99ca3c"
+   },
+   "attrs": {
+    ".steptext": {
+     "ref-y": ".66",
+     "y-alignment": "middle",
+     "text": "",
+     "lineHeight": "1.4em"
+    },
+    ".description": {
+     "opacity": 0,
+     "ref": ".step-container",
+     "ref-x": 0.5,
+     "ref-dy": 0
+    },
+    ".descriptionbox": {
+     "width": 0,
+     "height": 0,
+     "rx": 0,
+     "ry": 0,
+     "x": 0,
+     "y": 0
+    },
+    ".descriptiontext": {
+     "text": ""
+    },
+    "use": {
+     "xlink:href": "/clm/atlassupport/scripts/jointjs/svg/generic.svg#Dark"
+    },
+    "svg": {
+     "color": "#99ca3c",
+     "fill": "#fff"
+    },
+    "rect": {
+     "fill": "#99ca3c"
+    },
+    ".step-container": {
+     "data-error-state": false
+    }
+   }
+  },
+  "CheckOutDocumentActivity": {
+   "size": {
+    "width": 100,
+    "height": 100
+   },
+   "content": "",
+   "type": "springcm.Step",
+   "angle": 0,
+   "activityName": "CheckOutDocumentActivity",
+   "group": "engineActivities",
+   "icon": {
+    "path": "check_out_document.svg#Dark",
+    "color": "#29BDBE"
+   },
+   "attrs": {
+    ".steptext": {
+     "ref-y": ".66",
+     "y-alignment": "middle",
+     "text": "",
+     "lineHeight": "1.4em"
+    },
+    ".description": {
+     "opacity": 0,
+     "ref": ".step-container",
+     "ref-x": 0.5,
+     "ref-dy": 0
+    },
+    ".descriptionbox": {
+     "width": 0,
+     "height": 0,
+     "rx": 0,
+     "ry": 0,
+     "x": 0,
+     "y": 0
+    },
+    ".descriptiontext": {
+     "text": ""
+    },
+    "use": {
+     "xlink:href": "/clm/atlassupport/scripts/jointjs/svg/check_out_document.svg#Dark"
+    },
+    "svg": {
+     "color": "#29BDBE",
+     "fill": "#fff"
+    },
+    "rect": {
+     "fill": "#29BDBE"
+    },
+    ".step-container": {
+     "data-error-state": false
+    }
+   }
+  },
+  "CheckOutDocumentCancelActivity": {
+   "size": {
+    "width": 100,
+    "height": 100
+   },
+   "content": "",
+   "type": "springcm.Step",
+   "angle": 0,
+   "activityName": "CheckOutDocumentCancelActivity",
+   "group": "engineActivities",
+   "icon": {
+    "path": "check_out_document_cancellation.svg#Dark",
+    "color": "#CA2D2E"
+   },
+   "attrs": {
+    ".steptext": {
+     "ref-y": ".66",
+     "y-alignment": "middle",
+     "text": "",
+     "lineHeight": "1.4em"
+    },
+    ".description": {
+     "opacity": 0,
+     "ref": ".step-container",
+     "ref-x": 0.5,
+     "ref-dy": 0
+    },
+    ".descriptionbox": {
+     "width": 0,
+     "height": 0,
+     "rx": 0,
+     "ry": 0,
+     "x": 0,
+     "y": 0
+    },
+    ".descriptiontext": {
+     "text": ""
+    },
+    "use": {
+     "xlink:href": "/clm/atlassupport/scripts/jointjs/svg/check_out_document_cancellation.svg#Dark"
+    },
+    "svg": {
+     "color": "#CA2D2E",
+     "fill": "#fff"
+    },
+    "rect": {
+     "fill": "#CA2D2E"
+    },
+    ".step-container": {
+     "data-error-state": false
+    }
+   }
+  },
+  "FindDocumentsByFolderActivity": {
+   "size": {
+    "width": 100,
+    "height": 100
+   },
+   "content": "",
+   "type": "springcm.Step",
+   "angle": 0,
+   "activityName": "FindDocumentsByFolderActivity",
+   "group": "engineActivities",
+   "icon": {
+    "path": "find_documents_by_folder.svg#Dark",
+    "color": "#e98824"
+   },
+   "attrs": {
+    ".steptext": {
+     "ref-y": ".66",
+     "y-alignment": "middle",
+     "text": "",
+     "lineHeight": "1.4em"
+    },
+    ".description": {
+     "opacity": 0,
+     "ref": ".step-container",
+     "ref-x": 0.5,
+     "ref-dy": 0
+    },
+    ".descriptionbox": {
+     "width": 0,
+     "height": 0,
+     "rx": 0,
+     "ry": 0,
+     "x": 0,
+     "y": 0
+    },
+    ".descriptiontext": {
+     "text": ""
+    },
+    "use": {
+     "xlink:href": "/clm/atlassupport/scripts/jointjs/svg/find_documents_by_folder.svg#Dark"
+    },
+    "svg": {
+     "color": "#e98824",
+     "fill": "#fff"
+    },
+    "rect": {
+     "fill": "#e98824"
+    },
+    ".step-container": {
+     "data-error-state": false
+    }
+   }
+  },
+  "LogActivity": {
+   "size": {
+    "width": 100,
+    "height": 100
+   },
+   "content": "",
+   "type": "springcm.Step",
+   "angle": 0,
+   "activityName": "LogActivity",
+   "group": "engineActivities",
+   "icon": {
+    "path": "logger.svg#Dark",
+    "color": "#e0e0e0"
+   },
+   "attrs": {
+    ".steptext": {
+     "ref-y": ".66",
+     "y-alignment": "middle",
+     "text": "",
+     "lineHeight": "1.4em"
+    },
+    ".description": {
+     "opacity": 0,
+     "ref": ".step-container",
+     "ref-x": 0.5,
+     "ref-dy": 0
+    },
+    ".descriptionbox": {
+     "width": 0,
+     "height": 0,
+     "rx": 0,
+     "ry": 0,
+     "x": 0,
+     "y": 0
+    },
+    ".descriptiontext": {
+     "text": ""
+    },
+    "use": {
+     "xlink:href": "/clm/atlassupport/scripts/jointjs/svg/logger.svg#Dark"
+    },
+    "svg": {
+     "color": "#e0e0e0",
+     "fill": "#fff"
+    },
+    "rect": {
+     "fill": "#e0e0e0"
+    },
+    ".step-container": {
+     "data-error-state": false
+    }
+   }
+  },
+  "UpdateFolderDescriptionActivity": {
+   "size": {
+    "width": 100,
+    "height": 100
+   },
+   "content": "",
+   "type": "springcm.Step",
+   "angle": 0,
+   "activityName": "UpdateFolderDescriptionActivity",
+   "group": "engineActivities",
+   "icon": {
+    "path": "update_folder_description.svg#Dark",
+    "color": "#e98824"
+   },
+   "attrs": {
+    ".steptext": {
+     "ref-y": ".66",
+     "y-alignment": "middle",
+     "text": "",
+     "lineHeight": "1.4em"
+    },
+    ".description": {
+     "opacity": 0,
+     "ref": ".step-container",
+     "ref-x": 0.5,
+     "ref-dy": 0
+    },
+    ".descriptionbox": {
+     "width": 0,
+     "height": 0,
+     "rx": 0,
+     "ry": 0,
+     "x": 0,
+     "y": 0
+    },
+    ".descriptiontext": {
+     "text": ""
+    },
+    "use": {
+     "xlink:href": "/clm/atlassupport/scripts/jointjs/svg/update_folder_description.svg#Dark"
+    },
+    "svg": {
+     "color": "#e98824",
+     "fill": "#fff"
+    },
+    "rect": {
+     "fill": "#e98824"
+    },
+    ".step-container": {
+     "data-error-state": false
+    }
+   }
+  },
+  "CreateLinkActivity": {
+   "size": {
+    "width": 100,
+    "height": 100
+   },
+   "content": "",
+   "type": "springcm.Step",
+   "angle": 0,
+   "activityName": "CreateLinkActivity",
+   "group": "engineActivities",
+   "icon": {
+    "path": "create_link.svg#Dark",
+    "color": "#d13393"
+   },
+   "attrs": {
+    ".steptext": {
+     "ref-y": ".66",
+     "y-alignment": "middle",
+     "text": "",
+     "lineHeight": "1.4em"
+    },
+    ".description": {
+     "opacity": 0,
+     "ref": ".step-container",
+     "ref-x": 0.5,
+     "ref-dy": 0
+    },
+    ".descriptionbox": {
+     "width": 0,
+     "height": 0,
+     "rx": 0,
+     "ry": 0,
+     "x": 0,
+     "y": 0
+    },
+    ".descriptiontext": {
+     "text": ""
+    },
+    "use": {
+     "xlink:href": "/clm/atlassupport/scripts/jointjs/svg/create_link.svg#Dark"
+    },
+    "svg": {
+     "color": "#d13393",
+     "fill": "#fff"
+    },
+    "rect": {
+     "fill": "#d13393"
+    },
+    ".step-container": {
+     "data-error-state": false
+    }
+   }
+  },
+  "CopyFolderActivity": {
+   "size": {
+    "width": 100,
+    "height": 100
+   },
+   "content": "",
+   "type": "springcm.Step",
+   "angle": 0,
+   "activityName": "CopyFolderActivity",
+   "group": "engineActivities",
+   "icon": {
+    "path": "copy_folder.svg#Dark",
+    "color": "#d13393"
+   },
+   "attrs": {
+    ".steptext": {
+     "ref-y": ".66",
+     "y-alignment": "middle",
+     "text": "",
+     "lineHeight": "1.4em"
+    },
+    ".description": {
+     "opacity": 0,
+     "ref": ".step-container",
+     "ref-x": 0.5,
+     "ref-dy": 0
+    },
+    ".descriptionbox": {
+     "width": 0,
+     "height": 0,
+     "rx": 0,
+     "ry": 0,
+     "x": 0,
+     "y": 0
+    },
+    ".descriptiontext": {
+     "text": ""
+    },
+    "use": {
+     "xlink:href": "/clm/atlassupport/scripts/jointjs/svg/copy_folder.svg#Dark"
+    },
+    "svg": {
+     "color": "#d13393",
+     "fill": "#fff"
+    },
+    "rect": {
+     "fill": "#d13393"
+    },
+    ".step-container": {
+     "data-error-state": false
+    }
+   }
+  },
+  "GetPathActivity": {
+   "size": {
+    "width": 100,
+    "height": 100
+   },
+   "content": "",
+   "type": "springcm.Step",
+   "angle": 0,
+   "activityName": "GetPathActivity",
+   "group": "engineActivities",
+   "icon": {
+    "path": "get_path.svg#Dark",
+    "color": "#3366cc"
+   },
+   "attrs": {
+    ".steptext": {
+     "ref-y": ".66",
+     "y-alignment": "middle",
+     "text": "",
+     "lineHeight": "1.4em"
+    },
+    ".description": {
+     "opacity": 0,
+     "ref": ".step-container",
+     "ref-x": 0.5,
+     "ref-dy": 0
+    },
+    ".descriptionbox": {
+     "width": 0,
+     "height": 0,
+     "rx": 0,
+     "ry": 0,
+     "x": 0,
+     "y": 0
+    },
+    ".descriptiontext": {
+     "text": ""
+    },
+    "use": {
+     "xlink:href": "/clm/atlassupport/scripts/jointjs/svg/get_path.svg#Dark"
+    },
+    "svg": {
+     "color": "#3366cc",
+     "fill": "#fff"
+    },
+    "rect": {
+     "fill": "#3366cc"
+    },
+    ".step-container": {
+     "data-error-state": false
+    }
+   }
+  },
+  "UpdateStatusActivity": {
+   "size": {
+    "width": 100,
+    "height": 100
+   },
+   "content": "",
+   "type": "springcm.Step",
+   "angle": 0,
+   "activityName": "UpdateStatusActivity",
+   "group": "engineActivities",
+   "icon": {
+    "path": "status_change.svg#Dark",
+    "color": "#e98824"
+   },
+   "attrs": {
+    ".steptext": {
+     "ref-y": ".66",
+     "y-alignment": "middle",
+     "text": "",
+     "lineHeight": "1.4em"
+    },
+    ".description": {
+     "opacity": 0,
+     "ref": ".step-container",
+     "ref-x": 0.5,
+     "ref-dy": 0
+    },
+    ".descriptionbox": {
+     "width": 0,
+     "height": 0,
+     "rx": 0,
+     "ry": 0,
+     "x": 0,
+     "y": 0
+    },
+    ".descriptiontext": {
+     "text": ""
+    },
+    "use": {
+     "xlink:href": "/clm/atlassupport/scripts/jointjs/svg/status_change.svg#Dark"
+    },
+    "svg": {
+     "color": "#e98824",
+     "fill": "#fff"
+    },
+    "rect": {
+     "fill": "#e98824"
+    },
+    ".step-container": {
+     "data-error-state": false
+    }
+   }
+  },
+  "SearchActivity": {
+   "size": {
+    "width": 100,
+    "height": 100
+   },
+   "content": "",
+   "type": "springcm.Step",
+   "angle": 0,
+   "activityName": "SearchActivity",
+   "group": "engineActivities",
+   "icon": {
+    "path": "search.svg#Dark",
+    "color": "#607D8B"
+   },
+   "attrs": {
+    ".steptext": {
+     "ref-y": ".66",
+     "y-alignment": "middle",
+     "text": "",
+     "lineHeight": "1.4em"
+    },
+    ".description": {
+     "opacity": 0,
+     "ref": ".step-container",
+     "ref-x": 0.5,
+     "ref-dy": 0
+    },
+    ".descriptionbox": {
+     "width": 0,
+     "height": 0,
+     "rx": 0,
+     "ry": 0,
+     "x": 0,
+     "y": 0
+    },
+    ".descriptiontext": {
+     "text": ""
+    },
+    "use": {
+     "xlink:href": "/clm/atlassupport/scripts/jointjs/svg/search.svg#Dark"
+    },
+    "svg": {
+     "color": "#607D8B",
+     "fill": "#fff"
+    },
+    "rect": {
+     "fill": "#607D8B"
+    },
+    ".step-container": {
+     "data-error-state": false
+    }
+   }
+  },
+  "WriteTextDocumentActivity": {
+   "size": {
+    "width": 100,
+    "height": 100
+   },
+   "content": "",
+   "type": "springcm.Step",
+   "angle": 0,
+   "activityName": "WriteTextDocumentActivity",
+   "group": "engineActivities",
+   "icon": {
+    "path": "write_text_doc.svg#Dark",
+    "color": "#f7b618"
+   },
+   "attrs": {
+    ".steptext": {
+     "ref-y": ".66",
+     "y-alignment": "middle",
+     "text": "",
+     "lineHeight": "1.4em"
+    },
+    ".description": {
+     "opacity": 0,
+     "ref": ".step-container",
+     "ref-x": 0.5,
+     "ref-dy": 0
+    },
+    ".descriptionbox": {
+     "width": 0,
+     "height": 0,
+     "rx": 0,
+     "ry": 0,
+     "x": 0,
+     "y": 0
+    },
+    ".descriptiontext": {
+     "text": ""
+    },
+    "use": {
+     "xlink:href": "/clm/atlassupport/scripts/jointjs/svg/write_text_doc.svg#Dark"
+    },
+    "svg": {
+     "color": "#f7b618",
+     "fill": "#fff"
+    },
+    "rect": {
+     "fill": "#f7b618"
+    },
+    ".step-container": {
+     "data-error-state": false
+    }
+   }
+  },
+  "AppendTextDocumentActivity": {
+   "size": {
+    "width": 100,
+    "height": 100
+   },
+   "content": "",
+   "type": "springcm.Step",
+   "angle": 0,
+   "activityName": "AppendTextDocumentActivity",
+   "group": "engineActivities",
+   "icon": {
+    "path": "generic.svg#Dark",
+    "color": "#f7b618"
+   },
+   "attrs": {
+    ".steptext": {
+     "ref-y": ".66",
+     "y-alignment": "middle",
+     "text": "",
+     "lineHeight": "1.4em"
+    },
+    ".description": {
+     "opacity": 0,
+     "ref": ".step-container",
+     "ref-x": 0.5,
+     "ref-dy": 0
+    },
+    ".descriptionbox": {
+     "width": 0,
+     "height": 0,
+     "rx": 0,
+     "ry": 0,
+     "x": 0,
+     "y": 0
+    },
+    ".descriptiontext": {
+     "text": ""
+    },
+    "use": {
+     "xlink:href": "/clm/atlassupport/scripts/jointjs/svg/generic.svg#Dark"
+    },
+    "svg": {
+     "color": "#f7b618",
+     "fill": "#fff"
+    },
+    "rect": {
+     "fill": "#f7b618"
+    },
+    ".step-container": {
+     "data-error-state": false
+    }
+   }
+  },
+  "UpdateXMLVariableFromCSVActivity": {
+   "size": {
+    "width": 100,
+    "height": 100
+   },
+   "content": "",
+   "type": "springcm.Step",
+   "angle": 0,
+   "activityName": "UpdateXMLVariableFromCSVActivity",
+   "group": "engineActivities",
+   "icon": {
+    "path": "update_xml_variable_from_csv.svg#Dark",
+    "color": "#e78926"
+   },
+   "attrs": {
+    ".steptext": {
+     "ref-y": ".66",
+     "y-alignment": "middle",
+     "text": "",
+     "lineHeight": "1.4em"
+    },
+    ".description": {
+     "opacity": 0,
+     "ref": ".step-container",
+     "ref-x": 0.5,
+     "ref-dy": 0
+    },
+    ".descriptionbox": {
+     "width": 0,
+     "height": 0,
+     "rx": 0,
+     "ry": 0,
+     "x": 0,
+     "y": 0
+    },
+    ".descriptiontext": {
+     "text": ""
+    },
+    "use": {
+     "xlink:href": "/clm/atlassupport/scripts/jointjs/svg/update_xml_variable_from_csv.svg#Dark"
+    },
+    "svg": {
+     "color": "#e78926",
+     "fill": "#fff"
+    },
+    "rect": {
+     "fill": "#e78926"
+    },
+    ".step-container": {
+     "data-error-state": false
+    }
+   }
+  },
+  "ConvertJsonToXmlActivity": {
+   "size": {
+    "width": 100,
+    "height": 100
+   },
+   "content": "",
+   "type": "springcm.Step",
+   "angle": 0,
+   "activityName": "ConvertJsonToXmlActivity",
+   "group": "engineActivities",
+   "icon": {
+    "path": "generic.svg#Dark",
+    "color": "#f7b618"
+   },
+   "attrs": {
+    ".steptext": {
+     "ref-y": ".66",
+     "y-alignment": "middle",
+     "text": "",
+     "lineHeight": "1.4em"
+    },
+    ".description": {
+     "opacity": 0,
+     "ref": ".step-container",
+     "ref-x": 0.5,
+     "ref-dy": 0
+    },
+    ".descriptionbox": {
+     "width": 0,
+     "height": 0,
+     "rx": 0,
+     "ry": 0,
+     "x": 0,
+     "y": 0
+    },
+    ".descriptiontext": {
+     "text": ""
+    },
+    "use": {
+     "xlink:href": "/clm/atlassupport/scripts/jointjs/svg/generic.svg#Dark"
+    },
+    "svg": {
+     "color": "#f7b618",
+     "fill": "#fff"
+    },
+    "rect": {
+     "fill": "#f7b618"
+    },
+    ".step-container": {
+     "data-error-state": false
+    }
+   }
+  },
+  "GetDocumentAttachmentsActivity": {
+   "size": {
+    "width": 100,
+    "height": 100
+   },
+   "content": "",
+   "type": "springcm.Step",
+   "angle": 0,
+   "activityName": "GetDocumentAttachmentsActivity",
+   "group": "engineActivities",
+   "icon": {
+    "path": "find_attachments.svg#Dark",
+    "color": "#e98824"
+   },
+   "attrs": {
+    ".steptext": {
+     "ref-y": ".66",
+     "y-alignment": "middle",
+     "text": "",
+     "lineHeight": "1.4em"
+    },
+    ".description": {
+     "opacity": 0,
+     "ref": ".step-container",
+     "ref-x": 0.5,
+     "ref-dy": 0
+    },
+    ".descriptionbox": {
+     "width": 0,
+     "height": 0,
+     "rx": 0,
+     "ry": 0,
+     "x": 0,
+     "y": 0
+    },
+    ".descriptiontext": {
+     "text": ""
+    },
+    "use": {
+     "xlink:href": "/clm/atlassupport/scripts/jointjs/svg/find_attachments.svg#Dark"
+    },
+    "svg": {
+     "color": "#e98824",
+     "fill": "#fff"
+    },
+    "rect": {
+     "fill": "#e98824"
+    },
+    ".step-container": {
+     "data-error-state": false
+    }
+   }
+  },
+  "MergePdfDocumentActivity": {
+   "size": {
+    "width": 100,
+    "height": 100
+   },
+   "content": "",
+   "type": "springcm.Step",
+   "angle": 0,
+   "activityName": "MergePdfDocumentActivity",
+   "group": "engineActivities",
+   "icon": {
+    "path": "merge_pdf_document.svg#Dark",
+    "color": "#3366cc"
+   },
+   "attrs": {
+    ".steptext": {
+     "ref-y": ".66",
+     "y-alignment": "middle",
+     "text": "",
+     "lineHeight": "1.4em"
+    },
+    ".description": {
+     "opacity": 0,
+     "ref": ".step-container",
+     "ref-x": 0.5,
+     "ref-dy": 0
+    },
+    ".descriptionbox": {
+     "width": 0,
+     "height": 0,
+     "rx": 0,
+     "ry": 0,
+     "x": 0,
+     "y": 0
+    },
+    ".descriptiontext": {
+     "text": ""
+    },
+    "use": {
+     "xlink:href": "/clm/atlassupport/scripts/jointjs/svg/merge_pdf_document.svg#Dark"
+    },
+    "svg": {
+     "color": "#3366cc",
+     "fill": "#fff"
+    },
+    "rect": {
+     "fill": "#3366cc"
+    },
+    ".step-container": {
+     "data-error-state": false
+    }
+   }
+  },
+  "WatermarkDocumentActivity": {
+   "size": {
+    "width": 100,
+    "height": 100
+   },
+   "content": "",
+   "type": "springcm.Step",
+   "angle": 0,
+   "activityName": "WatermarkDocumentActivity",
+   "group": "engineActivities",
+   "icon": {
+    "path": "generic.svg#Dark",
+    "color": "#f7b618"
+   },
+   "attrs": {
+    ".steptext": {
+     "ref-y": ".66",
+     "y-alignment": "middle",
+     "text": "",
+     "lineHeight": "1.4em"
+    },
+    ".description": {
+     "opacity": 0,
+     "ref": ".step-container",
+     "ref-x": 0.5,
+     "ref-dy": 0
+    },
+    ".descriptionbox": {
+     "width": 0,
+     "height": 0,
+     "rx": 0,
+     "ry": 0,
+     "x": 0,
+     "y": 0
+    },
+    ".descriptiontext": {
+     "text": ""
+    },
+    "use": {
+     "xlink:href": "/clm/atlassupport/scripts/jointjs/svg/generic.svg#Dark"
+    },
+    "svg": {
+     "color": "#f7b618",
+     "fill": "#fff"
+    },
+    "rect": {
+     "fill": "#f7b618"
+    },
+    ".step-container": {
+     "data-error-state": false
+    }
+   }
+  },
+  "SplitDocumentActivity": {
+   "size": {
+    "width": 100,
+    "height": 100
+   },
+   "content": "",
+   "type": "springcm.Step",
+   "angle": 0,
+   "activityName": "SplitDocumentActivity",
+   "group": "engineActivities",
+   "icon": {
+    "path": "split_document.svg#Dark",
+    "color": "#29bdbe"
+   },
+   "attrs": {
+    ".steptext": {
+     "ref-y": ".66",
+     "y-alignment": "middle",
+     "text": "",
+     "lineHeight": "1.4em"
+    },
+    ".description": {
+     "opacity": 0,
+     "ref": ".step-container",
+     "ref-x": 0.5,
+     "ref-dy": 0
+    },
+    ".descriptionbox": {
+     "width": 0,
+     "height": 0,
+     "rx": 0,
+     "ry": 0,
+     "x": 0,
+     "y": 0
+    },
+    ".descriptiontext": {
+     "text": ""
+    },
+    "use": {
+     "xlink:href": "/clm/atlassupport/scripts/jointjs/svg/split_document.svg#Dark"
+    },
+    "svg": {
+     "color": "#29bdbe",
+     "fill": "#fff"
+    },
+    "rect": {
+     "fill": "#29bdbe"
+    },
+    ".step-container": {
+     "data-error-state": false
+    }
+   }
+  },
+  "CompareDocumentsActivity": {
+   "size": {
+    "width": 100,
+    "height": 100
+   },
+   "content": "",
+   "type": "springcm.Step",
+   "angle": 0,
+   "activityName": "CompareDocumentsActivity",
+   "group": "engineActivities",
+   "icon": {
+    "path": "compare_documents.svg#Dark",
+    "color": "#f7b618"
+   },
+   "attrs": {
+    ".steptext": {
+     "ref-y": ".66",
+     "y-alignment": "middle",
+     "text": "",
+     "lineHeight": "1.4em"
+    },
+    ".description": {
+     "opacity": 0,
+     "ref": ".step-container",
+     "ref-x": 0.5,
+     "ref-dy": 0
+    },
+    ".descriptionbox": {
+     "width": 0,
+     "height": 0,
+     "rx": 0,
+     "ry": 0,
+     "x": 0,
+     "y": 0
+    },
+    ".descriptiontext": {
+     "text": ""
+    },
+    "use": {
+     "xlink:href": "/clm/atlassupport/scripts/jointjs/svg/compare_documents.svg#Dark"
+    },
+    "svg": {
+     "color": "#f7b618",
+     "fill": "#fff"
+    },
+    "rect": {
+     "fill": "#f7b618"
+    },
+    ".step-container": {
+     "data-error-state": false
+    }
+   }
+  },
+  "CheckInDocumentActivity": {
+   "size": {
+    "width": 100,
+    "height": 100
+   },
+   "content": "",
+   "type": "springcm.Step",
+   "angle": 0,
+   "activityName": "CheckInDocumentActivity",
+   "group": "engineActivities",
+   "icon": {
+    "path": "check_in_document.svg#Dark",
+    "color": "#29BDBE"
+   },
+   "attrs": {
+    ".steptext": {
+     "ref-y": ".66",
+     "y-alignment": "middle",
+     "text": "",
+     "lineHeight": "1.4em"
+    },
+    ".description": {
+     "opacity": 0,
+     "ref": ".step-container",
+     "ref-x": 0.5,
+     "ref-dy": 0
+    },
+    ".descriptionbox": {
+     "width": 0,
+     "height": 0,
+     "rx": 0,
+     "ry": 0,
+     "x": 0,
+     "y": 0
+    },
+    ".descriptiontext": {
+     "text": ""
+    },
+    "use": {
+     "xlink:href": "/clm/atlassupport/scripts/jointjs/svg/check_in_document.svg#Dark"
+    },
+    "svg": {
+     "color": "#29BDBE",
+     "fill": "#fff"
+    },
+    "rect": {
+     "fill": "#29BDBE"
+    },
+    ".step-container": {
+     "data-error-state": false
+    }
+   }
+  },
+  "CompareDocumentVersionsActivity": {
+   "size": {
+    "width": 100,
+    "height": 100
+   },
+   "content": "",
+   "type": "springcm.Step",
+   "angle": 0,
+   "activityName": "CompareDocumentVersionsActivity",
+   "group": "engineActivities",
+   "icon": {
+    "path": "compare_document_versions.svg#Dark",
+    "color": "#f7b618"
+   },
+   "attrs": {
+    ".steptext": {
+     "ref-y": ".66",
+     "y-alignment": "middle",
+     "text": "",
+     "lineHeight": "1.4em"
+    },
+    ".description": {
+     "opacity": 0,
+     "ref": ".step-container",
+     "ref-x": 0.5,
+     "ref-dy": 0
+    },
+    ".descriptionbox": {
+     "width": 0,
+     "height": 0,
+     "rx": 0,
+     "ry": 0,
+     "x": 0,
+     "y": 0
+    },
+    ".descriptiontext": {
+     "text": ""
+    },
+    "use": {
+     "xlink:href": "/clm/atlassupport/scripts/jointjs/svg/compare_document_versions.svg#Dark"
+    },
+    "svg": {
+     "color": "#f7b618",
+     "fill": "#fff"
+    },
+    "rect": {
+     "fill": "#f7b618"
+    },
+    ".step-container": {
+     "data-error-state": false
+    }
+   }
+  },
+  "FindUserActivity": {
+   "size": {
+    "width": 100,
+    "height": 100
+   },
+   "content": "",
+   "type": "springcm.Step",
+   "angle": 0,
+   "activityName": "FindUserActivity",
+   "group": "engineActivities",
+   "icon": {
+    "path": "find_user.svg#Dark",
+    "color": "#29bdbe"
+   },
+   "attrs": {
+    ".steptext": {
+     "ref-y": ".66",
+     "y-alignment": "middle",
+     "text": "",
+     "lineHeight": "1.4em"
+    },
+    ".description": {
+     "opacity": 0,
+     "ref": ".step-container",
+     "ref-x": 0.5,
+     "ref-dy": 0
+    },
+    ".descriptionbox": {
+     "width": 0,
+     "height": 0,
+     "rx": 0,
+     "ry": 0,
+     "x": 0,
+     "y": 0
+    },
+    ".descriptiontext": {
+     "text": ""
+    },
+    "use": {
+     "xlink:href": "/clm/atlassupport/scripts/jointjs/svg/find_user.svg#Dark"
+    },
+    "svg": {
+     "color": "#29bdbe",
+     "fill": "#fff"
+    },
+    "rect": {
+     "fill": "#29bdbe"
+    },
+    ".step-container": {
+     "data-error-state": false
+    }
+   }
+  },
+  "ResourceVariableActivity": {
+   "size": {
+    "width": 100,
+    "height": 100
+   },
+   "content": "",
+   "type": "springcm.Step",
+   "angle": 0,
+   "activityName": "ResourceVariableActivity",
+   "group": "engineActivities",
+   "icon": {
+    "path": "resource_variable.svg#Dark",
+    "color": "#3366cc"
+   },
+   "attrs": {
+    ".steptext": {
+     "ref-y": ".66",
+     "y-alignment": "middle",
+     "text": "",
+     "lineHeight": "1.4em"
+    },
+    ".description": {
+     "opacity": 0,
+     "ref": ".step-container",
+     "ref-x": 0.5,
+     "ref-dy": 0
+    },
+    ".descriptionbox": {
+     "width": 0,
+     "height": 0,
+     "rx": 0,
+     "ry": 0,
+     "x": 0,
+     "y": 0
+    },
+    ".descriptiontext": {
+     "text": ""
+    },
+    "use": {
+     "xlink:href": "/clm/atlassupport/scripts/jointjs/svg/resource_variable.svg#Dark"
+    },
+    "svg": {
+     "color": "#3366cc",
+     "fill": "#fff"
+    },
+    "rect": {
+     "fill": "#3366cc"
+    },
+    ".step-container": {
+     "data-error-state": false
+    }
+   }
+  },
+  "EvaluateDocumentText": {
+   "size": {
+    "width": 100,
+    "height": 100
+   },
+   "content": "",
+   "type": "springcm.Step",
+   "angle": 0,
+   "activityName": "EvaluateDocumentText",
+   "group": "engineActivities",
+   "icon": {
+    "path": "evaluate_text.svg#Dark",
+    "color": "#d13393"
+   },
+   "attrs": {
+    ".steptext": {
+     "ref-y": ".66",
+     "y-alignment": "middle",
+     "text": "",
+     "lineHeight": "1.4em"
+    },
+    ".description": {
+     "opacity": 0,
+     "ref": ".step-container",
+     "ref-x": 0.5,
+     "ref-dy": 0
+    },
+    ".descriptionbox": {
+     "width": 0,
+     "height": 0,
+     "rx": 0,
+     "ry": 0,
+     "x": 0,
+     "y": 0
+    },
+    ".descriptiontext": {
+     "text": ""
+    },
+    "use": {
+     "xlink:href": "/clm/atlassupport/scripts/jointjs/svg/evaluate_text.svg#Dark"
+    },
+    "svg": {
+     "color": "#d13393",
+     "fill": "#fff"
+    },
+    "rect": {
+     "fill": "#d13393"
+    },
+    ".step-container": {
+     "data-error-state": false
+    }
+   }
+  },
+  "SimpleDelayActivity": {
+   "size": {
+    "width": 100,
+    "height": 100
+   },
+   "content": "",
+   "type": "springcm.Step",
+   "angle": 0,
+   "activityName": "SimpleDelayActivity",
+   "group": "engineActivities",
+   "icon": {
+    "path": "generic.svg#Dark",
+    "color": "#99ca3c"
+   },
+   "attrs": {
+    ".steptext": {
+     "ref-y": ".66",
+     "y-alignment": "middle",
+     "text": "",
+     "lineHeight": "1.4em"
+    },
+    ".description": {
+     "opacity": 0,
+     "ref": ".step-container",
+     "ref-x": 0.5,
+     "ref-dy": 0
+    },
+    ".descriptionbox": {
+     "width": 0,
+     "height": 0,
+     "rx": 0,
+     "ry": 0,
+     "x": 0,
+     "y": 0
+    },
+    ".descriptiontext": {
+     "text": ""
+    },
+    "use": {
+     "xlink:href": "/clm/atlassupport/scripts/jointjs/svg/generic.svg#Dark"
+    },
+    "svg": {
+     "color": "#99ca3c",
+     "fill": "#fff"
+    },
+    "rect": {
+     "fill": "#99ca3c"
+    },
+    ".step-container": {
+     "data-error-state": false
+    }
+   }
+  },
+  "HttpClientActivity": {
+   "size": {
+    "width": 100,
+    "height": 100
+   },
+   "content": "",
+   "type": "springcm.Step",
+   "angle": 0,
+   "activityName": "HttpClientActivity",
+   "group": "engineActivities",
+   "icon": {
+    "path": "http_client.svg#Dark",
+    "color": "#f7b618"
+   },
+   "attrs": {
+    ".steptext": {
+     "ref-y": ".66",
+     "y-alignment": "middle",
+     "text": "",
+     "lineHeight": "1.4em"
+    },
+    ".description": {
+     "opacity": 0,
+     "ref": ".step-container",
+     "ref-x": 0.5,
+     "ref-dy": 0
+    },
+    ".descriptionbox": {
+     "width": 0,
+     "height": 0,
+     "rx": 0,
+     "ry": 0,
+     "x": 0,
+     "y": 0
+    },
+    ".descriptiontext": {
+     "text": ""
+    },
+    "use": {
+     "xlink:href": "/clm/atlassupport/scripts/jointjs/svg/http_client.svg#Dark"
+    },
+    "svg": {
+     "color": "#f7b618",
+     "fill": "#fff"
+    },
+    "rect": {
+     "fill": "#f7b618"
+    },
+    ".step-container": {
+     "data-error-state": false
+    }
+   }
+  },
+  "FindEOSParentFolderActivity": {
+   "size": {
+    "width": 100,
+    "height": 100
+   },
+   "content": "",
+   "type": "springcm.Step",
+   "angle": 0,
+   "activityName": "FindEOSParentFolderActivity",
+   "group": "engineActivities",
+   "icon": {
+    "path": "find_eos_parent_folder.svg#Dark",
+    "color": "#e98824"
+   },
+   "attrs": {
+    ".steptext": {
+     "ref-y": ".66",
+     "y-alignment": "middle",
+     "text": "",
+     "lineHeight": "1.4em"
+    },
+    ".description": {
+     "opacity": 0,
+     "ref": ".step-container",
+     "ref-x": 0.5,
+     "ref-dy": 0
+    },
+    ".descriptionbox": {
+     "width": 0,
+     "height": 0,
+     "rx": 0,
+     "ry": 0,
+     "x": 0,
+     "y": 0
+    },
+    ".descriptiontext": {
+     "text": ""
+    },
+    "use": {
+     "xlink:href": "/clm/atlassupport/scripts/jointjs/svg/find_eos_parent_folder.svg#Dark"
+    },
+    "svg": {
+     "color": "#e98824",
+     "fill": "#fff"
+    },
+    "rect": {
+     "fill": "#e98824"
+    },
+    ".step-container": {
+     "data-error-state": false
+    }
+   }
+  },
+  "FindDocumentsByMetadataActivity": {
+   "size": {
+    "width": 100,
+    "height": 100
+   },
+   "content": "",
+   "type": "springcm.Step",
+   "angle": 0,
+   "activityName": "FindDocumentsByMetadataActivity",
+   "group": "engineActivities",
+   "icon": {
+    "path": "find_documents_by_metadata.svg#Dark",
+    "color": "#e98824"
+   },
+   "attrs": {
+    ".steptext": {
+     "ref-y": ".66",
+     "y-alignment": "middle",
+     "text": "",
+     "lineHeight": "1.4em"
+    },
+    ".description": {
+     "opacity": 0,
+     "ref": ".step-container",
+     "ref-x": 0.5,
+     "ref-dy": 0
+    },
+    ".descriptionbox": {
+     "width": 0,
+     "height": 0,
+     "rx": 0,
+     "ry": 0,
+     "x": 0,
+     "y": 0
+    },
+    ".descriptiontext": {
+     "text": ""
+    },
+    "use": {
+     "xlink:href": "/clm/atlassupport/scripts/jointjs/svg/find_documents_by_metadata.svg#Dark"
+    },
+    "svg": {
+     "color": "#e98824",
+     "fill": "#fff"
+    },
+    "rect": {
+     "fill": "#e98824"
+    },
+    ".step-container": {
+     "data-error-state": false
+    }
+   }
+  },
+  "ExtractPdfFieldsActivity": {
+   "size": {
+    "width": 100,
+    "height": 100
+   },
+   "content": "",
+   "type": "springcm.Step",
+   "angle": 0,
+   "activityName": "ExtractPdfFieldsActivity",
+   "group": "engineActivities",
+   "icon": {
+    "path": "extract_pdf_fields.svg#Dark",
+    "color": "#511e36"
+   },
+   "attrs": {
+    ".steptext": {
+     "ref-y": ".66",
+     "y-alignment": "middle",
+     "text": "",
+     "lineHeight": "1.4em"
+    },
+    ".description": {
+     "opacity": 0,
+     "ref": ".step-container",
+     "ref-x": 0.5,
+     "ref-dy": 0
+    },
+    ".descriptionbox": {
+     "width": 0,
+     "height": 0,
+     "rx": 0,
+     "ry": 0,
+     "x": 0,
+     "y": 0
+    },
+    ".descriptiontext": {
+     "text": ""
+    },
+    "use": {
+     "xlink:href": "/clm/atlassupport/scripts/jointjs/svg/extract_pdf_fields.svg#Dark"
+    },
+    "svg": {
+     "color": "#511e36",
+     "fill": "#fff"
+    },
+    "rect": {
+     "fill": "#511e36"
+    },
+    ".step-container": {
+     "data-error-state": false
+    }
+   }
+  },
+  "XmlMergeDocumentActivity": {
+   "size": {
+    "width": 100,
+    "height": 100
+   },
+   "content": "",
+   "type": "springcm.Step",
+   "angle": 0,
+   "activityName": "XmlMergeDocumentActivity",
+   "group": "engineActivities",
+   "icon": {
+    "path": "xml_merge_doc.svg#Dark",
+    "color": "#29bdbe"
+   },
+   "attrs": {
+    ".steptext": {
+     "ref-y": ".66",
+     "y-alignment": "middle",
+     "text": "",
+     "lineHeight": "1.4em"
+    },
+    ".description": {
+     "opacity": 0,
+     "ref": ".step-container",
+     "ref-x": 0.5,
+     "ref-dy": 0
+    },
+    ".descriptionbox": {
+     "width": 0,
+     "height": 0,
+     "rx": 0,
+     "ry": 0,
+     "x": 0,
+     "y": 0
+    },
+    ".descriptiontext": {
+     "text": ""
+    },
+    "use": {
+     "xlink:href": "/clm/atlassupport/scripts/jointjs/svg/xml_merge_doc.svg#Dark"
+    },
+    "svg": {
+     "color": "#29bdbe",
+     "fill": "#fff"
+    },
+    "rect": {
+     "fill": "#29bdbe"
+    },
+    ".step-container": {
+     "data-error-state": false
+    }
+   }
+  },
+  "AutofillAnalysisActivity": {
+   "size": {
+    "width": 100,
+    "height": 100
+   },
+   "content": "",
+   "type": "springcm.Step",
+   "angle": 0,
+   "activityName": "AutofillAnalysisActivity",
+   "group": "engineActivities",
+   "icon": {
+    "path": "evaluate_text.svg#Dark",
+    "color": "#d13393"
+   },
+   "attrs": {
+    ".steptext": {
+     "ref-y": ".66",
+     "y-alignment": "middle",
+     "text": "",
+     "lineHeight": "1.4em"
+    },
+    ".description": {
+     "opacity": 0,
+     "ref": ".step-container",
+     "ref-x": 0.5,
+     "ref-dy": 0
+    },
+    ".descriptionbox": {
+     "width": 0,
+     "height": 0,
+     "rx": 0,
+     "ry": 0,
+     "x": 0,
+     "y": 0
+    },
+    ".descriptiontext": {
+     "text": ""
+    },
+    "use": {
+     "xlink:href": "/clm/atlassupport/scripts/jointjs/svg/evaluate_text.svg#Dark"
+    },
+    "svg": {
+     "color": "#d13393",
+     "fill": "#fff"
+    },
+    "rect": {
+     "fill": "#d13393"
+    },
+    ".step-container": {
+     "data-error-state": false
+    }
+   }
+  },
+  "SendForExternalReviewNewActivity": {
+   "size": {
+    "width": 100,
+    "height": 100
+   },
+   "content": "",
+   "type": "springcm.Step",
+   "angle": 0,
+   "activityName": "SendForExternalReviewNewActivity",
+   "group": "engineActivities",
+   "icon": {
+    "path": "send_for_external_review.svg#Dark",
+    "color": "#1b9d1d"
+   },
+   "attrs": {
+    ".steptext": {
+     "ref-y": ".66",
+     "y-alignment": "middle",
+     "text": "",
+     "lineHeight": "1.4em"
+    },
+    ".description": {
+     "opacity": 0,
+     "ref": ".step-container",
+     "ref-x": 0.5,
+     "ref-dy": 0
+    },
+    ".descriptionbox": {
+     "width": 0,
+     "height": 0,
+     "rx": 0,
+     "ry": 0,
+     "x": 0,
+     "y": 0
+    },
+    ".descriptiontext": {
+     "text": ""
+    },
+    "use": {
+     "xlink:href": "/clm/atlassupport/scripts/jointjs/svg/send_for_external_review.svg#Dark"
+    },
+    "svg": {
+     "color": "#1b9d1d",
+     "fill": "#fff"
+    },
+    "rect": {
+     "fill": "#1b9d1d"
+    },
+    ".step-container": {
+     "data-error-state": false
+    }
+   }
+  },
+  "ForLoopActivity": {
+   "size": {
+    "width": 100,
+    "height": 100
+   },
+   "content": "",
+   "type": "springcm.Step",
+   "angle": 0,
+   "activityName": "ForLoopActivity",
+   "group": "engineActivities",
+   "icon": {
+    "path": "for_each_loop.svg#Dark",
+    "color": "#29BDBE"
+   },
+   "attrs": {
+    ".steptext": {
+     "ref-y": ".66",
+     "y-alignment": "middle",
+     "text": "",
+     "lineHeight": "1.4em"
+    },
+    ".description": {
+     "opacity": 0,
+     "ref": ".step-container",
+     "ref-x": 0.5,
+     "ref-dy": 0
+    },
+    ".descriptionbox": {
+     "width": 0,
+     "height": 0,
+     "rx": 0,
+     "ry": 0,
+     "x": 0,
+     "y": 0
+    },
+    ".descriptiontext": {
+     "text": ""
+    },
+    "use": {
+     "xlink:href": "/clm/atlassupport/scripts/jointjs/svg/for_each_loop.svg#Dark"
+    },
+    "svg": {
+     "color": "#29BDBE",
+     "fill": "#fff"
+    },
+    "rect": {
+     "fill": "#29BDBE"
+    },
+    ".step-container": {
+     "data-error-state": false
+    }
+   }
+  },
+  "XPathForEachLoopActivity": {
+   "size": {
+    "width": 100,
+    "height": 100
+   },
+   "content": "",
+   "type": "springcm.Step",
+   "angle": 0,
+   "activityName": "XPathForEachLoopActivity",
+   "group": "engineActivities",
+   "icon": {
+    "path": "for_each_loop.svg#Dark",
+    "color": "#29bdbe"
+   },
+   "attrs": {
+    ".steptext": {
+     "ref-y": ".66",
+     "y-alignment": "middle",
+     "text": "",
+     "lineHeight": "1.4em"
+    },
+    ".description": {
+     "opacity": 0,
+     "ref": ".step-container",
+     "ref-x": 0.5,
+     "ref-dy": 0
+    },
+    ".descriptionbox": {
+     "width": 0,
+     "height": 0,
+     "rx": 0,
+     "ry": 0,
+     "x": 0,
+     "y": 0
+    },
+    ".descriptiontext": {
+     "text": ""
+    },
+    "use": {
+     "xlink:href": "/clm/atlassupport/scripts/jointjs/svg/for_each_loop.svg#Dark"
+    },
+    "svg": {
+     "color": "#29bdbe",
+     "fill": "#fff"
+    },
+    "rect": {
+     "fill": "#29bdbe"
+    },
+    ".step-container": {
+     "data-error-state": false
+    }
+   }
+  },
+  "NextLoopActivity": {
+   "size": {
+    "width": 100,
+    "height": 100
+   },
+   "content": "",
+   "type": "springcm.Step",
+   "angle": 0,
+   "activityName": "NextLoopActivity",
+   "group": "engineActivities",
+   "icon": {
+    "path": "next_loop.svg#Dark",
+    "color": "#29bdbe"
+   },
+   "attrs": {
+    ".steptext": {
+     "ref-y": ".66",
+     "y-alignment": "middle",
+     "text": "",
+     "lineHeight": "1.4em"
+    },
+    ".description": {
+     "opacity": 0,
+     "ref": ".step-container",
+     "ref-x": 0.5,
+     "ref-dy": 0
+    },
+    ".descriptionbox": {
+     "width": 0,
+     "height": 0,
+     "rx": 0,
+     "ry": 0,
+     "x": 0,
+     "y": 0
+    },
+    ".descriptiontext": {
+     "text": ""
+    },
+    "use": {
+     "xlink:href": "/clm/atlassupport/scripts/jointjs/svg/next_loop.svg#Dark"
+    },
+    "svg": {
+     "color": "#29bdbe",
+     "fill": "#fff"
+    },
+    "rect": {
+     "fill": "#29bdbe"
+    },
+    ".step-container": {
+     "data-error-state": false
+    }
+   }
+  },
+  "UpdateParentVariableActivity": {
+   "size": {
+    "width": 100,
+    "height": 100
+   },
+   "content": "",
+   "type": "springcm.Step",
+   "angle": 0,
+   "activityName": "UpdateParentVariableActivity",
+   "group": "engineActivities",
+   "icon": {
+    "path": "update_parent_variable.svg#Dark",
+    "color": "#d13393"
+   },
+   "attrs": {
+    ".steptext": {
+     "ref-y": ".66",
+     "y-alignment": "middle",
+     "text": "",
+     "lineHeight": "1.4em"
+    },
+    ".description": {
+     "opacity": 0,
+     "ref": ".step-container",
+     "ref-x": 0.5,
+     "ref-dy": 0
+    },
+    ".descriptionbox": {
+     "width": 0,
+     "height": 0,
+     "rx": 0,
+     "ry": 0,
+     "x": 0,
+     "y": 0
+    },
+    ".descriptiontext": {
+     "text": ""
+    },
+    "use": {
+     "xlink:href": "/clm/atlassupport/scripts/jointjs/svg/update_parent_variable.svg#Dark"
+    },
+    "svg": {
+     "color": "#d13393",
+     "fill": "#fff"
+    },
+    "rect": {
+     "fill": "#d13393"
+    },
+    ".step-container": {
+     "data-error-state": false
+    }
+   }
+  },
+  "UpdateVariableFromCSVActivity": {
+   "size": {
+    "width": 100,
+    "height": 100
+   },
+   "content": "",
+   "type": "springcm.Step",
+   "angle": 0,
+   "activityName": "UpdateVariableFromCSVActivity",
+   "group": "engineActivities",
+   "icon": {
+    "path": "update_xml_variable_from_csv.svg#Dark",
+    "color": "#d13393"
+   },
+   "attrs": {
+    ".steptext": {
+     "ref-y": ".66",
+     "y-alignment": "middle",
+     "text": "",
+     "lineHeight": "1.4em"
+    },
+    ".description": {
+     "opacity": 0,
+     "ref": ".step-container",
+     "ref-x": 0.5,
+     "ref-dy": 0
+    },
+    ".descriptionbox": {
+     "width": 0,
+     "height": 0,
+     "rx": 0,
+     "ry": 0,
+     "x": 0,
+     "y": 0
+    },
+    ".descriptiontext": {
+     "text": ""
+    },
+    "use": {
+     "xlink:href": "/clm/atlassupport/scripts/jointjs/svg/update_xml_variable_from_csv.svg#Dark"
+    },
+    "svg": {
+     "color": "#d13393",
+     "fill": "#fff"
+    },
+    "rect": {
+     "fill": "#d13393"
+    },
+    ".step-container": {
+     "data-error-state": false
+    }
+   }
+  },
+  "WaitForSignal": {
+   "size": {
+    "width": 100,
+    "height": 100
+   },
+   "content": "",
+   "type": "springcm.Step",
+   "angle": 0,
+   "activityName": "WaitForSignal",
+   "group": "engineActivities",
+   "icon": {
+    "path": "wait_for_signal.svg#Dark",
+    "color": "#99ca3c"
+   },
+   "attrs": {
+    ".steptext": {
+     "ref-y": ".66",
+     "y-alignment": "middle",
+     "text": "",
+     "lineHeight": "1.4em"
+    },
+    ".description": {
+     "opacity": 0,
+     "ref": ".step-container",
+     "ref-x": 0.5,
+     "ref-dy": 0
+    },
+    ".descriptionbox": {
+     "width": 0,
+     "height": 0,
+     "rx": 0,
+     "ry": 0,
+     "x": 0,
+     "y": 0
+    },
+    ".descriptiontext": {
+     "text": ""
+    },
+    "use": {
+     "xlink:href": "/clm/atlassupport/scripts/jointjs/svg/wait_for_signal.svg#Dark"
+    },
+    "svg": {
+     "color": "#99ca3c",
+     "fill": "#fff"
+    },
+    "rect": {
+     "fill": "#99ca3c"
+    },
+    ".step-container": {
+     "data-error-state": false
+    }
+   }
+  },
+  "GroupBoxActivity": {
+   "size": {
+    "width": 582,
+    "height": 135
+   },
+   "content": "",
+   "type": "springcm.Group",
+   "angle": 0,
+   "activityName": "GroupBoxActivity",
+   "group": "engineActivities",
+   "icon": {
+    "path": "group.svg#Concepts",
+    "color": "#3366cc"
+   },
+   "attrs": {
+    "use": {
+     "xlink:href": "/clm/atlassupport/scripts/jointjs/svg/group.svg#Concepts"
+    },
+    "svg": {
+     "color": "#fff",
+     "fill": "#3366cc"
+    },
+    "rect": {
+     "fill": "#3366cc"
+    },
+    "text": {
+     "text": "",
+     "ref-x": 0,
+     "ref-y": 0
+    },
+    ".body": {
+     "width": 150,
+     "height": 150,
+     "stroke": "#000000",
+     "stroke-dasharray": "6",
+     "stroke-width": 2,
+     "rx": 1,
+     "ry": 1,
+     "pointer-events": "stroke"
+    },
+    ".label-rect": {
+     "ref": ".body",
+     "ref-width": 1,
+     "ref-x": 0,
+     "ref-y": -30,
+     "height": 25
+    },
+    ".label-group": {
+     "ref": ".label-rect",
+     "ref-x": 0,
+     "ref-y": 0
+    },
+    ".label-wrap": {
+     "ref": ".label-rect",
+     "ref-width": 1,
+     "ref-height": 1
+    },
+    ".label": {
+     "y": "1.3em",
+     "text-anchor": "middle",
+     "font-size": 14,
+     "fill": "#000000",
+     "ref-x": "50%",
+     "text": ""
+    }
+   }
+  },
+  "PoolActivity": {
+   "size": {
+    "width": 500,
+    "height": 150
+   },
+   "content": "",
+   "type": "springcm.Lane",
+   "angle": 0,
+   "activityName": "PoolActivity",
+   "group": "engineActivities",
+   "icon": {
+    "path": "pool.svg#Concepts",
+    "color": "#d13393"
+   },
+   "attrs": {
+    "use": {
+     "xlink:href": "/clm/atlassupport/scripts/jointjs/svg/pool.svg#Concepts"
+    },
+    "svg": {
+     "color": "#fff",
+     "fill": "#d13393"
+    },
+    "rect": {
+     "fill": "#757575"
+    },
+    "text": {
+     "text": "",
+     "ref-x": 0,
+     "ref-y": 0
+    },
+    ".body": {
+     "width": 500,
+     "height": 150,
+     "pointer-events": "stroke"
+    },
+    ".header": {
+     "width": 30,
+     "ref": ".body",
+     "ref-height": 1,
+     "pointer-events": "visiblePainted"
+    },
+    ".label": {
+     "transform": "rotate(-90)",
+     "ref": ".header",
+     "ref-x": 15,
+     "ref-y": ".5",
+     "y": "1.2em",
+     "font-size": 14,
+     "x-alignment": "middle",
+     "text-anchor": "middle"
+    }
+   },
+   "lanes": {}
+  },
+  "LaneActivity": {
+   "size": {
+    "width": 500,
+    "height": 150
+   },
+   "content": "",
+   "type": "springcm.Lane",
+   "angle": 0,
+   "activityName": "LaneActivity",
+   "group": "engineActivities",
+   "icon": {
+    "path": "lane.svg#Dark",
+    "color": "#d13393"
+   },
+   "attrs": {
+    "use": {
+     "xlink:href": "/clm/atlassupport/scripts/jointjs/svg/lane.svg#Dark"
+    },
+    "svg": {
+     "color": "#fff",
+     "fill": "#d13393"
+    },
+    "rect": {
+     "fill": "#757575"
+    },
+    "text": {
+     "text": "",
+     "ref-x": 0,
+     "ref-y": 0
+    },
+    ".body": {
+     "width": 500,
+     "height": 150,
+     "pointer-events": "stroke"
+    },
+    ".header": {
+     "width": 30,
+     "ref": ".body",
+     "ref-height": 1,
+     "pointer-events": "visiblePainted"
+    },
+    ".label": {
+     "transform": "rotate(-90)",
+     "ref": ".header",
+     "ref-x": 15,
+     "ref-y": ".5",
+     "y": "1.2em",
+     "font-size": 14,
+     "x-alignment": "middle",
+     "text-anchor": "middle"
+    }
+   },
+   "lanes": {}
+  },
+  "AddPartyActivity": {
+   "size": {
+    "width": 100,
+    "height": 100
+   },
+   "content": "",
+   "type": "springcm.Step",
+   "angle": 0,
+   "activityName": "AddPartyActivity",
+   "group": "engineActivities",
+   "icon": {
+    "path": "add_party.svg#Dark",
+    "color": "#6600bb"
+   },
+   "attrs": {
+    ".steptext": {
+     "ref-y": ".66",
+     "y-alignment": "middle",
+     "text": "",
+     "lineHeight": "1.4em"
+    },
+    ".description": {
+     "opacity": 0,
+     "ref": ".step-container",
+     "ref-x": 0.5,
+     "ref-dy": 0
+    },
+    ".descriptionbox": {
+     "width": 0,
+     "height": 0,
+     "rx": 0,
+     "ry": 0,
+     "x": 0,
+     "y": 0
+    },
+    ".descriptiontext": {
+     "text": ""
+    },
+    "use": {
+     "xlink:href": "/clm/atlassupport/scripts/jointjs/svg/add_party.svg#Dark"
+    },
+    "svg": {
+     "color": "#6600bb",
+     "fill": "#fff"
+    },
+    "rect": {
+     "fill": "#6600bb"
+    },
+    ".step-container": {
+     "data-error-state": false
+    }
+   }
+  },
+  "EditPartyActivity": {
+   "size": {
+    "width": 100,
+    "height": 100
+   },
+   "content": "",
+   "type": "springcm.Step",
+   "angle": 0,
+   "activityName": "EditPartyActivity",
+   "group": "engineActivities",
+   "icon": {
+    "path": "edit_party.svg#Dark",
+    "color": "#6600BB"
+   },
+   "attrs": {
+    ".steptext": {
+     "ref-y": ".66",
+     "y-alignment": "middle",
+     "text": "",
+     "lineHeight": "1.4em"
+    },
+    ".description": {
+     "opacity": 0,
+     "ref": ".step-container",
+     "ref-x": 0.5,
+     "ref-dy": 0
+    },
+    ".descriptionbox": {
+     "width": 0,
+     "height": 0,
+     "rx": 0,
+     "ry": 0,
+     "x": 0,
+     "y": 0
+    },
+    ".descriptiontext": {
+     "text": ""
+    },
+    "use": {
+     "xlink:href": "/clm/atlassupport/scripts/jointjs/svg/edit_party.svg#Dark"
+    },
+    "svg": {
+     "color": "#6600BB",
+     "fill": "#fff"
+    },
+    "rect": {
+     "fill": "#6600BB"
+    },
+    ".step-container": {
+     "data-error-state": false
+    }
+   }
+  },
+  "ChooseDocumentsActivity": {
+   "size": {
+    "width": 100,
+    "height": 100
+   },
+   "content": "",
+   "type": "springcm.Step",
+   "angle": 0,
+   "activityName": "ChooseDocumentsActivity",
+   "group": "engineActivities",
+   "icon": {
+    "path": "choose_documents.svg#Dark",
+    "color": "#ecb900"
+   },
+   "attrs": {
+    ".steptext": {
+     "ref-y": ".66",
+     "y-alignment": "middle",
+     "text": "",
+     "lineHeight": "1.4em"
+    },
+    ".description": {
+     "opacity": 0,
+     "ref": ".step-container",
+     "ref-x": 0.5,
+     "ref-dy": 0
+    },
+    ".descriptionbox": {
+     "width": 0,
+     "height": 0,
+     "rx": 0,
+     "ry": 0,
+     "x": 0,
+     "y": 0
+    },
+    ".descriptiontext": {
+     "text": ""
+    },
+    "use": {
+     "xlink:href": "/clm/atlassupport/scripts/jointjs/svg/choose_documents.svg#Dark"
+    },
+    "svg": {
+     "color": "#ecb900",
+     "fill": "#fff"
+    },
+    "rect": {
+     "fill": "#ecb900"
+    },
+    ".step-container": {
+     "data-error-state": false
+    }
+   }
+  },
+  "UpdateFolderMetadataActivity": {
+   "size": {
+    "width": 100,
+    "height": 100
+   },
+   "content": "",
+   "type": "springcm.Step",
+   "angle": 0,
+   "activityName": "UpdateFolderMetadataActivity",
+   "group": "engineActivities",
+   "icon": {
+    "path": "update_folder_metadata_value.svg#Dark",
+    "color": "#e78926"
+   },
+   "attrs": {
+    ".steptext": {
+     "ref-y": ".66",
+     "y-alignment": "middle",
+     "text": "",
+     "lineHeight": "1.4em"
+    },
+    ".description": {
+     "opacity": 0,
+     "ref": ".step-container",
+     "ref-x": 0.5,
+     "ref-dy": 0
+    },
+    ".descriptionbox": {
+     "width": 0,
+     "height": 0,
+     "rx": 0,
+     "ry": 0,
+     "x": 0,
+     "y": 0
+    },
+    ".descriptiontext": {
+     "text": ""
+    },
+    "use": {
+     "xlink:href": "/clm/atlassupport/scripts/jointjs/svg/update_folder_metadata_value.svg#Dark"
+    },
+    "svg": {
+     "color": "#e78926",
+     "fill": "#fff"
+    },
+    "rect": {
+     "fill": "#e78926"
+    },
+    ".step-container": {
+     "data-error-state": false
+    }
+   }
+  },
+  "CancelElectronicSignatureActivity": {
+   "size": {
+    "width": 100,
+    "height": 100
+   },
+   "content": "",
+   "type": "springcm.Step",
+   "angle": 0,
+   "activityName": "CancelElectronicSignatureActivity",
+   "group": "engineActivities",
+   "icon": {
+    "path": "cancel_electronic_signature.svg#Dark",
+    "color": "#ca2d2e"
+   },
+   "attrs": {
+    ".steptext": {
+     "ref-y": ".66",
+     "y-alignment": "middle",
+     "text": "",
+     "lineHeight": "1.4em"
+    },
+    ".description": {
+     "opacity": 0,
+     "ref": ".step-container",
+     "ref-x": 0.5,
+     "ref-dy": 0
+    },
+    ".descriptionbox": {
+     "width": 0,
+     "height": 0,
+     "rx": 0,
+     "ry": 0,
+     "x": 0,
+     "y": 0
+    },
+    ".descriptiontext": {
+     "text": ""
+    },
+    "use": {
+     "xlink:href": "/clm/atlassupport/scripts/jointjs/svg/cancel_electronic_signature.svg#Dark"
+    },
+    "svg": {
+     "color": "#ca2d2e",
+     "fill": "#fff"
+    },
+    "rect": {
+     "fill": "#ca2d2e"
+    },
+    ".step-container": {
+     "data-error-state": false
+    }
+   }
+  },
+  "FillFormActivity": {
+   "size": {
+    "width": 100,
+    "height": 100
+   },
+   "content": "",
+   "type": "springcm.Step",
+   "angle": 0,
+   "activityName": "FillFormActivity",
+   "group": "engineActivities",
+   "icon": {
+    "path": "fill_form.svg#Dark",
+    "color": "#f7b618"
+   },
+   "attrs": {
+    ".steptext": {
+     "ref-y": ".66",
+     "y-alignment": "middle",
+     "text": "",
+     "lineHeight": "1.4em"
+    },
+    ".description": {
+     "opacity": 0,
+     "ref": ".step-container",
+     "ref-x": 0.5,
+     "ref-dy": 0
+    },
+    ".descriptionbox": {
+     "width": 0,
+     "height": 0,
+     "rx": 0,
+     "ry": 0,
+     "x": 0,
+     "y": 0
+    },
+    ".descriptiontext": {
+     "text": ""
+    },
+    "use": {
+     "xlink:href": "/clm/atlassupport/scripts/jointjs/svg/fill_form.svg#Dark"
+    },
+    "svg": {
+     "color": "#f7b618",
+     "fill": "#fff"
+    },
+    "rect": {
+     "fill": "#f7b618"
+    },
+    ".step-container": {
+     "data-error-state": false
+    }
+   }
+  },
+  "EditFormActivity": {
+   "size": {
+    "width": 100,
+    "height": 100
+   },
+   "content": "",
+   "type": "springcm.Step",
+   "angle": 0,
+   "activityName": "EditFormActivity",
+   "group": "engineActivities",
+   "icon": {
+    "path": "edit_form.svg#Dark",
+    "color": "#f7b618"
+   },
+   "attrs": {
+    ".steptext": {
+     "ref-y": ".66",
+     "y-alignment": "middle",
+     "text": "",
+     "lineHeight": "1.4em"
+    },
+    ".description": {
+     "opacity": 0,
+     "ref": ".step-container",
+     "ref-x": 0.5,
+     "ref-dy": 0
+    },
+    ".descriptionbox": {
+     "width": 0,
+     "height": 0,
+     "rx": 0,
+     "ry": 0,
+     "x": 0,
+     "y": 0
+    },
+    ".descriptiontext": {
+     "text": ""
+    },
+    "use": {
+     "xlink:href": "/clm/atlassupport/scripts/jointjs/svg/edit_form.svg#Dark"
+    },
+    "svg": {
+     "color": "#f7b618",
+     "fill": "#fff"
+    },
+    "rect": {
+     "fill": "#f7b618"
+    },
+    ".step-container": {
+     "data-error-state": false
+    }
+   }
+  },
+  "FullPageFillFormActivity": {
+   "size": {
+    "width": 100,
+    "height": 100
+   },
+   "content": "",
+   "type": "springcm.Step",
+   "angle": 0,
+   "activityName": "FullPageFillFormActivity",
+   "group": "engineActivities",
+   "icon": {
+    "path": "full_page_fill_form.svg#Dark",
+    "color": "#f7b618"
+   },
+   "attrs": {
+    ".steptext": {
+     "ref-y": ".66",
+     "y-alignment": "middle",
+     "text": "",
+     "lineHeight": "1.4em"
+    },
+    ".description": {
+     "opacity": 0,
+     "ref": ".step-container",
+     "ref-x": 0.5,
+     "ref-dy": 0
+    },
+    ".descriptionbox": {
+     "width": 0,
+     "height": 0,
+     "rx": 0,
+     "ry": 0,
+     "x": 0,
+     "y": 0
+    },
+    ".descriptiontext": {
+     "text": ""
+    },
+    "use": {
+     "xlink:href": "/clm/atlassupport/scripts/jointjs/svg/full_page_fill_form.svg#Dark"
+    },
+    "svg": {
+     "color": "#f7b618",
+     "fill": "#fff"
+    },
+    "rect": {
+     "fill": "#f7b618"
+    },
+    ".step-container": {
+     "data-error-state": false
+    }
+   }
+  },
+  "FullPageEditFormActivity": {
+   "size": {
+    "width": 100,
+    "height": 100
+   },
+   "content": "",
+   "type": "springcm.Step",
+   "angle": 0,
+   "activityName": "FullPageEditFormActivity",
+   "group": "engineActivities",
+   "icon": {
+    "path": "full_page_edit_form.svg#Dark",
+    "color": "#f7b618"
+   },
+   "attrs": {
+    ".steptext": {
+     "ref-y": ".66",
+     "y-alignment": "middle",
+     "text": "",
+     "lineHeight": "1.4em"
+    },
+    ".description": {
+     "opacity": 0,
+     "ref": ".step-container",
+     "ref-x": 0.5,
+     "ref-dy": 0
+    },
+    ".descriptionbox": {
+     "width": 0,
+     "height": 0,
+     "rx": 0,
+     "ry": 0,
+     "x": 0,
+     "y": 0
+    },
+    ".descriptiontext": {
+     "text": ""
+    },
+    "use": {
+     "xlink:href": "/clm/atlassupport/scripts/jointjs/svg/full_page_edit_form.svg#Dark"
+    },
+    "svg": {
+     "color": "#f7b618",
+     "fill": "#fff"
+    },
+    "rect": {
+     "fill": "#f7b618"
+    },
+    ".step-container": {
+     "data-error-state": false
+    }
+   }
+  },
+  "GetTrackedContentActivity": {
+   "size": {
+    "width": 100,
+    "height": 100
+   },
+   "content": "",
+   "type": "springcm.Step",
+   "angle": 0,
+   "activityName": "GetTrackedContentActivity",
+   "group": "engineActivities",
+   "icon": {
+    "path": "compare_tracked_content.svg#Dark",
+    "color": "#f7b618"
+   },
+   "attrs": {
+    ".steptext": {
+     "ref-y": ".66",
+     "y-alignment": "middle",
+     "text": "",
+     "lineHeight": "1.4em"
+    },
+    ".description": {
+     "opacity": 0,
+     "ref": ".step-container",
+     "ref-x": 0.5,
+     "ref-dy": 0
+    },
+    ".descriptionbox": {
+     "width": 0,
+     "height": 0,
+     "rx": 0,
+     "ry": 0,
+     "x": 0,
+     "y": 0
+    },
+    ".descriptiontext": {
+     "text": ""
+    },
+    "use": {
+     "xlink:href": "/clm/atlassupport/scripts/jointjs/svg/compare_tracked_content.svg#Dark"
+    },
+    "svg": {
+     "color": "#f7b618",
+     "fill": "#fff"
+    },
+    "rect": {
+     "fill": "#f7b618"
+    },
+    ".step-container": {
+     "data-error-state": false
+    }
+   }
+  },
+  "MergeTrackedContentActivity": {
+   "size": {
+    "width": 100,
+    "height": 100
+   },
+   "content": "",
+   "type": "springcm.Step",
+   "angle": 0,
+   "activityName": "MergeTrackedContentActivity",
+   "group": "engineActivities",
+   "icon": {
+    "path": "xml_merge_doc.svg#Dark",
+    "color": "#29bdbe"
+   },
+   "attrs": {
+    ".steptext": {
+     "ref-y": ".66",
+     "y-alignment": "middle",
+     "text": "",
+     "lineHeight": "1.4em"
+    },
+    ".description": {
+     "opacity": 0,
+     "ref": ".step-container",
+     "ref-x": 0.5,
+     "ref-dy": 0
+    },
+    ".descriptionbox": {
+     "width": 0,
+     "height": 0,
+     "rx": 0,
+     "ry": 0,
+     "x": 0,
+     "y": 0
+    },
+    ".descriptiontext": {
+     "text": ""
+    },
+    "use": {
+     "xlink:href": "/clm/atlassupport/scripts/jointjs/svg/xml_merge_doc.svg#Dark"
+    },
+    "svg": {
+     "color": "#29bdbe",
+     "fill": "#fff"
+    },
+    "rect": {
+     "fill": "#29bdbe"
+    },
+    ".step-container": {
+     "data-error-state": false
+    }
+   }
+  },
+  "CompareTrackedContentActivity": {
+   "size": {
+    "width": 100,
+    "height": 100
+   },
+   "content": "",
+   "type": "springcm.Step",
+   "angle": 0,
+   "activityName": "CompareTrackedContentActivity",
+   "group": "engineActivities",
+   "icon": {
+    "path": "compare_tracked_content.svg#Dark",
+    "color": "#f7b618"
+   },
+   "attrs": {
+    ".steptext": {
+     "ref-y": ".66",
+     "y-alignment": "middle",
+     "text": "",
+     "lineHeight": "1.4em"
+    },
+    ".description": {
+     "opacity": 0,
+     "ref": ".step-container",
+     "ref-x": 0.5,
+     "ref-dy": 0
+    },
+    ".descriptionbox": {
+     "width": 0,
+     "height": 0,
+     "rx": 0,
+     "ry": 0,
+     "x": 0,
+     "y": 0
+    },
+    ".descriptiontext": {
+     "text": ""
+    },
+    "use": {
+     "xlink:href": "/clm/atlassupport/scripts/jointjs/svg/compare_tracked_content.svg#Dark"
+    },
+    "svg": {
+     "color": "#f7b618",
+     "fill": "#fff"
+    },
+    "rect": {
+     "fill": "#f7b618"
+    },
+    ".step-container": {
+     "data-error-state": false
+    }
+   }
+  },
+  "TriggerOrchestrationActivity": {
+   "size": {
+    "width": 100,
+    "height": 100
+   },
+   "content": "",
+   "type": "springcm.Step",
+   "angle": 0,
+   "activityName": "TriggerOrchestrationActivity",
+   "group": "engineActivities",
+   "icon": {
+    "path": "workflow.svg#Dark",
+    "color": "#212121"
+   },
+   "attrs": {
+    ".steptext": {
+     "ref-y": ".66",
+     "y-alignment": "middle",
+     "text": "",
+     "lineHeight": "1.4em"
+    },
+    ".description": {
+     "opacity": 0,
+     "ref": ".step-container",
+     "ref-x": 0.5,
+     "ref-dy": 0
+    },
+    ".descriptionbox": {
+     "width": 0,
+     "height": 0,
+     "rx": 0,
+     "ry": 0,
+     "x": 0,
+     "y": 0
+    },
+    ".descriptiontext": {
+     "text": ""
+    },
+    "use": {
+     "xlink:href": "/clm/atlassupport/scripts/jointjs/svg/workflow.svg#Dark"
+    },
+    "svg": {
+     "color": "#212121",
+     "fill": "#fff"
+    },
+    "rect": {
+     "fill": "#212121"
+    },
+    ".step-container": {
+     "data-error-state": false
+    }
+   }
+  },
+  "UseObligationDataActivity": {
+   "size": {
+    "width": 100,
+    "height": 100
+   },
+   "content": "",
+   "type": "springcm.Step",
+   "angle": 0,
+   "activityName": "UseObligationDataActivity",
+   "group": "engineActivities",
+   "icon": {
+    "path": "evaluate_text.svg#Dark",
+    "color": "#d13393"
+   },
+   "attrs": {
+    ".steptext": {
+     "ref-y": ".66",
+     "y-alignment": "middle",
+     "text": "",
+     "lineHeight": "1.4em"
+    },
+    ".description": {
+     "opacity": 0,
+     "ref": ".step-container",
+     "ref-x": 0.5,
+     "ref-dy": 0
+    },
+    ".descriptionbox": {
+     "width": 0,
+     "height": 0,
+     "rx": 0,
+     "ry": 0,
+     "x": 0,
+     "y": 0
+    },
+    ".descriptiontext": {
+     "text": ""
+    },
+    "use": {
+     "xlink:href": "/clm/atlassupport/scripts/jointjs/svg/evaluate_text.svg#Dark"
+    },
+    "svg": {
+     "color": "#d13393",
+     "fill": "#fff"
+    },
+    "rect": {
+     "fill": "#d13393"
+    },
+    ".step-container": {
+     "data-error-state": false
+    }
+   }
+  },
+  "UseNavigatorAIActivity": {
+   "size": {
+    "width": 100,
+    "height": 100
+   },
+   "content": "",
+   "type": "springcm.Step",
+   "angle": 0,
+   "activityName": "UseNavigatorAIActivity",
+   "group": "engineActivities",
+   "icon": {
+    "path": "evaluate_text.svg#Dark",
+    "color": "#d13393"
+   },
+   "attrs": {
+    ".steptext": {
+     "ref-y": ".66",
+     "y-alignment": "middle",
+     "text": "",
+     "lineHeight": "1.4em"
+    },
+    ".description": {
+     "opacity": 0,
+     "ref": ".step-container",
+     "ref-x": 0.5,
+     "ref-dy": 0
+    },
+    ".descriptionbox": {
+     "width": 0,
+     "height": 0,
+     "rx": 0,
+     "ry": 0,
+     "x": 0,
+     "y": 0
+    },
+    ".descriptiontext": {
+     "text": ""
+    },
+    "use": {
+     "xlink:href": "/clm/atlassupport/scripts/jointjs/svg/evaluate_text.svg#Dark"
+    },
+    "svg": {
+     "color": "#d13393",
+     "fill": "#fff"
+    },
+    "rect": {
+     "fill": "#d13393"
+    },
+    ".step-container": {
+     "data-error-state": false
+    }
+   }
+  }
+ },
+ "outputs": {
+  "ApproveDocumentsActivity": [
+   {
+    "value": "approved",
+    "name": "Approved"
+   },
+   {
+    "value": "rejected",
+    "name": "Rejected"
+   },
+   {
+    "value": "action canceled",
+    "name": "Cancel"
+   },
+   {
+    "value": "failure",
+    "name": "Failure"
+   }
+  ],
+  "DecisionActivity": [
+   {
+    "value": "failure",
+    "name": "Failure"
+   }
+  ],
+  "SendForSignatureActivity": [
+   {
+    "value": "cancelled",
+    "name": "Cancelled"
+   },
+   {
+    "value": "signed",
+    "name": "Signed"
+   },
+   {
+    "value": "rejected",
+    "name": "Rejected"
+   },
+   {
+    "value": "updated",
+    "name": "Updated"
+   },
+   {
+    "value": "failure",
+    "name": "Failure"
+   },
+   {
+    "value": "timed out",
+    "name": "Timed Out"
+   }
+  ],
+  "WaitForSignatureActivity": [
+   {
+    "value": "cancelled",
+    "name": "Cancelled"
+   },
+   {
+    "value": "signed",
+    "name": "Signed"
+   },
+   {
+    "value": "rejected",
+    "name": "Rejected"
+   },
+   {
+    "value": "updated",
+    "name": "Updated"
+   },
+   {
+    "value": "failure",
+    "name": "Failure"
+   },
+   {
+    "value": "timed out",
+    "name": "Timed Out"
+   }
+  ],
+  "ReviewAndSendForSignatureActivity": [
+   {
+    "value": "action Completed - Sent by Sender",
+    "name": "Action Completed - Sent by Sender"
+   },
+   {
+    "value": "action Completed - Rejected by Sender",
+    "name": "Action Completed - Rejected by Sender"
+   },
+   {
+    "value": "action canceled",
+    "name": "Action Canceled"
+   },
+   {
+    "value": "failure",
+    "name": "Failure"
+   }
+  ],
+  "WorkflowActivity": [
+   {
+    "value": "child workflow aborted",
+    "name": "Child Workflow Aborted"
+   },
+   {
+    "value": "child workflow failure",
+    "name": "Child Workflow Failure"
+   },
+   {
+    "value": "failure",
+    "name": "Failure"
+   },
+   {
+    "value": "success",
+    "name": "Success"
+   }
+  ],
+  "CreateDocumentActivity": [
+   {
+    "value": "action canceled",
+    "name": "Action Canceled"
+   },
+   {
+    "value": "action completed",
+    "name": "Action Completed"
+   },
+   {
+    "value": "failure",
+    "name": "Failure "
+   }
+  ],
+  "EvaluateXPathActivity": [
+   {
+    "value": "failure",
+    "name": "Failure"
+   },
+   {
+    "value": "match",
+    "name": "Match"
+   },
+   {
+    "value": "no match",
+    "name": "No Match"
+   }
+  ],
+  "DocLauncherActivity": [
+   {
+    "value": "success",
+    "name": "Success"
+   },
+   {
+    "value": "conditional success",
+    "name": "Conditional Success"
+   },
+   {
+    "value": "failure",
+    "name": "Failure"
+   }
+  ],
+  "CopyMoveDocumentActivity": [
+   {
+    "value": "success",
+    "name": "Success"
+   },
+   {
+    "value": "failure",
+    "name": "Failure"
+   },
+   {
+    "value": "timed out",
+    "name": "Timed Out"
+   }
+  ],
+  "UpdateDocumentMetadataActivity": [
+   {
+    "value": "success",
+    "name": "Success"
+   },
+   {
+    "value": "failure",
+    "name": "Failure"
+   }
+  ],
+  "UpdateVariableActivity": [
+   {
+    "value": "updated",
+    "name": "Updated"
+   },
+   {
+    "value": "not updated",
+    "name": "Not Updated"
+   },
+   {
+    "value": "failure",
+    "name": "Failure"
+   }
+  ],
+  "ChoiceActivity": [
+   {
+    "value": "failure",
+    "name": "Failure"
+   }
+  ],
+  "EditDocumentsActivity": [
+   {
+    "value": "Action Completed",
+    "name": "ActionCompleted"
+   },
+   {
+    "value": "Action Rejected",
+    "name": "ActionRejected"
+   },
+   {
+    "value": "Failure",
+    "name": "Failure"
+   }
+  ],
+  "FindDocumentActivity": [
+   {
+    "value": "success",
+    "name": "Success"
+   },
+   {
+    "value": "failure",
+    "name": "Failure"
+   }
+  ],
+  "FindFolderActivity": [
+   {
+    "value": "success",
+    "name": "Success"
+   },
+   {
+    "value": "failure",
+    "name": "Failure"
+   }
+  ],
+  "FindOrCreateEOSFolderActivity": [
+   {
+    "value": "success",
+    "name": "Success"
+   },
+   {
+    "value": "failure",
+    "name": "Failure"
+   }
+  ],
+  "UpdateVariableFromXMLActivity": [
+   {
+    "value": "success",
+    "name": "Success"
+   },
+   {
+    "value": "failure",
+    "name": "Failure"
+   }
+  ],
+  "CreateFolderActivity": [
+   {
+    "value": "success",
+    "name": "Success"
+   },
+   {
+    "value": "failure",
+    "name": "Failure"
+   }
+  ],
+  "RoutingActivity": [
+   {
+    "value": "success",
+    "name": "Success"
+   },
+   {
+    "value": "failure",
+    "name": "Failure"
+   }
+  ],
+  "RenameDocumentActivity": [
+   {
+    "value": "success",
+    "name": "Success"
+   },
+   {
+    "value": "failure",
+    "name": "Failure"
+   }
+  ],
+  "UpdateDocumentKeywordActivity": [
+   {
+    "value": "success",
+    "name": "Success"
+   },
+   {
+    "value": "failure",
+    "name": "Failure"
+   }
+  ],
+  "ScheduleDocumentReminderActivity": [
+   {
+    "value": "success",
+    "name": "Success"
+   },
+   {
+    "value": "duplicate reminder",
+    "name": "Duplicate Reminder"
+   },
+   {
+    "value": "failure",
+    "name": "Failure"
+   }
+  ],
+  "AddWatchedDocumentsActivity": [
+   {
+    "value": "success",
+    "name": "Success"
+   },
+   {
+    "value": "failure",
+    "name": "Failure"
+   }
+  ],
+  "SetWorkflowScopeNameActivity": [
+   {
+    "value": "success",
+    "name": "Success"
+   },
+   {
+    "value": "failure",
+    "name": "Failure"
+   }
+  ],
+  "FindPartyActivity": [
+   {
+    "value": "failure",
+    "name": "Failure"
+   },
+   {
+    "value": "match",
+    "name": "Match"
+   },
+   {
+    "value": "no match",
+    "name": "No Match"
+   }
+  ],
+  "EditClmAgreementAttributesActivity": [
+   {
+    "value": "success",
+    "name": "Success"
+   },
+   {
+    "value": "failure",
+    "name": "Failure"
+   }
+  ],
+  "ChooseUsersActivity": [
+   {
+    "value": "failure",
+    "name": "Failure"
+   },
+   {
+    "value": "Action Completed",
+    "name": "ActionCompleted"
+   },
+   {
+    "value": "Action Rejected",
+    "name": "ActionRejected"
+   }
+  ],
+  "DataReviewActivity": [
+   {
+    "value": "success",
+    "name": "Success"
+   },
+   {
+    "value": "failure",
+    "name": "Failure"
+   }
+  ],
+  "RemoveWatchedDocumentsActivity": [
+   {
+    "value": "success",
+    "name": "Success"
+   },
+   {
+    "value": "failure",
+    "name": "Failure"
+   }
+  ],
+  "DeleteDocumentReminderActivity": [
+   {
+    "value": "success",
+    "name": "Success"
+   },
+   {
+    "value": "failure reminder not found",
+    "name": "Failure Reminder Not Found"
+   },
+   {
+    "value": "failure",
+    "name": "Failure"
+   }
+  ],
+  "CheckOutDocumentActivity": [
+   {
+    "value": "success",
+    "name": "Success"
+   },
+   {
+    "value": "failure",
+    "name": "Failure"
+   }
+  ],
+  "CheckOutDocumentCancelActivity": [
+   {
+    "value": "success",
+    "name": "Success"
+   },
+   {
+    "value": "failure",
+    "name": "Failure"
+   }
+  ],
+  "FindDocumentsByFolderActivity": [
+   {
+    "value": "success",
+    "name": "Success"
+   },
+   {
+    "value": "failure",
+    "name": "Failure"
+   },
+   {
+    "value": "match",
+    "name": "Match"
+   },
+   {
+    "value": "no match",
+    "name": "No Match"
+   }
+  ],
+  "LogActivity": [
+   {
+    "value": "failure",
+    "name": "Failure"
+   }
+  ],
+  "UpdateFolderDescriptionActivity": [
+   {
+    "value": "success",
+    "name": "Success"
+   },
+   {
+    "value": "failure",
+    "name": "Failure"
+   }
+  ],
+  "CreateLinkActivity": [
+   {
+    "value": "success",
+    "name": "Success"
+   },
+   {
+    "value": "failure",
+    "name": "Failure"
+   }
+  ],
+  "CopyFolderActivity": [
+   {
+    "value": "success",
+    "name": "Success"
+   },
+   {
+    "value": "failure",
+    "name": "Failure"
+   }
+  ],
+  "GetPathActivity": [
+   {
+    "value": "success",
+    "name": "Success"
+   },
+   {
+    "value": "failure",
+    "name": "Failure"
+   }
+  ],
+  "UpdateStatusActivity": [
+   {
+    "value": "success",
+    "name": "Success"
+   },
+   {
+    "value": "failure",
+    "name": "Failure"
+   }
+  ],
+  "SearchActivity": [
+   {
+    "value": "success",
+    "name": "Success"
+   },
+   {
+    "value": "failure",
+    "name": "Failure"
+   }
+  ],
+  "WriteTextDocumentActivity": [
+   {
+    "value": "success",
+    "name": "Success"
+   },
+   {
+    "value": "failure",
+    "name": "Failure"
+   }
+  ],
+  "AppendTextDocumentActivity": [
+   {
+    "value": "success",
+    "name": "Success"
+   },
+   {
+    "value": "failure",
+    "name": "Failure"
+   }
+  ],
+  "UpdateXMLVariableFromCSVActivity": [
+   {
+    "value": "success",
+    "name": "Success"
+   },
+   {
+    "value": "failure",
+    "name": "Failure"
+   }
+  ],
+  "ConvertJsonToXmlActivity": [
+   {
+    "value": "success",
+    "name": "Success"
+   },
+   {
+    "value": "failure",
+    "name": "Failure"
+   },
+   {
+    "value": "timed out",
+    "name": "Timed Out"
+   }
+  ],
+  "GetDocumentAttachmentsActivity": [
+   {
+    "value": "success",
+    "name": "Success"
+   },
+   {
+    "value": "failure",
+    "name": "Failure"
+   },
+   {
+    "value": "has attachments",
+    "name": "Has Attachments"
+   },
+   {
+    "value": "no attachments",
+    "name": "No Attachments"
+   }
+  ],
+  "MergePdfDocumentActivity": [
+   {
+    "value": "success",
+    "name": "Success"
+   },
+   {
+    "value": "failure",
+    "name": "Failure"
+   },
+   {
+    "value": "timed out",
+    "name": "Timed Out"
+   }
+  ],
+  "WatermarkDocumentActivity": [
+   {
+    "value": "success",
+    "name": "Success"
+   },
+   {
+    "value": "failure",
+    "name": "Failure"
+   },
+   {
+    "value": "timed out",
+    "name": "Timed Out"
+   }
+  ],
+  "SplitDocumentActivity": [
+   {
+    "value": "success",
+    "name": "Success"
+   },
+   {
+    "value": "failure",
+    "name": "Failure"
+   },
+   {
+    "value": "timed out",
+    "name": "Timed Out"
+   }
+  ],
+  "CompareDocumentsActivity": [
+   {
+    "value": "success",
+    "name": "Success"
+   },
+   {
+    "value": "failure",
+    "name": "Failure"
+   },
+   {
+    "value": "timed out",
+    "name": "Timed Out"
+   },
+   {
+    "value": "compare timeout",
+    "name": "Compare Timeout"
+   }
+  ],
+  "CheckInDocumentActivity": [
+   {
+    "value": "success",
+    "name": "Success"
+   },
+   {
+    "value": "failure",
+    "name": "Failure"
+   }
+  ],
+  "CompareDocumentVersionsActivity": [
+   {
+    "value": "success",
+    "name": "Success"
+   },
+   {
+    "value": "failure",
+    "name": "Failure"
+   },
+   {
+    "value": "timed out",
+    "name": "Timed Out"
+   },
+   {
+    "value": "compare timeout",
+    "name": "Compare Timeout"
+   },
+   {
+    "value": "no version",
+    "name": "No Version"
+   }
+  ],
+  "FindUserActivity": [
+   {
+    "value": "success",
+    "name": "Success"
+   },
+   {
+    "value": "failure",
+    "name": "Failure"
+   }
+  ],
+  "ResourceVariableActivity": [
+   {
+    "value": "not enough resources",
+    "name": "Not Enough Resources"
+   },
+   {
+    "value": "action executed",
+    "name": "Action Executed"
+   },
+   {
+    "value": "failure",
+    "name": "Failure"
+   }
+  ],
+  "EvaluateDocumentText": [
+   {
+    "value": "failure",
+    "name": "Failure"
+   },
+   {
+    "value": "match",
+    "name": "Match"
+   },
+   {
+    "value": "no match",
+    "name": "No Match"
+   }
+  ],
+  "SimpleDelayActivity": [
+   {
+    "value": "failure",
+    "name": "Failure"
+   }
+  ],
+  "HttpClientActivity": [
+   {
+    "value": "success",
+    "name": "Success"
+   },
+   {
+    "value": "failure",
+    "name": "Failure"
+   },
+   {
+    "value": "response failure",
+    "name": "Response Failure"
+   }
+  ],
+  "FindEOSParentFolderActivity": [
+   {
+    "value": "found",
+    "name": "Found"
+   },
+   {
+    "value": "not found",
+    "name": "Not Found"
+   }
+  ],
+  "FindDocumentsByMetadataActivity": [
+   {
+    "value": "success",
+    "name": "Success"
+   },
+   {
+    "value": "failure",
+    "name": "Failure"
+   },
+   {
+    "value": "match",
+    "name": "Match"
+   },
+   {
+    "value": "no match",
+    "name": "No Match"
+   }
+  ],
+  "ExtractPdfFieldsActivity": [
+   {
+    "value": "success",
+    "name": "Success"
+   },
+   {
+    "value": "failure",
+    "name": "Failure"
+   },
+   {
+    "value": "timed out",
+    "name": "Timed Out"
+   }
+  ],
+  "XmlMergeDocumentActivity": [
+   {
+    "value": "success",
+    "name": "Success"
+   },
+   {
+    "value": "failure",
+    "name": "Failure"
+   },
+   {
+    "value": "timed out",
+    "name": "Timed Out"
+   }
+  ],
+  "AutofillAnalysisActivity": [
+   {
+    "value": "success",
+    "name": "Success"
+   },
+   {
+    "value": "failure",
+    "name": "Failure"
+   },
+   {
+    "value": "timed out",
+    "name": "Timed Out"
+   }
+  ],
+  "SendForExternalReviewNewActivity": [
+   {
+    "value": "cancelled - Invalid Recipient",
+    "name": "Cancelled - Invalid Recipient"
+   },
+   {
+    "value": "cancelled - Manual Override",
+    "name": "Cancelled - Manual Override"
+   },
+   {
+    "value": "completed without Document",
+    "name": "Completed without Document"
+   },
+   {
+    "value": "completed with Document",
+    "name": "Completed with Document"
+   },
+   {
+    "value": "expired",
+    "name": "Expired"
+   },
+   {
+    "value": "failure",
+    "name": "Failure"
+   }
+  ],
+  "ForLoopActivity": [
+   {
+    "value": "step",
+    "name": "Step",
+    "display": "Step"
+   },
+   {
+    "value": "loop end",
+    "name": "Loop End",
+    "display": "Loop End"
+   },
+   {
+    "value": "failure",
+    "name": "Failure"
+   }
+  ],
+  "XPathForEachLoopActivity": [
+   {
+    "value": "step",
+    "name": "Step",
+    "display": "Step"
+   },
+   {
+    "value": "loop end",
+    "name": "Loop End",
+    "display": "Loop End"
+   },
+   {
+    "value": "failure",
+    "name": "Failure"
+   }
+  ],
+  "NextLoopActivity": [
+   {
+    "value": "next step",
+    "name": "Next Step"
+   },
+   {
+    "value": "failure",
+    "name": "Failure"
+   }
+  ],
+  "UpdateParentVariableActivity": [
+   {
+    "value": "updated",
+    "name": "Updated"
+   },
+   {
+    "value": "not updated",
+    "name": "Not Updated"
+   },
+   {
+    "value": "failure",
+    "name": "Failure"
+   }
+  ],
+  "UpdateVariableFromCSVActivity": [
+   {
+    "value": "success",
+    "name": "Success"
+   },
+   {
+    "value": "failure",
+    "name": "Failure"
+   }
+  ],
+  "WaitForSignal": [
+   {
+    "value": "timeout",
+    "name": "Timeout"
+   },
+   {
+    "value": "signalled",
+    "name": "Signalled"
+   },
+   {
+    "value": "failure",
+    "name": "Failure"
+   }
+  ],
+  "GroupBoxActivity": [],
+  "PoolActivity": [],
+  "LaneActivity": [],
+  "AddPartyActivity": [
+   {
+    "value": "success",
+    "name": "Success"
+   },
+   {
+    "value": "failure",
+    "name": "Failure"
+   }
+  ],
+  "EditPartyActivity": [
+   {
+    "value": "success",
+    "name": "Success"
+   },
+   {
+    "value": "failure",
+    "name": "Failure"
+   }
+  ],
+  "ChooseDocumentsActivity": [
+   {
+    "value": "failure",
+    "name": "Failure"
+   },
+   {
+    "value": "Action Completed",
+    "name": "ActionCompleted"
+   },
+   {
+    "value": "Action Rejected",
+    "name": "ActionRejected"
+   }
+  ],
+  "UpdateFolderMetadataActivity": [
+   {
+    "value": "success",
+    "name": "Success"
+   },
+   {
+    "value": "failure",
+    "name": "Failure"
+   }
+  ],
+  "CancelElectronicSignatureActivity": [
+   {
+    "value": "success",
+    "name": "Success"
+   },
+   {
+    "value": "failure",
+    "name": "Failure"
+   }
+  ],
+  "FillFormActivity": [
+   {
+    "value": "Action Completed",
+    "name": "ActionCompleted"
+   },
+   {
+    "value": "Failure",
+    "name": "Failure"
+   }
+  ],
+  "EditFormActivity": [
+   {
+    "value": "Action Completed",
+    "name": "ActionCompleted"
+   },
+   {
+    "value": "Failure",
+    "name": "Failure"
+   }
+  ],
+  "FullPageFillFormActivity": [
+   {
+    "value": "Action Completed",
+    "name": "ActionCompleted"
+   },
+   {
+    "value": "Failure",
+    "name": "Failure"
+   }
+  ],
+  "FullPageEditFormActivity": [
+   {
+    "value": "Action Completed",
+    "name": "ActionCompleted"
+   },
+   {
+    "value": "Failure",
+    "name": "Failure"
+   }
+  ],
+  "UseObligationDataActivity": [
+   {
+    "value": "success",
+    "name": "Success"
+   },
+   {
+    "value": "failure",
+    "name": "Failure"
+   }
+  ],
+  "UseNavigatorAIActivity": [
+   {
+    "value": "success",
+    "name": "Success"
+   },
+   {
+    "value": "failure",
+    "name": "Failure"
+   },
+   {
+    "value": "timed out",
+    "name": "Timed Out"
+   }
+  ]
+ }
+}

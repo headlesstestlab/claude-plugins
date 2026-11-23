@@ -1,0 +1,74 @@
+{
+  "id": "counterparty-record-setup",
+  "name": "Counterparty Record Setup",
+  "description": "Keeps the counterparty's party record current for an incoming contract: Find Party looks the counterparty up by name; when it exists, Edit Party updates its contact and phone from Params; when it does not, Add Party creates it with its type, contact and phone, into an XML variable. A Logger line closes each path.",
+  "variables": [
+    {
+      "name": "Found",
+      "type": "xml"
+    },
+    {
+      "name": "Created",
+      "type": "xml"
+    }
+  ],
+  "paramsSchema": "<Params><Documents><Document><Id/><Name/></Document></Documents><Counterparty/><ContactName/><Phone/></Params>",
+  "steps": [
+    {
+      "id": "find",
+      "name": "Find the counterparty",
+      "kind": "findParty",
+      "partyName": "<%#XmlVariables.Params.Counterparty%>",
+      "output": "Found",
+      "on": {
+        "match": "edit",
+        "noMatch": "add",
+        "failure": "logFailed"
+      }
+    },
+    {
+      "id": "edit",
+      "name": "Update the counterparty",
+      "kind": "editParty",
+      "partyId": "<%#XmlVariables.Found.Parties.CLMPartyData.CLMPartyId%>",
+      "contactName": "<%#XmlVariables.Params.ContactName%>",
+      "phone": "<%#XmlVariables.Params.Phone%>",
+      "on": {
+        "success": "logDone",
+        "failure": "logFailed"
+      }
+    },
+    {
+      "id": "add",
+      "name": "Create the counterparty",
+      "kind": "addParty",
+      "partyName": "<%#XmlVariables.Params.Counterparty%>",
+      "partyType": "Vendor",
+      "contactName": "<%#XmlVariables.Params.ContactName%>",
+      "phone": "<%#XmlVariables.Params.Phone%>",
+      "output": "Created",
+      "on": {
+        "success": "logDone",
+        "failure": "logFailed"
+      }
+    },
+    {
+      "id": "logDone",
+      "name": "Log party ready",
+      "kind": "logger",
+      "message": "Party record ready for <%#XmlVariables.Params.Counterparty%>",
+      "next": "finish"
+    },
+    {
+      "id": "logFailed",
+      "name": "Log failed",
+      "kind": "logger",
+      "message": "Failed: no party record for <%#XmlVariables.Params.Counterparty%>",
+      "next": "finish"
+    },
+    {
+      "id": "finish",
+      "kind": "finish"
+    }
+  ]
+}

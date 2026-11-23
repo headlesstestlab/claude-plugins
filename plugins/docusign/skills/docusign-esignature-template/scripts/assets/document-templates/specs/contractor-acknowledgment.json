@@ -1,0 +1,104 @@
+{
+  "id": "contractor-acknowledgment",
+  "name": "Contractor Confidentiality and Acceptable Use Acknowledgment",
+  "description": "An agency contractor placed with Fontara acknowledges, before or during an assignment, how Fontara's and its customers' information and systems may be used: confidentiality, acceptable use of accounts and devices, return of equipment and the end of access on the last day, and reporting a security incident.",
+  "agreementType": "Nda",
+  "fields": {
+    "fontara_entity": {
+      "label": "Fontara contracting entity",
+      "type": "select",
+      "options": [
+        "Fontara, Inc.",
+        "Fontara UK Ltd",
+        "Fontara Europe Ltd"
+      ],
+      "optionValues": {
+        "Fontara, Inc.": "Fontara, Inc., a Delaware corporation with its principal place of business at 1500 Harbor Boulevard, Suite 1200, San Francisco, CA 94111",
+        "Fontara UK Ltd": "Fontara UK Ltd, a company registered in England and Wales with its registered office at 48 Ashcombe Street, London EC2A 4NE, United Kingdom",
+        "Fontara Europe Ltd": "Fontara Europe Ltd, a company registered in Ireland with its registered office at 3 Riverside Quay, Dublin 2, D02 X285, Ireland"
+      },
+      "required": true,
+      "description": "Prints the entity’s full legal description and address"
+    },
+    "agency": {
+      "label": "Staffing agency that placed you",
+      "required": true,
+      "description": "The agency that employs you, for example: Pathway Placers, LLC"
+    },
+    "manager": {
+      "label": "Your Fontara manager",
+      "required": true
+    }
+  },
+  "signers": [
+    "Contractor"
+  ],
+  "body": [
+    {
+      "title": "CONTRACTOR CONFIDENTIALITY AND ACCEPTABLE USE ACKNOWLEDGMENT"
+    },
+    {
+      "p": "I am placed with {{fontara_entity}} (\"Fontara\") by {{agency}} (the \"Agency\"), which employs me. My Fontara manager is {{manager}}. I give this acknowledgment to Fontara directly, because my assignment gives me access to Fontara's systems and to information about Fontara's customers and their users."
+    },
+    {
+      "h": "1. Confidential Information"
+    },
+    {
+      "p": "I will keep confidential all non-public information I learn through my assignment, including Fontara's business information and its customers' data: the names, contact details, messages and files in support tickets, account settings and any data I handle in an implementation or migration. I will use it only to do the work Fontara assigns me, and I will not copy it, send it or keep it outside the systems Fontara provides. This duty continues after my assignment ends."
+    },
+    {
+      "h": "2. Acceptable Use of Accounts and Systems"
+    },
+    {
+      "p": "My Fontara accounts are for me alone. I will not share a password or a sign-in code, I will use multi-factor authentication where Fontara requires it, and I will access only the customers, tickets and records my work needs. I will not paste customer data into a tool or service Fontara has not approved, including an AI service, and I will not try to get around a security control. Fontara may monitor my use of its systems."
+    },
+    {
+      "h": "3. Devices"
+    },
+    {
+      "p": "I will work on customer data only on a device Fontara provides or approves, keep it locked and updated, and not use it for personal downloads or software Fontara has not approved. I will report a lost or stolen device to Fontara at once."
+    },
+    {
+      "h": "4. End of Assignment"
+    },
+    {
+      "p": "On my last day, or earlier if Fontara or the Agency asks, I will return every Fontara device and any copy of Fontara or customer information I hold, and my access to Fontara's systems will end. I will tell my Fontara manager if my assignment's end date changes."
+    },
+    {
+      "h": "5. Reporting an Incident"
+    },
+    {
+      "p": "I will report to Fontara's security team, within 24 hours of noticing it, anything that suggests customer data or a Fontara account has been seen, taken or used by someone not allowed to, including a request from anyone, inside or outside Fontara, to collect customer data for them."
+    },
+    {
+      "h": "6. My Employment"
+    },
+    {
+      "p": "This acknowledgment does not make me an employee of Fontara or change my employment with the Agency or the agreement between Fontara and the Agency. If I do not follow it, Fontara may end my access and ask the Agency to end my assignment with Fontara."
+    },
+    {
+      "p": "[[check:Contractor:Accepts the acknowledgment]] I have read this acknowledgment and agree to follow it from the date I sign it."
+    },
+    {
+      "sign": "Contractor",
+      "title": true,
+      "company": true
+    }
+  ],
+  "examples": [
+    {
+      "values": {
+        "fontara_entity": "Fontara, Inc.",
+        "agency": "Pathway Placers, LLC",
+        "manager": "Valentina Osei"
+      },
+      "expect": [
+        "placed with Fontara, Inc.",
+        "Pathway Placers, LLC",
+        "within 24 hours of noticing it",
+        "My Fontara manager is Valentina Osei"
+      ]
+    }
+  ],
+  "source": "written for the library for agency contractors (the IT and security story The support contractors with the keys); its terms follow the vault's AUP and Confidentiality clause headings, not their positions"
+}

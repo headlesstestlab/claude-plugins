@@ -1,0 +1,48 @@
+{
+  "id": "customer-onboarding-packet",
+  "from": "service-level-agreement",
+  "variant": {
+    "fontara_entity": "Fontara, Inc.",
+    "uptime": "99.9%"
+  },
+  "variantLabel": "Fontara, Inc.",
+  "name": "Customer Onboarding Packet (Fontara, Inc.)",
+  "summary": "Two documents in one envelope — the service level agreement and the Acceptable Use Policy. The customer fills both and signs both, Fontara signs the SLA, Fontara Legal gets a copy. Reminders after 2 days then every 3; expires in 30 days with a warning 5 days before; the account brand, locked.",
+  "owners": {
+    "default": "Customer",
+    "fields": {
+      "agreement": "Fontara",
+      "effective": "Fontara"
+    }
+  },
+  "documents": [
+    {
+      "from": "acceptable-use-policy",
+      "variant": {
+        "fontara_entity": "Fontara, Inc."
+      },
+      "variantLabel": "Fontara, Inc.",
+      "owners": {
+        "default": "Customer"
+      }
+    }
+  ],
+  "carbonCopies": [
+    {
+      "role": "Fontara Legal"
+    }
+  ],
+  "reminders": {
+    "delayDays": 2,
+    "frequencyDays": 3
+  },
+  "expiration": {
+    "afterDays": 30,
+    "warnDays": 5
+  },
+  "brand": {
+    "lock": true
+  },
+  "emailSubject": "Your Fontara onboarding documents",
+  "emailBlurb": "Please complete your details in both documents and sign."
+}

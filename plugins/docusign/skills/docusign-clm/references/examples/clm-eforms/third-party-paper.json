@@ -1,0 +1,97 @@
+{
+  "id": "third-party-paper",
+  "name": "Third-Party Paper Review",
+  "description": "Got a contract on the other side's paper? Attach it first, then answer a few questions. Legal reviews the draft and applies the metadata from this form to it.",
+  "submitFolder": "eForms/Third-Party Paper Review/Submitted",
+  "sections": [
+    {
+      "title": "Step 1: attach their draft",
+      "fields": [
+        {
+          "kind": "attachment",
+          "label": "Their draft",
+          "count": 1,
+          "required": true,
+          "help": "Word or PDF. Use + to add an order form, a quote or a redline. The form will not save without a file."
+        }
+      ]
+    },
+    {
+      "title": "Step 2: about the draft",
+      "fields": [
+        {
+          "kind": "select",
+          "id": "tppDocType",
+          "label": "What did they send?",
+          "options": [
+            "MSA",
+            "Order form or quote",
+            "NDA",
+            "Data Processing Agreement",
+            "Amendment",
+            "Other"
+          ]
+        },
+        {
+          "kind": "date",
+          "id": "tppNeededBy",
+          "label": "Review needed by"
+        },
+        {
+          "kind": "textarea",
+          "id": "tppNotes",
+          "label": "Anything Legal should know",
+          "help": "Deal context, terms you already agreed, or a deadline the counterparty gave you."
+        },
+        {
+          "kind": "attribute",
+          "attribute": "External Party.Business Name",
+          "label": "Counterparty legal name"
+        },
+        {
+          "kind": "attribute",
+          "attribute": "External Party.Party Type",
+          "label": "Relationship"
+        },
+        {
+          "kind": "attribute",
+          "attribute": "External Party.Contact Email",
+          "label": "Counterparty contact email"
+        },
+        {
+          "kind": "attribute",
+          "attribute": "Document.Information Classification",
+          "label": "Information classification",
+          "help": "Internal use if the draft has pricing or confidential terms."
+        },
+        {
+          "kind": "attribute",
+          "attribute": "Internal Entity.Entity Name",
+          "label": "Contracting entity",
+          "required": true
+        },
+        {
+          "kind": "attribute",
+          "attribute": "Internal Entity.Entity Business Unit",
+          "label": "Requesting business unit",
+          "required": true
+        },
+        {
+          "kind": "attribute",
+          "attribute": "Document.Document Owner",
+          "label": "Business owner",
+          "help": "The person Legal contacts with questions about the deal."
+        }
+      ]
+    }
+  ],
+  "attributeIds": {
+    "External Party.Business Name": "c0425376-6fb3-f111-93b3-e8e4a5d525fb",
+    "External Party.Party Type": "c5425376-6fb3-f111-93b3-e8e4a5d525fb",
+    "External Party.Contact Email": "c8425376-6fb3-f111-93b3-e8e4a5d525fb",
+    "Document.Information Classification": "b7425376-6fb3-f111-93b3-e8e4a5d525fb",
+    "Internal Entity.Entity Name": "d3425376-6fb3-f111-93b3-e8e4a5d525fb",
+    "Internal Entity.Entity Business Unit": "df425376-6fb3-f111-93b3-e8e4a5d525fb",
+    "Document.Document Owner": "af425376-6fb3-f111-93b3-e8e4a5d525fb"
+  }
+}

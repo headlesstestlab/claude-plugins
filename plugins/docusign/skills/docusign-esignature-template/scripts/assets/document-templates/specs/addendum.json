@@ -1,0 +1,260 @@
+{
+  "id": "addendum",
+  "name": "Addendum",
+  "description": "Add services to a signed agreement without renegotiating it: the additional services and inputs, their fees and cap, term and termination, and precedence.",
+  "agreementType": "Amendment",
+  "fields": {
+    "fontara_entity": {
+      "label": "Fontara contracting entity",
+      "type": "select",
+      "options": [
+        "Fontara, Inc.",
+        "Fontara UK Ltd",
+        "Fontara Europe Ltd"
+      ],
+      "optionValues": {
+        "Fontara, Inc.": "Fontara, Inc., a Delaware corporation with its principal place of business at 1500 Harbor Boulevard, Suite 1200, San Francisco, CA 94111",
+        "Fontara UK Ltd": "Fontara UK Ltd, a company registered in England and Wales with its registered office at 48 Ashcombe Street, London EC2A 4NE, United Kingdom",
+        "Fontara Europe Ltd": "Fontara Europe Ltd, a company registered in Ireland with its registered office at 3 Riverside Quay, Dublin 2, D02 X285, Ireland"
+      },
+      "required": true,
+      "description": "Prints the entity’s full legal description and address"
+    },
+    "currency": {
+      "label": "Currency",
+      "type": "select",
+      "options": [
+        "US$",
+        "£",
+        "€"
+      ],
+      "required": true,
+      "description": "The signing entity’s: US$ for Fontara, Inc., £ for Fontara UK Ltd, € for Fontara Europe Ltd"
+    },
+    "customer": {
+      "bind": {
+        "provision": "AgreementParty"
+      },
+      "required": true,
+      "description": "Customer legal name"
+    },
+    "customer_address": {
+      "label": "Customer street address",
+      "required": true
+    },
+    "customer_city": {
+      "label": "Customer city",
+      "required": true
+    },
+    "customer_region": {
+      "label": "Customer state",
+      "required": true
+    },
+    "customer_postal": {
+      "label": "Customer ZIP code",
+      "required": true
+    },
+    "customer_entity": {
+      "label": "Customer entity type",
+      "required": true,
+      "description": "For example: an Illinois corporation"
+    },
+    "addendum_number": {
+      "label": "Addendum number",
+      "required": true
+    },
+    "agreement": {
+      "label": "Agreement supplemented",
+      "required": true
+    },
+    "agreement_date": {
+      "label": "Agreement date",
+      "type": "date",
+      "required": true
+    },
+    "additional": {
+      "label": "Additional services",
+      "required": true
+    },
+    "inputs": {
+      "label": "Customer inputs",
+      "required": true
+    },
+    "fees": {
+      "label": "Annual fees for the additional services",
+      "type": "number",
+      "money": true,
+      "required": true
+    },
+    "price_cap": {
+      "label": "Renewal price-increase cap",
+      "type": "select",
+      "options": [
+        "3% a year",
+        "5% a year",
+        "7% a year"
+      ],
+      "required": false,
+      "description": "Used by the Balanced position only"
+    },
+    "position": {
+      "label": "Negotiated position",
+      "type": "select",
+      "options": [
+        "Balanced",
+        "Favours Fontara",
+        "Favours the counterparty"
+      ],
+      "required": true,
+      "description": "For the clauses most often negotiated"
+    },
+    "effective": {
+      "bind": {
+        "provision": "EffectiveDate"
+      },
+      "required": true
+    }
+  },
+  "signers": [
+    "Customer",
+    "Fontara"
+  ],
+  "body": [
+    {
+      "title": "ADDENDUM"
+    },
+    {
+      "p": "This Addendum No. {{addendum_number}} (this \"Addendum\"), effective {{effective}}, supplements the {{agreement}} dated {{agreement_date}} (the \"Agreement\") between {{fontara_entity}} (\"Vendor\") and **{{customer}}**, {{customer_entity}} with its principal place of business at {{customer_address}}, {{customer_city}}, {{customer_region}} {{customer_postal}} (\"Customer\")."
+    },
+    {
+      "p": "Additional services: {{additional}}. Fees: {{currency}}{{fees}} a year. Customer inputs on which the additional services depend: {{inputs}}."
+    },
+    {
+      "h": "1. Additional Services"
+    },
+    {
+      "p": "Vendor shall provide the additional services described in this Addendum as part of the Services, to the same standards and under the same terms as the existing Services. The additional services do not reduce, replace or change the existing Services, and work not described in this Addendum is outside its scope. Where the additional services depend on Customer inputs, this Addendum lists them, and Vendor is excused from a resulting delay only to the extent Customer fails to provide them."
+    },
+    {
+      "h": "2. Fees for Additional Services"
+    },
+    {
+      "if": {
+        "field": "position",
+        "is": "Balanced"
+      },
+      "then": [
+        {
+          "p": "Customer shall pay the fees for the additional services stated in this Addendum, invoiced and payable under the payment terms of the Agreement. Those fees are fixed for the first 12 months of the additional services and may then increase by no more than {{price_cap}}. The fees for the existing Services are unchanged by this Addendum."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "position",
+        "is": "Favours Fontara"
+      },
+      "then": [
+        {
+          "p": "Customer shall pay the fees for the additional services stated in this Addendum annually in advance from the effective date of this Addendum, whether or not Customer has begun to use them. The fees are non-cancellable and non-refundable for the term of the additional services, and Vendor may increase them at each anniversary by up to 8% or, if greater, the change in the consumer price index. Any discount on the existing Services does not apply to the additional services."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "position",
+        "is": "Favours the counterparty"
+      },
+      "then": [
+        {
+          "p": "Customer shall pay the fees for the additional services stated in this Addendum, invoiced monthly in arrears once each additional service is available for use, and the discount on the existing Services applies to them. Those fees are fixed for the term of the additional services, are prorated to end with the Agreement, and are subject to the same service credits, set-off and dispute rights as the fees for the existing Services."
+        }
+      ]
+    },
+    {
+      "h": "3. Term and Termination of Additional Services"
+    },
+    {
+      "p": "The additional services begin on the effective date of this Addendum and continue until the Agreement expires or terminates, renewing with it. Either party may end the additional services alone, without affecting the existing Services, by 90 days' written notice effective at the end of a contract year. Termination of the Agreement for any reason ends this Addendum on the same date."
+    },
+    {
+      "h": "4. Precedence and Incorporation"
+    },
+    {
+      "p": "This Addendum supplements the Agreement and forms part of it, and the terms of the Agreement apply to the additional services except where this Addendum expressly provides otherwise. If this Addendum conflicts with the Agreement, this Addendum governs, but only for the additional services. Except as set out in this Addendum, the Agreement continues unchanged and in full force."
+    },
+    {
+      "h": "5. General"
+    },
+    {
+      "p": "This Addendum is governed by the law that governs the Agreement, any dispute under it is resolved in the manner the Agreement provides, and notices under it are given as the Agreement provides. This Addendum is the entire agreement of the parties on its subject and may be amended only in a writing signed by both parties. It may be signed in counterparts and by electronic signature, each of which is an original."
+    },
+    {
+      "sign": "Customer",
+      "title": true,
+      "company": true
+    },
+    {
+      "sign": "Fontara",
+      "title": true,
+      "company": true
+    }
+  ],
+  "examples": [
+    {
+      "values": {
+        "effective": "09/01/2027",
+        "customer": "Nesis Biotech",
+        "customer_entity": "a Delaware corporation",
+        "customer_address": "3300 Life Sciences Drive",
+        "addendum_number": "1",
+        "agreement": "Master Services Agreement",
+        "agreement_date": "11/29/2026",
+        "additional": "the AI contract-extraction module for up to 5,000 documents a year",
+        "inputs": "access to the contract repository and a named reviewer",
+        "fees": "60000",
+        "price_cap": "5% a year",
+        "fontara_entity": "Fontara, Inc.",
+        "currency": "US$",
+        "position": "Balanced",
+        "customer_city": "Cambridge",
+        "customer_region": "MA",
+        "customer_postal": "02139"
+      },
+      "expect": [
+        "Addendum No. 1",
+        "US$60,000.00",
+        "no more than 5% a year",
+        "only for the additional services"
+      ]
+    },
+    {
+      "values": {
+        "effective": "10/01/2027",
+        "customer": "Helix Learning",
+        "customer_entity": "a Delaware corporation",
+        "customer_address": "2850 Life Sciences Parkway, Suite 250",
+        "addendum_number": "3",
+        "agreement": "Master Services Agreement",
+        "agreement_date": "04/06/2025",
+        "additional": "UK data residency for all Customer data",
+        "inputs": "a list of Customer's UK business units",
+        "fees": "24000",
+        "position": "Favours Fontara",
+        "fontara_entity": "Fontara UK Ltd",
+        "currency": "£",
+        "customer_city": "Cambridge",
+        "customer_region": "MA",
+        "customer_postal": "02142"
+      },
+      "expect": [
+        "£24,000.00",
+        "non-cancellable and non-refundable"
+      ],
+      "absent": [
+        "US$"
+      ]
+    }
+  ],
+  "source": "vault: Contracts/Clauses/Addendum"
+}

@@ -1,0 +1,15 @@
+{
+  "name": "demo-studio",
+  "owner": {
+    "name": "Steven Cooke"
+  },
+  "description": "Docusign demo skills for Claude Code (not an official Docusign product).",
+  "plugins": [
+    {
+      "name": "docusign",
+      "source": "./plugins/docusign",
+      "description": "The Docusign Claude skills in one install: docusign-ai-agent, docusign-clm, docusign-document-template, docusign-esignature-template, docusign-gen-salesforce, docusign-request-type, docusign-solution, docusign-webform, docusign-workflow.",
+      "version": "2026.1123.2347"
+    }
+  ]
+}

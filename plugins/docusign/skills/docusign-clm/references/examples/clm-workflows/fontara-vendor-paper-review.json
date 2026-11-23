@@ -1,0 +1,540 @@
+{
+  "id": "fontara-vendor-paper-review",
+  "name": "Vendor paper review",
+  "description": "Fontara's review of a vendor's own paper (buy side; the owner 11-21, CLM realism item 4 and 5). A contract dropped into /Intake/Vendor paper starts this workflow (smart rule 'Start vendor paper review', assets/clm-smart-rules/specs/fontara-vendor-paper.json), or Actions ▸ Start Workflow on the document. Docusign AI (Use Docusign AI, the site's mapping configuration) stages the agreement's type, party, value, dates and terms; Procurement checks them in a Review Data task (the human-review pattern of the site's own 'Testing' workflow), which writes the reviewed values to CLM Agreement Details; the run reads them back and files the reviewed party and type in Agreement Profile (Counterparty, Agreement Type: a required field the later tasks need). IT and Security approves the vendor's security, Privacy answers the DPA check (DPA attached / Needs DPA / No personal data -> Contract Process ▸ DPA Status), and Legal Operations checks the paper against Fontara's buy-side positions (Clause Library, buy side: liability cap, indemnity, renewal notice, governing law). Where it deviates, Legal approves Fontara's fallback clauses, Legal Operations checks in Fontara's markup, Procurement sends it to the vendor's counsel for external review, and the run waits for the returned version (checked in as a new version of the contract). Compare Document Versions writes the compare of the vendor's return against Fontara's markup as a new document in /Intake/Redline compares (CLM keeps the contract's own name on it: the step's document name is not applied, Test 4 2026-11-21), and Legal Operations reviews the returned redline (the task's preview compares it with the previous version): accept, another round, or escalate to Legal. Accepted paper is approved (Contract Process ▸ Approval Status Approved) and stays in the intake folder until it is signed (/Contracts holds only the sales deals of 'The deal that lands once': its report 'Contracts in flight' reads that whole folder). Every task is the presenter's (the site's task groups hold the presenter only).",
+  "variables": [
+    "Comments",
+    "VendorCounsel",
+    {
+      "name": "AiData",
+      "type": "xml"
+    },
+    {
+      "name": "Reviewed",
+      "type": "xml"
+    },
+    {
+      "name": "Compared",
+      "type": "document"
+    },
+    {
+      "name": "Returned",
+      "type": "document"
+    },
+    {
+      "name": "Updated",
+      "type": "document"
+    },
+    {
+      "name": "Doc",
+      "type": "xml"
+    },
+    {
+      "name": "PartyX",
+      "type": "xml"
+    },
+    {
+      "name": "TypeX",
+      "type": "xml"
+    },
+    "AgreementType"
+  ],
+  "steps": [
+    {
+      "id": "name",
+      "name": "Name the run",
+      "kind": "setWorkflowProcessName",
+      "processName": "Vendor paper review - <%#XmlVariables.Params.Documents.Document.Name%>",
+      "on": {
+        "success": "inReview",
+        "failure": "inReview"
+      }
+    },
+    {
+      "id": "inReview",
+      "name": "Mark In Review",
+      "kind": "updateMetadata",
+      "set": [
+        {
+          "attribute": "Contract Process.Status",
+          "value": "In Review"
+        },
+        {
+          "attribute": "Contract Process.Approval Status",
+          "value": "Pending"
+        },
+        {
+          "attribute": "Agreement Profile.Line of Business",
+          "value": "Procurement"
+        }
+      ],
+      "on": {
+        "success": "ai"
+      }
+    },
+    {
+      "id": "ai",
+      "name": "Use Docusign AI",
+      "kind": "useDocusignAi",
+      "output": "AiData",
+      "on": {
+        "success": "review",
+        "failure": "review",
+        "timedOut": "review"
+      }
+    },
+    {
+      "id": "review",
+      "name": "Review Data",
+      "kind": "reviewData",
+      "assignee": {
+        "taskGroup": "Procurement"
+      },
+      "displayName": "Check the AI's values: <%#XmlVariables.Params.Documents.Document.Name%>",
+      "stage": "Intake",
+      "subject": "Vendor paper to check: <%#XmlVariables.Params.Documents.Document.Name%>",
+      "instructions": "Docusign AI read the vendor's paper and staged these values. Check each one against the document (the suggestion shows its confidence), correct what is wrong, and Complete: the reviewed values are written to the agreement's CLM Agreement Details.",
+      "review": [
+        {
+          "attribute": "Document Type"
+        },
+        {
+          "attribute": "Party"
+        },
+        {
+          "attribute": "Total Contract Value"
+        },
+        {
+          "attribute": "Effective Date"
+        },
+        {
+          "attribute": "Expiration Date"
+        },
+        {
+          "attribute": "Renewal Term"
+        },
+        {
+          "attribute": "Renewal Notice Period"
+        },
+        {
+          "attribute": "Payment Duration"
+        },
+        {
+          "attribute": "Limitation of Liability"
+        },
+        {
+          "attribute": "Indemnity"
+        },
+        {
+          "attribute": "Assignable"
+        },
+        {
+          "attribute": "Termination Convenience"
+        }
+      ],
+      "output": "Reviewed",
+      "on": {
+        "success": "reread",
+        "failure": "reread"
+      }
+    },
+    {
+      "id": "reread",
+      "name": "Read the reviewed values",
+      "kind": "findDocument",
+      "output": "Doc",
+      "next": "xpParty"
+    },
+    {
+      "id": "xpParty",
+      "name": "Reviewed party",
+      "kind": "evaluateXPath",
+      "source": "Doc",
+      "xpath": "//Metadata[Group='CLM Agreement Details' and Field='Party Name']/Value",
+      "output": "PartyX",
+      "on": {
+        "match": "xpType",
+        "noMatch": "xpType",
+        "failure": "xpType"
+      }
+    },
+    {
+      "id": "xpType",
+      "name": "Reviewed type",
+      "kind": "evaluateXPath",
+      "source": "Doc",
+      "xpath": "//Metadata[Group='CLM Agreement Details' and Field='Type']/Value",
+      "output": "TypeX",
+      "on": {
+        "match": "agreementType",
+        "noMatch": "agreementType",
+        "failure": "agreementType"
+      }
+    },
+    {
+      "id": "agreementType",
+      "name": "Agreement type",
+      "kind": "setVariable",
+      "set": {
+        "AgreementType": {
+          "code": "var t = Convert.ToString(GetVariableValue(\"TypeX\")); if (t == \"Statement of Work\") return \"Statement Of Work\"; if (t == \"Nondisclosure Agreement\") return \"Non-Disclosure Agreement\"; var same = new[] { \"Master Service Agreement\", \"Services Agreement\", \"Order Form\", \"Amendment\", \"Change Order\", \"Purchase Order\", \"Lease\", \"Engagement Letter\" }; return Array.IndexOf(same, t) >= 0 ? t : \"Miscellaneous\";"
+        }
+      },
+      "next": "fileReviewed"
+    },
+    {
+      "id": "fileReviewed",
+      "name": "File the reviewed values",
+      "kind": "updateMetadata",
+      "set": [
+        {
+          "attribute": "Agreement Profile.Agreement Type",
+          "value": "<%#Variable.AgreementType%>"
+        },
+        {
+          "attribute": "Agreement Profile.Counterparty",
+          "value": "<%#XmlVariables.PartyX.Value%>"
+        }
+      ],
+      "on": {
+        "success": "security"
+      }
+    },
+    {
+      "id": "security",
+      "name": "Security review",
+      "kind": "approve",
+      "assignee": {
+        "taskGroup": "IT and Security"
+      },
+      "displayName": "Security review: <%#XmlVariables.Params.Documents.Document.Name%>",
+      "stage": "Security review",
+      "subject": "Security review needed: <%#XmlVariables.Params.Documents.Document.Name%>",
+      "instructions": "Check the vendor's security terms in its paper (security exhibit, breach notice, audit and certification clauses) and the vendor's tier: high for personal data or $1,000,000 a year or more, medium on site or $250,000 or more. Approve when the terms and the vendor's file meet Fontara's tier requirements; Reject to stop the review.",
+      "comments": "Yes",
+      "on": {
+        "approved": "securityOk",
+        "rejected": "securityNo"
+      }
+    },
+    {
+      "id": "securityOk",
+      "name": "Security approved",
+      "kind": "updateMetadata",
+      "set": [
+        {
+          "attribute": "Contract Process.Security Review",
+          "value": "Approved"
+        }
+      ],
+      "on": {
+        "success": "dpa"
+      }
+    },
+    {
+      "id": "securityNo",
+      "name": "Security rejected",
+      "kind": "updateMetadata",
+      "set": [
+        {
+          "attribute": "Contract Process.Security Review",
+          "value": "Rejected"
+        },
+        {
+          "attribute": "Contract Process.Approval Status",
+          "value": "Rejected"
+        }
+      ],
+      "on": {
+        "success": "logRejected"
+      }
+    },
+    {
+      "id": "dpa",
+      "name": "DPA check",
+      "kind": "choice",
+      "assignee": {
+        "taskGroup": "Privacy"
+      },
+      "displayName": "DPA check: <%#XmlVariables.Params.Documents.Document.Name%>",
+      "stage": "DPA check",
+      "subject": "DPA check: <%#XmlVariables.Params.Documents.Document.Name%>",
+      "instructions": "Does this vendor process personal data for Fontara? DPA attached: the vendor's data processing agreement is in the paper or signed already. Needs DPA: it will process personal data and no DPA is in place (the DPA is asked for with the markup). No personal data: it never receives personal data.",
+      "comments": "Yes",
+      "options": [
+        {
+          "label": "DPA attached",
+          "to": "dpaAttached"
+        },
+        {
+          "label": "Needs DPA",
+          "to": "dpaNeeded"
+        },
+        {
+          "label": "No personal data",
+          "to": "dpaNone"
+        }
+      ]
+    },
+    {
+      "id": "dpaAttached",
+      "name": "DPA attached",
+      "kind": "updateMetadata",
+      "set": [
+        {
+          "attribute": "Contract Process.DPA Status",
+          "value": "DPA attached"
+        }
+      ],
+      "on": {
+        "success": "positions"
+      }
+    },
+    {
+      "id": "dpaNeeded",
+      "name": "Needs DPA",
+      "kind": "updateMetadata",
+      "set": [
+        {
+          "attribute": "Contract Process.DPA Status",
+          "value": "Needs DPA"
+        }
+      ],
+      "on": {
+        "success": "positions"
+      }
+    },
+    {
+      "id": "dpaNone",
+      "name": "No personal data",
+      "kind": "updateMetadata",
+      "set": [
+        {
+          "attribute": "Contract Process.DPA Status",
+          "value": "No personal data"
+        }
+      ],
+      "on": {
+        "success": "positions"
+      }
+    },
+    {
+      "id": "positions",
+      "name": "Check against our positions",
+      "kind": "choice",
+      "assignee": {
+        "taskGroup": "Legal Operations"
+      },
+      "displayName": "Check the vendor's terms: <%#XmlVariables.Params.Documents.Document.Name%>",
+      "stage": "Legal review",
+      "subject": "Vendor paper against Fontara's positions: <%#XmlVariables.Params.Documents.Document.Name%>",
+      "instructions": "Read the vendor's liability cap, indemnity, renewal notice and governing law against Fontara's buy-side positions (Clause Library, buy side: each clause's Standard, Acceptable and Fallback wording). Within our positions: Standard or Acceptable throughout. Fallback needed: any clause below Acceptable (a cap under 12 months' fees or without carve-outs, Fontara indemnifying the vendor, non-renewal notice of 90 days or more, a non-US law for Fontara, Inc.); Legal approves the fallback wording next.",
+      "comments": "Yes",
+      "options": [
+        {
+          "label": "Within our positions",
+          "to": "file"
+        },
+        {
+          "label": "Fallback needed",
+          "to": "fallback"
+        }
+      ]
+    },
+    {
+      "id": "fallback",
+      "name": "Fallback clause approval",
+      "kind": "approve",
+      "assignee": {
+        "taskGroup": "Legal"
+      },
+      "displayName": "Approve fallback clauses: <%#XmlVariables.Params.Documents.Document.Name%>",
+      "stage": "Legal review",
+      "subject": "Fallback clauses to approve: <%#XmlVariables.Params.Documents.Document.Name%>",
+      "instructions": "The vendor's paper is outside Fontara's positions. Approve answering it with the clause library's Fallback wording (Clause Library, buy side) for each clause Legal Operations flagged, as the last position before walking away. Reject to walk away from this paper.",
+      "comments": "Yes",
+      "on": {
+        "approved": "markup",
+        "rejected": "walkAway"
+      }
+    },
+    {
+      "id": "markup",
+      "name": "Our markup",
+      "kind": "editDocument",
+      "assignee": {
+        "taskGroup": "Legal Operations"
+      },
+      "displayName": "Check in Fontara's markup: <%#XmlVariables.Params.Documents.Document.Name%>",
+      "stage": "Negotiation",
+      "subject": "Mark up the vendor's paper: <%#XmlVariables.Params.Documents.Document.Name%>",
+      "instructions": "Check in Fontara's markup as a new version of the contract: the approved fallback wording as tracked changes in the vendor's own document (Check Out, edit in Word, Check In), then Complete.",
+      "comments": "Yes",
+      "on": {
+        "completed": "counsel"
+      }
+    },
+    {
+      "id": "counsel",
+      "name": "Vendor counsel",
+      "kind": "setVariable",
+      "set": {
+        "VendorCounsel": "vendor-counsel@example.com"
+      },
+      "next": "send"
+    },
+    {
+      "id": "send",
+      "name": "Review and Send for External Review",
+      "kind": "externalReview",
+      "assignee": {
+        "taskGroup": "Procurement"
+      },
+      "toVar": "VendorCounsel",
+      "subject": "Send Fontara's markup to the vendor's counsel: <%#XmlVariables.Params.Documents.Document.Name%>",
+      "body": "Fontara's markup is checked in. Send it to the vendor's counsel for their review.",
+      "instructions": "Send Fontara's markup to the vendor's counsel (the To is their address from the intake). Check the email, then Send.",
+      "on": {
+        "sent": "wait",
+        "rejected": "positions"
+      },
+      "displayName": "Send Fontara's markup: <%#XmlVariables.Params.Documents.Document.Name%>",
+      "email": {
+        "subject": "Fontara's markup: <%#XmlVariables.Params.Documents.Document.Name%>",
+        "body": "Please find Fontara's markup of your paper attached, with our changes tracked. Review it online, upload your revised version with any further changes tracked, or accept it as is, and add your comments for our legal team."
+      }
+    },
+    {
+      "id": "wait",
+      "name": "Wait for External Review",
+      "kind": "waitExternalReview",
+      "outputDocuments": "Returned",
+      "updatedDocuments": "Updated",
+      "on": {
+        "completedWithDocument": "negotiating",
+        "completedWithoutDocument": "file",
+        "expired": "send",
+        "failure": "logFailed",
+        "manualOverride": "logFailed",
+        "invalidRecipient": "send"
+      }
+    },
+    {
+      "id": "negotiating",
+      "name": "Mark In Negotiation",
+      "kind": "updateMetadata",
+      "set": [
+        {
+          "attribute": "Contract Process.Status",
+          "value": "In Negotiation"
+        }
+      ],
+      "on": {
+        "success": "compare"
+      }
+    },
+    {
+      "id": "compare",
+      "name": "Compare Document Versions",
+      "kind": "compareDocumentVersions",
+      "with": "previous",
+      "newDocument": {
+        "name": "<%#XmlVariables.Params.Documents.Document.Name%>",
+        "folder": {
+          "path": "/Intake/Redline compares"
+        }
+      },
+      "output": "Compared",
+      "on": {
+        "success": "redline",
+        "failure": "redline",
+        "timedOut": "redline",
+        "compareTimeout": "redline",
+        "noVersion": "redline"
+      }
+    },
+    {
+      "id": "redline",
+      "name": "Review the vendor's redline",
+      "kind": "choice",
+      "assignee": {
+        "taskGroup": "Legal Operations"
+      },
+      "compareWithPrevious": true,
+      "displayName": "Review the vendor's redline: <%#XmlVariables.Params.Documents.Document.Name%>",
+      "stage": "Negotiation",
+      "subject": "The vendor returned its redline: <%#XmlVariables.Params.Documents.Document.Name%>",
+      "instructions": "The vendor's counsel returned the contract with their changes; it is the newest version, and this task opens on Version history comparing it with Fontara's markup (their comments in the margin). The same compare is kept as a document in Intake/Redline compares. Accept their changes: within the approved fallback. Another round: check in Fontara's answer and send it again. Escalate: a change goes past the fallback, Legal decides.",
+      "comments": "Yes",
+      "options": [
+        {
+          "label": "Accept their changes",
+          "to": "file"
+        },
+        {
+          "label": "Another round",
+          "to": "markup"
+        },
+        {
+          "label": "Escalate to Legal",
+          "to": "fallback"
+        }
+      ]
+    },
+    {
+      "id": "file",
+      "name": "Approve the paper",
+      "kind": "updateMetadata",
+      "set": [
+        {
+          "attribute": "Contract Process.Approval Status",
+          "value": "Approved"
+        }
+      ],
+      "on": {
+        "success": "notify"
+      }
+    },
+    {
+      "id": "notify",
+      "name": "Tell the requester",
+      "kind": "emailDocument",
+      "to": "submitter",
+      "subject": "Vendor paper approved: <%#XmlVariables.Params.Documents.Document.Name%>",
+      "next": "finish"
+    },
+    {
+      "id": "walkAway",
+      "name": "Walk away",
+      "kind": "updateMetadata",
+      "set": [
+        {
+          "attribute": "Contract Process.Approval Status",
+          "value": "Rejected"
+        }
+      ],
+      "on": {
+        "success": "logRejected"
+      }
+    },
+    {
+      "id": "logRejected",
+      "name": "Log rejected",
+      "kind": "logger",
+      "message": "Vendor paper review of <%#XmlVariables.Params.Documents.Document.Name%>: rejected",
+      "next": "finish"
+    },
+    {
+      "id": "logFailed",
+      "name": "Log external review ended",
+      "kind": "logger",
+      "message": "External review of <%#XmlVariables.Params.Documents.Document.Name%> ended without a return",
+      "next": "finish"
+    },
+    {
+      "id": "finish",
+      "name": "Finish",
+      "kind": "finish"
+    }
+  ]
+}

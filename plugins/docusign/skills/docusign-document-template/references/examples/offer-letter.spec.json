@@ -1,0 +1,299 @@
+{
+  "id": "offer-letter",
+  "name": "Offer Letter",
+  "agreementType": "OfferLetter",
+  "description": "An offer of employment: role, start date, salary or hourly pay, bonus target and equity, work arrangement, conditions — and the candidate’s acceptance.",
+  "fields": {
+    "candidate": {
+      "bind": {
+        "provision": "AgreementParty"
+      },
+      "required": true,
+      "description": "Candidate name"
+    },
+    "title": {
+      "label": "Job title",
+      "required": true
+    },
+    "start": {
+      "bind": {
+        "provision": "HireDate"
+      },
+      "required": true
+    },
+    "type": {
+      "label": "Employment type",
+      "type": "select",
+      "options": [
+        "Full-time, exempt",
+        "Part-time, non-exempt"
+      ],
+      "required": true
+    },
+    "salary": {
+      "label": "Annual base salary (USD, exempt)",
+      "type": "number",
+      "money": true
+    },
+    "hourly_rate": {
+      "label": "Hourly rate (USD, non-exempt)",
+      "type": "number",
+      "money": true
+    },
+    "bonus": {
+      "label": "Signing bonus (USD)",
+      "type": "number",
+      "money": true
+    },
+    "bonus_target": {
+      "label": "Annual bonus target (% of salary)",
+      "type": "number"
+    },
+    "equity": {
+      "label": "Stock options",
+      "type": "number"
+    },
+    "arrangement": {
+      "label": "Work arrangement",
+      "type": "select",
+      "options": [
+        "On-site",
+        "Hybrid",
+        "Remote"
+      ],
+      "required": true
+    },
+    "manager": {
+      "label": "Hiring manager",
+      "required": true
+    },
+    "location": {
+      "bind": {
+        "provision": "EmploymentLocation"
+      },
+      "required": true
+    },
+    "expires": {
+      "label": "Offer expires",
+      "type": "date",
+      "required": true
+    }
+  },
+  "signers": [
+    "Fontara",
+    "Candidate"
+  ],
+  "body": [
+    {
+      "title": "OFFER OF EMPLOYMENT"
+    },
+    {
+      "p": "Fontara, Inc. · 1500 Harbor Boulevard, Suite 1200, San Francisco, CA 94111"
+    },
+    {
+      "p": "Dear {{candidate}},"
+    },
+    {
+      "p": "We are delighted to offer you the position of **{{title}}** at Fontara, Inc. (\"Fontara\"), reporting to {{manager}} and based in {{location}}, with an anticipated start date of {{start}}."
+    },
+    {
+      "h": "Compensation"
+    },
+    {
+      "if": {
+        "field": "type",
+        "is": "Full-time, exempt"
+      },
+      "then": [
+        {
+          "p": "Your annual base salary will be US${{salary}}, paid semi-monthly and subject to applicable withholdings."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "type",
+        "is": "Part-time, non-exempt"
+      },
+      "then": [
+        {
+          "p": "You will be paid US${{hourly_rate}} per hour for all hours worked, paid semi-monthly, with overtime as the law requires and subject to applicable withholdings."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "bonus_target",
+        "gt": 0
+      },
+      "then": [
+        {
+          "p": "You will be eligible for an annual performance bonus with a target of {{bonus_target}}% of your base salary under Fontara's bonus plan as in effect each year. Any bonus is at Fontara's discretion, and you must be employed on the payment date to receive it."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "equity",
+        "gt": 0
+      },
+      "then": [
+        {
+          "p": "Subject to approval by Fontara's Board of Directors, you will be granted an option to purchase {{equity}} shares of Fontara's common stock under Fontara's 2024 Equity Incentive Plan, at an exercise price equal to the fair market value on the grant date, vesting over four years with 25% vesting on the first anniversary of your start date and the rest quarterly after that, subject to the plan and your option agreement."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "bonus",
+        "gt": 0
+      },
+      "then": [
+        {
+          "p": "You will receive a one-time signing bonus of US${{bonus}}, paid with your first regular paycheck and repayable in full if you resign within twelve months of your start date."
+        }
+      ]
+    },
+    {
+      "h": "Employment"
+    },
+    {
+      "if": {
+        "field": "type",
+        "is": "Full-time, exempt"
+      },
+      "then": [
+        {
+          "p": "This is a full-time, exempt position, eligible for Fontara’s medical, dental, vision and 401(k) plans and for paid time off under Fontara’s policy."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "type",
+        "is": "Part-time, non-exempt"
+      },
+      "then": [
+        {
+          "p": "This is a part-time, non-exempt position. Benefits eligibility follows the plan documents."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "arrangement",
+        "is": "On-site"
+      },
+      "then": [
+        {
+          "p": "You will work on-site at our {{location}} office."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "arrangement",
+        "is": "Hybrid"
+      },
+      "then": [
+        {
+          "p": "You will work in a hybrid arrangement, on-site at our {{location}} office at least three days a week."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "arrangement",
+        "is": "Remote"
+      },
+      "then": [
+        {
+          "p": "You will work remotely from your home in {{location}}, and travel to Fontara offices as reasonably required."
+        }
+      ]
+    },
+    {
+      "p": "Your employment is at will: either you or Fontara may end it at any time, with or without cause or notice. This offer is contingent on a satisfactory background check; on proof of your eligibility to work in the United States, for which you must complete Form I-9 and provide the required documents within three business days after your start date; and on your signing Fontara’s Employee Confidentiality and Invention Assignment Agreement and its Mutual Arbitration Agreement."
+    },
+    {
+      "p": "This letter, with the agreements it refers to, is the entire agreement about the terms of your employment and supersedes any prior representations or agreements, written or oral. It may be changed only in a writing signed by you and an authorized officer of Fontara, although Fontara may change your compensation, benefits and duties from time to time."
+    },
+    {
+      "p": "This offer expires on {{expires}}."
+    },
+    {
+      "sign": "Fontara",
+      "title": true,
+      "company": true
+    },
+    {
+      "h": "Acceptance"
+    },
+    {
+      "p": "Candidate decision: [[radio:Candidate:Decision:I accept this offer|I decline this offer]]"
+    },
+    {
+      "p": "[[check:Candidate:At-will acknowledgement]] I understand my employment is at will."
+    },
+    {
+      "p": "Personal email for onboarding: [[email:Candidate:Personal email]]"
+    },
+    {
+      "sign": "Candidate",
+      "title": false
+    }
+  ],
+  "examples": [
+    {
+      "values": {
+        "candidate": "Payal Tanaka",
+        "title": "Revenue Accountant",
+        "start": "06/07/2027",
+        "type": "Full-time, exempt",
+        "salary": "98000",
+        "bonus": "10000",
+        "bonus_target": "10",
+        "equity": "1200",
+        "arrangement": "Hybrid",
+        "manager": "Thomas Anderson",
+        "location": "San Francisco, California",
+        "expires": "05/14/2027"
+      },
+      "expect": [
+        "US$98,000.00",
+        "signing bonus of US$10,000.00",
+        "target of 10%",
+        "2024 Equity Incentive Plan",
+        "at least three days a week",
+        "Form I-9"
+      ],
+      "absent": [
+        "per hour for all hours worked"
+      ]
+    },
+    {
+      "values": {
+        "candidate": "Jordan Avery",
+        "title": "Legal Operations Coordinator",
+        "start": "06/14/2027",
+        "type": "Part-time, non-exempt",
+        "hourly_rate": "32.50",
+        "arrangement": "Remote",
+        "manager": "Maya Patel",
+        "location": "Sacramento, California",
+        "expires": "05/21/2027"
+      },
+      "expect": [
+        "US$32.50 per hour",
+        "part-time, non-exempt",
+        "work remotely"
+      ],
+      "absent": [
+        "signing bonus",
+        "annual base salary",
+        "Equity Incentive Plan"
+      ]
+    }
+  ],
+  "source": "written for the library — no vault clause set for this type"
+}

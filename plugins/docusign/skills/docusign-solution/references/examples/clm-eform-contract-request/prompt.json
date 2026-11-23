@@ -1,0 +1,108 @@
+{
+  "id": "clm-eform-contract-request",
+  "prompt": "In CLM, business users should ask Legal for a contract through a form inside CLM: request type, agreement type, our contracting entity and business unit, the counterparty, estimated value, target date, and their draft when it is on the counterparty's paper. Counterparty, entity and business unit must be searchable in CLM. Each submission should start a CLM workflow that sends the request to Legal.",
+  "industry": "manufacturing",
+  "department": "legal",
+  "variation_tags": {
+    "start": [
+      "clm"
+    ],
+    "routing": [
+      "none"
+    ],
+    "approvals": [
+      "none"
+    ],
+    "data_source": [
+      "form"
+    ],
+    "locale": [
+      "en-US"
+    ],
+    "currency": [
+      "USD"
+    ],
+    "platform": "clm",
+    "ai": [
+      "none"
+    ],
+    "documents": [
+      "uploaded"
+    ],
+    "logic": [
+      "conditional-fields"
+    ],
+    "notifications": [
+      "email"
+    ],
+    "identity": [
+      "none"
+    ],
+    "payment": false,
+    "agreement_desk": false
+  },
+  "expected_assets": [
+    {
+      "kind": "clm-eform",
+      "purpose": "contract request intake",
+      "features": [
+        "attribute fields for counterparty, entity and business unit",
+        "custom answers for request type, agreement type, value and target date",
+        "attachment shown only when the paper is theirs, required then",
+        "submit folder",
+        "Set Workflow"
+      ]
+    },
+    {
+      "kind": "clm-workflow",
+      "purpose": "hand the request to Legal",
+      "features": [
+        "Params schema with CustomFormFields",
+        "Email Document to Legal with the answers merged",
+        "failure path",
+        "Finish"
+      ]
+    }
+  ],
+  "acceptance": [
+    "counterparty, entity and business unit are attribute fields; the other answers are custom ids in camelCase",
+    "the draft upload shows only when the paper is theirs and Save is blocked without it then",
+    "the eForm's Set Workflow names the CLM workflow, which is published first",
+    "the workflow reads the custom answers at Params CustomFormFields"
+  ],
+  "hard_parts": [
+    "attribute field ids are the account's: Generate Sample Form, or the account values",
+    "every Save of the eForm turns off Allow Submission",
+    "a show-if rule does not run in the designer Preview"
+  ],
+  "clarifying_questions": [
+    {
+      "question": "Which answers must be searchable or route the workflow (attributes), and which are form-only?",
+      "default": "party, entity, business unit and the third-party flag are attributes; request type, agreement type, value and dates are form answers"
+    }
+  ],
+  "capabilities": [
+    "clm-eform.field.attribute",
+    "clm-eform.field.attribute-label",
+    "clm-eform.field.custom-text",
+    "clm-eform.field.custom-select",
+    "clm-eform.field.custom-number",
+    "clm-eform.field.custom-date",
+    "clm-eform.field.custom-textarea",
+    "clm-eform.field.attachment",
+    "clm-eform.rule.show-if",
+    "clm-eform.check.required-attribute",
+    "clm-eform.check.required-custom",
+    "clm-eform.check.required-conditional",
+    "clm-eform.layout.sections",
+    "clm-eform.setting.submit-folder",
+    "clm-eform.setting.allow-submission",
+    "clm-eform.setting.set-workflow",
+    "clm-eform.setting.custom-form-fields",
+    "clm-eform.setting.attribute-ids-placeholder",
+    "clm-workflow.variable.params",
+    "clm-workflow.variable.params-schema",
+    "clm-workflow.step.email-document",
+    "clm-workflow.step.finish"
+  ]
+}

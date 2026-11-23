@@ -1,0 +1,317 @@
+{
+  "id": "notice-of-non-renewal",
+  "name": "Notice of Non-Renewal or Termination",
+  "agreementType": "Termination",
+  "description": "A one-signature letter from Fontara ending a vendor agreement: non-renewal, termination for convenience, or for breach with a cure period — the clause relied on, the end date and a data-return request.",
+  "fields": {
+    "fontara_entity": {
+      "label": "Fontara contracting entity",
+      "type": "select",
+      "options": [
+        "Fontara, Inc.",
+        "Fontara UK Ltd",
+        "Fontara Europe Ltd"
+      ],
+      "optionValues": {
+        "Fontara, Inc.": "Fontara, Inc., a Delaware corporation with its principal place of business at 1500 Harbor Boulevard, Suite 1200, San Francisco, CA 94111",
+        "Fontara UK Ltd": "Fontara UK Ltd, a company registered in England and Wales with its registered office at 48 Ashcombe Street, London EC2A 4NE, United Kingdom",
+        "Fontara Europe Ltd": "Fontara Europe Ltd, a company registered in Ireland with its registered office at 3 Riverside Quay, Dublin 2, D02 X285, Ireland"
+      },
+      "required": true,
+      "description": "Prints the entity’s full legal description and address"
+    },
+    "effective": {
+      "bind": {
+        "provision": "ExecutionDate"
+      },
+      "required": true,
+      "description": "Date of the notice"
+    },
+    "counterparty": {
+      "bind": {
+        "provision": "AgreementParty"
+      },
+      "required": true,
+      "description": "Recipient legal name"
+    },
+    "counterparty_entity": {
+      "label": "Recipient entity type",
+      "required": true,
+      "description": "For example: a Delaware corporation"
+    },
+    "counterparty_address": {
+      "label": "Recipient street address",
+      "required": true
+    },
+    "counterparty_city": {
+      "label": "Recipient city",
+      "required": true
+    },
+    "counterparty_region": {
+      "label": "Recipient state",
+      "required": true
+    },
+    "counterparty_postal": {
+      "label": "Recipient ZIP code",
+      "required": true
+    },
+    "attention": {
+      "label": "Attention (name and title)",
+      "required": true
+    },
+    "agreement": {
+      "label": "Agreement",
+      "required": true
+    },
+    "agreement_date": {
+      "label": "Agreement date",
+      "type": "date",
+      "required": true
+    },
+    "section": {
+      "label": "Section relied on",
+      "required": true
+    },
+    "reason": {
+      "label": "Notice type",
+      "type": "select",
+      "options": [
+        "Non-renewal",
+        "Termination for convenience",
+        "Termination for breach"
+      ],
+      "required": true
+    },
+    "end_date": {
+      "bind": {
+        "provision": "ExpirationDate"
+      },
+      "required": true,
+      "description": "When the agreement ends"
+    },
+    "breach": {
+      "label": "Breach (for breach only)"
+    },
+    "cure_days": {
+      "label": "Cure period in days (for breach only)",
+      "type": "number"
+    },
+    "data_return": {
+      "label": "Request return of Fontara data",
+      "type": "select",
+      "options": [
+        "Yes",
+        "No"
+      ],
+      "required": true
+    }
+  },
+  "signers": [
+    "Fontara",
+    "Counterparty"
+  ],
+  "body": [
+    {
+      "if": {
+        "field": "reason",
+        "is": "Non-renewal"
+      },
+      "then": [
+        {
+          "title": "NOTICE OF NON-RENEWAL"
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "reason",
+        "is": "Termination for convenience"
+      },
+      "then": [
+        {
+          "title": "NOTICE OF TERMINATION"
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "reason",
+        "is": "Termination for breach"
+      },
+      "then": [
+        {
+          "title": "NOTICE OF BREACH AND TERMINATION"
+        }
+      ]
+    },
+    {
+      "p": "{{effective}}"
+    },
+    {
+      "p": "By courier and by email"
+    },
+    {
+      "p": "**{{counterparty}}**, {{counterparty_entity}}, {{counterparty_address}}, {{counterparty_city}}, {{counterparty_region}} {{counterparty_postal}}. Attention: {{attention}}."
+    },
+    {
+      "p": "**Re: {{agreement}} dated {{agreement_date}} (the \"Agreement\")**"
+    },
+    {
+      "if": {
+        "field": "reason",
+        "is": "Non-renewal"
+      },
+      "then": [
+        {
+          "p": "Under Section {{section}} of the Agreement, {{fontara_entity}} (\"Fontara\") gives notice that it will not renew the Agreement. The Agreement will expire at the end of its current term on {{end_date}}, and Fontara does not consent to any automatic renewal or extension of it."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "reason",
+        "is": "Termination for convenience"
+      },
+      "then": [
+        {
+          "p": "Under Section {{section}} of the Agreement, {{fontara_entity}} (\"Fontara\") terminates the Agreement for convenience, with effect on {{end_date}}."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "reason",
+        "is": "Termination for breach"
+      },
+      "then": [
+        {
+          "p": "Under Section {{section}} of the Agreement, {{fontara_entity}} (\"Fontara\") gives notice of the following material breach of the Agreement: {{breach}}. Unless the breach is cured within {{cure_days}} days after the date of this notice, the Agreement terminates on {{end_date}} without further notice."
+        }
+      ]
+    },
+    {
+      "p": "Each party remains bound by the Agreement until it ends. Please send Fontara a final invoice for amounts accrued through that date."
+    },
+    {
+      "if": {
+        "field": "data_return",
+        "is": "Yes"
+      },
+      "then": [
+        {
+          "p": "As the Agreement provides, please return all Fontara data in a commonly used, machine-readable format within 30 days after the Agreement ends, then delete all copies and certify the deletion to Fontara in writing."
+        }
+      ]
+    },
+    {
+      "p": "This notice is given without prejudice to Fontara's rights and remedies under the Agreement and at law, all of which are reserved."
+    },
+    {
+      "p": "Sincerely,"
+    },
+    {
+      "sign": "Fontara",
+      "title": true,
+      "company": true
+    },
+    {
+      "p": "**Receipt acknowledged** on behalf of {{counterparty}}:"
+    },
+    {
+      "sign": "Counterparty"
+    }
+  ],
+  "examples": [
+    {
+      "values": {
+        "effective": "11/15/2027",
+        "counterparty": "Stellogica",
+        "counterparty_entity": "a Delaware corporation",
+        "counterparty_address": "4200 Innovation Circle",
+        "attention": "Nadia Petrova, General Counsel",
+        "agreement": "Subscription Agreement",
+        "agreement_date": "01/23/2026",
+        "section": "2.2",
+        "reason": "Non-renewal",
+        "end_date": "02/29/2028",
+        "data_return": "Yes",
+        "fontara_entity": "Fontara, Inc.",
+        "counterparty_city": "Bellevue",
+        "counterparty_region": "WA",
+        "counterparty_postal": "98004"
+      },
+      "expect": [
+        "NOTICE OF NON-RENEWAL",
+        "will not renew the Agreement",
+        "02/29/2028",
+        "machine-readable format",
+        "Nadia Petrova"
+      ],
+      "absent": [
+        "material breach"
+      ]
+    },
+    {
+      "values": {
+        "effective": "10/22/2026",
+        "counterparty": "MarketPulse Dynamics",
+        "counterparty_entity": "a Georgia corporation",
+        "counterparty_address": "900 Marketing Row",
+        "attention": "Marcus Clark, Account Director",
+        "agreement": "Master Services Agreement",
+        "agreement_date": "12/20/2025",
+        "section": "3.2",
+        "reason": "Non-renewal",
+        "end_date": "11/26/2026",
+        "data_return": "Yes",
+        "fontara_entity": "Fontara, Inc.",
+        "counterparty_city": "Atlanta",
+        "counterparty_region": "GA",
+        "counterparty_postal": "30308"
+      },
+      "expect": [
+        "NOTICE OF NON-RENEWAL",
+        "will not renew the Agreement",
+        "11/26/2026",
+        "Marcus Clark",
+        "Fontara, Inc."
+      ],
+      "absent": [
+        "material breach",
+        "Fontara UK Ltd"
+      ]
+    },
+    {
+      "values": {
+        "effective": "06/01/2027",
+        "counterparty": "Precisys Health Analytics",
+        "counterparty_entity": "a Delaware corporation",
+        "counterparty_address": "2100 Medical Plaza",
+        "attention": "Carla Brack, VP of Customer Success",
+        "agreement": "Master Services Agreement",
+        "agreement_date": "11/04/2025",
+        "section": "12.2(b)",
+        "reason": "Termination for breach",
+        "end_date": "07/15/2027",
+        "breach": "repeated failure to deliver the monthly analytics reports on time",
+        "cure_days": "30",
+        "data_return": "No",
+        "fontara_entity": "Fontara UK Ltd",
+        "counterparty_city": "San Diego",
+        "counterparty_region": "CA",
+        "counterparty_postal": "92121"
+      },
+      "expect": [
+        "NOTICE OF BREACH AND TERMINATION",
+        "material breach",
+        "within 30 days",
+        "Fontara UK Ltd"
+      ],
+      "absent": [
+        "will not renew",
+        "machine-readable format"
+      ]
+    }
+  ],
+  "source": "written for the library — no vault clause set for this type"
+}

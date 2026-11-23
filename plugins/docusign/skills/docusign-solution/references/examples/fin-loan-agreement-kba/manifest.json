@@ -1,0 +1,25 @@
+{
+  "id": "fin-loan-agreement-kba",
+  "name": "Small business loan agreements from the loan system",
+  "description": "The loan system starts the workflow by API with the borrower, amount, APR and term, and a co-borrower when there is one. The workflow prepares the loan agreement's eSignature template with those values; each borrower passes knowledge-based authentication (US KBA) before signing, then the officer countersigns. Without a co-borrower, the template has no co-borrower role.",
+  "workflows": [
+    "business-loan-agreement"
+  ],
+  "prerequisites": [
+    "The loan system calls the workflow's API trigger as the loan officer (a human start).",
+    "ID Verification with the US KBA workflow (\"IDV (US KBA)\") is enabled on the account; KBA is US-only.",
+    "KBA is set on the eSignature template's borrower roles (per-role ID Verification), so each borrower answers it when they open the envelope. To check a borrower before the agreement is prepared instead, a Verify Someone's Identity step with \"configuration\": \"kba\" does it in the workflow."
+  ],
+  "gaps": [
+    {
+      "need": "the payment schedule chosen per loan",
+      "instead": "the templates fix monthly payments: a dropdown in an eSignature template is fixed at build time"
+    }
+  ],
+  "esignTemplates": [
+    "business-loan-agreement-kba"
+  ],
+  "integration": [
+    "The loan system sends `apr` as TEXT with two decimals (\"7.50\", not 7.5): the eSignature template's tab prints the value exactly as sent, and a number would print \"7.5\"."
+  ]
+}

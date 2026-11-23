@@ -1,0 +1,235 @@
+{
+  "id": "vendor-risk-assessment",
+  "name": "Vendor Security Assessment",
+  "description": "Security/IT's vendor risk review before signature, with the Data Protection Officer (Alexandra Kim) when personal data is involved: data, hosting, access, sub-processors and AI. Raise it when a vendor or software request handles personal data.",
+  "pages": [
+    {
+      "title": "Vendor Security Assessment",
+      "fields": [
+        {
+          "key": "party",
+          "bind": {
+            "provision": "Party"
+          },
+          "label": "Vendor",
+          "required": true
+        },
+        {
+          "key": "subject_title_note",
+          "type": "description",
+          "text": "**Product or service:** put it in the request title above the form."
+        },
+        {
+          "key": "existing",
+          "type": "text",
+          "label": "Related request or agreement",
+          "bind": {
+            "custom": "IntakeExistingAgreement",
+            "label": "Related Agreement"
+          },
+          "description": "The vendor or software request this assessment supports, or the agreement it covers."
+        },
+        {
+          "key": "data_class",
+          "type": "dropdown",
+          "label": "Highest class of Fontara data involved",
+          "bind": {
+            "custom": "DeskDataClass",
+            "label": "Data Class",
+            "type": "Dropdown",
+            "accountWideOptions": true
+          },
+          "options": [
+            "Public",
+            "Internal",
+            "Confidential",
+            "Restricted (special-category, children's or financial data)"
+          ],
+          "required": true
+        },
+        {
+          "key": "data_details",
+          "type": "longtext",
+          "label": "What personal data, about whom?",
+          "bind": {
+            "custom": "IntakeDataDetails",
+            "label": "Personal Data Description"
+          },
+          "description": "Leave blank if no personal data."
+        },
+        {
+          "key": "regions",
+          "type": "dropdown",
+          "label": "Where will the data be hosted?",
+          "bind": {
+            "custom": "DeskDataLocation",
+            "label": "Data Location",
+            "type": "Dropdown",
+            "accountWideOptions": true
+          },
+          "options": [
+            "United States",
+            "United Kingdom",
+            "EU or EEA",
+            "Multiple regions",
+            "Unknown"
+          ],
+          "required": true
+        },
+        {
+          "key": "onsite",
+          "type": "dropdown",
+          "label": "Will it connect to Fontara systems (SSO, APIs, data sync)?",
+          "bind": {
+            "custom": "DeskOnsite",
+            "label": "Site or System Access",
+            "type": "Dropdown",
+            "accountWideOptions": true
+          },
+          "options": [
+            "Yes",
+            "No"
+          ],
+          "required": true
+        },
+        {
+          "key": "subcontractors",
+          "type": "dropdown",
+          "label": "Does the vendor use sub-processors?",
+          "bind": {
+            "custom": "DeskSubprocessors",
+            "label": "Sub-processors Used",
+            "type": "Dropdown",
+            "accountWideOptions": true
+          },
+          "options": [
+            "Yes",
+            "No",
+            "Unknown"
+          ],
+          "required": true
+        },
+        {
+          "key": "ai_use",
+          "type": "dropdown",
+          "label": "Does the vendor use AI on Fontara data, or train models on it?",
+          "bind": {
+            "custom": "DeskAIUse",
+            "label": "AI on Fontara Data",
+            "type": "Dropdown",
+            "accountWideOptions": true
+          },
+          "options": [
+            "Yes",
+            "No",
+            "Unknown"
+          ],
+          "required": true
+        },
+        {
+          "key": "details",
+          "type": "longtext",
+          "label": "What has the vendor provided so far?",
+          "bind": {
+            "custom": "RequestDescription"
+          },
+          "description": "SOC 2 Type II, ISO 27001, pen-test summary, completed questionnaire."
+        },
+        {
+          "key": "entity",
+          "type": "dropdown",
+          "label": "Fontara contracting entity",
+          "bind": {
+            "custom": "DeskFontaraEntity",
+            "label": "Contracting Entity",
+            "type": "Dropdown",
+            "accountWideOptions": true
+          },
+          "options": [
+            "Fontara, Inc.",
+            "Fontara UK Ltd",
+            "Fontara Europe Ltd"
+          ],
+          "required": true,
+          "description": "The Fontara company that signs. US business: Fontara, Inc. UK: Fontara UK Ltd. EU: Fontara Europe Ltd."
+        },
+        {
+          "key": "cost_center",
+          "type": "text",
+          "label": "Cost center",
+          "bind": {
+            "custom": "IntakeCostCenter",
+            "label": "Cost Center"
+          },
+          "required": false,
+          "description": "The cost center that pays, e.g. 4100-Marketing."
+        },
+        {
+          "key": "owner",
+          "type": "text",
+          "label": "Business owner",
+          "bind": {
+            "custom": "BusinessOwnerName"
+          },
+          "required": true,
+          "description": "The person accountable for the vendor relationship."
+        },
+        {
+          "key": "urgency",
+          "type": "dropdown",
+          "label": "Urgency",
+          "bind": {
+            "custom": "DeskUrgency",
+            "label": "Urgency",
+            "type": "Dropdown",
+            "accountWideOptions": true
+          },
+          "options": [
+            "Standard (5 business days)",
+            "Expedited (2 business days)",
+            "Urgent (24 hours, VP approval)"
+          ],
+          "required": true,
+          "description": "Standard is five business days. Urgent needs a VP's approval: name them in the reason. Urgency changes how fast Legal Operations (Maya Patel) works the request, not who approves the deal, which follows Fontara's escalation matrix."
+        },
+        {
+          "key": "urgency_reason",
+          "type": "longtext",
+          "label": "Why is this urgent?",
+          "bind": {
+            "custom": "IntakeUrgencyReason",
+            "label": "Urgency Reason"
+          },
+          "description": "The business deadline or risk, and the VP who approved the urgency."
+        },
+        {
+          "key": "needed_by",
+          "type": "date",
+          "label": "Needed by",
+          "bind": {
+            "custom": "TargetDueDate"
+          },
+          "description": "When you need Legal's work finished. Not the contract's start or end date."
+        },
+        {
+          "key": "documents",
+          "type": "file",
+          "label": "SOC 2 report, ISO certificate or questionnaire"
+        }
+      ]
+    }
+  ],
+  "rules": [
+    {
+      "when": [
+        {
+          "field": "urgency",
+          "is": "Urgent (24 hours, VP approval)"
+        }
+      ],
+      "then": {
+        "urgency_reason": "show"
+      }
+    }
+  ]
+}

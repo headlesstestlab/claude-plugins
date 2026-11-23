@@ -1,0 +1,34 @@
+{
+  "id": "contract-signature-withdrawal",
+  "name": "Contract Signature Withdrawal",
+  "description": "Withdraws a contract that is out for signature: Cancel Electronic Signature voids the envelope Send for Signature made for the incoming document (the sending workflow then follows its Cancelled path), and the workflow output says so.",
+  "steps": [
+    {
+      "id": "cancel",
+      "name": "Withdraw the envelope",
+      "kind": "cancelElectronicSignature",
+      "on": {
+        "success": "outWithdrawn",
+        "failure": "outFailed"
+      }
+    },
+    {
+      "id": "outWithdrawn",
+      "name": "Output Withdrawn",
+      "kind": "setOutput",
+      "value": "Withdrawn",
+      "next": "finish"
+    },
+    {
+      "id": "outFailed",
+      "name": "Output Not withdrawn",
+      "kind": "setOutput",
+      "value": "Not withdrawn",
+      "next": "finish"
+    },
+    {
+      "id": "finish",
+      "kind": "finish"
+    }
+  ]
+}

@@ -1,0 +1,86 @@
+{
+  "id": "quote-summary-salesforce",
+  "name": "Quote Summary (Salesforce)",
+  "agreementType": "OrderForm",
+  "format": "word",
+  "description": "The Opportunity's primary CPQ quote, line by line, with Total rows under the quantity and the line totals.",
+  "salesforce": {
+    "connection": "default",
+    "object": "Opportunity"
+  },
+  "fields": {
+    "customer": {
+      "label": "Customer legal name",
+      "salesforce": "SBQQ__PrimaryQuote__r:SBQQ__Quote__c.SBQQ__Account__r:Account.Name"
+    },
+    "quote": {
+      "label": "Quote number",
+      "salesforce": "SBQQ__PrimaryQuote__r:SBQQ__Quote__c.Name"
+    },
+    "quote_valid": {
+      "label": "Quote valid until",
+      "type": "date",
+      "dateFormat": "MM/dd/yyyy",
+      "salesforce": "SBQQ__PrimaryQuote__r:SBQQ__Quote__c.SBQQ__ExpirationDate__c"
+    }
+  },
+  "signers": [
+    "Customer"
+  ],
+  "body": [
+    {
+      "title": "Quote Summary"
+    },
+    {
+      "p": "Prepared by Fontara, Inc. for **{{customer}}**. Quote {{quote}}, valid until {{quote_valid}}."
+    },
+    {
+      "lineItems": {
+        "name": "QuoteLines",
+        "label": "Quote lines",
+        "salesforce": "SBQQ__PrimaryQuote__r:SBQQ__Quote__c.SBQQ__LineItems__r:SBQQ__QuoteLine__c",
+        "columns": [
+          {
+            "key": "sku",
+            "label": "SKU",
+            "salesforce": "SBQQ__ProductCode__c"
+          },
+          {
+            "key": "product",
+            "label": "Product",
+            "salesforce": "SBQQ__ProductName__c"
+          },
+          {
+            "key": "quantity",
+            "label": "Quantity",
+            "salesforce": "SBQQ__Quantity__c",
+            "type": "number",
+            "total": "Total units:"
+          },
+          {
+            "key": "net_amount",
+            "label": "Total for the Term",
+            "salesforce": "SBQQ__NetTotal__c",
+            "type": "money",
+            "total": "Total:"
+          }
+        ]
+      }
+    },
+    {
+      "p": "Prices are for the whole subscription term and exclude taxes. The Order Form that refers to this quote governs."
+    },
+    {
+      "sign": "Customer",
+      "title": true
+    }
+  ],
+  "examples": [
+    {
+      "values": {},
+      "expect": [],
+      "absent": []
+    }
+  ],
+  "source": "written for the library — a Salesforce quote summary with Total rows (row doc-template.binding.salesforce-table-total)"
+}

@@ -1,0 +1,124 @@
+{
+  "id": "vendor-intake-checks",
+  "name": "Vendor Intake Checks",
+  "description": "Procurement runs automatic checks on an incoming vendor contract. Find User finds the contract owner by the email in Params into a user variable; Resource Variable puts the reviewer (the starter) into another; Evaluate Document Text checks the contract for a governing law clause (one Logger per answer); a Timer Trigger waits one minute for the vendor record to settle; Http Client asks the vendor registry (a GET with a manual connection) and keeps the response, its status code and headers. A Logger line closes each path.",
+  "variables": [
+    {
+      "name": "Owner",
+      "type": "user"
+    },
+    {
+      "name": "Reviewer",
+      "type": "user"
+    },
+    "Registry",
+    {
+      "name": "RegistryStatus",
+      "type": "number"
+    },
+    {
+      "name": "RegistryHeaders",
+      "type": "xml"
+    }
+  ],
+  "paramsSchema": "<Params><Documents><Document><Id/><Name/></Document></Documents><VendorName/><OwnerEmail/></Params>",
+  "steps": [
+    {
+      "id": "owner",
+      "name": "Find the owner",
+      "kind": "findUser",
+      "by": "email",
+      "value": "<%#XmlVariables.Params.OwnerEmail%>",
+      "output": "Owner",
+      "on": {
+        "success": "reviewer",
+        "failure": "logFailed"
+      }
+    },
+    {
+      "id": "reviewer",
+      "name": "Reviewer",
+      "kind": "resourceVariable",
+      "to": [
+        "submitter"
+      ],
+      "output": "Reviewer",
+      "on": {
+        "actionExecuted": "clause",
+        "notEnoughResources": "logFailed",
+        "failure": "logFailed"
+      }
+    },
+    {
+      "id": "clause",
+      "name": "Governing law clause",
+      "kind": "evaluateDocumentText",
+      "query": "Governing law",
+      "exactMatch": true,
+      "on": {
+        "match": "logClause",
+        "noMatch": "logNoClause",
+        "failure": "logFailed"
+      }
+    },
+    {
+      "id": "logClause",
+      "name": "Log clause found",
+      "kind": "logger",
+      "message": "The contract has a governing law clause",
+      "next": "wait"
+    },
+    {
+      "id": "logNoClause",
+      "name": "Log no clause",
+      "kind": "logger",
+      "message": "The contract has no governing law clause",
+      "next": "wait"
+    },
+    {
+      "id": "wait",
+      "name": "Wait one minute",
+      "kind": "timerTrigger",
+      "after": {
+        "minutes": 1
+      },
+      "next": "registry",
+      "on": {
+        "failure": "logFailed"
+      }
+    },
+    {
+      "id": "registry",
+      "name": "Ask the vendor registry",
+      "kind": "httpClient",
+      "method": "GET",
+      "url": "https://example.com/?vendor=<%#XmlVariables.Params.VendorName%>",
+      "response": "Registry",
+      "status": "RegistryStatus",
+      "headers": "RegistryHeaders",
+      "on": {
+        "success": "logDone",
+        "responseFailure": "logFailed",
+        "failure": "logFailed"
+      }
+    },
+    {
+      "id": "logDone",
+      "name": "Log checks done",
+      "kind": "logger",
+      "message": "Checks done for <%#XmlVariables.Params.VendorName%>: registry <%#Variable.RegistryStatus%>",
+      "next": "finish"
+    },
+    {
+      "id": "logFailed",
+      "name": "Log failed",
+      "kind": "logger",
+      "message": "Failed: the checks for <%#XmlVariables.Params.VendorName%> are not complete",
+      "next": "finish"
+    },
+    {
+      "id": "finish",
+      "kind": "finish"
+    }
+  ]
+}

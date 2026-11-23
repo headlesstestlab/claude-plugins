@@ -1,0 +1,23 @@
+{
+  "id": "fin-credit-application",
+  "name": "B2B credit applications with guarantor and credit approval",
+  "description": "A new B2B customer applies for credit terms on the website. The application is generated and signed by the applicant; over $50,000 a guarantor signs the personal guarantee too. Once signed, an Agreement Desk request is opened and the Credit Team approves or declines it; the outcome is the request's status.",
+  "workflows": [
+    "credit-application-intake",
+    "credit-application-approval"
+  ],
+  "sharedRequestTypes": [
+    "credit-application-review"
+  ],
+  "prerequisites": [
+    "Replace credit.team@example.com in the intake workflow with the credit team's mailbox.",
+    "Publish the intake workflow and put its link on the website."
+  ],
+  "gaps": [
+    {
+      "need": "guarantor name/email shown if limit > 50,000",
+      "capability": "webform.rule.number-threshold",
+      "instead": "the applicant answers \"Is the requested limit over $50,000?\" (Yes/No); that answer shows the guarantor fields and routes the guarantor signature"
+    }
+  ]
+}

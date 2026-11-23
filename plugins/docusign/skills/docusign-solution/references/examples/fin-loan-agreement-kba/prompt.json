@@ -1,0 +1,131 @@
+{
+  "id": "fin-loan-agreement-kba",
+  "prompt": "Small business loans: the loan officer starts a loan agreement from our system with the borrower, amount, rate and term. Borrower and any co-borrowers sign with knowledge-based authentication; the bank officer countersigns.",
+  "industry": "banking",
+  "department": "lending",
+  "variation_tags": {
+    "start": [
+      "api"
+    ],
+    "routing": [
+      "serial",
+      "optional-signer"
+    ],
+    "approvals": [
+      "none"
+    ],
+    "data_source": [
+      "api"
+    ],
+    "locale": [
+      "en-US"
+    ],
+    "currency": [
+      "USD"
+    ],
+    "platform": "iam",
+    "ai": [
+      "none"
+    ],
+    "documents": [
+      "generated"
+    ],
+    "logic": [
+      "none"
+    ],
+    "notifications": [
+      "email"
+    ],
+    "identity": [
+      "kba"
+    ],
+    "payment": false,
+    "agreement_desk": false
+  },
+  "expected_assets": [
+    {
+      "kind": "doc-template",
+      "purpose": "loan agreement",
+      "features": [
+        "principal (currency), APR (number), term months, payment schedule"
+      ]
+    },
+    {
+      "kind": "workflow",
+      "purpose": "API start",
+      "features": [
+        "variables incl. co-borrower optional",
+        "send borrower(s) with KBA → officer"
+      ]
+    }
+  ],
+  "acceptance": [
+    "each borrower authenticates with KBA before signing",
+    "no co-borrower role when none is passed",
+    "APR prints with 2 decimals (the loan system sends it as text, e.g. \"7.50\"; the README's integration notes say so)"
+  ],
+  "hard_parts": [
+    "KBA is US-only and set on the recipient; a workflow send must carry it [inferred]",
+    "an optional signer from an API variable may need two send shapes"
+  ],
+  "clarifying_questions": [
+    {
+      "question": "Max co-borrowers?",
+      "default": "one"
+    }
+  ],
+  "capabilities": [
+    "doc-template.setting.name",
+    "doc-template.setting.agreement-type",
+    "doc-template.setting.format-builder",
+    "doc-template.setting.upload-zip",
+    "doc-template.setting.publish",
+    "doc-template.content.title",
+    "doc-template.content.heading",
+    "doc-template.content.paragraph",
+    "doc-template.field.text",
+    "doc-template.field-setting.label",
+    "doc-template.field-setting.required",
+    "doc-template.field-setting.key-syntax",
+    "doc-template.field-setting.unused-field",
+    "doc-template.recipient.needs-to-sign",
+    "doc-template.tab.signature-block",
+    "doc-template.field.currency",
+    "doc-template.field-setting.money",
+    "doc-template.field.number",
+    "doc-template.field-setting.number-format-en",
+    "doc-template.field.date",
+    "doc-template.field-setting.date-format-mdy",
+    "doc-template.provision.effective-date",
+    "doc-template.table.static",
+    "doc-template.table.dynamic-builder",
+    "doc-template.content.bullet-list",
+    "doc-template.content.numbered-list",
+    "doc-template.provision.payment-terms",
+    "workflow.setting.participants",
+    "workflow.setting.description",
+    "workflow.setting.publish",
+    "workflow.setting.import-package",
+    "workflow.setting.workflow-name-rules",
+    "workflow.limit.size",
+    "workflow.variable.text",
+    "workflow.step.path-end",
+    "workflow.step-setting.done-screens",
+    "account.plan.iam-plan",
+    "account.limit.published-workflows",
+    "workflow.start.api-variables",
+    "workflow.start.api-human",
+    "workflow.variable.email",
+    "workflow.step.send-envelope",
+    "workflow.step-setting.send-envelope-recipients",
+    "workflow.step-setting.send-envelope-subject-message",
+    "workflow.step.confirmation-screen",
+    "workflow.step-setting.confirm-participant",
+    "workflow.step-setting.send-envelope-sender-starter",
+    "workflow.step-setting.send-envelope-sender-automatic",
+    "workflow.step.prepare-doc-template",
+    "workflow.step-setting.doc-template-fill",
+    "doc-template.recipient.routing-order",
+    "workflow.setting.integration-notes"
+  ]
+}

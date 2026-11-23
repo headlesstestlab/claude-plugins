@@ -1,0 +1,254 @@
+{
+  "name": "Business Credit Application",
+  "description": "A new B2B customer applies for credit terms: company, EIN, bank and trade references, the requested limit, and a guarantor when the limit is over $50,000.",
+  "welcome": {
+    "title": "Apply for credit terms",
+    "text": "About 10 minutes. Have your EIN, your bank contact and three trade references ready.",
+    "button": "Start"
+  },
+  "pages": [
+    {
+      "key": "pg_company",
+      "title": "Your company",
+      "fields": [
+        {
+          "key": "legal_name",
+          "type": "text",
+          "label": "Company legal name",
+          "required": true
+        },
+        {
+          "key": "address",
+          "type": "text",
+          "label": "Registered address",
+          "required": true
+        },
+        {
+          "key": "ein",
+          "type": "text",
+          "label": "EIN (tax ID)",
+          "required": true,
+          "description": "Nine digits, no dash.",
+          "pattern": {
+            "regex": "^\\d{9}$",
+            "message": "Enter the 9-digit EIN without a dash",
+            "example": "123456789"
+          }
+        },
+        {
+          "key": "contact_name",
+          "type": "text",
+          "label": "Your full name",
+          "required": true
+        },
+        {
+          "key": "contact_title",
+          "type": "text",
+          "label": "Your job title",
+          "required": true
+        },
+        {
+          "key": "contact_email",
+          "type": "email",
+          "label": "Your email",
+          "required": true
+        },
+        {
+          "key": "contact_phone",
+          "type": "phone",
+          "label": "Your phone",
+          "required": true
+        }
+      ]
+    },
+    {
+      "key": "pg_refs",
+      "title": "References",
+      "fields": [
+        {
+          "key": "bank",
+          "type": "section",
+          "label": "Bank reference",
+          "fields": [
+            {
+              "key": "bank_name",
+              "type": "text",
+              "label": "Bank",
+              "required": true
+            },
+            {
+              "key": "bank_contact",
+              "type": "text",
+              "label": "Relationship manager",
+              "required": true
+            },
+            {
+              "key": "bank_phone",
+              "type": "phone",
+              "label": "Bank phone",
+              "required": true
+            }
+          ]
+        },
+        {
+          "key": "ref1",
+          "type": "section",
+          "label": "Trade reference 1",
+          "fields": [
+            {
+              "key": "ref1_company",
+              "type": "text",
+              "label": "Company (trade reference 1)",
+              "required": true
+            },
+            {
+              "key": "ref1_contact",
+              "type": "text",
+              "label": "Contact name (trade reference 1)",
+              "required": true
+            },
+            {
+              "key": "ref1_email",
+              "type": "email",
+              "label": "Email (trade reference 1)",
+              "required": true
+            },
+            {
+              "key": "ref1_phone",
+              "type": "phone",
+              "label": "Phone (trade reference 1)",
+              "required": true
+            }
+          ]
+        },
+        {
+          "key": "ref2",
+          "type": "section",
+          "label": "Trade reference 2",
+          "fields": [
+            {
+              "key": "ref2_company",
+              "type": "text",
+              "label": "Company (trade reference 2)",
+              "required": true
+            },
+            {
+              "key": "ref2_contact",
+              "type": "text",
+              "label": "Contact name (trade reference 2)",
+              "required": true
+            },
+            {
+              "key": "ref2_email",
+              "type": "email",
+              "label": "Email (trade reference 2)",
+              "required": true
+            },
+            {
+              "key": "ref2_phone",
+              "type": "phone",
+              "label": "Phone (trade reference 2)",
+              "required": true
+            }
+          ]
+        },
+        {
+          "key": "ref3",
+          "type": "section",
+          "label": "Trade reference 3",
+          "fields": [
+            {
+              "key": "ref3_company",
+              "type": "text",
+              "label": "Company (trade reference 3)",
+              "required": true
+            },
+            {
+              "key": "ref3_contact",
+              "type": "text",
+              "label": "Contact name (trade reference 3)",
+              "required": true
+            },
+            {
+              "key": "ref3_email",
+              "type": "email",
+              "label": "Email (trade reference 3)",
+              "required": true
+            },
+            {
+              "key": "ref3_phone",
+              "type": "phone",
+              "label": "Phone (trade reference 3)",
+              "required": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "pg_credit",
+      "title": "Credit requested",
+      "fields": [
+        {
+          "key": "limit",
+          "type": "currency",
+          "label": "Credit limit requested",
+          "currency": "usd",
+          "required": true
+        },
+        {
+          "key": "over_50k",
+          "type": "dropdown",
+          "label": "Is the requested limit over $50,000?",
+          "options": [
+            "No",
+            "Yes"
+          ],
+          "required": true,
+          "description": "Over $50,000 needs a personal guarantee, signed by the guarantor."
+        },
+        {
+          "key": "guarantor_sec",
+          "type": "section",
+          "label": "Guarantor",
+          "fields": [
+            {
+              "key": "guarantor_name",
+              "type": "text",
+              "label": "Guarantor's full name",
+              "required": true
+            },
+            {
+              "key": "guarantor_email",
+              "type": "email",
+              "label": "Guarantor's email",
+              "required": true
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "title": "Review your application"
+  },
+  "thankYou": {
+    "title": "Application received",
+    "text": "Check your email to sign the application. Our credit team reviews it after signing."
+  },
+  "rules": [
+    {
+      "when": [
+        {
+          "field": "over_50k",
+          "is": "Yes"
+        }
+      ],
+      "then": {
+        "guarantor_sec": "show",
+        "guarantor_name": "show",
+        "guarantor_email": "show"
+      }
+    }
+  ]
+}

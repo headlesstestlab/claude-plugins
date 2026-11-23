@@ -1,0 +1,491 @@
+{
+  "id": "fontara-escalation-matrix-approvals",
+  "name": "Escalation matrix approvals",
+  "description": "The Escalation matrix's approvals, shared by Contract Request to Execution, Generated Order Approval, Generated MSA Approval and Legal request intake (each starts it with a Workflow step and waits). It reads the deal from its Params, which the parent builds (Title, Side, DealValue, PayDays, Verdict, CoveredByDPA, TouchesData, ValueOver, and the document), and checks the rules in order, every matching rule adding an approver (each a task group), all on the parent's document, so a later approver (the CFO) sees the earlier approvals and their comments: a red triage verdict to Legal, a yellow one to Legal Operations; sell side over $1M (or a redline that took it over) to Sales Leadership and payment terms beyond Net 60 to Finance; buy side to Procurement; no existing DPA to Privacy; a vendor that touches Fontara systems or data to IT and Security. The first rejection ends it. It answers the parent's MatrixResult with Approved or Rejected (Update Parent Variable). A step that fails ends the run as Failed (the parent's run fails with it) and CLM emails the person who started the deal. Each approval is due 2 business days after it is assigned; past that it is escalated to the task group Approval Escalations (the department heads on Fontara IAM + CLM; the presenter where the site has no persona users), with the same Approve and Reject paths.",
+  "variables": [
+    {
+      "name": "DealValue",
+      "type": "number"
+    },
+    {
+      "name": "PayDays",
+      "type": "number"
+    },
+    "Side",
+    "Verdict",
+    "CoveredByDPA",
+    "TouchesData",
+    "ValueOver",
+    "Title",
+    "MatrixResult"
+  ],
+  "paramsSchema": "<Params><Documents><Document><Id/><Name/></Document></Documents><Title/><Side/><DealValue/><PayDays/><Verdict/><CoveredByDPA/><TouchesData/><ValueOver/></Params>",
+  "errorNotify": [
+    "submitter"
+  ],
+  "steps": [
+    {
+      "id": "read",
+      "name": "Read the deal",
+      "kind": "setVariable",
+      "set": {
+        "Side": "<%#XmlVariables.Params.Side%>",
+        "DealValue": "<%#XmlVariables.Params.DealValue%>",
+        "PayDays": "<%#XmlVariables.Params.PayDays%>",
+        "Verdict": "<%#XmlVariables.Params.Verdict%>",
+        "CoveredByDPA": "<%#XmlVariables.Params.CoveredByDPA%>",
+        "TouchesData": "<%#XmlVariables.Params.TouchesData%>",
+        "ValueOver": "<%#XmlVariables.Params.ValueOver%>",
+        "Title": "<%#XmlVariables.Params.Title%>"
+      },
+      "next": "rule1"
+    },
+    {
+      "id": "rule1",
+      "name": "Rule 1: red or yellow legal terms?",
+      "kind": "decision",
+      "branches": [
+        {
+          "label": "Red",
+          "when": {
+            "var": "Verdict",
+            "op": "equals",
+            "value": "Red"
+          },
+          "to": "legal"
+        },
+        {
+          "label": "Yellow",
+          "when": {
+            "var": "Verdict",
+            "op": "equals",
+            "value": "Yellow"
+          },
+          "to": "legalOps"
+        }
+      ],
+      "else": {
+        "label": "Green or none",
+        "to": "side"
+      }
+    },
+    {
+      "id": "legal",
+      "name": "Legal approval",
+      "kind": "approve",
+      "assignee": {
+        "taskGroup": "Legal"
+      },
+      "displayName": "Legal approval: <%#XmlVariables.Params.Title%>",
+      "stage": "Approval",
+      "subject": "Legal approval needed (red verdict)",
+      "instructions": "The contract has non-standard legal terms (a red triage verdict). Approve it, or reject it with a comment.",
+      "comments": "Yes",
+      "on": {
+        "approved": "side",
+        "rejected": "tellRejected",
+        "timeout": "legalEscalated"
+      },
+      "due": {
+        "days": 2
+      },
+      "businessDays": true
+    },
+    {
+      "id": "legalEscalated",
+      "name": "Escalated: legal approval",
+      "kind": "approve",
+      "assignee": {
+        "taskGroup": "Approval Escalations"
+      },
+      "displayName": "Escalated: Legal approval: <%#XmlVariables.Params.Title%>",
+      "stage": "Approval",
+      "subject": "Escalated after 2 business days: legal approval needed (red verdict)",
+      "instructions": "Legal did not answer within 2 business days, so this approval comes to you. The contract has non-standard legal terms (a red triage verdict). Approve it, or reject it with a comment.",
+      "comments": "Yes",
+      "on": {
+        "approved": "side",
+        "rejected": "tellRejected"
+      }
+    },
+    {
+      "id": "legalOps",
+      "name": "Legal operations approval",
+      "kind": "approve",
+      "assignee": {
+        "taskGroup": "Legal Operations"
+      },
+      "displayName": "Legal operations review: <%#XmlVariables.Params.Title%>",
+      "stage": "Approval",
+      "subject": "Legal operations review needed (yellow verdict)",
+      "instructions": "The contract has terms at Fontara's acceptable, not standard, position (a yellow triage verdict). Approve it, or reject it with a comment.",
+      "comments": "Yes",
+      "on": {
+        "approved": "side",
+        "rejected": "tellRejected",
+        "timeout": "legalOpsEscalated"
+      },
+      "due": {
+        "days": 2
+      },
+      "businessDays": true
+    },
+    {
+      "id": "legalOpsEscalated",
+      "name": "Escalated: legal operations approval",
+      "kind": "approve",
+      "assignee": {
+        "taskGroup": "Approval Escalations"
+      },
+      "displayName": "Escalated: Legal operations review: <%#XmlVariables.Params.Title%>",
+      "stage": "Approval",
+      "subject": "Escalated after 2 business days: legal operations review needed (yellow verdict)",
+      "instructions": "Legal Operations did not answer within 2 business days, so this approval comes to you. The contract has terms at Fontara's acceptable, not standard, position (a yellow triage verdict). Approve it, or reject it with a comment.",
+      "comments": "Yes",
+      "on": {
+        "approved": "side",
+        "rejected": "tellRejected"
+      }
+    },
+    {
+      "id": "side",
+      "name": "Sell side or buy side?",
+      "kind": "decision",
+      "branches": [
+        {
+          "label": "Sell",
+          "when": {
+            "var": "Side",
+            "op": "equals",
+            "value": "Sell"
+          },
+          "to": "rule2"
+        },
+        {
+          "label": "Buy",
+          "when": {
+            "var": "Side",
+            "op": "equals",
+            "value": "Buy"
+          },
+          "to": "procurement"
+        }
+      ],
+      "else": {
+        "label": "Not given",
+        "to": "rule5"
+      }
+    },
+    {
+      "id": "rule2",
+      "name": "Rule 2: over $1M?",
+      "kind": "decision",
+      "branches": [
+        {
+          "label": "Over $1M",
+          "when": {
+            "var": "DealValue",
+            "op": "greaterThan",
+            "value": "1000000"
+          },
+          "to": "sales"
+        },
+        {
+          "label": "Redline took it over $1M",
+          "when": {
+            "var": "ValueOver",
+            "op": "equals",
+            "value": "Yes"
+          },
+          "to": "sales"
+        }
+      ],
+      "else": {
+        "label": "$1M or less",
+        "to": "rule3"
+      }
+    },
+    {
+      "id": "sales",
+      "name": "Sales and CFO approval",
+      "kind": "approve",
+      "assignee": {
+        "taskGroup": "Sales Leadership"
+      },
+      "displayName": "Deal approval over $1M: <%#XmlVariables.Params.Title%>",
+      "stage": "Approval",
+      "subject": "Sell-side deal over $1M",
+      "instructions": "The deal is over $1M. Approve it, or reject it with a comment.",
+      "comments": "Yes",
+      "on": {
+        "approved": "rule3",
+        "rejected": "tellRejected",
+        "timeout": "salesEscalated"
+      },
+      "due": {
+        "days": 2
+      },
+      "businessDays": true
+    },
+    {
+      "id": "salesEscalated",
+      "name": "Escalated: sales and CFO approval",
+      "kind": "approve",
+      "assignee": {
+        "taskGroup": "Approval Escalations"
+      },
+      "displayName": "Escalated: Deal approval over $1M: <%#XmlVariables.Params.Title%>",
+      "stage": "Approval",
+      "subject": "Escalated after 2 business days: sell-side deal over $1M",
+      "instructions": "Sales Leadership did not answer within 2 business days, so this approval comes to you. The deal is over $1M. Approve it, or reject it with a comment.",
+      "comments": "Yes",
+      "on": {
+        "approved": "rule3",
+        "rejected": "tellRejected"
+      }
+    },
+    {
+      "id": "rule3",
+      "name": "Rule 3: beyond Net 60?",
+      "kind": "decision",
+      "branches": [
+        {
+          "label": "Beyond Net 60",
+          "when": {
+            "var": "PayDays",
+            "op": "greaterThan",
+            "value": "60"
+          },
+          "to": "finance"
+        }
+      ],
+      "else": {
+        "label": "Net 60 or shorter",
+        "to": "rule5"
+      }
+    },
+    {
+      "id": "finance",
+      "name": "Finance approval",
+      "kind": "approve",
+      "assignee": {
+        "taskGroup": "Finance"
+      },
+      "displayName": "Payment terms approval: <%#XmlVariables.Params.Title%>",
+      "stage": "Approval",
+      "subject": "Payment terms beyond Net 60",
+      "instructions": "The customer asks for payment terms beyond Net 60. Approve them, or reject with a comment.",
+      "comments": "Yes",
+      "on": {
+        "approved": "rule5",
+        "rejected": "tellRejected",
+        "timeout": "financeEscalated"
+      },
+      "due": {
+        "days": 2
+      },
+      "businessDays": true
+    },
+    {
+      "id": "financeEscalated",
+      "name": "Escalated: finance approval",
+      "kind": "approve",
+      "assignee": {
+        "taskGroup": "Approval Escalations"
+      },
+      "displayName": "Escalated: Payment terms approval: <%#XmlVariables.Params.Title%>",
+      "stage": "Approval",
+      "subject": "Escalated after 2 business days: payment terms beyond Net 60",
+      "instructions": "Finance did not answer within 2 business days, so this approval comes to you. The customer asks for payment terms beyond Net 60. Approve them, or reject with a comment.",
+      "comments": "Yes",
+      "on": {
+        "approved": "rule5",
+        "rejected": "tellRejected"
+      }
+    },
+    {
+      "id": "procurement",
+      "name": "Rule 4: procurement approval",
+      "kind": "approve",
+      "assignee": {
+        "taskGroup": "Procurement"
+      },
+      "displayName": "Spend approval: <%#XmlVariables.Params.Title%>",
+      "stage": "Approval",
+      "subject": "Buy-side spend approval",
+      "instructions": "Approve the spend: the head of procurement up to $1M, the CFO above. Reject with a comment if it can't go ahead.",
+      "comments": "Yes",
+      "on": {
+        "approved": "rule5",
+        "rejected": "tellRejected",
+        "timeout": "procurementEscalated"
+      },
+      "due": {
+        "days": 2
+      },
+      "businessDays": true
+    },
+    {
+      "id": "procurementEscalated",
+      "name": "Escalated: procurement approval",
+      "kind": "approve",
+      "assignee": {
+        "taskGroup": "Approval Escalations"
+      },
+      "displayName": "Escalated: Spend approval: <%#XmlVariables.Params.Title%>",
+      "stage": "Approval",
+      "subject": "Escalated after 2 business days: buy-side spend approval",
+      "instructions": "Procurement did not answer within 2 business days, so this approval comes to you. Approve the spend: the head of procurement up to $1M, the CFO above. Reject with a comment if it can't go ahead.",
+      "comments": "Yes",
+      "on": {
+        "approved": "rule5",
+        "rejected": "tellRejected"
+      }
+    },
+    {
+      "id": "rule5",
+      "name": "Rule 5: covered by a DPA?",
+      "kind": "decision",
+      "branches": [
+        {
+          "label": "No DPA",
+          "when": {
+            "var": "CoveredByDPA",
+            "op": "equals",
+            "value": "No"
+          },
+          "to": "privacy"
+        }
+      ],
+      "else": {
+        "label": "Covered",
+        "to": "rule6"
+      }
+    },
+    {
+      "id": "privacy",
+      "name": "Privacy approval",
+      "kind": "approve",
+      "assignee": {
+        "taskGroup": "Privacy"
+      },
+      "displayName": "Privacy review: <%#XmlVariables.Params.Title%>",
+      "stage": "Approval",
+      "subject": "New personal-data processing",
+      "instructions": "The deal processes personal data that no existing DPA covers. Approve it (a DPA goes with it), or reject with a comment.",
+      "comments": "Yes",
+      "on": {
+        "approved": "rule6",
+        "rejected": "tellRejected",
+        "timeout": "privacyEscalated"
+      },
+      "due": {
+        "days": 2
+      },
+      "businessDays": true
+    },
+    {
+      "id": "privacyEscalated",
+      "name": "Escalated: privacy approval",
+      "kind": "approve",
+      "assignee": {
+        "taskGroup": "Approval Escalations"
+      },
+      "displayName": "Escalated: Privacy review: <%#XmlVariables.Params.Title%>",
+      "stage": "Approval",
+      "subject": "Escalated after 2 business days: new personal-data processing",
+      "instructions": "Privacy did not answer within 2 business days, so this approval comes to you. The deal processes personal data that no existing DPA covers. Approve it (a DPA goes with it), or reject with a comment.",
+      "comments": "Yes",
+      "on": {
+        "approved": "rule6",
+        "rejected": "tellRejected"
+      }
+    },
+    {
+      "id": "rule6",
+      "name": "Rule 6: touches our systems or data?",
+      "kind": "decision",
+      "branches": [
+        {
+          "label": "Yes",
+          "when": {
+            "var": "TouchesData",
+            "op": "equals",
+            "value": "Yes"
+          },
+          "to": "security"
+        }
+      ],
+      "else": {
+        "label": "No",
+        "to": "tellApproved"
+      }
+    },
+    {
+      "id": "security",
+      "name": "Security and IT approval",
+      "kind": "approve",
+      "assignee": {
+        "taskGroup": "IT and Security"
+      },
+      "displayName": "Vendor security review: <%#XmlVariables.Params.Title%>",
+      "stage": "Approval",
+      "subject": "Vendor security review",
+      "instructions": "The vendor will touch Fontara systems or data. Check its SOC 2 or ISO 27001 report, then approve or reject with a comment.",
+      "comments": "Yes",
+      "on": {
+        "approved": "tellApproved",
+        "rejected": "tellRejected",
+        "timeout": "securityEscalated"
+      },
+      "due": {
+        "days": 2
+      },
+      "businessDays": true
+    },
+    {
+      "id": "securityEscalated",
+      "name": "Escalated: security and IT approval",
+      "kind": "approve",
+      "assignee": {
+        "taskGroup": "Approval Escalations"
+      },
+      "displayName": "Escalated: Vendor security review: <%#XmlVariables.Params.Title%>",
+      "stage": "Approval",
+      "subject": "Escalated after 2 business days: vendor security review",
+      "instructions": "IT and Security did not answer within 2 business days, so this approval comes to you. The vendor will touch Fontara systems or data. Check its SOC 2 or ISO 27001 report, then approve or reject with a comment.",
+      "comments": "Yes",
+      "on": {
+        "approved": "tellApproved",
+        "rejected": "tellRejected"
+      }
+    },
+    {
+      "id": "tellApproved",
+      "name": "Tell the parent: approved",
+      "kind": "updateParentVariable",
+      "set": {
+        "MatrixResult": "Approved"
+      },
+      "on": {
+        "updated": "finish"
+      }
+    },
+    {
+      "id": "tellRejected",
+      "name": "Tell the parent: rejected",
+      "kind": "updateParentVariable",
+      "set": {
+        "MatrixResult": "Rejected"
+      },
+      "on": {
+        "updated": "finish"
+      }
+    },
+    {
+      "id": "finish",
+      "name": "Finish",
+      "kind": "finish"
+    }
+  ]
+}

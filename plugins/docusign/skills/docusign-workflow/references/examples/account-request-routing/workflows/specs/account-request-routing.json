@@ -1,0 +1,54 @@
+{
+  "id": "account-request-routing",
+  "name": "Route an Account Request by Type",
+  "description": "A support tool starts this workflow by API with the customer and what they asked for. A renewal request emails the renewals team, a cancellation emails the retention team, and anything else is sent back to the agent. The workflow needs no web form, template or request type, so the package carries the workflow alone.",
+  "trigger": {
+    "api": {
+      "variables": [
+        { "name": "customerName", "type": "String" },
+        { "name": "customerEmail", "type": "Email" },
+        { "name": "requestKind", "type": "String" }
+      ]
+    }
+  },
+  "steps": [
+    {
+      "switch": {
+        "field": "start.requestKind",
+        "cases": [
+          {
+            "is": "Renewal",
+            "steps": [
+              {
+                "email": {
+                  "to": ["renewals@example.com"],
+                  "subject": "Renewal request from {{start.customerName}}",
+                  "headline": "A customer asked to renew",
+                  "body": "{{start.customerName}} ({{start.customerEmail}}) asked to renew their agreement.\nReply to them within one business day."
+                }
+              },
+              { "confirm": { "title": "Sent to Renewals", "description": "The renewals team has the request and will contact the customer." } }
+            ]
+          },
+          {
+            "is": "Cancellation",
+            "steps": [
+              {
+                "email": {
+                  "to": ["retention@example.com"],
+                  "subject": "Cancellation request from {{start.customerName}}",
+                  "headline": "A customer asked to cancel",
+                  "body": "{{start.customerName}} ({{start.customerEmail}}) asked to cancel.\nCall them before processing the cancellation."
+                }
+              },
+              { "confirm": { "title": "Sent to Retention", "description": "The retention team will call the customer before anything is cancelled." } }
+            ]
+          }
+        ],
+        "default": [
+          { "confirm": { "title": "Request type not recognised", "description": "Set the request type to Renewal or Cancellation and start again." } }
+        ]
+      }
+    }
+  ]
+}

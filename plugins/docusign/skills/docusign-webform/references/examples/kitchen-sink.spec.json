@@ -1,0 +1,305 @@
+{
+  "name": "WF-LAB Kitchen sink",
+  "description": "One of every component the builder's palette offers — all twelve field types, a section, a description block, a hidden-data page — plus a rule of each kind. The reference form: if a property is in this file, it was measured. Since 2026-11-02 it also carries a read-only field with a default, a default on each field type that takes one, the comma number format, ZIP+4, a longtext line-break limit, an editable currency, an exactly-N checkbox, a page API name a Section inside a Section and a checkbox with two options ticked by default.",
+  "welcome": {
+    "title": "Every field type",
+    "text": "One of each component the builder offers, plus a section, hidden data and rules.",
+    "button": "Begin"
+  },
+  "hidden": [
+    {
+      "key": "campaign_id",
+      "type": "text",
+      "label": "Campaign ID"
+    }
+  ],
+  "pages": [
+    {
+      "key": "page_basics",
+      "title": "Basics",
+      "subtitle": "Text, numbers, dates and contact details",
+      "fields": [
+        {
+          "key": "intro_note",
+          "type": "description",
+          "text": "**Bold** and _italic_ markdown in a description block."
+        },
+        {
+          "key": "ref_code",
+          "type": "text",
+          "label": "Reference code",
+          "readOnly": true,
+          "default": "WF-LAB-001"
+        },
+        {
+          "key": "department",
+          "type": "text",
+          "label": "Department",
+          "default": "Legal Operations"
+        },
+        {
+          "key": "full_name",
+          "type": "text",
+          "label": "Full name",
+          "placeholder": "Jordan Avery",
+          "required": true,
+          "maxLength": 120
+        },
+        {
+          "key": "ein",
+          "type": "text",
+          "label": "EIN",
+          "pattern": {
+            "regex": "^\\d{2}-\\d{7}$",
+            "message": "Use 12-3456789",
+            "example": "12-3456789"
+          }
+        },
+        {
+          "key": "zip",
+          "type": "text",
+          "label": "ZIP",
+          "preset": "zip"
+        },
+        {
+          "key": "zip4",
+          "type": "text",
+          "label": "ZIP+4",
+          "preset": "extendedZip"
+        },
+        {
+          "key": "notes",
+          "type": "longtext",
+          "label": "Notes",
+          "description": "Anything else we should know",
+          "maxLineBreaks": 5
+        },
+        {
+          "key": "headcount",
+          "type": "number",
+          "label": "Headcount",
+          "numberFormat": "commaSeparatedNumber",
+          "default": 25
+        },
+        {
+          "key": "budget",
+          "type": "currency",
+          "label": "Budget",
+          "currency": "eur",
+          "default": 5000,
+          "currencyEditable": true
+        },
+        {
+          "key": "start_date",
+          "type": "date",
+          "label": "Start date",
+          "dateFormat": "yyyy_MM_dd"
+        },
+        {
+          "key": "review_date",
+          "type": "date",
+          "label": "Review date",
+          "default": "11/02/2026"
+        },
+        {
+          "key": "work_email",
+          "type": "email",
+          "label": "Work email",
+          "required": true,
+          "default": "fontara.deal-desk@example.com"
+        },
+        {
+          "key": "mobile",
+          "type": "phone",
+          "label": "Mobile",
+          "countryCode": "44",
+          "default": "2075550123"
+        }
+      ]
+    },
+    {
+      "key": "page_choices",
+      "title": "Choices",
+      "fields": [
+        {
+          "key": "entity_type",
+          "type": "dropdown",
+          "label": "Entity type",
+          "required": true,
+          "options": [
+            "LLC",
+            "Corporation",
+            {
+              "label": "Sole proprietor",
+              "value": "sole_prop"
+            }
+          ]
+        },
+        {
+          "key": "llc_members",
+          "type": "number",
+          "label": "Number of LLC members"
+        },
+        {
+          "key": "tier",
+          "type": "radio",
+          "label": "Tier",
+          "options": [
+            "Bronze",
+            "Silver",
+            {
+              "label": "Gold",
+              "selected": true
+            }
+          ]
+        },
+        {
+          "key": "interests",
+          "type": "checkbox",
+          "label": "Interests",
+          "options": [
+            "Billing",
+            "Support",
+            "Sales"
+          ],
+          "select": {
+            "atLeast": 1,
+            "atMost": 2
+          }
+        },
+        {
+          "key": "newsletters",
+          "type": "checkbox",
+          "label": "Newsletters",
+          "options": [
+            {
+              "label": "Product news",
+              "selected": true
+            },
+            {
+              "label": "Events",
+              "selected": true
+            },
+            "Partner offers"
+          ]
+        },
+        {
+          "key": "top_two",
+          "type": "checkbox",
+          "label": "Pick exactly two channels",
+          "options": [
+            "By email",
+            "By phone",
+            "By post"
+          ],
+          "select": {
+            "exactly": 2
+          }
+        },
+        {
+          "key": "contact",
+          "type": "section",
+          "label": "Secondary contact",
+          "text": "Only if different from you",
+          "fields": [
+            {
+              "key": "alt_name",
+              "type": "text",
+              "label": "Name"
+            },
+            {
+              "key": "alt_email",
+              "type": "email",
+              "label": "Email"
+            },
+            {
+              "key": "alt_postal",
+              "type": "section",
+              "label": "Postal address",
+              "text": "A section inside a section",
+              "fields": [
+                {
+                  "key": "alt_street",
+                  "type": "text",
+                  "label": "Street"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "key": "w9",
+          "type": "file",
+          "label": "W-9",
+          "formats": [
+            "pdf",
+            "png",
+            "jpg"
+          ],
+          "maxFileSizeInMB": 10
+        }
+      ],
+      "apiName": "ChoicesPage"
+    },
+    {
+      "key": "page_enterprise",
+      "title": "Enterprise only",
+      "fields": [
+        {
+          "key": "procurement_contact",
+          "type": "email",
+          "label": "Procurement contact"
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "title": "Review",
+    "text": "Check everything before you submit."
+  },
+  "thankYou": {
+    "title": "All done",
+    "text": "We will be in touch.",
+    "button": {
+      "text": "Visit site",
+      "url": "https://example.com"
+    }
+  },
+  "rules": [
+    {
+      "when": [
+        {
+          "field": "entity_type",
+          "is": "LLC"
+        }
+      ],
+      "then": {
+        "llc_members": "show"
+      }
+    },
+    {
+      "when": [
+        {
+          "field": "tier",
+          "is": "Gold"
+        }
+      ],
+      "then": {
+        "page_enterprise": "show"
+      }
+    },
+    {
+      "when": [
+        {
+          "field": "interests",
+          "isAnyOf": [
+            "Sales"
+          ]
+        }
+      ],
+      "then": {
+        "contact": "hide"
+      }
+    }
+  ]
+}

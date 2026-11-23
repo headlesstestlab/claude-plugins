@@ -1,0 +1,213 @@
+{
+  "id": "fontara-data-processing-addendum",
+  "name": "Data Processing Addendum",
+  "description": "Fontara's data processing addendum as processor for a customer (sell side): international transfers add the standard contractual clauses only when personal data leaves the EEA or the UK, the sub-processor notice is 30 days or (fallback) 60 days with a right to object, and the breach notice is 72 hours or (fallback, as the Clause Library's Data Privacy and Security fallback) 24 hours. Governing law follows the contracting entity.",
+  "templateOnly": true,
+  "fields": [
+    {
+      "kind": "heading",
+      "label": "Customer"
+    },
+    {
+      "kind": "text",
+      "label": "Customer Legal Name",
+      "required": true
+    },
+    {
+      "kind": "text",
+      "label": "Customer Address",
+      "required": true
+    },
+    {
+      "kind": "dropdown",
+      "label": "Legal Entity",
+      "options": [
+        "Fontara, Inc.",
+        "Fontara UK Ltd",
+        "Fontara Europe Ltd",
+        "Fontara GmbH"
+      ],
+      "required": true
+    },
+    {
+      "kind": "heading",
+      "label": "Processing"
+    },
+    {
+      "kind": "text",
+      "label": "Agreement",
+      "required": true
+    },
+    {
+      "kind": "date",
+      "label": "DPA Effective Date",
+      "format": "MMMM d, yyyy",
+      "required": true
+    },
+    {
+      "kind": "text",
+      "label": "Categories of Personal Data",
+      "required": true,
+      "default": "Names, business contact details and usage data of Customer's users."
+    },
+    {
+      "kind": "radio",
+      "label": "Transfers Outside the EEA or UK",
+      "options": [
+        "Yes",
+        "No"
+      ],
+      "required": true
+    },
+    {
+      "kind": "dropdown",
+      "label": "Sub-processor Position",
+      "options": [
+        "Standard",
+        "Fallback"
+      ],
+      "required": true,
+      "help": "Standard: 30 days' notice. Fallback: 60 days' notice and a right to object (legal operations reviews)."
+    },
+    {
+      "kind": "dropdown",
+      "label": "Breach Notice Position",
+      "options": [
+        "Standard",
+        "Fallback"
+      ],
+      "required": true,
+      "help": "Standard: 72 hours. Fallback: 24 hours, the Clause Library's Data Privacy and Security fallback (general counsel's approval)."
+    },
+    {
+      "kind": "heading",
+      "label": "Signers"
+    },
+    {
+      "kind": "text",
+      "label": "Customer Signer Name",
+      "required": true
+    },
+    {
+      "kind": "text",
+      "label": "Customer Signer Email",
+      "required": true
+    },
+    {
+      "kind": "text",
+      "label": "Company Signer Name",
+      "required": true
+    },
+    {
+      "kind": "text",
+      "label": "Company Signer Email",
+      "required": true
+    },
+    {
+      "kind": "text",
+      "label": "Agreement Type",
+      "hidden": true,
+      "default": "Addendum"
+    },
+    {
+      "kind": "text",
+      "label": "Line of Business",
+      "hidden": true,
+      "default": "Sales"
+    }
+  ],
+  "template": [
+    "DATA PROCESSING ADDENDUM",
+    "This Data Processing Addendum is made on {{DPA Effective Date}} between {{Legal Entity}} (\"Processor\") and {{Customer Legal Name}}, {{Customer Address}} (\"Controller\"), and forms part of the {{Agreement}}.",
+    "1. Processing. Processor processes the following personal data only on Controller's documented instructions and only to provide the services: {{Categories of Personal Data}}",
+    "2. Security. Processor keeps appropriate technical and organisational measures, including encryption in transit and at rest, access control and staff confidentiality.",
+    {
+      "text": "3. Sub-processors. Processor may engage sub-processors and gives Controller 30 days' notice of a new one.",
+      "when": {
+        "field": "Sub-processor Position",
+        "is": "Standard"
+      }
+    },
+    {
+      "text": "3. Sub-processors. Processor gives Controller 60 days' notice of a new sub-processor. Controller may object on reasonable data protection grounds and, if the parties cannot resolve the objection, terminate the affected services without penalty.",
+      "when": {
+        "field": "Sub-processor Position",
+        "is": "Fallback"
+      }
+    },
+    {
+      "text": "4. Personal data breaches. Processor notifies Controller without undue delay, and in any case within 72 hours, after becoming aware of a personal data breach.",
+      "when": {
+        "field": "Breach Notice Position",
+        "is": "Standard"
+      }
+    },
+    {
+      "text": "4. Personal data breaches. Processor shall notify Controller of any personal data breach within 24 hours of discovering it. Controller may audit Processor's data handling practices once a year.",
+      "when": {
+        "field": "Breach Notice Position",
+        "is": "Fallback"
+      }
+    },
+    {
+      "text": "5. International transfers. Where personal data is transferred outside the EEA or the UK, the parties incorporate the EU Standard Contractual Clauses (Module 2, controller to processor) and the UK International Data Transfer Addendum, and Processor keeps a transfer impact assessment.",
+      "when": {
+        "field": "Transfers Outside the EEA or UK",
+        "is": "Yes"
+      }
+    },
+    {
+      "text": "5. International transfers. Processor processes personal data only in the EEA and the UK and does not transfer it elsewhere without Controller's prior written consent.",
+      "when": {
+        "field": "Transfers Outside the EEA or UK",
+        "is": "No"
+      }
+    },
+    "6. End of processing. When the services end, Processor deletes or returns the personal data within 30 days, unless law requires it to keep a copy.",
+    {
+      "text": "7. Governing law. This Addendum is governed by the laws of the State of Delaware.",
+      "when": {
+        "field": "Legal Entity",
+        "is": "Fontara, Inc."
+      }
+    },
+    {
+      "text": "7. Governing law. This Addendum is governed by the laws of England and Wales.",
+      "when": {
+        "field": "Legal Entity",
+        "is": "Fontara UK Ltd"
+      }
+    },
+    {
+      "text": "7. Governing law. This Addendum is governed by the laws of Ireland.",
+      "when": {
+        "field": "Legal Entity",
+        "is": "Fontara Europe Ltd"
+      }
+    },
+    {
+      "text": "7. Governing law. This Addendum is governed by the laws of the Federal Republic of Germany, and the courts of Munich have exclusive jurisdiction.",
+      "when": {
+        "field": "Legal Entity",
+        "is": "Fontara GmbH"
+      }
+    },
+    "Signed for {{Customer Legal Name}}: {{Customer Signer Name}}",
+    "Signed for {{Legal Entity}}: {{Company Signer Name}}"
+  ],
+  "sample": {
+    "Customer Legal Name": "ClimbTech Financial",
+    "Customer Address": "800 Finance Street, Boston, MA 02110",
+    "Legal Entity": "Fontara, Inc.",
+    "Agreement": "ClimbTech Financial Platform MSA",
+    "DPA Effective Date": "01/04/2027",
+    "Categories of Personal Data": "Names, business contact details and usage data of Customer's users.",
+    "Transfers Outside the EEA or UK": "Yes",
+    "Sub-processor Position": "Fallback",
+    "Breach Notice Position": "Standard",
+    "Customer Signer Name": "Mina Collier",
+    "Customer Signer Email": "climbtech-financial.mina.collier@example.com",
+    "Company Signer Name": "Alexandra Kim",
+    "Company Signer Email": "fontara.alexandra.kim@example.com"
+  }
+}

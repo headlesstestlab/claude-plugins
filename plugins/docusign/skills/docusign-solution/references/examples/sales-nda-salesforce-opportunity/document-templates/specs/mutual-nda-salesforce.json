@@ -1,0 +1,247 @@
+{
+  "id": "mutual-nda-salesforce",
+  "name": "Mutual NDA (Salesforce)",
+  "description": "The mutual NDA generated from a Salesforce Opportunity: the counterparty and its billing address come from the Opportunity's Account.",
+  "agreementType": "Nda",
+  "fields": {
+    "fontara_entity": {
+      "label": "Fontara contracting entity",
+      "type": "select",
+      "options": [
+        "Fontara, Inc.",
+        "Fontara UK Ltd",
+        "Fontara Europe Ltd"
+      ],
+      "optionValues": {
+        "Fontara, Inc.": "Fontara, Inc., a Delaware corporation with its principal place of business at 1500 Harbor Boulevard, Suite 1200, San Francisco, CA 94111",
+        "Fontara UK Ltd": "Fontara UK Ltd, a company registered in England and Wales with its registered office at 48 Ashcombe Street, London EC2A 4NE, United Kingdom",
+        "Fontara Europe Ltd": "Fontara Europe Ltd, a company registered in Ireland with its registered office at 3 Riverside Quay, Dublin 2, D02 X285, Ireland"
+      },
+      "required": true,
+      "description": "Prints the entity’s full legal description and address"
+    },
+    "effective": {
+      "bind": {
+        "provision": "EffectiveDate"
+      },
+      "required": true
+    },
+    "counterparty": {
+      "required": false,
+      "description": "Counterparty legal name",
+      "salesforce": "Account.Name"
+    },
+    "counterparty_entity": {
+      "label": "Counterparty entity type",
+      "required": true,
+      "description": "For example: a Delaware corporation"
+    },
+    "counterparty_address": {
+      "label": "Counterparty street address",
+      "required": false,
+      "salesforce": "Account.BillingStreet"
+    },
+    "counterparty_city": {
+      "label": "Counterparty city",
+      "required": false,
+      "salesforce": "Account.BillingCity"
+    },
+    "counterparty_region": {
+      "label": "Counterparty state",
+      "required": false,
+      "salesforce": "Account.BillingState"
+    },
+    "counterparty_postal": {
+      "label": "Counterparty ZIP code",
+      "required": false,
+      "salesforce": "Account.BillingPostalCode"
+    },
+    "purpose": {
+      "label": "Purpose of the disclosures",
+      "required": true
+    },
+    "disclosure_period": {
+      "label": "Disclosure period",
+      "type": "select",
+      "options": [
+        "1 year",
+        "2 years",
+        "3 years"
+      ],
+      "required": true
+    },
+    "confidentiality_period": {
+      "label": "Confidentiality period",
+      "type": "select",
+      "options": [
+        "1 year",
+        "2 years",
+        "3 years",
+        "5 years"
+      ],
+      "required": true
+    }
+  },
+  "signers": [
+    "Counterparty",
+    "Fontara"
+  ],
+  "body": [
+    {
+      "title": "MUTUAL NON-DISCLOSURE AGREEMENT"
+    },
+    {
+      "p": "This Mutual Non-Disclosure Agreement (the \"Agreement\") is entered into as of {{effective}} (the \"Effective Date\") between {{fontara_entity}} (\"Fontara\"), and **{{counterparty}}**, {{counterparty_entity}} with its principal place of business at {{counterparty_address}}, {{counterparty_city}}, {{counterparty_region}} {{counterparty_postal}} (the \"Counterparty\"). Each party may act as the \"Disclosing Party\" or the \"Receiving Party\"."
+    },
+    {
+      "p": "The parties wish to exchange Confidential Information for the following purpose: {{purpose}} (the \"Purpose\")."
+    },
+    {
+      "h": "1. Definition of Confidential Information"
+    },
+    {
+      "p": "\"Confidential Information\" means non-public business, technical and financial information that the Disclosing Party discloses to the Receiving Party, in writing or orally, and marks or identifies as confidential when it is disclosed. Information disclosed orally is Confidential Information only if the Disclosing Party confirms in writing that it is confidential within 10 days of disclosure."
+    },
+    {
+      "h": "2. Nature of This Agreement"
+    },
+    {
+      "p": "This Agreement is mutual. Each party may disclose Confidential Information as the Disclosing Party and receive it as the Receiving Party, and the obligations in this Agreement apply equally to each party's Confidential Information."
+    },
+    {
+      "h": "3. Obligations of the Receiving Party"
+    },
+    {
+      "p": "The Receiving Party shall protect the Disclosing Party's Confidential Information with the same degree of care it uses for its own confidential information of a similar kind, and in no event less than reasonable care. It shall use the Confidential Information only for the purpose of this Agreement, and disclose it only to its employees and professional advisers who need to know it for that purpose and are bound by obligations of confidentiality no less protective than those in this Agreement."
+    },
+    {
+      "h": "4. Standard Exclusions"
+    },
+    {
+      "p": "The Receiving Party's obligations do not apply to information that (a) is or becomes publicly available through no breach of this Agreement, (b) was known to the Receiving Party before disclosure, (c) is independently developed by the Receiving Party without use of the Confidential Information, or (d) is rightfully received from a third party without a duty of confidentiality. The Receiving Party bears the burden of proving that an exclusion applies. If the Receiving Party is required by law or court order to disclose Confidential Information, it shall give the Disclosing Party prompt notice where the law permits, and disclose only what is required."
+    },
+    {
+      "h": "5. Disclosure Period"
+    },
+    {
+      "p": "Either party may disclose Confidential Information under this Agreement for {{disclosure_period}} from the Effective Date (the \"Disclosure Period\"). Either party may end the Disclosure Period earlier by 30 days' written notice, and this Agreement expires when the Disclosure Period ends. Expiry or termination does not affect the obligations that continue under the Term & Survival section."
+    },
+    {
+      "h": "6. Term & Survival"
+    },
+    {
+      "p": "The Receiving Party's obligations continue for {{confidentiality_period}} after this Agreement expires or is terminated, except that its obligations for Confidential Information that is a trade secret continue for as long as the information remains a trade secret under applicable law. On request, and on expiry or termination, the Receiving Party shall return or destroy the Disclosing Party's Confidential Information."
+    },
+    {
+      "h": "7. Remedies"
+    },
+    {
+      "p": "Each party acknowledges that a breach of this Agreement may cause the Disclosing Party irreparable harm for which damages would be an inadequate remedy, and that the Disclosing Party may seek injunctive relief, without posting a bond, in addition to any other remedy. In any action to enforce this Agreement, the prevailing party may recover its reasonable attorneys' fees."
+    },
+    {
+      "h": "8. No License, Warranty or Commitment"
+    },
+    {
+      "p": "All Confidential Information remains the property of the Disclosing Party. No license under any patent, copyright, trade secret or other right is granted by this Agreement or by any disclosure, except the limited right to use Confidential Information for the Purpose. Confidential Information is provided \"AS IS\", without any warranty as to its accuracy or completeness. Nothing in this Agreement obliges either party to disclose any information, or to enter into any further agreement or transaction."
+    },
+    {
+      "h": "9. Notices"
+    },
+    {
+      "p": "Notices under this Agreement must be in writing and delivered by hand, by recognized overnight courier or by email to the addresses stated in this Agreement or later notified in writing. A notice is effective on confirmed delivery or, for email, when the recipient acknowledges it. Notices of breach, termination or a legal claim must be sent by courier, with a copy by email."
+    },
+    {
+      "h": "10. Assignment"
+    },
+    {
+      "p": "Neither party may assign or transfer this Agreement without the other party's prior written consent, which may not be unreasonably withheld, except that either party may assign it on written notice to an affiliate, or to a successor to all or substantially all of the business or assets to which it relates that assumes it in writing. Any other attempted assignment is void. This Agreement binds and benefits the parties and their permitted successors and assigns."
+    },
+    {
+      "h": "11. Governing Law and Disputes"
+    },
+    {
+      "if": {
+        "field": "fontara_entity",
+        "is": "Fontara, Inc."
+      },
+      "then": [
+        {
+          "p": "This Agreement is governed by the laws of the State of Delaware, without regard to its conflict-of-laws rules. The parties shall first try to resolve any dispute arising out of or relating to this Agreement by good-faith negotiation between senior executives for 30 days. A dispute not resolved in that time shall be finally settled by binding arbitration administered by the American Arbitration Association under its Commercial Arbitration Rules, before a single arbitrator, seated in San Francisco, California, and judgment on the award may be entered in any court of competent jurisdiction. Either party may seek injunctive relief from a court to protect its confidential information or intellectual property."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "fontara_entity",
+        "is": "Fontara UK Ltd"
+      },
+      "then": [
+        {
+          "p": "This Agreement, and any non-contractual obligation arising out of or in connection with it, is governed by the law of England and Wales. The parties shall first try to resolve any dispute arising out of or in connection with this Agreement by good-faith negotiation between senior executives for 30 days. A dispute not resolved in that time shall be referred to and finally resolved by arbitration under the LCIA Rules, which are incorporated by reference into this section, before a sole arbitrator, with the seat of arbitration in London and English as the language of the arbitration. Either party may seek urgent injunctive relief from a court."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "fontara_entity",
+        "is": "Fontara Europe Ltd"
+      },
+      "then": [
+        {
+          "p": "This Agreement, and any non-contractual obligation arising out of or in connection with it, is governed by the laws of Ireland. The parties shall first try to resolve any dispute arising out of or in connection with this Agreement by good-faith negotiation between senior executives for 30 days, after which the courts of Ireland have exclusive jurisdiction to settle it."
+        }
+      ]
+    },
+    {
+      "h": "12. Entire Agreement and Amendment"
+    },
+    {
+      "p": "This Agreement is the entire agreement of the parties on its subject and supersedes all prior proposals, negotiations, representations and understandings about it. Each party confirms that in entering into it, it has not relied on any statement not set out in it. This Agreement may be amended only in a writing signed by authorized representatives of both parties."
+    },
+    {
+      "h": "13. General"
+    },
+    {
+      "p": "If any provision of this Agreement is held invalid or unenforceable, it is enforced to the maximum extent permitted and the rest of this Agreement continues in full force. No failure or delay in exercising a right is a waiver of it, and a waiver is effective only if it is in writing and signed. No person other than the parties and their permitted successors and assigns has any right to enforce any term of this Agreement. This Agreement may be signed in counterparts and by electronic signature, each of which is an original and all of which together are one instrument."
+    },
+    {
+      "p": "IN WITNESS WHEREOF, the parties have signed this Agreement by their authorized representatives as of the Effective Date."
+    },
+    {
+      "sign": "Counterparty",
+      "title": true,
+      "company": true
+    },
+    {
+      "sign": "Fontara",
+      "title": true,
+      "company": true
+    }
+  ],
+  "source": "vault: Contracts/Clauses/NDA",
+  "format": "word",
+  "salesforce": {
+    "connection": "default",
+    "object": "Opportunity"
+  },
+  "examples": [
+    {
+      "values": {
+        "fontara_entity": "Fontara, Inc.",
+        "effective": "11/02/2026",
+        "counterparty_entity": "a Delaware corporation",
+        "purpose": "evaluating a potential subscription to Fontara's platform",
+        "disclosure_period": "2 years",
+        "confidentiality_period": "3 years"
+      },
+      "expect": [
+        "MUTUAL NON-DISCLOSURE AGREEMENT",
+        "1500 Harbor Boulevard",
+        "State of Delaware"
+      ],
+      "absent": [
+        "England and Wales"
+      ]
+    }
+  ]
+}

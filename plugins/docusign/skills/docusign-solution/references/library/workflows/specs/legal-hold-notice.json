@@ -1,0 +1,68 @@
+{
+  "id": "legal-hold-notice",
+  "name": "Legal Hold Notice and Acknowledgment",
+  "summary": "Issues a legal hold notice to a custodian and tracks their signed acknowledgment.",
+  "description": "Fontara Legal issues a legal hold notice to one custodian: the notice is generated from the matter details (Legal picks the Fontara entity at preview), the custodian acknowledges it by signing, and Legal Operations is told whether they did. Closes the gap the vault's legal-hold process names: no acknowledgment tracking. Pattern: generate, send, branch on the Envelope Status.",
+  "participants": [
+    {
+      "role": "Custodian",
+      "name": "legal-hold-notice.custodian",
+      "email": "legal-hold-notice.custodian_email"
+    }
+  ],
+  "steps": [
+    {
+      "form": "legal-hold-notice"
+    },
+    {
+      "generate": "legal-hold-notice",
+      "fill": {
+        "matter": "legal-hold-notice.matter",
+        "matter_id": "legal-hold-notice.matter_id",
+        "custodian": "legal-hold-notice.custodian",
+        "issued": "run.startDate",
+        "scope": "legal-hold-notice.scope",
+        "period_start": "legal-hold-notice.period_start",
+        "legal_contact": "legal-hold-notice.legal_contact"
+      }
+    },
+    {
+      "sign": {
+        "Custodian": "Custodian"
+      },
+      "subject": "Legal hold notice: please acknowledge",
+      "message": "Please read the attached notice and sign to acknowledge it.",
+      "as": "hold"
+    },
+    {
+      "if": {
+        "field": "hold.status",
+        "is": "completed"
+      },
+      "then": [
+        {
+          "email": {
+            "to": [
+              "fontara.legal-ops@example.com"
+            ],
+            "subject": "Hold acknowledged: {{legal-hold-notice.matter_id}}",
+            "headline": "Custodian acknowledgment",
+            "body": "{{legal-hold-notice.custodian}} acknowledged the legal hold for {{legal-hold-notice.matter}}."
+          }
+        }
+      ],
+      "else": [
+        {
+          "email": {
+            "to": [
+              "fontara.legal-ops@example.com"
+            ],
+            "subject": "Hold NOT acknowledged: {{legal-hold-notice.matter_id}}",
+            "headline": "Custodian did not acknowledge",
+            "body": "{{legal-hold-notice.custodian}} declined or did not complete the legal hold notice for {{legal-hold-notice.matter}}. Escalate to the General Counsel."
+          }
+        }
+      ]
+    }
+  ]
+}

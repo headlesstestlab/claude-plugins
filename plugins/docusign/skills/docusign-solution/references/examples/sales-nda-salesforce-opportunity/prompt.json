@@ -1,0 +1,174 @@
+{
+  "id": "sales-nda-salesforce-opportunity",
+  "prompt": "Our reps should be able to send an NDA straight from a Salesforce opportunity. Pull the account name, billing address and the primary contact, and the rep signs on our side after the customer. When it's signed, attach the signed PDF to the opportunity and set its NDA Status field to Signed.",
+  "industry": "software",
+  "department": "sales",
+  "variation_tags": {
+    "start": [
+      "salesforce-launcher"
+    ],
+    "routing": [
+      "serial"
+    ],
+    "approvals": [
+      "none"
+    ],
+    "data_source": [
+      "salesforce"
+    ],
+    "locale": [
+      "en-US"
+    ],
+    "currency": [
+      "USD"
+    ],
+    "platform": "iam",
+    "ai": [
+      "none"
+    ],
+    "documents": [
+      "generated"
+    ],
+    "logic": [
+      "none"
+    ],
+    "notifications": [
+      "email"
+    ],
+    "identity": [
+      "none"
+    ],
+    "payment": false,
+    "agreement_desk": false
+  },
+  "expected_assets": [
+    {
+      "kind": "doc-template",
+      "purpose": "NDA with Salesforce merge fields",
+      "features": [
+        "Account.Name and billing address from the Opportunity",
+        "contact from OpportunityContactRole",
+        "signer fields for Customer and Company roles"
+      ]
+    },
+    {
+      "kind": "workflow",
+      "purpose": "launcher-started generate and send",
+      "features": [
+        "From a Link start with recordId/objectName/applicationName/orgId",
+        "generate with recordId = start.recordId",
+        "send: contact then the rep (starter)",
+        "Store Files in Salesforce on the Opportunity",
+        "Writeback: NDA_Status__c = Signed"
+      ]
+    }
+  ],
+  "acceptance": [
+    "the start exposes exactly the four launcher variables recordId, objectName, applicationName, orgId",
+    "the template's recordId is mapped from start.recordId; no step asks a person for a Salesforce id",
+    "the primary contact is read through OpportunityContactRole, not Opportunity.Contact",
+    "signing order: customer contact 1, the rep 2",
+    "after completion the signed PDF is a file on the launching Opportunity",
+    "NDA_Status__c is updated only after the envelope completes"
+  ],
+  "hard_parts": [
+    "an Opportunity has no direct Contact relationship; the contact must come from OpportunityContactRole",
+    "the published workflow appears in the launcher only on the account the Salesforce org is connected to"
+  ],
+  "clarifying_questions": [
+    {
+      "question": "Which contact signs: the primary contact role, or one the rep picks?",
+      "default": "the primary OpportunityContactRole"
+    },
+    {
+      "question": "Does the rep sign, or a fixed signatory?",
+      "default": "the rep who launched it (the starter)"
+    }
+  ],
+  "capabilities": [
+    "doc-template.setting.name",
+    "doc-template.setting.agreement-type",
+    "doc-template.setting.format-builder",
+    "doc-template.setting.upload-zip",
+    "doc-template.setting.publish",
+    "doc-template.content.title",
+    "doc-template.content.heading",
+    "doc-template.content.paragraph",
+    "doc-template.field.text",
+    "doc-template.field-setting.label",
+    "doc-template.field-setting.required",
+    "doc-template.field-setting.key-syntax",
+    "doc-template.field-setting.unused-field",
+    "doc-template.recipient.needs-to-sign",
+    "doc-template.tab.signature-block",
+    "doc-template.tab.company",
+    "doc-template.provision.agreement-party",
+    "doc-template.recipient.other-types",
+    "doc-template.tab.text",
+    "workflow.setting.participants",
+    "workflow.setting.description",
+    "workflow.setting.publish",
+    "workflow.setting.import-package",
+    "workflow.setting.workflow-name-rules",
+    "workflow.limit.size",
+    "workflow.variable.text",
+    "workflow.step.path-end",
+    "workflow.step-setting.done-screens",
+    "account.plan.iam-plan",
+    "account.limit.published-workflows",
+    "workflow.start.salesforce-launcher",
+    "workflow.start.api-human",
+    "salesforce.start.launcher-api",
+    "salesforce.start.launcher-object",
+    "salesforce.start.launcher-string-type",
+    "salesforce.start.request-chain",
+    "salesforce.setup.launcher-component",
+    "salesforce.setup.add-to-menu",
+    "salesforce.setup.permissions",
+    "salesforce.connection.install",
+    "salesforce.connection.import-mapping",
+    "salesforce.connection.shared",
+    "salesforce.connection.refresh",
+    "salesforce.connection.health",
+    "salesforce.connection.org-settings",
+    "account.connection.salesforce",
+    "account.plan.iam-for-sales",
+    "salesforce.object.opportunity",
+    "salesforce.object.account",
+    "salesforce.step.read",
+    "salesforce.step.read-typed-fields",
+    "workflow.step.sf-read",
+    "workflow.step-setting.sf-read-typed-fields",
+    "workflow.step.send-envelope",
+    "workflow.step-setting.send-envelope-recipients",
+    "workflow.step-setting.send-envelope-subject-message",
+    "workflow.step.confirmation-screen",
+    "workflow.step-setting.confirm-participant",
+    "workflow.step-setting.send-envelope-sender-starter",
+    "workflow.step.prepare-doc-template",
+    "workflow.step-setting.doc-template-fill",
+    "workflow.step-setting.doc-template-salesforce-record",
+    "salesforce.binding.doc-template-connection",
+    "salesforce.binding.field",
+    "salesforce.binding.picklist",
+    "salesforce.binding.line-items",
+    "salesforce.binding.generate-record",
+    "doc-template.binding.salesforce-field",
+    "doc-template.binding.salesforce-root-opportunity",
+    "doc-template.binding.salesforce-lookup-path",
+    "doc-template.binding.salesforce-date-format",
+    "doc-template.binding.salesforce-table",
+    "doc-template.binding.salesforce-money-column",
+    "doc-template.binding.salesforce-table-total",
+    "salesforce.object.contact-role",
+    "salesforce.step.read-related",
+    "workflow.step-setting.sf-read-related-object",
+    "salesforce.object.custom-fields",
+    "doc-template.recipient.routing-order",
+    "workflow.step.sf-writeback",
+    "workflow.step.sf-store-files",
+    "salesforce.step.writeback",
+    "workflow.step-setting.send-envelope-status-output",
+    "workflow.variable.op-envelope-status"
+  ]
+}

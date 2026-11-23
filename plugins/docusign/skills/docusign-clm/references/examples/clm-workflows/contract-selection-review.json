@@ -1,0 +1,115 @@
+{
+  "id": "contract-selection-review",
+  "name": "Contract Selection Review",
+  "description": "A legal team tags its contract folder, then the requester picks the one contract to review and an approver approves it. Update Folder Metadata Value tags the Contracts folder; Choose Documents asks the requester for exactly one document from that folder (with a Reject button); Approve on the chosen contract compares it with its previous version, has a due date two business days out, a custom action button to the playbook, and can be cancelled by the requester (Step Cancelled path). The workflow notifies the requester when it hits an error.",
+  "errorNotify": [
+    "submitter"
+  ],
+  "variables": [
+    {
+      "name": "Chosen",
+      "type": "document"
+    }
+  ],
+  "steps": [
+    {
+      "id": "tag",
+      "name": "Tag the contracts folder",
+      "kind": "updateFolderMetadata",
+      "folder": {
+        "name": "Contracts"
+      },
+      "set": [
+        {
+          "attribute": "Document.Source",
+          "value": "Selection review"
+        }
+      ],
+      "on": {
+        "success": "choose",
+        "failure": "logFailed"
+      }
+    },
+    {
+      "id": "choose",
+      "name": "Choose the contract",
+      "kind": "chooseDocuments",
+      "assignee": "submitter",
+      "folder": {
+        "name": "Contracts"
+      },
+      "choose": "one",
+      "limit": 1,
+      "rejectButton": true,
+      "output": "Chosen",
+      "displayName": "Choose the contract to review",
+      "instructions": "Pick the one contract to review.",
+      "on": {
+        "completed": "approve",
+        "rejected": "logRejected",
+        "failure": "logFailed"
+      }
+    },
+    {
+      "id": "approve",
+      "name": "Approve the contract",
+      "kind": "approve",
+      "assignee": "submitter",
+      "documents": {
+        "var": "Chosen"
+      },
+      "compareWithPrevious": true,
+      "due": {
+        "days": 2
+      },
+      "businessDays": true,
+      "customAction": {
+        "label": "Open the playbook",
+        "url": "https://example.com/playbook"
+      },
+      "cancellation": {
+        "by": [
+          "submitter"
+        ],
+        "to": "logCancelled"
+      },
+      "on": {
+        "approved": "logDone",
+        "rejected": "logRejected",
+        "failure": "logFailed"
+      }
+    },
+    {
+      "id": "logDone",
+      "name": "Log approved",
+      "kind": "logger",
+      "message": "The chosen contract is approved",
+      "next": "finish"
+    },
+    {
+      "id": "logRejected",
+      "name": "Log rejected",
+      "kind": "logger",
+      "message": "Rejected",
+      "next": "finish"
+    },
+    {
+      "id": "logCancelled",
+      "name": "Log cancelled",
+      "kind": "logger",
+      "message": "The approval step was cancelled",
+      "next": "finish"
+    },
+    {
+      "id": "logFailed",
+      "name": "Log failed",
+      "kind": "logger",
+      "message": "Failed",
+      "next": "finish"
+    },
+    {
+      "id": "finish",
+      "kind": "finish"
+    }
+  ]
+}

@@ -1,0 +1,98 @@
+{
+  "id": "volunteer-waiver",
+  "from": {
+    "name": "Volunteer Release and Waiver of Liability",
+    "description": "An adult volunteer's assumption of risk, release, medical authorization and photo consent for one volunteer event, with their phone and emergency contact.",
+    "fields": {
+      "event_code": {
+        "label": "Event code",
+        "required": true
+      },
+      "volunteer_phone": {
+        "label": "Volunteer phone",
+        "required": true
+      },
+      "emergency_name": {
+        "label": "Emergency contact name",
+        "required": true
+      },
+      "emergency_phone": {
+        "label": "Emergency contact phone",
+        "required": true
+      },
+      "emergency_relationship": {
+        "label": "Relationship",
+        "required": false
+      }
+    },
+    "signers": [
+      "Volunteer"
+    ],
+    "body": [
+      {
+        "title": "VOLUNTEER RELEASE AND WAIVER OF LIABILITY"
+      },
+      {
+        "p": "Event: **{{event_code}}**"
+      },
+      {
+        "p": "Volunteer phone: {{volunteer_phone}}. I confirm I am 18 or older."
+      },
+      {
+        "h": "1. Assumption of Risk"
+      },
+      {
+        "p": "I understand that volunteer activities can involve physical work, travel and other risks, including injury and damage to property, and I take part voluntarily and assume those risks."
+      },
+      {
+        "h": "2. Release"
+      },
+      {
+        "p": "I release the organization, its officers, staff, volunteers and event partners from claims arising from my volunteering, except claims caused by their gross negligence or willful misconduct."
+      },
+      {
+        "h": "3. Medical Treatment"
+      },
+      {
+        "p": "I authorize the organization to obtain emergency medical treatment for me if it reasonably believes I need it and I cannot consent, and I am responsible for its cost."
+      },
+      {
+        "h": "4. Emergency Contact"
+      },
+      {
+        "p": "{{emergency_name}} ({{emergency_relationship}}), {{emergency_phone}}"
+      },
+      {
+        "h": "5. Photography"
+      },
+      {
+        "p": "Photo consent: [[radio:Volunteer:Media consent:I consent to the organization using photos of me from the event|I do not consent to photos]]"
+      },
+      {
+        "p": "If any part of this release is held unenforceable, the rest remains in effect."
+      },
+      {
+        "sign": "Volunteer",
+        "title": false
+      }
+    ],
+    "examples": [
+      {
+        "values": {
+          "event_code": "PARK-CLEANUP-1114",
+          "volunteer_phone": "(415) 555-0142",
+          "emergency_name": "Sam Rivera",
+          "emergency_phone": "(415) 555-0199",
+          "emergency_relationship": "Friend"
+        }
+      }
+    ]
+  },
+  "name": "Volunteer Release and Waiver of Liability",
+  "summary": "A NEW document written inline: an adult volunteer's waiver for one event (event code, phone, emergency contact, photo consent), signed by the volunteer. The template behind the volunteer sign-up web form.",
+  "owners": {
+    "default": "Volunteer"
+  },
+  "emailSubject": "Your volunteer waiver",
+  "emailBlurb": "Thank you for volunteering. A copy of your signed waiver is attached."
+}

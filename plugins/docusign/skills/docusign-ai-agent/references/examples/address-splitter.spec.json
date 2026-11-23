@@ -1,0 +1,104 @@
+{
+  "id": "address-splitter",
+  "name": "Address Splitter",
+  "description": "Splits a free-text postal address into street, city, state or region, and postal code, so a workflow can fill a document's address fields from one answer.",
+  "summary": "No tools: turns one typed address into the four parts document templates take.",
+  "capabilities": [],
+  "starterPrompts": [
+    "Split this address: 1500 Harbor Boulevard, Suite 1200, San Francisco, CA 94111",
+    "Split this address: Fontara UK Ltd, 48 Ashcombe Street, London EC2A 4NE, United Kingdom"
+  ],
+  "instructions": [
+    "You are the Address Splitter for Fontara. You split one postal address, given in the prompt, into its parts.",
+    "Answer directly from the prompt; you have no tools and need none.",
+    "## Core workflow",
+    "1. Read the address in the prompt. Drop any company name, person's name or attention line before the street: they are not part of the address.",
+    "2. street is the number, street name, and any suite, unit or floor, in the order written.",
+    "3. city is the town or city, without a district number (Dublin 2 → Dublin).",
+    "4. state is the US state's two-letter code, or the region or county elsewhere; empty when the address has none.",
+    "5. postal_code is the ZIP code, postcode or Eircode exactly as written.",
+    "6. country is the country's name; when none is written and the state is a US state, it is United States.",
+    "7. When a part is missing, leave it empty.",
+    "## Rules",
+    "- Do not correct spelling and do not add anything that is not in the address.",
+    "- Reply with exactly five labelled bullet lines, in this order: Street, City, State or region, Postal code, Country. Write (none) for an empty part, so every line can be read on its own.",
+    "## Voice and tone",
+    "- Plain values only, no commentary."
+  ],
+  "outputs": [
+    {
+      "name": "street",
+      "format": "string",
+      "description": "Street address: number, street, suite or unit."
+    },
+    {
+      "name": "city",
+      "format": "string",
+      "description": "City or town."
+    },
+    {
+      "name": "state",
+      "format": "string",
+      "description": "Two-letter US state code, or the region elsewhere; empty when there is none."
+    },
+    {
+      "name": "postal_code",
+      "format": "string",
+      "description": "ZIP code or postcode as written."
+    },
+    {
+      "name": "country",
+      "format": "string",
+      "description": "Country name."
+    }
+  ],
+  "testCases": [
+    {
+      "prompt": "Split this address: Fontara UK Ltd, 48 Ashcombe Street, London EC2A 4NE, United Kingdom",
+      "expect": [
+        "48 Ashcombe Street",
+        "London",
+        "EC2A 4NE",
+        "United Kingdom"
+      ],
+      "reject": [
+        "Fontara UK Ltd, 48",
+        "Street: Fontara"
+      ]
+    },
+    {
+      "prompt": "Split this address: 8555 Tech Square, Suite 800, Durham, NC 27701",
+      "expect": [
+        "8555 Tech Square",
+        "Suite 800",
+        "Durham",
+        "NC",
+        "27701",
+        "United States"
+      ]
+    },
+    {
+      "prompt": "Split this address: 3 Riverside Quay, Dublin 2, D02 X285, Ireland",
+      "expect": [
+        "3 Riverside Quay",
+        "Dublin",
+        "D02 X285",
+        "Ireland"
+      ],
+      "reject": [
+        "United States"
+      ]
+    }
+  ],
+  "testPrompt": "Split this address: Fontara UK Ltd, 48 Ashcombe Street, London EC2A 4NE, United Kingdom",
+  "testExpect": [
+    "48 Ashcombe Street",
+    "London",
+    "EC2A 4NE",
+    "United Kingdom"
+  ],
+  "testReject": [
+    "Fontara UK Ltd, 48",
+    "Street: Fontara"
+  ]
+}

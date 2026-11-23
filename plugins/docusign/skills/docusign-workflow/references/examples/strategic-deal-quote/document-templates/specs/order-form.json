@@ -1,0 +1,570 @@
+{
+  "id": "order-form",
+  "name": "Order Form",
+  "description": "A subscription order under a master agreement: products, quantities, term, renewal, price, billing contact and tax.",
+  "agreementType": "OrderForm",
+  "fields": {
+    "fontara_entity": {
+      "label": "Fontara contracting entity",
+      "type": "select",
+      "options": [
+        "Fontara, Inc.",
+        "Fontara UK Ltd",
+        "Fontara Europe Ltd"
+      ],
+      "optionValues": {
+        "Fontara, Inc.": "Fontara, Inc., a Delaware corporation with its principal place of business at 1500 Harbor Boulevard, Suite 1200, San Francisco, CA 94111",
+        "Fontara UK Ltd": "Fontara UK Ltd, a company registered in England and Wales with its registered office at 48 Ashcombe Street, London EC2A 4NE, United Kingdom",
+        "Fontara Europe Ltd": "Fontara Europe Ltd, a company registered in Ireland with its registered office at 3 Riverside Quay, Dublin 2, D02 X285, Ireland"
+      },
+      "required": true,
+      "description": "Prints the entity’s full legal description and address"
+    },
+    "currency": {
+      "label": "Currency",
+      "type": "select",
+      "options": [
+        "US$",
+        "£",
+        "€"
+      ],
+      "required": true,
+      "description": "The signing entity’s: US$ for Fontara, Inc., £ for Fontara UK Ltd, € for Fontara Europe Ltd"
+    },
+    "customer": {
+      "bind": {
+        "provision": "AgreementParty"
+      },
+      "required": true,
+      "description": "Customer legal name"
+    },
+    "customer_address": {
+      "label": "Customer street address",
+      "required": true
+    },
+    "customer_city": {
+      "label": "Customer city",
+      "required": true
+    },
+    "customer_region": {
+      "label": "Customer state",
+      "required": true
+    },
+    "customer_postal": {
+      "label": "Customer ZIP code",
+      "required": true
+    },
+    "customer_entity": {
+      "label": "Customer entity type",
+      "required": true,
+      "description": "For example: an Illinois corporation"
+    },
+    "msa_date": {
+      "label": "Master agreement date",
+      "type": "date",
+      "required": true
+    },
+    "plan": {
+      "label": "Plan",
+      "type": "select",
+      "options": [
+        "Standard",
+        "Professional",
+        "Enterprise"
+      ],
+      "required": true
+    },
+    "quote": {
+      "label": "Quote number",
+      "required": true
+    },
+    "quote_valid": {
+      "label": "Quote valid until",
+      "type": "date",
+      "required": true
+    },
+    "overage_rate": {
+      "label": "Overage rate",
+      "required": true,
+      "description": "For example: $45 per additional user per month"
+    },
+    "annual_value": {
+      "label": "Annual value",
+      "type": "number",
+      "money": true,
+      "required": true,
+      "formula": "$sum(OrderItems.$number($replace(net_amount, ',', '')))"
+    },
+    "contract_value": {
+      "label": "Total contract value",
+      "type": "number",
+      "money": true,
+      "required": true,
+      "formula": "$sum(OrderItems.$number($replace(net_amount, ',', ''))) * $number($substringBefore(initial_term, ' '))"
+    },
+    "effective": {
+      "bind": {
+        "provision": "EffectiveDate"
+      },
+      "required": true
+    },
+    "initial_term": {
+      "label": "Initial term",
+      "type": "select",
+      "options": [
+        "1 year",
+        "2 years",
+        "3 years"
+      ],
+      "required": true
+    },
+    "expiration": {
+      "bind": {
+        "provision": "ExpirationDate"
+      },
+      "required": true
+    },
+    "renewal_type": {
+      "label": "Renewal",
+      "type": "select",
+      "options": [
+        "Auto-renews yearly",
+        "Fixed term",
+        "Follows the master agreement"
+      ],
+      "required": true
+    },
+    "position": {
+      "label": "Negotiated position",
+      "type": "select",
+      "options": [
+        "Balanced",
+        "Favours Fontara",
+        "Favours the counterparty"
+      ],
+      "required": true,
+      "description": "For the clauses most often negotiated"
+    },
+    "payment_terms": {
+      "label": "Payment terms",
+      "type": "select",
+      "options": [
+        "net 30 days",
+        "net 45 days",
+        "net 60 days",
+        "net 90 days"
+      ],
+      "required": true
+    },
+    "price_cap": {
+      "label": "Renewal price-increase cap",
+      "type": "select",
+      "options": [
+        "3% a year",
+        "5% a year",
+        "7% a year"
+      ],
+      "required": true
+    }
+  },
+  "signers": [
+    "Customer",
+    "Fontara"
+  ],
+  "body": [
+    {
+      "title": "ORDER FORM"
+    },
+    {
+      "p": "This Order Form is entered into as of {{effective}} between {{fontara_entity}} (\"Vendor\") and **{{customer}}**, {{customer_entity}} with its principal place of business at {{customer_address}}, {{customer_city}}, {{customer_region}} {{customer_postal}} (\"Customer\"), under the Master Services Agreement between them dated {{msa_date}} (the \"Agreement\")."
+    },
+    {
+      "p": "Quote **{{quote}}**, valid until {{quote_valid}}. Customer orders the following for the Fontara platform, {{plan}} plan; amounts are annual and in the currency of this Order Form."
+    },
+    {
+      "lineItems": {
+        "name": "OrderItems",
+        "label": "Order items",
+        "columns": [
+          {
+            "key": "sku",
+            "label": "SKU"
+          },
+          {
+            "key": "product",
+            "label": "Product"
+          },
+          {
+            "key": "quantity",
+            "label": "Quantity"
+          },
+          {
+            "key": "unit_price",
+            "label": "Unit Price"
+          },
+          {
+            "key": "net_amount",
+            "label": "Net Amount"
+          }
+        ]
+      }
+    },
+    {
+      "if": {
+        "field": "plan",
+        "is": "Enterprise"
+      },
+      "then": [
+        {
+          "p": "The Enterprise plan includes a named customer success manager, single sign-on and a 99.9% monthly uptime commitment."
+        }
+      ]
+    },
+    {
+      "h": "1. Products & Services"
+    },
+    {
+      "p": "Vendor shall provide the products and services listed in this Order Form, in the quantities and at the unit prices stated for each. The product documentation describes their features and is incorporated by reference. Vendor may rename a product without Customer's consent if its functionality is unchanged."
+    },
+    {
+      "h": "2. Subscription Term & Auto-Renewal"
+    },
+    {
+      "p": "The subscription term begins on {{effective}} and continues for an Initial Term of {{initial_term}}, expiring on {{expiration}}."
+    },
+    {
+      "if": {
+        "field": "renewal_type",
+        "is": "Auto-renews yearly"
+      },
+      "then": [
+        {
+          "p": "It renews automatically for successive 1-year terms unless either party gives written notice of non-renewal at least 60 days before the end of the then-current term."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "renewal_type",
+        "is": "Fixed term"
+      },
+      "then": [
+        {
+          "p": "This Order Form does not renew. Any continuation after it ends requires a new written agreement signed by both parties."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "renewal_type",
+        "is": "Follows the master agreement"
+      },
+      "then": [
+        {
+          "p": "It is governed by the Agreement and ends on {{expiration}} or, if earlier, when the Agreement ends. It does not renew separately."
+        }
+      ]
+    },
+    {
+      "h": "3. Pricing & Discounts"
+    },
+    {
+      "if": {
+        "field": "position",
+        "is": "Balanced"
+      },
+      "then": [
+        {
+          "p": "The fees under this Order Form total {{currency}}{{contract_value}}, with an annual value of {{currency}}{{annual_value}}. Fees are Vendor's list prices less the discounts stated in this Order Form, and are fixed for the Initial Term. A volume discount in this Order Form applies while Customer's use stays at or above its threshold."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "position",
+        "is": "Favours Fontara"
+      },
+      "then": [
+        {
+          "p": "The fees under this Order Form total {{currency}}{{contract_value}}, with an annual value of {{currency}}{{annual_value}}. The discounts in this Order Form apply to the Initial Term only and do not carry forward to any renewal, and a volume discount applies only if Customer's use stays at or above its threshold for the whole term."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "position",
+        "is": "Favours the counterparty"
+      },
+      "then": [
+        {
+          "p": "The fees under this Order Form total {{currency}}{{contract_value}}, with an annual value of {{currency}}{{annual_value}}. Fees are fixed for the subscription term and, if the subscription renews, the discounts in this Order Form carry forward to each renewal term. If Vendor offers better pricing for the same products to a comparable customer, it shall offer the same pricing to Customer."
+        }
+      ]
+    },
+    {
+      "h": "4. Billing & Payment"
+    },
+    {
+      "if": {
+        "field": "position",
+        "is": "Balanced"
+      },
+      "then": [
+        {
+          "p": "Vendor shall invoice the fees annually in advance, and each invoice is payable {{payment_terms}} from the invoice date. Customer may dispute an invoice in good faith by written notice within 30 days of receipt, and must pay the undisputed portion when due; no late interest accrues on an amount disputed in good faith. Undisputed amounts more than 30 days overdue accrue interest at 1% per month."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "position",
+        "is": "Favours Fontara"
+      },
+      "then": [
+        {
+          "p": "Vendor shall invoice the fees for the full subscription term in advance, and each invoice is payable {{payment_terms}} from its date. Past-due amounts accrue interest at 1.5% per month, and the undisputed part of an invoice is due even while a dispute is pending. Vendor may suspend the Services for any amount more than 15 days overdue without further notice, and Customer shall pay Vendor's costs of collection, including attorneys' fees."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "position",
+        "is": "Favours the counterparty"
+      },
+      "then": [
+        {
+          "p": "Vendor shall invoice the fees monthly, and each invoice is payable {{payment_terms}} from its date. Undisputed past-due amounts accrue interest at 1% per month, and amounts Customer disputes in good faith accrue no interest while the dispute is resolved. Vendor may not suspend the Services without 30 days' written notice, and shall correct any billing error within 30 days of Customer's notice of it."
+        }
+      ]
+    },
+    {
+      "p": "Customer billing contact email: [[email:Customer:Billing contact email]]  Customer purchase order number (optional): [[text?:Customer:PO number]]  Customer VAT or tax ID (if any): [[text?:Customer:Tax ID]]"
+    },
+    {
+      "if": {
+        "field": "fontara_entity",
+        "is": "Fontara, Inc."
+      },
+      "then": [
+        {
+          "p": "Fees exclude sales, use and similar taxes, which Customer pays unless it gives Vendor a valid exemption certificate."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "fontara_entity",
+        "is": "Fontara UK Ltd"
+      },
+      "then": [
+        {
+          "p": "Fees exclude VAT, which Customer pays at the applicable rate or accounts for under the reverse charge where it applies."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "fontara_entity",
+        "is": "Fontara Europe Ltd"
+      },
+      "then": [
+        {
+          "p": "Fees exclude VAT, which Customer pays at the applicable rate or accounts for under the reverse charge where it applies."
+        }
+      ]
+    },
+    {
+      "h": "5. Usage Limits & Overages"
+    },
+    {
+      "p": "Customer's use is limited to the quantities in this Order Form, and Vendor shall notify Customer when its use reaches 80% of a limit. Use above a limit is billed at {{overage_rate}}, prorated to the end of the current term. If Customer exceeds a limit in 3 consecutive months, the parties shall sign an order for the higher quantity."
+    },
+    {
+      "h": "6. Authorized Users & Entities"
+    },
+    {
+      "p": "Only the authorized users Customer names, who must be its employees, may use the Services. Customer may extend use to an affiliate by written notice and an amendment to this Order Form. User credentials may not be shared or transferred, and Customer is responsible for keeping them secure and for promptly removing access for anyone who leaves."
+    },
+    {
+      "p": "Customer system administrator: [[text:Customer:Administrator name]]  Administrator email: [[email:Customer:Administrator email]]"
+    },
+    {
+      "h": "7. Renewal Price Increase Cap"
+    },
+    {
+      "if": {
+        "field": "position",
+        "is": "Balanced"
+      },
+      "then": [
+        {
+          "p": "Fees for each renewal term may increase over the fees for the preceding term by no more than {{price_cap}}. Vendor must give written notice of any increase at least 60 days before the last day for notice of non-renewal; without that notice, fees for the renewal term are unchanged."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "position",
+        "is": "Favours Fontara"
+      },
+      "then": [
+        {
+          "p": "Each renewal term is invoiced at Vendor's then-current list price for the subscribed products. Vendor posts price changes on its website and may notify Customer by email, and Customer's failure to give notice of non-renewal is acceptance of the renewal price."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "position",
+        "is": "Favours the counterparty"
+      },
+      "then": [
+        {
+          "p": "Fees for each renewal term may increase by no more than the lesser of {{price_cap}} and the change in the US Consumer Price Index for All Urban Consumers over the preceding 12 months, and not at all at the first renewal. Vendor must give written notice of any increase at least 120 days before the end of the current term."
+        }
+      ]
+    },
+    {
+      "h": "8. Co-Terming Add-On Purchases"
+    },
+    {
+      "p": "Products and quantities added during the subscription term are co-terminous with it: their fees are prorated from their start date to the end of the current term, at the unit prices in this Order Form, and if the subscription renews they renew with it, at the same unit prices as the base products."
+    },
+    {
+      "h": "9. Usage True-Up at Renewal"
+    },
+    {
+      "p": "Vendor measures Customer's use of each subscribed product quarterly. If average use in a year exceeds the purchased quantity, Vendor invoices the excess at the unit prices in this Order Form, prorated from the quarter in which it began, and the renewal quantity equals the higher of the purchased quantity and the average use in the last quarter. At renewal Customer may reduce quantities by up to 10%."
+    },
+    {
+      "h": "10. Renewal on Current Terms"
+    },
+    {
+      "p": "Each renewal term is governed by the Agreement and this Order Form as in effect at the end of the preceding term. Vendor may propose changes to the terms for a renewal by written notice at least 90 days before the last day for notice of non-renewal, and the changes apply only if Customer agrees to them in writing."
+    },
+    {
+      "sign": "Customer",
+      "title": true,
+      "company": true
+    },
+    {
+      "sign": "Fontara",
+      "title": true,
+      "company": true
+    }
+  ],
+  "examples": [
+    {
+      "values": {
+        "effective": "04/01/2027",
+        "customer": "LearnSphere Global",
+        "customer_entity": "a Delaware corporation",
+        "customer_address": "1777 Academic Drive",
+        "msa_date": "05/01/2024",
+        "plan": "Enterprise",
+        "quote": "Q-2027-0331",
+        "quote_valid": "04/30/2027",
+        "initial_term": "3 years",
+        "expiration": "03/31/2030",
+        "renewal_type": "Auto-renews yearly",
+        "payment_terms": "net 30 days",
+        "price_cap": "3% a year",
+        "fontara_entity": "Fontara Europe Ltd",
+        "currency": "€",
+        "overage_rate": "€42 per additional user per month",
+        "position": "Balanced",
+        "customer_city": "Boulder",
+        "customer_region": "CO",
+        "customer_postal": "80309"
+      },
+      "tables": {
+        "OrderItems": [
+          [
+            "FON-ENT-USR",
+            "Platform, Enterprise (per user)",
+            "450",
+            "800.00",
+            "360,000.00"
+          ],
+          [
+            "FON-SUP-PRM",
+            "Premium support",
+            "1",
+            "45,000.00",
+            "45,000.00"
+          ]
+        ]
+      },
+      "expect": [
+        "named customer success manager",
+        "renews automatically",
+        "Q-2027-0331",
+        "FON-ENT-USR",
+        "FON-SUP-PRM",
+        "360,000.00",
+        "405,000.00",
+        "1,215,000.00",
+        "Pricing & Discounts",
+        "Fees exclude VAT",
+        "€42 per additional user per month",
+        "accrue interest at 1% per month"
+      ],
+      "absent": [
+        "sales, use and similar taxes",
+        "US$",
+        "1.5%"
+      ]
+    },
+    {
+      "values": {
+        "effective": "04/01/2027",
+        "customer": "EduTech Solutions",
+        "customer_entity": "a Delaware corporation",
+        "customer_address": "545 Education Park",
+        "msa_date": "10/14/2023",
+        "plan": "Standard",
+        "quote": "Q-2027-0347",
+        "quote_valid": "04/30/2027",
+        "initial_term": "1 year",
+        "expiration": "03/31/2028",
+        "renewal_type": "Fixed term",
+        "payment_terms": "net 30 days",
+        "price_cap": "5% a year",
+        "overage_rate": "$40 per additional user per month",
+        "fontara_entity": "Fontara, Inc.",
+        "currency": "US$",
+        "position": "Balanced",
+        "customer_city": "Austin",
+        "customer_region": "TX",
+        "customer_postal": "78712"
+      },
+      "tables": {
+        "OrderItems": [
+          [
+            "FON-STD-USR",
+            "Platform, Standard (per user)",
+            "40",
+            "600.00",
+            "24,000.00"
+          ]
+        ]
+      },
+      "expect": [
+        "This Order Form does not renew",
+        "Fontara, Inc.",
+        "a Delaware corporation",
+        "FON-STD-USR",
+        "24,000.00",
+        "sales, use and similar taxes",
+        "$40 per additional user per month"
+      ],
+      "absent": [
+        "named customer success manager",
+        "Fees exclude VAT",
+        "This Agreement does not renew"
+      ]
+    }
+  ],
+  "format": "word",
+  "source": "vault: Contracts/Clauses/Order Form"
+}

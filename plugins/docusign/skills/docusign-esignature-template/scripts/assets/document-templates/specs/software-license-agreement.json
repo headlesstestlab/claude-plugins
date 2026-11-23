@@ -1,0 +1,399 @@
+{
+  "id": "software-license-agreement",
+  "name": "Software License Agreement",
+  "description": "A license to install and use Fontara software: grant, restrictions, term, fees and maintenance, warranty, IP indemnity, liability, audit, export.",
+  "agreementType": "License",
+  "fields": {
+    "fontara_entity": {
+      "label": "Fontara contracting entity",
+      "type": "select",
+      "options": [
+        "Fontara, Inc.",
+        "Fontara UK Ltd",
+        "Fontara Europe Ltd"
+      ],
+      "optionValues": {
+        "Fontara, Inc.": "Fontara, Inc., a Delaware corporation with its principal place of business at 1500 Harbor Boulevard, Suite 1200, San Francisco, CA 94111",
+        "Fontara UK Ltd": "Fontara UK Ltd, a company registered in England and Wales with its registered office at 48 Ashcombe Street, London EC2A 4NE, United Kingdom",
+        "Fontara Europe Ltd": "Fontara Europe Ltd, a company registered in Ireland with its registered office at 3 Riverside Quay, Dublin 2, D02 X285, Ireland"
+      },
+      "required": true,
+      "description": "Prints the entity’s full legal description and address"
+    },
+    "currency": {
+      "label": "Currency",
+      "type": "select",
+      "options": [
+        "US$",
+        "£",
+        "€"
+      ],
+      "required": true,
+      "description": "The signing entity’s: US$ for Fontara, Inc., £ for Fontara UK Ltd, € for Fontara Europe Ltd"
+    },
+    "effective": {
+      "bind": {
+        "provision": "EffectiveDate"
+      },
+      "required": true
+    },
+    "licensee": {
+      "bind": {
+        "provision": "AgreementParty"
+      },
+      "required": true,
+      "description": "Licensee legal name"
+    },
+    "licensee_entity": {
+      "label": "Licensee entity type",
+      "required": true,
+      "description": "For example: a Delaware corporation"
+    },
+    "licensee_address": {
+      "label": "Licensee street address",
+      "required": true
+    },
+    "licensee_city": {
+      "label": "Licensee city",
+      "required": true
+    },
+    "licensee_region": {
+      "label": "Licensee state",
+      "required": true
+    },
+    "licensee_postal": {
+      "label": "Licensee ZIP code",
+      "required": true
+    },
+    "users": {
+      "label": "Licensed named users",
+      "type": "number",
+      "required": true
+    },
+    "license_term": {
+      "label": "License term",
+      "type": "select",
+      "options": [
+        "Perpetual",
+        "Annual subscription"
+      ],
+      "required": true
+    },
+    "fee": {
+      "label": "License or subscription fee",
+      "type": "number",
+      "money": true,
+      "required": true
+    },
+    "support_pct": {
+      "label": "Annual maintenance (% of license fee, perpetual only)",
+      "type": "number"
+    },
+    "payment_terms": {
+      "label": "Payment terms",
+      "type": "select",
+      "options": [
+        "net 30 days",
+        "net 45 days",
+        "net 60 days",
+        "net 90 days"
+      ],
+      "required": true
+    }
+  },
+  "signers": [
+    "Licensee",
+    "Fontara"
+  ],
+  "body": [
+    {
+      "title": "SOFTWARE LICENSE AGREEMENT"
+    },
+    {
+      "p": "This Software License Agreement (this \"Agreement\") is entered into as of {{effective}} (the \"Effective Date\") between {{fontara_entity}} (\"Licensor\"), and **{{licensee}}**, {{licensee_entity}} with its principal place of business at {{licensee_address}}, {{licensee_city}}, {{licensee_region}} {{licensee_postal}} (\"Licensee\"), for the Fontara software products described in their documentation (the \"Software\"), for up to {{users}} named users."
+    },
+    {
+      "h": "1. License Grant"
+    },
+    {
+      "p": "Subject to this Agreement and payment of the fees, Licensor grants Licensee a non-exclusive, non-transferable license to install and use the Software, in object-code form, for Licensee's internal business purposes, by up to the number of named users stated above and in the environments the documentation authorizes, and to make a reasonable number of backup copies. The license extends to Licensee's employees and contractors acting on its behalf, for whose compliance Licensee is responsible."
+    },
+    {
+      "h": "2. Term of License"
+    },
+    {
+      "if": {
+        "field": "license_term",
+        "is": "Perpetual"
+      },
+      "then": [
+        {
+          "p": "The license is perpetual, subject to termination under this Agreement."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "license_term",
+        "is": "Annual subscription"
+      },
+      "then": [
+        {
+          "p": "The license runs for one year from the Effective Date and renews for further one-year periods unless either party gives 60 days' notice of non-renewal before the end of the current period. When it ends, Licensee's right to use the Software ends."
+        }
+      ]
+    },
+    {
+      "h": "3. Restrictions"
+    },
+    {
+      "p": "Licensee shall not (a) reverse engineer, decompile or disassemble the Software, except to the extent applicable law expressly permits despite this restriction; (b) sublicense, rent, lease or transfer the Software to any third party; (c) use the Software to build a competing product; or (d) remove or alter any proprietary notice or label."
+    },
+    {
+      "h": "4. Fees and Payment"
+    },
+    {
+      "if": {
+        "field": "license_term",
+        "is": "Perpetual"
+      },
+      "then": [
+        {
+          "p": "Licensee shall pay the license fee of {{currency}}{{fee}} on signature, and an annual support and maintenance fee of {{support_pct}}% of the license fee, invoiced annually in advance from the Effective Date."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "license_term",
+        "is": "Annual subscription"
+      },
+      "then": [
+        {
+          "p": "Licensee shall pay the annual subscription fee of {{currency}}{{fee}}, which includes support and maintenance, invoiced annually in advance."
+        }
+      ]
+    },
+    {
+      "p": "Invoices are payable {{payment_terms}} from receipt. Fees exclude taxes, which Licensee pays other than taxes on Licensor's income."
+    },
+    {
+      "h": "5. Ownership"
+    },
+    {
+      "p": "Licensor and its licensors own all intellectual property in the Software, the documentation and all updates, and no right is granted except as this Agreement expressly states. Licensee owns its data and the configurations it builds on the Software. Licensee grants Licensor a non-exclusive license to use any feedback Licensee gives to improve its products."
+    },
+    {
+      "h": "6. User Accounts and Credentials"
+    },
+    {
+      "p": "Licensee shall keep user credentials confidential and notify Licensor promptly of any suspected unauthorized access. Licensee may reassign a named-user license to a replacement user at no charge. Licensor may suspend a compromised account on reasonable notice, or without notice during an active security incident."
+    },
+    {
+      "h": "7. Acceptable Use"
+    },
+    {
+      "p": "Licensee shall use the Software only for its internal business operations and in compliance with applicable law, and shall not use it to transmit malware or other harmful code, to infringe any third party's intellectual property or to facilitate illegal activity. These acceptable use terms are fixed at signature, and Licensor may not change them unilaterally."
+    },
+    {
+      "h": "8. Updates and Changes"
+    },
+    {
+      "p": "Licensor may issue updates, patches and new versions. Licensor shall give 90 days' notice before releasing a new major version, and Licensee may remain on the prior major version, with security patches, for 12 months after the new version is released."
+    },
+    {
+      "h": "9. Support and Maintenance"
+    },
+    {
+      "p": "While support and maintenance is paid for, Licensor provides updates and new versions as they are released, and responds to support requests on business days in line with its published support policy."
+    },
+    {
+      "h": "10. Warranty"
+    },
+    {
+      "p": "Licensor warrants that, for 90 days after delivery, the Software will perform materially in accordance with its documentation. Licensee's exclusive remedy for breach of this warranty is for Licensor to correct the non-conformity or, if it cannot do so within a reasonable time, to end the license and refund the fees paid for the non-conforming Software."
+    },
+    {
+      "p": "EXCEPT AS EXPRESSLY STATED IN THIS AGREEMENT, THE SOFTWARE IS PROVIDED \"AS IS\", AND LICENSOR DISCLAIMS ALL OTHER WARRANTIES, EXPRESS OR IMPLIED, INCLUDING THE IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. LICENSOR DOES NOT WARRANT THAT THE SOFTWARE WILL BE ERROR-FREE OR OPERATE WITHOUT INTERRUPTION."
+    },
+    {
+      "h": "11. Intellectual Property Indemnity"
+    },
+    {
+      "p": "Licensor shall defend Licensee against any third-party claim that the Software, used as this Agreement permits, infringes that party's patent, copyright or trademark or misappropriates its trade secret, and shall pay the damages finally awarded or agreed in settlement. If the Software is or may be held to infringe, Licensor may obtain the right for Licensee to keep using it, modify it so that it does not infringe, or end the license and refund the unamortized fees. Licensor has no obligation for a claim arising from Licensee's modification of the Software, its combination with items Licensor did not supply, or use not permitted by this Agreement. This section states Licensor's entire liability for infringement."
+    },
+    {
+      "h": "12. Limitation of Liability"
+    },
+    {
+      "p": "EXCEPT FOR LICENSEE'S BREACH OF THE RESTRICTIONS SECTION, A PARTY'S INDEMNIFICATION OBLIGATIONS OR ITS FRAUD OR WILLFUL MISCONDUCT, NEITHER PARTY IS LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL OR CONSEQUENTIAL DAMAGES, OR FOR LOST PROFITS, REVENUE OR DATA, AND EACH PARTY'S TOTAL LIABILITY UNDER THIS AGREEMENT IS LIMITED TO THE FEES PAID OR PAYABLE IN THE 12 MONTHS BEFORE THE EVENT GIVING RISE TO THE CLAIM."
+    },
+    {
+      "p": "Licensee initials acknowledging Section 12 (Limitation of Liability): [[initials:Licensee]]"
+    },
+    {
+      "h": "13. Termination"
+    },
+    {
+      "p": "Either party may terminate this Agreement for the other's material breach not cured within 30 days after written notice. Licensor may suspend or terminate access immediately for a violation of the acceptable use terms that is causing active harm. On termination Licensee shall stop using the Software and, within 30 days, certify in writing that it has deleted all copies."
+    },
+    {
+      "h": "14. Audit"
+    },
+    {
+      "p": "Once a year, on 30 days' notice, Licensor may verify Licensee's use of the Software against the licensed quantities, by Licensee's written self-certification or, if Licensor reasonably believes use exceeds the license, by an audit during business hours. Licensee shall pay for any excess use at Licensor's then-current prices, and for the audit if it shows excess use of more than 5%."
+    },
+    {
+      "h": "15. Export Control"
+    },
+    {
+      "p": "Each party shall comply with the export control and economic sanctions laws that apply to the Software, including those of the United States, the United Kingdom and the European Union. Licensee shall not export, re-export or provide access to the Software to any person or destination those laws prohibit."
+    },
+    {
+      "h": "16. Relationship of the Parties"
+    },
+    {
+      "p": "The parties are independent contractors. Nothing in this Agreement creates a partnership, joint venture, agency, fiduciary or employment relationship between them, and neither party may make any commitment binding the other."
+    },
+    {
+      "h": "17. Notices"
+    },
+    {
+      "p": "Notices under this Agreement must be in writing and delivered by hand, by recognized overnight courier or by email to the addresses stated in this Agreement or later notified in writing. A notice is effective on confirmed delivery or, for email, when the recipient acknowledges it. Notices of breach, termination or a legal claim must be sent by courier, with a copy by email."
+    },
+    {
+      "h": "18. Assignment"
+    },
+    {
+      "p": "Neither party may assign or transfer this Agreement without the other party's prior written consent, which may not be unreasonably withheld, except that either party may assign it on written notice to an affiliate, or to a successor to all or substantially all of the business or assets to which it relates that assumes it in writing. Any other attempted assignment is void. This Agreement binds and benefits the parties and their permitted successors and assigns."
+    },
+    {
+      "h": "19. Force Majeure"
+    },
+    {
+      "p": "Neither party is liable for a delay or failure to perform, other than an obligation to pay money, caused by events beyond its reasonable control, including natural disasters, epidemics, war, terrorism, civil unrest, government action and widespread failures of the internet or public utilities. The affected party shall notify the other within 5 business days and use reasonable efforts to resume performance. If the event continues for more than 60 days, either party may terminate the affected performance under this Agreement on written notice without liability."
+    },
+    {
+      "h": "20. Governing Law and Disputes"
+    },
+    {
+      "if": {
+        "field": "fontara_entity",
+        "is": "Fontara, Inc."
+      },
+      "then": [
+        {
+          "p": "This Agreement is governed by the laws of the State of Delaware, without regard to its conflict-of-laws rules. The parties shall first try to resolve any dispute arising out of or relating to this Agreement by good-faith negotiation between senior executives for 30 days. A dispute not resolved in that time shall be finally settled by binding arbitration administered by the American Arbitration Association under its Commercial Arbitration Rules, before a single arbitrator, seated in San Francisco, California, and judgment on the award may be entered in any court of competent jurisdiction. Either party may seek injunctive relief from a court to protect its confidential information or intellectual property."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "fontara_entity",
+        "is": "Fontara UK Ltd"
+      },
+      "then": [
+        {
+          "p": "This Agreement, and any non-contractual obligation arising out of or in connection with it, is governed by the law of England and Wales. The parties shall first try to resolve any dispute arising out of or in connection with this Agreement by good-faith negotiation between senior executives for 30 days. A dispute not resolved in that time shall be referred to and finally resolved by arbitration under the LCIA Rules, which are incorporated by reference into this section, before a sole arbitrator, with the seat of arbitration in London and English as the language of the arbitration. Either party may seek urgent injunctive relief from a court."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "fontara_entity",
+        "is": "Fontara Europe Ltd"
+      },
+      "then": [
+        {
+          "p": "This Agreement, and any non-contractual obligation arising out of or in connection with it, is governed by the laws of Ireland. The parties shall first try to resolve any dispute arising out of or in connection with this Agreement by good-faith negotiation between senior executives for 30 days, after which the courts of Ireland have exclusive jurisdiction to settle it."
+        }
+      ]
+    },
+    {
+      "h": "21. Entire Agreement and Amendment"
+    },
+    {
+      "p": "This Agreement is the entire agreement of the parties on its subject and supersedes all prior proposals, negotiations, representations and understandings about it. Each party confirms that in entering into it, it has not relied on any statement not set out in it. This Agreement may be amended only in a writing signed by authorized representatives of both parties."
+    },
+    {
+      "h": "22. Survival"
+    },
+    {
+      "p": "Any provision of this Agreement that by its nature is intended to survive its termination or expiration survives it, including the Ownership, Warranty disclaimer, Intellectual Property Indemnity, Limitation of Liability and Audit sections, together with any payment obligation accrued before termination."
+    },
+    {
+      "h": "23. General"
+    },
+    {
+      "p": "If any provision of this Agreement is held invalid or unenforceable, it is enforced to the maximum extent permitted and the rest of this Agreement continues in full force. No failure or delay in exercising a right is a waiver of it, and a waiver is effective only if it is in writing and signed. No person other than the parties and their permitted successors and assigns has any right to enforce any term of this Agreement. This Agreement may be signed in counterparts and by electronic signature, each of which is an original and all of which together are one instrument."
+    },
+    {
+      "p": "IN WITNESS WHEREOF, the parties have signed this Agreement by their authorized representatives as of the Effective Date."
+    },
+    {
+      "sign": "Licensee",
+      "title": true,
+      "company": true
+    },
+    {
+      "sign": "Fontara",
+      "title": true,
+      "company": true
+    }
+  ],
+  "examples": [
+    {
+      "values": {
+        "effective": "02/01/2027",
+        "licensee": "Innovate Global Manufacturing",
+        "licensee_entity": "a Pennsylvania corporation",
+        "licensee_address": "2200 Factory Lane",
+        "users": "300",
+        "license_term": "Perpetual",
+        "fee": "210000",
+        "support_pct": "20",
+        "payment_terms": "net 30 days",
+        "fontara_entity": "Fontara, Inc.",
+        "currency": "US$",
+        "licensee_city": "Pittsburgh",
+        "licensee_region": "PA",
+        "licensee_postal": "15222"
+      },
+      "expect": [
+        "300 named users",
+        "The license is perpetual",
+        "20% of the license fee",
+        "PROVIDED \"AS IS\""
+      ],
+      "absent": [
+        "annual subscription fee"
+      ]
+    },
+    {
+      "values": {
+        "effective": "03/15/2027",
+        "licensee": "LearnSphere Global",
+        "licensee_entity": "a Delaware corporation",
+        "licensee_address": "1777 Academic Drive",
+        "users": "120",
+        "license_term": "Annual subscription",
+        "fee": "54000",
+        "payment_terms": "net 45 days",
+        "fontara_entity": "Fontara Europe Ltd",
+        "currency": "€",
+        "licensee_city": "Boulder",
+        "licensee_region": "CO",
+        "licensee_postal": "80309"
+      },
+      "expect": [
+        "annual subscription fee of €54,000.00",
+        "courts of Ireland"
+      ],
+      "absent": [
+        "The license is perpetual",
+        "maintenance fee of"
+      ]
+    }
+  ],
+  "source": "written for the library under the vault's clause headings (Contracts/Clauses/EULA); its text is not the clause notes' positions"
+}

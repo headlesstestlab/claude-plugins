@@ -1,0 +1,46 @@
+{
+  "id": "approval-subflow",
+  "name": "Approval Subflow",
+  "description": "A parent workflow hands the approval to a child workflow and reads the answer back: the Workflow step starts the child and waits for it; the child sets the parent's ApprovalResult with Update Parent Variable; the parent shows it as its workflow output.",
+  "variables": [
+    {
+      "name": "ApprovalResult",
+      "type": "text",
+      "writableByChild": true
+    }
+  ],
+  "steps": [
+    {
+      "id": "child",
+      "name": "Run the approval subflow",
+      "kind": "childWorkflow",
+      "workflow": "Approval Subflow Child",
+      "params": "Params",
+      "wait": true,
+      "on": {
+        "success": "out",
+        "failure": "outFailed",
+        "aborted": "outFailed",
+        "childFailure": "outFailed"
+      }
+    },
+    {
+      "id": "out",
+      "name": "Output the result",
+      "kind": "setOutput",
+      "value": "Result: <%#Variable.ApprovalResult%>",
+      "next": "finish"
+    },
+    {
+      "id": "outFailed",
+      "name": "Output failed",
+      "kind": "setOutput",
+      "value": "The subflow failed",
+      "next": "finish"
+    },
+    {
+      "id": "finish",
+      "kind": "finish"
+    }
+  ]
+}

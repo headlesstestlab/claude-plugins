@@ -1,0 +1,798 @@
+{
+  "id": "saas-subscription-agreement",
+  "name": "SaaS Subscription Agreement",
+  "description": "Fontara’s subscription terms: ordering, use, term and renewal, fees, service levels, support, data, warranties, indemnity and liability.",
+  "agreementType": "Subscription",
+  "fields": {
+    "fontara_entity": {
+      "label": "Fontara contracting entity",
+      "type": "select",
+      "options": [
+        "Fontara, Inc.",
+        "Fontara UK Ltd",
+        "Fontara Europe Ltd"
+      ],
+      "optionValues": {
+        "Fontara, Inc.": "Fontara, Inc., a Delaware corporation with its principal place of business at 1500 Harbor Boulevard, Suite 1200, San Francisco, CA 94111",
+        "Fontara UK Ltd": "Fontara UK Ltd, a company registered in England and Wales with its registered office at 48 Ashcombe Street, London EC2A 4NE, United Kingdom",
+        "Fontara Europe Ltd": "Fontara Europe Ltd, a company registered in Ireland with its registered office at 3 Riverside Quay, Dublin 2, D02 X285, Ireland"
+      },
+      "required": true,
+      "description": "Prints the entity’s full legal description and address"
+    },
+    "currency": {
+      "label": "Currency",
+      "type": "select",
+      "options": [
+        "US$",
+        "£",
+        "€"
+      ],
+      "required": true,
+      "description": "The signing entity’s: US$ for Fontara, Inc., £ for Fontara UK Ltd, € for Fontara Europe Ltd"
+    },
+    "customer": {
+      "bind": {
+        "provision": "AgreementParty"
+      },
+      "required": true,
+      "description": "Customer legal name"
+    },
+    "customer_address": {
+      "label": "Customer street address",
+      "required": true
+    },
+    "customer_city": {
+      "label": "Customer city",
+      "required": true
+    },
+    "customer_region": {
+      "label": "Customer state",
+      "required": true
+    },
+    "customer_postal": {
+      "label": "Customer ZIP code",
+      "required": true
+    },
+    "customer_entity": {
+      "label": "Customer entity type",
+      "required": true,
+      "description": "For example: an Illinois corporation"
+    },
+    "support": {
+      "label": "Support level",
+      "type": "select",
+      "options": [
+        "Standard",
+        "Premium"
+      ],
+      "required": true
+    },
+    "renewal_notice": {
+      "bind": {
+        "provision": "RenewalNoticeDate"
+      },
+      "required": true,
+      "description": "The last day either party may give notice of non-renewal"
+    },
+    "renewal_info": {
+      "bind": {
+        "provision": "RenewalInfo"
+      },
+      "description": "Anything agreed about the renewal, for example a price hold"
+    },
+    "effective": {
+      "bind": {
+        "provision": "EffectiveDate"
+      },
+      "required": true
+    },
+    "initial_term": {
+      "label": "Initial term",
+      "type": "select",
+      "options": [
+        "1 year",
+        "2 years",
+        "3 years"
+      ],
+      "required": true
+    },
+    "expiration": {
+      "bind": {
+        "provision": "ExpirationDate"
+      },
+      "required": true
+    },
+    "renewal_type": {
+      "bind": {
+        "provision": "RenewalType"
+      },
+      "required": true
+    },
+    "position": {
+      "label": "Negotiated position",
+      "type": "select",
+      "options": [
+        "Balanced",
+        "Favours Fontara",
+        "Favours the counterparty"
+      ],
+      "required": true,
+      "description": "For the clauses most often negotiated"
+    },
+    "contract_value": {
+      "label": "Total contract value",
+      "type": "number",
+      "money": true,
+      "required": true
+    },
+    "annual_value": {
+      "label": "Annual value",
+      "type": "number",
+      "money": true,
+      "required": true
+    },
+    "payment_terms": {
+      "bind": {
+        "provision": "PaymentTerms"
+      },
+      "required": true
+    },
+    "price_cap": {
+      "label": "Renewal price-increase cap",
+      "type": "select",
+      "options": [
+        "3% a year",
+        "5% a year",
+        "7% a year"
+      ],
+      "required": true
+    },
+    "liability_cap": {
+      "label": "Liability cap",
+      "type": "select",
+      "options": [
+        "fees paid in the prior 3 months",
+        "fees paid in the prior 12 months",
+        "two times the fees paid in the prior 12 months"
+      ],
+      "required": true
+    }
+  },
+  "signers": [
+    "Customer",
+    "Fontara"
+  ],
+  "body": [
+    {
+      "title": "SAAS SUBSCRIPTION AGREEMENT"
+    },
+    {
+      "p": "This SaaS Subscription Agreement (the \"Agreement\") is entered into as of {{effective}} (the \"Effective Date\") between {{fontara_entity}} (\"Vendor\"), and **{{customer}}**, {{customer_entity}} with its principal place of business at {{customer_address}}, {{customer_city}}, {{customer_region}} {{customer_postal}} (\"Customer\"). Vendor and Customer are each a \"party\" and together the \"parties\"."
+    },
+    {
+      "p": "Customer subscribes to the Fontara platform on the terms of this Agreement and the Order Forms signed under it."
+    },
+    {
+      "h": "1. Definitions"
+    },
+    {
+      "p": "\"Services\" means the Fontara subscription services Customer orders. \"Order Form\" means an ordering document the parties sign that refers to this Agreement. \"Users\" means the individuals Customer authorizes to use the Services. \"Confidential Information\" means information a party discloses that is marked confidential or that a reasonable person would understand to be confidential, other than information that is public, independently developed, or rightfully received from a third party."
+    },
+    {
+      "h": "2. Ordering and Order Acceptance"
+    },
+    {
+      "p": "Customer orders Services by signing an Order Form that refers to this Agreement. An order binds Vendor only when Vendor signs it or confirms it in writing, and Vendor accepts or rejects each order within 10 business days of receiving it. Any terms in a Customer purchase order, supplier portal or invoice that add to or differ from this Agreement have no effect, even if Vendor accepts the purchase order."
+    },
+    {
+      "h": "3. Use of the Services"
+    },
+    {
+      "p": "Customer uses the Services only for its internal business purposes and in accordance with this Agreement, the documentation and applicable law, and does not resell or reverse engineer the Services or use them to send unlawful or harmful content. Customer is responsible for the acts and omissions of its users and keeps their credentials secure. Vendor may suspend a user's access to the extent necessary to stop a material violation, after notice where practicable, and restores access once the violation is cured."
+    },
+    {
+      "p": "[[check:Customer:Accepts the Acceptable Use Policy]] Customer has read and accepts Vendor's Acceptable Use Policy."
+    },
+    {
+      "h": "4. Term & Termination"
+    },
+    {
+      "p": "This Agreement begins on {{effective}} and continues for an Initial Term of {{initial_term}}, expiring on {{expiration}} unless terminated earlier. Either party may terminate for material breach on 30 days' written notice if the breach is not cured within that period; Vendor may terminate for non-payment not cured within 10 business days."
+    },
+    {
+      "if": {
+        "field": "renewal_type",
+        "is": "Auto Renew"
+      },
+      "then": [
+        {
+          "p": "It renews automatically for successive 1-year periods unless either party gives written notice of non-renewal at least 60 days before the end of the then-current term."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "renewal_type",
+        "is": "Fixed Term"
+      },
+      "then": [
+        {
+          "p": "This Agreement does not renew. Any continuation after it ends requires a new written agreement signed by both parties."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "renewal_type",
+        "is": "Evergreen"
+      },
+      "then": [
+        {
+          "p": "It continues until either party ends it by at least 60 days' written notice to the other."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "renewal_type",
+        "is": "Renewal Option"
+      },
+      "then": [
+        {
+          "p": "Customer may renew it for a further 1-year term by written notice to Vendor at least 60 days before the end of the then-current term."
+        }
+      ]
+    },
+    {
+      "h": "5. Fees & Payment Terms"
+    },
+    {
+      "if": {
+        "field": "position",
+        "is": "Balanced"
+      },
+      "then": [
+        {
+          "p": "The total contract value is {{currency}}{{contract_value}}, with an annualized value of {{currency}}{{annual_value}}. Fees are as set out in the applicable Order Form, invoiced annually in advance. Payment is due on the payment terms below, counted from the invoice date, and overdue amounts accrue interest at 1.5% per month. Fees may increase at renewal by no more than {{price_cap}} over the fees for the prior period. Vendor may suspend services for invoices more than 30 days overdue after written notice."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "position",
+        "is": "Favours Fontara"
+      },
+      "then": [
+        {
+          "p": "The total contract value is {{currency}}{{contract_value}}, with an annualized value of {{currency}}{{annual_value}}. Vendor may increase the fees by up to {{price_cap}} without Customer's consent. Payment is due on the payment terms below, counted from the invoice date, overdue amounts accrue interest at 1.5% per month, and Vendor may suspend the services if any invoice is more than 10 days overdue. Customer shall pay all costs of collection, including reasonable attorneys' fees. Except as this Agreement expressly provides, all fees are non-refundable once invoiced."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "position",
+        "is": "Favours the counterparty"
+      },
+      "then": [
+        {
+          "p": "The total contract value is {{currency}}{{contract_value}}, with an annualized value of {{currency}}{{annual_value}}. Pricing is fixed for the full contract term, and Vendor may not increase it unilaterally. Payment is due on the payment terms below, counted from the invoice date. Vendor may not suspend the services without 30 days' prior written notice. Customer may dispute any invoice in good faith within 60 days of receiving it, and no interest or late charge accrues on a disputed amount. On termination, Vendor shall refund prepaid fees for unused services pro rata, except where this Agreement requires Customer to pay the fees for the rest of the term."
+        }
+      ]
+    },
+    {
+      "if": [
+        {
+          "field": "payment_terms",
+          "is": "Under 7 days"
+        }
+      ],
+      "then": [
+        {
+          "p": "Payment terms: in fewer than 7 days."
+        }
+      ]
+    },
+    {
+      "if": [
+        {
+          "field": "payment_terms",
+          "is": "7 days"
+        }
+      ],
+      "then": [
+        {
+          "p": "Payment terms: net 7 days."
+        }
+      ]
+    },
+    {
+      "if": [
+        {
+          "field": "payment_terms",
+          "is": "15 days"
+        }
+      ],
+      "then": [
+        {
+          "p": "Payment terms: net 15 days."
+        }
+      ]
+    },
+    {
+      "if": [
+        {
+          "field": "payment_terms",
+          "is": "30 days"
+        }
+      ],
+      "then": [
+        {
+          "p": "Payment terms: net 30 days."
+        }
+      ]
+    },
+    {
+      "if": [
+        {
+          "field": "payment_terms",
+          "is": "45 days"
+        }
+      ],
+      "then": [
+        {
+          "p": "Payment terms: net 45 days."
+        }
+      ]
+    },
+    {
+      "if": [
+        {
+          "field": "payment_terms",
+          "is": "60 days"
+        }
+      ],
+      "then": [
+        {
+          "p": "Payment terms: net 60 days."
+        }
+      ]
+    },
+    {
+      "if": [
+        {
+          "field": "payment_terms",
+          "is": "90 days"
+        }
+      ],
+      "then": [
+        {
+          "p": "Payment terms: net 90 days."
+        }
+      ]
+    },
+    {
+      "if": [
+        {
+          "field": "payment_terms",
+          "is": "> 90 days"
+        }
+      ],
+      "then": [
+        {
+          "p": "Payment terms: in more than 90 days, as the Order Form states."
+        }
+      ]
+    },
+    {
+      "if": [
+        {
+          "field": "payment_terms",
+          "is": "On Receipt"
+        }
+      ],
+      "then": [
+        {
+          "p": "Payment terms: on receipt of the invoice."
+        }
+      ]
+    },
+    {
+      "if": [
+        {
+          "field": "payment_terms",
+          "is": "Other"
+        },
+        {
+          "field": "payment_terms",
+          "is": "Silent"
+        }
+      ],
+      "then": [
+        {
+          "p": "Payment terms: as the Order Form states."
+        }
+      ]
+    },
+    {
+      "h": "6. Service Availability"
+    },
+    {
+      "if": {
+        "field": "position",
+        "is": "Balanced"
+      },
+      "then": [
+        {
+          "p": "Vendor shall make the Services available at least 99.9% of the time in each calendar month, excluding scheduled maintenance notified at least 5 business days in advance. The Services are unavailable when no user can access them."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "position",
+        "is": "Favours Fontara"
+      },
+      "then": [
+        {
+          "p": "Vendor shall make the Services available at least 99.5% of the time, measured over a rolling 90-day period and excluding all scheduled and emergency maintenance. Availability is measured by Vendor's own monitoring tools, whose results are conclusive, and degraded performance is not unavailability."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "position",
+        "is": "Favours the counterparty"
+      },
+      "then": [
+        {
+          "p": "Vendor shall make the Services available at least 99.95% of the time in each calendar month, measured from Customer's external monitoring endpoint. Scheduled maintenance is excluded only up to 4 hours a month, and any period in which response times exceed 3 seconds counts as partial unavailability, credited pro rata."
+        }
+      ]
+    },
+    {
+      "h": "7. Service Credits"
+    },
+    {
+      "if": {
+        "field": "position",
+        "is": "Balanced"
+      },
+      "then": [
+        {
+          "p": "If availability in a month is below 99.9%, Vendor shall credit Customer 10% of that month's fees, rising to 25% below 99.0% and 50% below 95.0%, against the next invoice. Customer must request a credit within 30 days of the incident, and credits are Customer's sole remedy for a failure to meet the availability commitment."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "position",
+        "is": "Favours Fontara"
+      },
+      "then": [
+        {
+          "p": "Service credits are capped at 10% of the monthly recurring fees, however severe the outage, and are Customer's sole and exclusive remedy for any failure under this SLA, including repeated failures. Credits are applied only against future invoices, never paid in cash, and are lost if not claimed within 30 days."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "position",
+        "is": "Favours the counterparty"
+      },
+      "then": [
+        {
+          "p": "Service credits are not Customer's sole remedy for a material or repeated failure under this SLA, and Customer may take any credit as a cash refund. If Vendor misses a Priority 1 commitment 3 or more times in any 12 months, Customer may terminate the affected Services, and credits do not limit any claim for indemnification for data lost in an outage."
+        }
+      ]
+    },
+    {
+      "h": "8. Support"
+    },
+    {
+      "if": {
+        "field": "support",
+        "is": "Premium"
+      },
+      "then": [
+        {
+          "p": "Premium support: 24x7 coverage for severity-1 issues with a one-hour response target, and a named technical account manager."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "support",
+        "is": "Standard"
+      },
+      "then": [
+        {
+          "p": "Standard support: business-hours coverage with a one-business-day response target."
+        }
+      ]
+    },
+    {
+      "h": "9. Confidentiality"
+    },
+    {
+      "p": "Each party shall keep the other's Confidential Information confidential, and use it only to perform or receive the Services, during the term and for two (2) years after termination. These obligations do not apply to information that is publicly available, independently developed, or received from a third party without restriction. Either party may seek injunctive relief against a threatened breach without proving irreparable harm."
+    },
+    {
+      "h": "10. Data Privacy & Security"
+    },
+    {
+      "p": "Each party complies with applicable data protection laws governing its own activities. Vendor processes Customer personal data only per Customer's written instructions. If GDPR or CCPA applies, the parties execute a mutually agreed data processing agreement before go-live."
+    },
+    {
+      "h": "11. Warranties"
+    },
+    {
+      "p": "Vendor warrants that during the subscription term the Services will perform materially in accordance with their documentation, and that it will not materially reduce their overall functionality. Each party warrants that it has authority to enter into this Agreement. Customer's sole remedy for breach of Vendor's warranty is for Vendor to correct the non-conformity or, if it cannot do so within a reasonable period, for Customer to terminate the affected Services and receive a pro-rata refund of prepaid fees."
+    },
+    {
+      "p": "EXCEPT AS EXPRESSLY STATED IN THIS AGREEMENT, THE SERVICES ARE PROVIDED \"AS IS\", AND VENDOR DISCLAIMS ALL OTHER WARRANTIES, EXPRESS OR IMPLIED, INCLUDING THE IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT."
+    },
+    {
+      "h": "12. Indemnification"
+    },
+    {
+      "if": {
+        "field": "position",
+        "is": "Balanced"
+      },
+      "then": [
+        {
+          "p": "Each party indemnifies the other for third-party claims arising from its own gross negligence or willful misconduct. Vendor additionally indemnifies Customer against third-party IP infringement claims arising from Customer's authorized use of the platform. Indemnification is conditioned on prompt notice, sole control of defense, and reasonable cooperation."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "position",
+        "is": "Favours Fontara"
+      },
+      "then": [
+        {
+          "p": "Vendor shall defend Customer against third-party claims that the platform, used as documented, infringes a third party's intellectual property rights, and shall pay the damages finally awarded on such a claim. Vendor's total liability under this indemnity is capped at the fees paid in the prior 12 months, and the indemnity does not cover claims arising from Customer's modifications, combinations with third-party products, or use outside the documented purpose. Customer shall defend and indemnify Vendor against any claim arising from Customer data, Customer's industry-specific regulatory obligations, or Customer's breach of this Agreement."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "position",
+        "is": "Favours the counterparty"
+      },
+      "then": [
+        {
+          "p": "Vendor shall defend, indemnify and hold harmless Customer against all third-party claims arising from Vendor's acts, omissions or breach of this Agreement, including claims that the platform infringes a third party's intellectual property rights, and Vendor's liability under this indemnity is uncapped. Customer shall indemnify Vendor only against third-party claims arising solely from the content of Customer data or from Customer's own gross negligence or willful misconduct. Customer may participate in the defense of any claim against it with counsel of its choosing, at Vendor's cost."
+        }
+      ]
+    },
+    {
+      "h": "13. Limitation of Liability"
+    },
+    {
+      "if": {
+        "field": "position",
+        "is": "Balanced"
+      },
+      "then": [
+        {
+          "p": "Each party's total aggregate liability is capped at {{liability_cap}}. Neither party is liable for indirect, incidental, or consequential damages including lost profits. Confidentiality breaches, IP infringement, and fraud are excluded from the cap and consequential damages waiver."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "position",
+        "is": "Favours Fontara"
+      },
+      "then": [
+        {
+          "p": "Vendor's aggregate liability is capped at {{liability_cap}}. Vendor is not liable for any indirect, incidental, special or consequential damages, including lost profits, lost data and lost revenue, even if Vendor was advised of the possibility of such loss. Vendor's IP indemnity obligations are subject to the separate cap the Indemnification clause states, and no other claim is excluded from the cap."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "position",
+        "is": "Favours the counterparty"
+      },
+      "then": [
+        {
+          "p": "Vendor's aggregate liability is capped at {{liability_cap}}. Neither party is liable for indirect, incidental or consequential damages, except as this clause provides. Liability for breach of confidentiality obligations, for data breaches, under indemnification obligations and for IP infringement is excluded from both the cap and that exclusion of damages. Vendor is liable for direct lost profits caused by service outages that exceed the agreed service level thresholds."
+        }
+      ]
+    },
+    {
+      "p": "Initials acknowledging Section 13 (Limitation of Liability) — Customer: [[initials:Customer]]   Fontara: [[initials:Fontara]]"
+    },
+    {
+      "h": "14. Order of Precedence"
+    },
+    {
+      "p": "If an Order Form conflicts with this Agreement, this Agreement governs unless the Order Form expressly identifies the section it overrides, and then only for that Order Form. No click-through, shrink-wrap or online terms accepted by Customer's Users form part of this Agreement."
+    },
+    {
+      "h": "15. Relationship of the Parties"
+    },
+    {
+      "p": "The parties are independent contractors. Nothing in this Agreement creates a partnership, joint venture, agency, fiduciary or employment relationship between them, and neither party may make any commitment binding the other."
+    },
+    {
+      "h": "16. Notices"
+    },
+    {
+      "p": "Notices under this Agreement must be in writing and delivered by hand, by recognized overnight courier or by email to the addresses stated in this Agreement or later notified in writing. A notice is effective on confirmed delivery or, for email, when the recipient acknowledges it. Notices of breach, termination or a legal claim must be sent by courier, with a copy by email."
+    },
+    {
+      "p": "Fontara's address for notices: its address stated above, Attention: General Counsel."
+    },
+    {
+      "p": "Customer's address for notices: [[text:Customer:Notice address]]"
+    },
+    {
+      "p": "Customer's accounts-payable email for invoices: [[email:Customer:Billing email]]"
+    },
+    {
+      "h": "17. Assignment"
+    },
+    {
+      "p": "Neither party may assign or transfer this Agreement without the other party's prior written consent, which may not be unreasonably withheld, except that either party may assign it on written notice to an affiliate, or to a successor to all or substantially all of the business or assets to which it relates that assumes it in writing. Any other attempted assignment is void. This Agreement binds and benefits the parties and their permitted successors and assigns."
+    },
+    {
+      "h": "18. Force Majeure"
+    },
+    {
+      "p": "Neither party is liable for a delay or failure to perform, other than an obligation to pay money, caused by events beyond its reasonable control, including natural disasters, epidemics, war, terrorism, civil unrest, government action and widespread failures of the internet or public utilities. The affected party shall notify the other within 5 business days and use reasonable efforts to resume performance. If the event continues for more than 60 days, either party may terminate the affected performance under this Agreement on written notice without liability."
+    },
+    {
+      "h": "19. Governing Law and Disputes"
+    },
+    {
+      "if": {
+        "field": "fontara_entity",
+        "is": "Fontara, Inc."
+      },
+      "then": [
+        {
+          "p": "This Agreement is governed by the laws of the State of Delaware, without regard to its conflict-of-laws rules. The parties shall first try to resolve any dispute arising out of or relating to this Agreement by good-faith negotiation between senior executives for 30 days. A dispute not resolved in that time shall be finally settled by binding arbitration administered by the American Arbitration Association under its Commercial Arbitration Rules, before a single arbitrator, seated in San Francisco, California, and judgment on the award may be entered in any court of competent jurisdiction. Either party may seek injunctive relief from a court to protect its confidential information or intellectual property."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "fontara_entity",
+        "is": "Fontara UK Ltd"
+      },
+      "then": [
+        {
+          "p": "This Agreement, and any non-contractual obligation arising out of or in connection with it, is governed by the law of England and Wales. The parties shall first try to resolve any dispute arising out of or in connection with this Agreement by good-faith negotiation between senior executives for 30 days. A dispute not resolved in that time shall be referred to and finally resolved by arbitration under the LCIA Rules, which are incorporated by reference into this section, before a sole arbitrator, with the seat of arbitration in London and English as the language of the arbitration. Either party may seek urgent injunctive relief from a court."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "fontara_entity",
+        "is": "Fontara Europe Ltd"
+      },
+      "then": [
+        {
+          "p": "This Agreement, and any non-contractual obligation arising out of or in connection with it, is governed by the laws of Ireland. The parties shall first try to resolve any dispute arising out of or in connection with this Agreement by good-faith negotiation between senior executives for 30 days, after which the courts of Ireland have exclusive jurisdiction to settle it."
+        }
+      ]
+    },
+    {
+      "h": "20. Entire Agreement and Amendment"
+    },
+    {
+      "p": "This Agreement is the entire agreement of the parties on its subject and supersedes all prior proposals, negotiations, representations and understandings about it. Each party confirms that in entering into it, it has not relied on any statement not set out in it. This Agreement may be amended only in a writing signed by authorized representatives of both parties."
+    },
+    {
+      "h": "21. Survival"
+    },
+    {
+      "p": "Any provision of this Agreement that by its nature is intended to survive its termination or expiration survives it, including the Confidentiality, Indemnification and Limitation of Liability sections, together with any payment obligation accrued before termination."
+    },
+    {
+      "h": "22. General"
+    },
+    {
+      "p": "If any provision of this Agreement is held invalid or unenforceable, it is enforced to the maximum extent permitted and the rest of this Agreement continues in full force. No failure or delay in exercising a right is a waiver of it, and a waiver is effective only if it is in writing and signed. No person other than the parties and their permitted successors and assigns has any right to enforce any term of this Agreement. This Agreement may be signed in counterparts and by electronic signature, each of which is an original and all of which together are one instrument."
+    },
+    {
+      "p": "Renewal notice date: {{renewal_notice}}. Renewal notes: {{renewal_info}}"
+    },
+    {
+      "p": "IN WITNESS WHEREOF, the parties have signed this Agreement by their authorized representatives as of the Effective Date."
+    },
+    {
+      "sign": "Customer",
+      "title": true,
+      "company": true
+    },
+    {
+      "sign": "Fontara",
+      "title": true,
+      "company": true
+    }
+  ],
+  "examples": [
+    {
+      "values": {
+        "effective": "03/01/2027",
+        "customer": "FutureSkills Solutions",
+        "customer_entity": "a Texas corporation",
+        "customer_address": "1650 Hetch Boulevard, Suite 300",
+        "support": "Premium",
+        "initial_term": "3 years",
+        "expiration": "02/28/2030",
+        "renewal_type": "Auto Renew",
+        "contract_value": "252000",
+        "annual_value": "84000",
+        "payment_terms": "30 days",
+        "price_cap": "3% a year",
+        "liability_cap": "fees paid in the prior 12 months",
+        "renewal_notice": "12/30/2029",
+        "renewal_info": "Price held for the first renewal year",
+        "fontara_entity": "Fontara, Inc.",
+        "currency": "US$",
+        "position": "Balanced",
+        "customer_city": "Houston",
+        "customer_region": "TX",
+        "customer_postal": "77002"
+      },
+      "expect": [
+        "24x7 coverage",
+        "99.9%",
+        "renews automatically",
+        "US$252,000.00",
+        "Renewal notice date: 12/30/2029",
+        "Price held for the first renewal year",
+        "Payment terms: net 30 days."
+      ],
+      "absent": [
+        "one-business-day response",
+        "Delivery and Acceptance"
+      ]
+    },
+    {
+      "values": {
+        "effective": "03/01/2027",
+        "customer": "Helix Learning",
+        "customer_entity": "a Delaware corporation",
+        "customer_address": "2850 Life Sciences Parkway, Suite 250",
+        "support": "Standard",
+        "initial_term": "1 year",
+        "expiration": "02/29/2028",
+        "renewal_type": "Fixed Term",
+        "contract_value": "18000",
+        "annual_value": "18000",
+        "payment_terms": "90 days",
+        "price_cap": "5% a year",
+        "liability_cap": "fees paid in the prior 12 months",
+        "fontara_entity": "Fontara UK Ltd",
+        "currency": "£",
+        "renewal_notice": "12/31/2027",
+        "renewal_info": "A new agreement is needed to continue",
+        "position": "Balanced",
+        "customer_city": "Cambridge",
+        "customer_region": "MA",
+        "customer_postal": "02142"
+      },
+      "expect": [
+        "one-business-day response",
+        "does not renew",
+        "Renewal notice date: 12/31/2027",
+        "LCIA Rules",
+        "£18,000.00",
+        "Payment terms: net 90 days."
+      ],
+      "absent": [
+        "24x7 coverage",
+        "US$"
+      ]
+    }
+  ],
+  "source": "written for the library under the vault's clause headings (Contracts/Clauses/Standard Terms and Conditions); its text is not the clause notes' positions"
+}

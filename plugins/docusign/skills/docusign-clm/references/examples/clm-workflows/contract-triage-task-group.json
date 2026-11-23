@@ -1,0 +1,82 @@
+{
+  "id": "contract-triage-task-group",
+  "name": "Contract Triage by Task Group",
+  "description": "Legal triages each contract the workflow starts on. Find Document puts the incoming contract in a Document variable. A Choice task goes to the Legal task group (the person who started the workflow is its Task Group Assignee): Needs edits sends the contract to an Edit Document task, Ready to file ends the run. The workflow output says which path the contract took.",
+  "variables": [
+    {
+      "name": "Contract",
+      "type": "document"
+    }
+  ],
+  "steps": [
+    {
+      "id": "find",
+      "name": "Find the contract",
+      "kind": "findDocument",
+      "output": "Contract",
+      "next": "triage"
+    },
+    {
+      "id": "triage",
+      "name": "Legal triage",
+      "kind": "choice",
+      "assignee": {
+        "taskGroup": "Legal",
+        "member": "submitter"
+      },
+      "documents": {
+        "var": "Contract"
+      },
+      "instructions": "Read the contract. Choose Needs edits if the wording must change before it is filed, or Ready to file.",
+      "subject": "Triage <%#XmlVariables.Params.Documents.Document.Name%>",
+      "comments": "Yes",
+      "options": [
+        {
+          "label": "Needs edits",
+          "to": "edit"
+        },
+        {
+          "label": "Ready to file",
+          "to": "outReady"
+        }
+      ],
+      "on": {
+        "failure": "finish"
+      }
+    },
+    {
+      "id": "edit",
+      "name": "Edit the contract",
+      "kind": "editDocument",
+      "assignee": "submitter",
+      "documents": {
+        "var": "Contract"
+      },
+      "instructions": "Make the changes in the contract (upload a new version or edit it online), then complete the task.",
+      "comments": "Yes",
+      "on": {
+        "completed": "outEdited",
+        "failure": "finish"
+      }
+    },
+    {
+      "id": "outEdited",
+      "name": "Output Edited",
+      "kind": "setOutput",
+      "value": "Edited",
+      "next": "finish"
+    },
+    {
+      "id": "outReady",
+      "name": "Output Ready",
+      "kind": "setOutput",
+      "value": "Ready to file",
+      "next": "finish"
+    },
+    {
+      "id": "finish",
+      "name": "Finish",
+      "kind": "finish"
+    }
+  ]
+}

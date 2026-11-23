@@ -1,0 +1,335 @@
+{
+  "id": "loan-agreement",
+  "name": "Intercompany Loan Agreement",
+  "agreementType": "Loan",
+  "description": "Fontara, Inc. lends to Fontara UK Ltd or Fontara Europe Ltd: principal and currency, a benchmark rate by currency (SOFR, SONIA, €STR) plus a margin, interest dates, repayment, prepayment, arm’s-length terms, defaults.",
+  "fields": {
+    "effective": {
+      "bind": {
+        "provision": "EffectiveDate"
+      },
+      "required": true
+    },
+    "borrower": {
+      "label": "Borrower",
+      "type": "select",
+      "options": [
+        "Fontara UK Ltd",
+        "Fontara Europe Ltd"
+      ],
+      "optionValues": {
+        "Fontara UK Ltd": "Fontara UK Ltd, a company registered in England and Wales with its registered office at 48 Ashcombe Street, London EC2A 4NE, United Kingdom",
+        "Fontara Europe Ltd": "Fontara Europe Ltd, a company registered in Ireland with its registered office at 3 Riverside Quay, Dublin 2, D02 X285, Ireland"
+      },
+      "required": true,
+      "description": "Prints the entity’s full legal description and address"
+    },
+    "currency": {
+      "label": "Currency",
+      "type": "select",
+      "options": [
+        "US$",
+        "£",
+        "€"
+      ],
+      "required": true,
+      "description": "The loan currency; it chooses the benchmark rate (US$ SOFR, £ SONIA, € €STR)"
+    },
+    "principal": {
+      "label": "Principal amount",
+      "type": "number",
+      "money": true,
+      "required": true
+    },
+    "purpose": {
+      "label": "Purpose",
+      "required": true
+    },
+    "margin_bps": {
+      "label": "Margin (basis points)",
+      "type": "number",
+      "required": true,
+      "description": "Supported by the group’s transfer pricing analysis"
+    },
+    "payment_dates": {
+      "label": "Interest payment dates",
+      "type": "select",
+      "options": [
+        "Quarterly",
+        "Semi-annually",
+        "Annually"
+      ],
+      "required": true
+    },
+    "maturity": {
+      "bind": {
+        "provision": "ExpirationDate"
+      },
+      "required": true,
+      "description": "Repayment date"
+    },
+    "loan_title": {
+      "bind": {
+        "provision": "Title"
+      },
+      "required": true,
+      "description": "The loan's name in the group's loan register, for example: UK working capital facility 2027"
+    },
+    "venue": {
+      "bind": {
+        "provision": "Jurisdiction"
+      },
+      "required": true,
+      "description": "The courts, for example: the state and federal courts located in the State of Delaware"
+    }
+  },
+  "signers": [
+    "Borrower",
+    "Lender"
+  ],
+  "body": [
+    {
+      "title": "INTERCOMPANY LOAN AGREEMENT"
+    },
+    {
+      "p": "This Intercompany Loan Agreement (this \"Agreement\") is dated {{effective}} between **Fontara, Inc.**, a Delaware corporation with its principal place of business at 1500 Harbor Boulevard, Suite 1200, San Francisco, CA 94111 (the \"Lender\"), and {{borrower}} (the \"Borrower\"), a wholly owned subsidiary of the Lender."
+    },
+    {
+      "p": "Loan register name: {{loan_title}}"
+    },
+    {
+      "h": "1. The Loan"
+    },
+    {
+      "p": "The Lender agrees to lend the Borrower {{currency}}{{principal}} (the \"Loan\") for {{purpose}}. The Borrower may draw the Loan in one amount within 30 days after the date of this Agreement by written notice to the Lender at least 3 business days in advance. Amounts repaid may not be re-borrowed."
+    },
+    {
+      "h": "2. Interest"
+    },
+    {
+      "if": {
+        "field": "currency",
+        "is": "US$"
+      },
+      "then": [
+        {
+          "p": "The Loan bears interest for each Interest Period at the forward-looking term SOFR rate for that period administered by CME Group Benchmark Administration Ltd, plus a margin of {{margin_bps}} basis points a year, calculated on the actual number of days elapsed and a 360-day year."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "currency",
+        "is": "£"
+      },
+      "then": [
+        {
+          "p": "The Loan bears interest for each Interest Period at the Sterling Overnight Index Average (SONIA) published by the Bank of England, compounded in arrears over the period, plus a margin of {{margin_bps}} basis points a year, calculated on the actual number of days elapsed and a 365-day year."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "currency",
+        "is": "€"
+      },
+      "then": [
+        {
+          "p": "The Loan bears interest for each Interest Period at the euro short-term rate (€STR) published by the European Central Bank, compounded in arrears over the period, plus a margin of {{margin_bps}} basis points a year, calculated on the actual number of days elapsed and a 360-day year."
+        }
+      ]
+    },
+    {
+      "p": "If the benchmark rate for a period is less than zero, it is treated as zero."
+    },
+    {
+      "if": {
+        "field": "payment_dates",
+        "is": "Quarterly"
+      },
+      "then": [
+        {
+          "p": "Interest is payable quarterly in arrears on 31 March, 30 June, 30 September and 31 December (each an \"Interest Payment Date\"); each period ending on an Interest Payment Date, or on the Repayment Date, is an \"Interest Period\"."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "payment_dates",
+        "is": "Semi-annually"
+      },
+      "then": [
+        {
+          "p": "Interest is payable semi-annually in arrears on 30 June and 31 December (each an \"Interest Payment Date\"); each period ending on an Interest Payment Date, or on the Repayment Date, is an \"Interest Period\"."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "payment_dates",
+        "is": "Annually"
+      },
+      "then": [
+        {
+          "p": "Interest is payable annually in arrears on 31 December (the \"Interest Payment Date\"); each period ending on an Interest Payment Date, or on the Repayment Date, is an \"Interest Period\"."
+        }
+      ]
+    },
+    {
+      "h": "3. Repayment"
+    },
+    {
+      "p": "The Borrower shall repay the Loan in full, with accrued interest, on {{maturity}} (the \"Repayment Date\")."
+    },
+    {
+      "h": "4. Voluntary Prepayment"
+    },
+    {
+      "p": "The Borrower may prepay all or part of the Loan, with accrued interest on the amount prepaid, on any business day, by giving the Lender at least 5 business days' written notice, without premium or penalty."
+    },
+    {
+      "h": "5. Payments and Taxes"
+    },
+    {
+      "p": "All payments are made in the currency of the Loan, in immediately available funds, to the account the Lender designates, without set-off or counterclaim. The Borrower makes payments without deduction for taxes unless the law requires one; if it does, the parties shall cooperate to obtain any reduced rate available under the double tax treaty between the United States and the Borrower's country, and the Borrower shall give the Lender evidence of the deduction."
+    },
+    {
+      "if": {
+        "field": "borrower",
+        "is": "Fontara UK Ltd"
+      },
+      "then": [
+        {
+          "p": "The parties shall use the UK Double Taxation Treaty Passport scheme so that interest can be paid without deduction of UK income tax where the treaty allows."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "borrower",
+        "is": "Fontara Europe Ltd"
+      },
+      "then": [
+        {
+          "p": "The parties shall rely on the exemption from Irish withholding tax on interest paid in the ordinary course of business to a company resident in a treaty country, where it applies."
+        }
+      ]
+    },
+    {
+      "h": "6. Arm's-Length Terms"
+    },
+    {
+      "p": "The parties intend the Loan, including its interest rate, to be on terms that independent parties would agree in comparable circumstances, in accordance with section 482 of the US Internal Revenue Code, the OECD Transfer Pricing Guidelines and the transfer pricing rules of the Borrower's jurisdiction. The margin reflects the Borrower's stand-alone credit standing as assessed in the Fontara group's transfer pricing documentation. If a tax authority finally adjusts the interest as not at arm's length, the parties shall make any corresponding adjustment the law permits."
+    },
+    {
+      "h": "7. Representations"
+    },
+    {
+      "p": "Each party represents that it is duly incorporated and validly existing, that it has the power to enter into and perform this Agreement and has taken all necessary corporate action to authorize it, and that this Agreement is its legal, valid and binding obligation."
+    },
+    {
+      "h": "8. Events of Default"
+    },
+    {
+      "p": "Each of the following is an event of default: (a) the Borrower fails to pay any amount when due and does not pay it within 5 business days; (b) the Borrower is unable to pay its debts as they fall due, or becomes subject to insolvency, administration, examinership, liquidation or a similar proceeding; or (c) the Borrower ceases to be a subsidiary of the Lender. While an event of default continues, the Lender may by notice declare the Loan and accrued interest immediately due and payable."
+    },
+    {
+      "h": "9. Notices"
+    },
+    {
+      "p": "Notices under this Agreement must be in writing and delivered by hand, by recognized overnight courier or by email to the addresses stated in this Agreement or later notified in writing. A notice is effective on confirmed delivery or, for email, when the recipient acknowledges it. Notices of breach, termination or a legal claim must be sent by courier, with a copy by email."
+    },
+    {
+      "h": "10. Assignment"
+    },
+    {
+      "p": "Neither party may assign or transfer its rights or obligations under this Agreement without the other's prior written consent."
+    },
+    {
+      "h": "11. Governing Law and Jurisdiction"
+    },
+    {
+      "p": "This Agreement is governed by the laws of the State of Delaware, the Lender's jurisdiction of incorporation. The {{venue}} have exclusive jurisdiction over any dispute arising out of it, and the Borrower irrevocably submits to that jurisdiction."
+    },
+    {
+      "h": "12. Entire Agreement and Amendment"
+    },
+    {
+      "p": "This Agreement is the entire agreement of the parties on its subject and supersedes all prior proposals, negotiations, representations and understandings about it. Each party confirms that in entering into it, it has not relied on any statement not set out in it. This Agreement may be amended only in a writing signed by authorized representatives of both parties."
+    },
+    {
+      "h": "13. General"
+    },
+    {
+      "p": "If any provision of this Agreement is held invalid or unenforceable, it is enforced to the maximum extent permitted and the rest of this Agreement continues in full force. No failure or delay in exercising a right is a waiver of it, and a waiver is effective only if it is in writing and signed. No person other than the parties and their permitted successors and assigns has any right to enforce any term of this Agreement. This Agreement may be signed in counterparts and by electronic signature, each of which is an original and all of which together are one instrument."
+    },
+    {
+      "sign": "Borrower",
+      "title": true,
+      "company": true
+    },
+    {
+      "sign": "Lender",
+      "title": true,
+      "company": true
+    }
+  ],
+  "examples": [
+    {
+      "values": {
+        "effective": "06/01/2027",
+        "borrower": "Fontara UK Ltd",
+        "currency": "£",
+        "principal": "15000000",
+        "purpose": "general corporate purposes, including working capital for its UK operations",
+        "margin_bps": "225",
+        "payment_dates": "Quarterly",
+        "maturity": "06/30/2032",
+        "loan_title": "UK working capital facility 2027",
+        "venue": "state and federal courts located in the State of Delaware"
+      },
+      "expect": [
+        "£15,000,000.00",
+        "SONIA",
+        "225 basis points",
+        "Fontara UK Ltd",
+        "Treaty Passport",
+        "arm's length",
+        "30 September"
+      ],
+      "absent": [
+        "SOFR",
+        "€STR",
+        "Irish withholding tax"
+      ]
+    },
+    {
+      "values": {
+        "effective": "09/01/2027",
+        "borrower": "Fontara Europe Ltd",
+        "currency": "€",
+        "principal": "8000000",
+        "purpose": "funding the expansion of its Dublin support center",
+        "margin_bps": "175",
+        "payment_dates": "Semi-annually",
+        "maturity": "08/31/2030",
+        "loan_title": "Dublin support center expansion loan",
+        "venue": "Court of Chancery of the State of Delaware"
+      },
+      "expect": [
+        "€8,000,000.00",
+        "€STR",
+        "175 basis points",
+        "Fontara Europe Ltd",
+        "30 June and 31 December",
+        "Irish withholding tax"
+      ],
+      "absent": [
+        "SONIA",
+        "SOFR",
+        "Treaty Passport"
+      ]
+    }
+  ],
+  "source": "written for the library — no vault clause set for this type"
+}

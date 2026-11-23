@@ -1,0 +1,62 @@
+{
+  "id": "contract-request-to-legal",
+  "name": "Contract Request to Legal",
+  "description": "Started by the Contract Request eForm (Routing ▸ Set Workflow) with the submitted .sxform as its Params document. It emails the request to Legal with the form answers read from Params CustomFormFields, and tells the requester if the hand-off fails. Every path ends at Finish.",
+  "paramsSchema": "<Params><Documents><Document><Id/><Name/><CustomFormFields><crRequestType/><crAgreementType/><crValue/><crTargetDate/><crPurpose/></CustomFormFields></Document></Documents></Params>",
+  "variables": [
+    "RequestSummary"
+  ],
+  "steps": [
+    {
+      "id": "summary",
+      "kind": "setVariable",
+      "name": "Summarise the request",
+      "set": {
+        "RequestSummary": "<%#XmlVariables.Params.Documents.Document.CustomFormFields.crRequestType%>: <%#XmlVariables.Params.Documents.Document.CustomFormFields.crAgreementType%>, about <%#XmlVariables.Params.Documents.Document.CustomFormFields.crValue%> USD, wanted by <%#XmlVariables.Params.Documents.Document.CustomFormFields.crTargetDate%>. Purpose: <%#XmlVariables.Params.Documents.Document.CustomFormFields.crPurpose%>"
+      },
+      "next": "toLegal"
+    },
+    {
+      "id": "toLegal",
+      "kind": "emailDocument",
+      "name": "Send the request to Legal",
+      "to": {
+        "user": "legal@example.com"
+      },
+      "subject": "Contract request: <%#XmlVariables.Params.Documents.Document.Name%>",
+      "note": "<%#Variable.RequestSummary%>",
+      "on": {
+        "success": "outSent",
+        "failure": "failed"
+      }
+    },
+    {
+      "id": "failed",
+      "kind": "email",
+      "name": "Hand-off failed",
+      "to": "submitter",
+      "subject": "Your contract request did not reach Legal",
+      "body": "The hand-off of <%#XmlVariables.Params.Documents.Document.Name%> failed. Instance <%#System.Uid%>. Please email Legal.",
+      "next": "outFailed"
+    },
+    {
+      "id": "outSent",
+      "kind": "setOutput",
+      "name": "Sent to Legal",
+      "value": "Sent to Legal",
+      "next": "finish"
+    },
+    {
+      "id": "outFailed",
+      "kind": "setOutput",
+      "name": "Failed",
+      "value": "Hand-off failed",
+      "next": "finish"
+    },
+    {
+      "id": "finish",
+      "kind": "finish",
+      "name": "Finish"
+    }
+  ]
+}

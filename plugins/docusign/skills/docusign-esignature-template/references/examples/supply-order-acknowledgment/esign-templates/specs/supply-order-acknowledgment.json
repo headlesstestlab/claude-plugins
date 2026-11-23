@@ -1,0 +1,64 @@
+{
+  "id": "supply-order-acknowledgment",
+  "from": {
+    "name": "Supply Order Acknowledgment",
+    "description": "The customer and Fontara acknowledge a supply order; the customer enters the quantity and the total is calculated.",
+    "fields": {
+      "order": {
+        "label": "Order number",
+        "required": true
+      }
+    },
+    "signers": [
+      "Customer",
+      "Fontara"
+    ],
+    "body": [
+      {
+        "title": "SUPPLY ORDER ACKNOWLEDGMENT"
+      },
+      {
+        "p": "Order {{order}}: replacement filter cartridges at USD 25.00 each."
+      },
+      {
+        "p": "Your PO number: [[text:Customer:PO number:width=160;pattern=^PO-\\d{6}$;message=Use PO-123456;tooltip=Your purchase order number]]  Quantity: [[number:Customer:Quantity]]  Total (USD): [[calc:Customer:Total]]"
+      },
+      {
+        "p": "Both parties may sign in any order. The order ships to [[prefill:Ship-to warehouse]] when both have signed."
+      },
+      {
+        "sign": "Customer",
+        "title": true,
+        "company": true
+      },
+      {
+        "sign": "Fontara",
+        "title": true
+      }
+    ],
+    "examples": [
+      {
+        "values": {
+          "order": "SO-2026-1187"
+        }
+      }
+    ]
+  },
+  "name": "Supply Order Acknowledgment",
+  "summary": "A NEW document inline: the customer types a quantity and a formula tab calculates the total ([Quantity] * 25); signing order is off, so the customer and Fontara sign at the same time. The order number is locked: the sender fills it, no signer can change it. The PO number tab checks its format (PO- and six digits) with a validation pattern, a message and a tooltip. The ship-to warehouse is a sender prefill field: the sender types it before sending, on the document itself, and no recipient owns it.",
+  "owners": {
+    "default": "Fontara"
+  },
+  "signingOrder": false,
+  "formulas": {
+    "Total": {
+      "formula": "[Quantity] * 25",
+      "decimals": 2
+    }
+  },
+  "lockedFields": [
+    "order"
+  ],
+  "emailSubject": "Supply order acknowledgment",
+  "emailBlurb": "Please enter the quantity and sign."
+}

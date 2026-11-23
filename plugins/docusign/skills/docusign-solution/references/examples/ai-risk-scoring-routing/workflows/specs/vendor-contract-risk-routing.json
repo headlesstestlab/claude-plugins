@@ -1,0 +1,148 @@
+{
+  "id": "vendor-contract-risk-routing",
+  "name": "Vendor Contract Risk Routing",
+  "description": "When a Third-Party Paper Review request is submitted, the Vendor Contract Risk Scorer agent reads the attached contract and scores it 1-10. 1-3 is approved with no review, 4-7 goes to legal ops, 8-10 to the general counsel.",
+  "trigger": {
+    "request": "third-party-paper-review"
+  },
+  "steps": [
+    {
+      "owner": "submitter"
+    },
+    {
+      "agent": "vendor-contract-risk-scorer",
+      "as": "risk",
+      "prompt": "Score request {{TicketId}}. Read the attached vendor contract. Set risk_score and reasons."
+    },
+    {
+      "if": {
+        "field": "risk.risk_score",
+        "lte": 3
+      },
+      "name": "Low risk?",
+      "then": [
+        {
+          "status": "Ready for Signature",
+          "color": "success"
+        },
+        {
+          "message": {
+            "to": [
+              "submitter"
+            ],
+            "body": "Auto-approved (risk {{risk.risk_score}} of 10): {{TicketTitle}} can go to signature.\n{{risk.reasons}}"
+          }
+        }
+      ],
+      "else": [
+        {
+          "if": {
+            "field": "risk.risk_score",
+            "lte": 7
+          },
+          "name": "Medium risk?",
+          "then": [
+            {
+              "status": "Legal Review",
+              "color": "warning"
+            },
+            {
+              "message": {
+                "to": [
+                  "submitter"
+                ],
+                "body": "Risk {{risk.risk_score}} of 10: legal ops reviews {{TicketTitle}}.\n{{risk.reasons}}"
+              }
+            },
+            {
+              "approval": {
+                "title": "Legal ops review",
+                "description": "The AI risk score is 4-7: review the flagged terms (the reasons are in the request message).",
+                "approvers": [
+                  {
+                    "group": "Legal Operations"
+                  }
+                ]
+              }
+            },
+            {
+              "if": {
+                "approved": "Legal ops review"
+              },
+              "then": [
+                {
+                  "message": {
+                    "to": [
+                      "submitter"
+                    ],
+                    "body": "Legal ops approved {{TicketTitle}}."
+                  }
+                }
+              ],
+              "else": [
+                {
+                  "message": {
+                    "to": [
+                      "submitter"
+                    ],
+                    "body": "Legal ops sent {{TicketTitle}} back. See the approval comments."
+                  }
+                }
+              ]
+            }
+          ],
+          "else": [
+            {
+              "status": "Legal Review",
+              "color": "alert"
+            },
+            {
+              "message": {
+                "to": [
+                  "submitter"
+                ],
+                "body": "Risk {{risk.risk_score}} of 10: the general counsel reviews {{TicketTitle}}.\n{{risk.reasons}}"
+              }
+            },
+            {
+              "approval": {
+                "title": "General counsel review",
+                "description": "The AI risk score is 8-10: high-risk terms (the reasons are in the request message).",
+                "approvers": [
+                  {
+                    "group": "General Counsel"
+                  }
+                ]
+              }
+            },
+            {
+              "if": {
+                "approved": "General counsel review"
+              },
+              "then": [
+                {
+                  "message": {
+                    "to": [
+                      "submitter"
+                    ],
+                    "body": "The general counsel approved {{TicketTitle}}."
+                  }
+                }
+              ],
+              "else": [
+                {
+                  "message": {
+                    "to": [
+                      "submitter"
+                    ],
+                    "body": "The general counsel sent {{TicketTitle}} back. See the approval comments."
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

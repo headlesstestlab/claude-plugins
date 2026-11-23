@@ -1,0 +1,166 @@
+{
+  "id": "sales-mutual-nda-web-form",
+  "prompt": "We want prospects to request our standard mutual NDA from a page on our website. They fill in their company name, address and signer, the NDA is generated and they sign first, then our general counsel countersigns.",
+  "industry": "software",
+  "department": "sales",
+  "variation_tags": {
+    "start": [
+      "web-form"
+    ],
+    "routing": [
+      "serial"
+    ],
+    "approvals": [
+      "none"
+    ],
+    "data_source": [
+      "form"
+    ],
+    "locale": [
+      "en-US"
+    ],
+    "currency": [
+      "USD"
+    ],
+    "platform": "iam",
+    "ai": [
+      "none"
+    ],
+    "documents": [
+      "generated"
+    ],
+    "logic": [
+      "none"
+    ],
+    "notifications": [
+      "email"
+    ],
+    "identity": [
+      "none"
+    ],
+    "payment": false,
+    "agreement_desk": false
+  },
+  "expected_assets": [
+    {
+      "kind": "webform",
+      "purpose": "public intake for the counterparty",
+      "features": [
+        "company name, address, signer name and email",
+        "required fields",
+        "no login"
+      ]
+    },
+    {
+      "kind": "doc-template",
+      "purpose": "mutual NDA generated from the form answers",
+      "features": [
+        "party name and address fields",
+        "effective date",
+        "signature and date-signed for two roles"
+      ]
+    },
+    {
+      "kind": "workflow",
+      "purpose": "intake → generate → serial signing",
+      "features": [
+        "web-form start",
+        "Prepare Document Template filled from the form",
+        "one send: counterparty then general counsel"
+      ]
+    }
+  ],
+  "acceptance": [
+    "the workflow starts from the web form, not from a Salesforce record",
+    "every document-template field is filled from a form field or a fixed value; none is left for the sender",
+    "the envelope has two signers in order: the form submitter (1), general counsel (2)",
+    "general counsel is a fixed account user or role, not typed by the submitter"
+  ],
+  "hard_parts": [
+    "a public form means the starter is anonymous: the counterparty must be the first signer and the envelope sender must be set explicitly",
+    "the product runs a bot check on live web forms, so an end-to-end run needs a real browser"
+  ],
+  "clarifying_questions": [
+    {
+      "question": "Who countersigns for you, and do you want them notified by email when the counterparty has signed?",
+      "default": "general counsel as a fixed user; Docusign completion email only"
+    },
+    {
+      "question": "Should the NDA term be fixed or chosen on the form?",
+      "default": "fixed: 2 years, confidentiality survives 3 years"
+    }
+  ],
+  "capabilities": [
+    "webform.setting.upload",
+    "webform.setting.versions",
+    "webform.page.pages",
+    "webform.page.title",
+    "webform.page.thank-you",
+    "webform.field.text",
+    "webform.field-setting.label",
+    "webform.field-setting.required",
+    "webform.field-setting.api-name",
+    "webform.field-setting.help-text",
+    "webform.limit.duplicate-keys",
+    "webform.field.currency",
+    "webform.field-setting.currency-type",
+    "webform.field.email",
+    "webform.field.number",
+    "webform.field.longtext",
+    "webform.field-setting.preset-zip",
+    "webform.page.welcome",
+    "webform.page.summary",
+    "webform.field.section",
+    "webform.field.description",
+    "webform.setting.activate-public",
+    "webform.prefill.public-link",
+    "webform.template.workflow-esign",
+    "doc-template.setting.name",
+    "doc-template.setting.agreement-type",
+    "doc-template.setting.format-builder",
+    "doc-template.setting.upload-zip",
+    "doc-template.setting.publish",
+    "doc-template.content.title",
+    "doc-template.content.heading",
+    "doc-template.content.paragraph",
+    "doc-template.field.text",
+    "doc-template.field-setting.label",
+    "doc-template.field-setting.required",
+    "doc-template.field-setting.key-syntax",
+    "doc-template.field-setting.unused-field",
+    "doc-template.recipient.needs-to-sign",
+    "doc-template.tab.signature-block",
+    "doc-template.field.date",
+    "doc-template.field-setting.date-format-mdy",
+    "doc-template.provision.effective-date",
+    "doc-template.tab.company",
+    "doc-template.provision.agreement-party",
+    "doc-template.tab.text",
+    "workflow.setting.participants",
+    "workflow.setting.description",
+    "workflow.setting.publish",
+    "workflow.setting.import-package",
+    "workflow.setting.workflow-name-rules",
+    "workflow.limit.size",
+    "workflow.variable.text",
+    "workflow.step.path-end",
+    "workflow.step-setting.done-screens",
+    "account.plan.iam-plan",
+    "account.limit.published-workflows",
+    "workflow.start.link",
+    "workflow.step.web-form",
+    "workflow.step-setting.web-form-participant",
+    "workflow.variable.form-outputs",
+    "webform.prefill.workflow-mapping",
+    "workflow.step.send-envelope",
+    "workflow.step-setting.send-envelope-recipients",
+    "workflow.step-setting.send-envelope-subject-message",
+    "workflow.step.confirmation-screen",
+    "workflow.step-setting.confirm-participant",
+    "workflow.step-setting.send-envelope-sender-starter",
+    "workflow.step.prepare-doc-template",
+    "workflow.step-setting.doc-template-fill",
+    "workflow.variable.run-start-date",
+    "doc-template.recipient.routing-order"
+  ]
+}

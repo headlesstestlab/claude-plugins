@@ -1,0 +1,108 @@
+{
+  "id": "internal-approval-and-signature",
+  "name": "Internal Approval and Signature",
+  "description": "The Internal Approval + Signature template pattern: the starter approves the incoming document, a Decision routes on the deal tier, the document goes to the signer for e-signature, and the workflow waits for it.",
+  "variables": [
+    "DealTier",
+    "SignerEmail",
+    "Outcome"
+  ],
+  "steps": [
+    {
+      "id": "prep",
+      "kind": "setVariable",
+      "name": "Signer and tier",
+      "set": {
+        "SignerEmail": "fontara.marcus.chen@example.com",
+        "DealTier": "Gold"
+      },
+      "next": "approve"
+    },
+    {
+      "id": "approve",
+      "kind": "approve",
+      "name": "Approve the agreement",
+      "assignee": "submitter",
+      "instructions": "Review the agreement and approve it, or reject it with a comment.",
+      "subject": "Approval needed: <%#XmlVariables.Params.Documents.Document.Name%>",
+      "timeoutDays": 3,
+      "on": {
+        "approved": "tier",
+        "rejected": "outRejected",
+        "canceled": "outRejected",
+        "failure": "outRejected",
+        "timeout": "outRejected"
+      }
+    },
+    {
+      "id": "tier",
+      "kind": "decision",
+      "name": "Deal tier?",
+      "branches": [
+        {
+          "label": "Gold",
+          "when": {
+            "var": "DealTier",
+            "op": "equals",
+            "value": "Gold"
+          },
+          "to": "sign"
+        }
+      ],
+      "else": {
+        "label": "Other",
+        "to": "sign"
+      }
+    },
+    {
+      "id": "sign",
+      "kind": "sendForSignature",
+      "name": "Send for Signature",
+      "recipients": [
+        {
+          "var": "SignerEmail",
+          "role": "Signer 1"
+        }
+      ],
+      "subject": "Please sign: <%#XmlVariables.Params.Documents.Document.Name%>",
+      "message": "Fontara has approved this agreement.",
+      "on": {
+        "signed": "wait",
+        "rejected": "outRejected",
+        "cancelled": "outRejected",
+        "failure": "outRejected"
+      }
+    },
+    {
+      "id": "wait",
+      "kind": "waitForSignature",
+      "name": "Wait for Signature",
+      "on": {
+        "signed": "outSigned",
+        "rejected": "outRejected",
+        "cancelled": "outRejected",
+        "failure": "outRejected",
+        "timedOut": "outRejected"
+      }
+    },
+    {
+      "id": "outSigned",
+      "kind": "setOutput",
+      "name": "Signed",
+      "value": "Signed",
+      "next": "finish"
+    },
+    {
+      "id": "outRejected",
+      "kind": "setOutput",
+      "name": "Not signed",
+      "value": "Rejected, cancelled or failed",
+      "next": "finish"
+    },
+    {
+      "id": "finish",
+      "kind": "finish",
+      "name": "Finish"
+    }
+  ]
+}

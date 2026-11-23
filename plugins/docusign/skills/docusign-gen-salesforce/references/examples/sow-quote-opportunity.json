@@ -1,0 +1,228 @@
+{
+ "id": "sow-quote-opportunity",
+ "name": "Statement of Work from the primary quote (Opportunity)",
+ "summary": "Statement of Work from an Opportunity: the primary CPQ quote with its terms and a table of its quote lines (two levels of related lists: Opportunity → Quotes → Quote Lines, each line reading its Product), the customer's contact roles, and a multi-year clause per quote.",
+ "description": "Fontara Statement of Work from an Opportunity, its primary quote and the quote's lines. Built from assets/salesforce-gen-templates/specs/sow-quote-opportunity.json.",
+ "sourceObject": "Opportunity",
+ "lists": {
+  "SBQQ__Quotes2__r": {
+   "filter": "SBQQ__Primary__c = true",
+   "max": 1,
+   "fields": {
+    "SBQQ__StartDate__c": {
+     "format": "MMMM D, YYYY"
+    },
+    "SBQQ__EndDate__c": {
+     "format": "MMMM D, YYYY"
+    },
+    "SBQQ__ExpirationDate__c": {
+     "format": "MMMM D, YYYY"
+    }
+   },
+   "lists": {
+    "SBQQ__LineItems__r": {
+     "orderBy": "SBQQ__NetTotal__c DESC",
+     "max": 100
+    }
+   }
+  },
+  "OpportunityContactRoles": {
+   "orderBy": "IsPrimary DESC",
+   "max": 10
+  }
+ },
+ "partyName": "Account.Name",
+ "documents": [
+  {
+   "file": "Fontara_SOW.docx",
+   "output": {
+    "name": "Fontara Statement of Work",
+    "suffix": "name_date",
+    "format": "PDF"
+   },
+   "header": "Fontara Statement of Work · {{Account.Name}}",
+   "footer": "Confidential · Page {page} of {pages}",
+   "body": [
+    {
+     "title": "Statement of Work"
+    },
+    {
+     "if": {
+      "field": "OrderNumber__c",
+      "empty": false
+     },
+     "then": [
+      {
+       "p": "Order number **{{OrderNumber__c}}**",
+       "align": "center"
+      }
+     ]
+    },
+    {
+     "p": "This Statement of Work is issued by **{{Account.Fontara_Entity__c}}** (\"Fontara\") to **{{Account.Name}}** (\"Customer\") under the Master Subscription Agreement between them. It describes the subscription Fontara will deliver and how the parties will run the rollout."
+    },
+    {
+     "repeat": {
+      "rows": "SBQQ__Quotes2__r",
+      "body": [
+       {
+        "h": "1. Subscription"
+       },
+       {
+        "fields": [
+         [
+          "Offer valid until",
+          "{{SBQQ__ExpirationDate__c}}"
+         ],
+         [
+          "Subscription term",
+          "{{SBQQ__SubscriptionTerm__c}} months, {{SBQQ__StartDate__c}} to {{SBQQ__EndDate__c}}"
+         ],
+         [
+          "Payment terms",
+          "{{SBQQ__PaymentTerms__c}}"
+         ],
+         [
+          "Customer lead",
+          "{{SBQQ__PrimaryContact__r.Name}}, {{SBQQ__PrimaryContact__r.Title?}}"
+         ]
+        ]
+       },
+       {
+        "table": {
+         "rows": "SBQQ__LineItems__r",
+         "columns": [
+          {
+           "header": "Product",
+           "value": "{{SBQQ__Product__r.Name}}",
+           "width": 31
+          },
+          {
+           "header": "Code",
+           "value": "{{SBQQ__Product__r.ProductCode}}",
+           "width": 17
+          },
+          {
+           "header": "Qty",
+           "value": "{{SBQQ__Quantity__c}}",
+           "width": 10,
+           "align": "right"
+          },
+          {
+           "header": "List unit price",
+           "value": "{{SBQQ__ListPrice__c}}",
+           "width": 14,
+           "align": "right"
+          },
+          {
+           "header": "Net unit price",
+           "value": "{{SBQQ__NetPrice__c}}",
+           "width": 14,
+           "align": "right"
+          },
+          {
+           "header": "Net total",
+           "value": "{{SBQQ__NetTotal__c}}",
+           "width": 14,
+           "align": "right"
+          }
+         ],
+         "footer": [
+          "",
+          "",
+          "",
+          "",
+          "Quote total",
+          "{{SBQQ__NetAmount__c}}"
+         ]
+        }
+       },
+       {
+        "if": {
+         "field": "SBQQ__SubscriptionTerm__c",
+         "gt": 12
+        },
+        "then": [
+         {
+          "p": "**Multi-year delivery.** The quantities above are committed for every year of the {{SBQQ__SubscriptionTerm__c}}-month term. Fontara invoices each subscription year in advance, and the rollout plan below covers the first year; the parties review adoption at each anniversary."
+         }
+        ],
+        "else": [
+         {
+          "p": "**Annual delivery.** The quantities above apply for twelve months; any change at renewal is made by a new quote."
+         }
+        ]
+       }
+      ]
+     }
+    },
+    {
+     "h": "2. Customer team"
+    },
+    {
+     "table": {
+      "rows": "OpportunityContactRoles",
+      "columns": [
+       {
+        "header": "Name",
+        "value": "{{Contact.Name}}",
+        "width": 30
+       },
+       {
+        "header": "Title",
+        "value": "{{Contact.Title?}}",
+        "width": 35
+       },
+       {
+        "header": "Role in this project",
+        "value": "{{Role?}}",
+        "width": 35
+       }
+      ]
+     }
+    },
+    {
+     "h": "3. Rollout plan"
+    },
+    {
+     "bullets": [
+      "**Kickoff** within ten business days of the subscription start date: Fontara assigns a named onboarding manager and agrees the rollout calendar with Customer's lead.",
+      "**Configuration** in the first 30 days: single sign-on, user provisioning and the reporting workspace.",
+      "**Phased rollout**: users go live by site in waves agreed at kickoff; Fontara runs a training session for each wave.",
+      "**Adoption review** 90 days after the start date, with usage against the quantities above."
+     ]
+    },
+    {
+     "h": "4. Acceptance"
+    },
+    {
+     "p": "Each phase is accepted when Customer's lead confirms it in writing or does not raise a defect within ten business days of Fontara's completion notice."
+    },
+    {
+     "signature": {
+      "signer": 1,
+      "label": "Accepted for {{Account.Name}}",
+      "fields": [
+       "s",
+       "n",
+       "t",
+       "d"
+      ]
+     }
+    },
+    {
+     "signature": {
+      "signer": 2,
+      "label": "Issued for {{Account.Fontara_Entity__c}}",
+      "fields": [
+       "s",
+       "n",
+       "t",
+       "d"
+      ]
+     }
+    }
+   ]
+  }
+ ]
+}

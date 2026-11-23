@@ -1,0 +1,113 @@
+{
+  "id": "fontara-renewal-review",
+  "name": "Renewal review",
+  "description": "Fontara's renewal review of an executed contract (the owner 11-21; no Salesforce). It starts 90 business days before the contract expires: the CLM reminder template 'Renewal review due' (Expiration Date, 18 weeks before = 90 business days) fires, and the smart rule 'Start renewal review' (Document Reminder Processed, In Subfolder /Parties, Contract Process ▸ Renewal Status = Scheduled, set when the reminders were scheduled; assets/clm-smart-rules/specs/fontara-renewals.json) starts this workflow on the document; a contract already inside the window when it is filed is started at once (captures/clm-renewals.ts). The run marks Renewal Status Under review, gives the contract owner's team (task group Sales Leadership) one choice: Renew, Renegotiate or Let expire, and writes the answer to Renewal Status, so the renewals report and dashboard show what was decided. The later reminders (notice date, expiry) do not start it again: the rule only takes Renewal Status = Scheduled.",
+  "variables": [],
+  "steps": [
+    {
+      "id": "name",
+      "name": "Name the run",
+      "kind": "setWorkflowProcessName",
+      "processName": "Renewal review - <%#XmlVariables.Params.Documents.Document.Name%>",
+      "on": {
+        "success": "underReview",
+        "failure": "underReview"
+      }
+    },
+    {
+      "id": "underReview",
+      "name": "Mark Under review",
+      "kind": "updateMetadata",
+      "set": [
+        {
+          "attribute": "Contract Process.Renewal Status",
+          "value": "Under review"
+        }
+      ],
+      "on": {
+        "success": "decide"
+      }
+    },
+    {
+      "id": "decide",
+      "name": "Owner: renew, renegotiate or let expire?",
+      "kind": "choice",
+      "assignee": {
+        "taskGroup": "Sales Leadership"
+      },
+      "displayName": "Renewal review: <%#XmlVariables.Params.Documents.Document.Name%>",
+      "stage": "Renewal review",
+      "subject": "Renewal review due: <%#XmlVariables.Params.Documents.Document.Name%>",
+      "instructions": "This contract expires in about 90 business days. Check its value, owner and notice date (Attributes ▸ CLM Agreement Details and Contract Process; Parties ▸ the counterparty for its other agreements) and decide: Renew on the current terms, Renegotiate (price, scope or term), or Let expire. Give the notice before the Termination Notice Date if it should not renew automatically.",
+      "comments": "Yes",
+      "options": [
+        {
+          "label": "Renew",
+          "to": "renew"
+        },
+        {
+          "label": "Renegotiate",
+          "to": "renegotiate"
+        },
+        {
+          "label": "Let expire",
+          "to": "expire"
+        }
+      ]
+    },
+    {
+      "id": "renew",
+      "name": "Renew",
+      "kind": "updateMetadata",
+      "set": [
+        {
+          "attribute": "Contract Process.Renewal Status",
+          "value": "Renew"
+        }
+      ],
+      "on": {
+        "success": "logDone"
+      }
+    },
+    {
+      "id": "renegotiate",
+      "name": "Renegotiate",
+      "kind": "updateMetadata",
+      "set": [
+        {
+          "attribute": "Contract Process.Renewal Status",
+          "value": "Renegotiate"
+        }
+      ],
+      "on": {
+        "success": "logDone"
+      }
+    },
+    {
+      "id": "expire",
+      "name": "Let expire",
+      "kind": "updateMetadata",
+      "set": [
+        {
+          "attribute": "Contract Process.Renewal Status",
+          "value": "Let expire"
+        }
+      ],
+      "on": {
+        "success": "logDone"
+      }
+    },
+    {
+      "id": "logDone",
+      "name": "Log the decision",
+      "kind": "logger",
+      "message": "Renewal review of <%#XmlVariables.Params.Documents.Document.Name%> decided",
+      "next": "finish"
+    },
+    {
+      "id": "finish",
+      "name": "Finish",
+      "kind": "finish"
+    }
+  ]
+}

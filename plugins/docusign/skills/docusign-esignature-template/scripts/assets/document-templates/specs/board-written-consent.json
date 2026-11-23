@@ -1,0 +1,122 @@
+{
+  "id": "board-written-consent",
+  "name": "Board Unanimous Written Consent",
+  "agreementType": "Other",
+  "description": "Fontara, Inc.’s directors approve resolutions without a meeting (DGCL §141(f)): the matters approved as a table, an officers’ authority resolution, every director signs, the Secretary certifies.",
+  "fields": {
+    "effective": {
+      "bind": {
+        "provision": "EffectiveDate"
+      },
+      "required": true
+    },
+    "officer": {
+      "label": "Authorized officer",
+      "required": true
+    },
+    "officer_title": {
+      "label": "Officer title",
+      "required": true
+    }
+  },
+  "signers": [
+    "Director 1",
+    "Director 2",
+    "Director 3",
+    "Secretary"
+  ],
+  "body": [
+    {
+      "title": "ACTION BY UNANIMOUS WRITTEN CONSENT OF THE BOARD OF DIRECTORS OF FONTARA, INC."
+    },
+    {
+      "p": "The undersigned, being all the members of the Board of Directors (the \"Board\") of Fontara, Inc., a Delaware corporation (the \"Company\"), acting under Section 141(f) of the Delaware General Corporation Law and the Company's bylaws, consent to the adoption of the following resolutions with the same force and effect as if adopted at a duly convened meeting of the Board, effective as of {{effective}}."
+    },
+    {
+      "h": "Resolutions"
+    },
+    {
+      "p": "RESOLVED, that each of the following matters is approved:"
+    },
+    {
+      "lineItems": {
+        "name": "Resolutions",
+        "label": "Resolutions",
+        "columns": [
+          {
+            "key": "no",
+            "label": "No."
+          },
+          {
+            "key": "matter_approved",
+            "label": "Matter Approved"
+          }
+        ]
+      }
+    },
+    {
+      "p": "RESOLVED FURTHER, that {{officer}}, as {{officer_title}} of the Company, and each other officer of the Company, is authorized to sign and deliver all documents and to take all actions that officer considers necessary or advisable to carry out the foregoing resolutions, and that all actions previously taken by any officer consistent with them are ratified, confirmed and approved."
+    },
+    {
+      "p": "This consent may be signed in counterparts and by electronic signature, is effective when every director has signed it, and shall be filed with the minutes of the proceedings of the Board."
+    },
+    {
+      "h": "Directors"
+    },
+    {
+      "sign": "Director 1",
+      "title": false
+    },
+    {
+      "sign": "Director 2",
+      "title": false
+    },
+    {
+      "sign": "Director 3",
+      "title": false
+    },
+    {
+      "h": "Secretary's Certificate"
+    },
+    {
+      "p": "The undersigned Secretary of the Company certifies that this consent was signed by all the directors of the Company then in office, and has been filed with the minutes of the proceedings of the Board."
+    },
+    {
+      "sign": "Secretary",
+      "title": true,
+      "company": false
+    }
+  ],
+  "examples": [
+    {
+      "values": {
+        "effective": "05/15/2027",
+        "officer": "Marcus Chen",
+        "officer_title": "Chief Financial Officer"
+      },
+      "tables": {
+        "Resolutions": [
+          [
+            "1",
+            "2027 operating budget"
+          ],
+          [
+            "2",
+            "Loan to Fontara UK Ltd"
+          ],
+          [
+            "3",
+            "Dublin bank account"
+          ]
+        ]
+      },
+      "expect": [
+        "Section 141(f)",
+        "2027 operating budget",
+        "Marcus Chen, as Chief Financial Officer",
+        "Secretary's Certificate"
+      ]
+    }
+  ],
+  "source": "written for the library — no vault clause set for this type"
+}

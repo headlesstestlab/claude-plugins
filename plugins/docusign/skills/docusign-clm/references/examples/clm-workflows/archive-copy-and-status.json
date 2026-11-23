@@ -1,0 +1,63 @@
+{
+  "id": "archive-copy-and-status",
+  "name": "Archive Copy and Status",
+  "description": "For a signed agreement (the Params document): set its Agreement Status to Archived, copy it into the archive folder with its attributes, then move the original to the processed folder. Every failure or timeout path ends at Finish. Both folders are account folders by name: their uids come from the account values, else each is picked after Import.",
+  "variables": [
+    {
+      "name": "ArchiveCopy",
+      "type": "document"
+    }
+  ],
+  "steps": [
+    {
+      "id": "status",
+      "kind": "updateMetadata",
+      "name": "Set Status Archived",
+      "set": [
+        {
+          "attribute": "Agreement.Status",
+          "value": "Archived"
+        }
+      ],
+      "on": {
+        "success": "copy",
+        "failure": "finish"
+      }
+    },
+    {
+      "id": "copy",
+      "kind": "copyOrMoveDocument",
+      "name": "Copy to the archive",
+      "action": "copy",
+      "folder": {
+        "name": "Archive"
+      },
+      "includeAttributes": true,
+      "outputDocuments": "ArchiveCopy",
+      "on": {
+        "success": "move",
+        "failure": "finish",
+        "timedOut": "finish"
+      }
+    },
+    {
+      "id": "move",
+      "kind": "copyOrMoveDocument",
+      "name": "Move to processed",
+      "action": "move",
+      "folder": {
+        "name": "Processed"
+      },
+      "on": {
+        "success": "finish",
+        "failure": "finish",
+        "timedOut": "finish"
+      }
+    },
+    {
+      "id": "finish",
+      "kind": "finish",
+      "name": "Finish"
+    }
+  ]
+}

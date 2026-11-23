@@ -1,0 +1,16 @@
+{
+  "id": "proc-sourcing-rfp-nda-bulk",
+  "name": "RFP bid NDA, then the RFP pack",
+  "description": "25 suppliers each sign the one-signer bid NDA, sent by Bulk Send from the bundle's RFP Bid NDA template. When an NDA is completed, a workflow From an Event (Envelope Completed, template = the RFP Bid NDA) emails that supplier the RFP pack link.",
+  "esignTemplates": [
+    "rfp-bid-nda"
+  ],
+  "workflows": [
+    "rfp-pack-on-nda-signed"
+  ],
+  "prerequisites": [
+    "Send the bid NDAs from the bundle's RFP Bid NDA template (Bulk send): the workflow starts only on envelopes from it (the deploy creates the template and writes its new id into the start).",
+    "Replace https://example.com/rfp-pack in the workflow's email with the RFP pack link.",
+    "The 25 suppliers in the bundle's bulk send list (one row each), sent with Bulk send."
+  ]
+}

@@ -1,0 +1,211 @@
+{
+  "id": "signed-contract-filing",
+  "name": "Signed Contract Filing",
+  "description": "Files a signed contract. The run is named after the contract (Set Workflow Process Name). Find Party looks up the counterparty by name; the contract is checked out while Edit CLM Agreement Attributes sets the party, document type, dates and value, then the check-out is cancelled (no new version). The document is renamed and its keywords (description) set, a renewal reminder is scheduled 90 days before the expiration date for the requester, the requester watches the document, and a Logger line records the filing. Every Failure path logs which step failed.",
+  "paramsSchema": "<Params><Documents><Document><Id/><Name/></Document></Documents><ContractName/><PartyName/><DocumentType/><EffectiveDate/><ExpirationDate/><Value/></Params>",
+  "variables": [
+    {
+      "name": "Party",
+      "type": "xml",
+      "schema": "<Parties><CLMPartyData><CLMPartyId/><ExternalId/><Name/><BusinessContactName/><BusinessType/><Source/></CLMPartyData></Parties>"
+    }
+  ],
+  "steps": [
+    {
+      "id": "name",
+      "name": "Name the run",
+      "kind": "setWorkflowProcessName",
+      "processName": "Filing - <%#XmlVariables.Params.ContractName%>",
+      "on": {
+        "success": "party",
+        "failure": "failName"
+      }
+    },
+    {
+      "id": "party",
+      "name": "Find the party",
+      "kind": "findParty",
+      "partyName": "<%#XmlVariables.Params.PartyName%>",
+      "output": "Party",
+      "on": {
+        "match": "lock",
+        "noMatch": "noParty",
+        "failure": "failParty"
+      }
+    },
+    {
+      "id": "noParty",
+      "name": "Log no party",
+      "kind": "logger",
+      "message": "No party named <%#XmlVariables.Params.PartyName%>: the attributes are set without one",
+      "next": "lock"
+    },
+    {
+      "id": "lock",
+      "name": "Check out",
+      "kind": "checkOutDocument",
+      "user": "submitter",
+      "on": {
+        "success": "attributes",
+        "failure": "failLock"
+      }
+    },
+    {
+      "id": "attributes",
+      "name": "Set agreement attributes",
+      "kind": "editClmAgreementAttributes",
+      "set": {
+        "partyId": "<%#XmlVariables.Party.Parties.CLMPartyData.CLMPartyId%>",
+        "documentType": "<%#XmlVariables.Params.DocumentType%>",
+        "effectiveDate": "<%#XmlVariables.Params.EffectiveDate%>",
+        "expirationDate": "<%#XmlVariables.Params.ExpirationDate%>",
+        "totalContractValue": "<%#XmlVariables.Params.Value%>",
+        "requestorName": "<%#Variable.SubmittedBy.Name%>",
+        "noticePeriodCount": "30",
+        "noticePeriodUnit": "Days"
+      },
+      "on": {
+        "success": "unlock",
+        "failure": "failAttributes"
+      }
+    },
+    {
+      "id": "unlock",
+      "name": "Cancel the check out",
+      "kind": "checkOutDocumentCancellation",
+      "user": "submitter",
+      "on": {
+        "success": "rename",
+        "failure": "failUnlock"
+      }
+    },
+    {
+      "id": "rename",
+      "name": "Rename",
+      "kind": "renameDocument",
+      "newName": "<%#XmlVariables.Params.ContractName%> - Signed.docx",
+      "on": {
+        "success": "keywords",
+        "failure": "failRename"
+      }
+    },
+    {
+      "id": "keywords",
+      "name": "Set keywords",
+      "kind": "updateDocumentKeywords",
+      "keywords": "Signed; <%#XmlVariables.Params.PartyName%>",
+      "on": {
+        "success": "reminder",
+        "failure": "failKeywords"
+      }
+    },
+    {
+      "id": "reminder",
+      "name": "Renewal reminder",
+      "kind": "scheduleDocumentReminder",
+      "reminderName": "Renewal review",
+      "date": {
+        "var": "Params.ExpirationDate",
+        "addDays": -90
+      },
+      "hour": 8,
+      "to": [
+        "submitter"
+      ],
+      "subject": "Renewal review: <%#XmlVariables.Params.ContractName%>",
+      "body": "The contract expires in 90 days. Decide whether to renew.",
+      "on": {
+        "success": "watch",
+        "duplicate": "watch",
+        "failure": "failReminder"
+      }
+    },
+    {
+      "id": "watch",
+      "name": "Watch the contract",
+      "kind": "addDocumentsToWatchedDocumentsList",
+      "users": [
+        "submitter"
+      ],
+      "on": {
+        "success": "log",
+        "failure": "failWatch"
+      }
+    },
+    {
+      "id": "log",
+      "name": "Log the filing",
+      "kind": "logger",
+      "message": "Filed <%#XmlVariables.Params.ContractName%>: attributes set, renamed, reminder scheduled, watched",
+      "next": "finish"
+    },
+    {
+      "id": "failName",
+      "name": "Failed: Set Workflow Process Name",
+      "kind": "logger",
+      "message": "Failed: Set Workflow Process Name",
+      "next": "finish"
+    },
+    {
+      "id": "failParty",
+      "name": "Failed: Find Party",
+      "kind": "logger",
+      "message": "Failed: Find Party",
+      "next": "finish"
+    },
+    {
+      "id": "failLock",
+      "name": "Failed: Check Out Document",
+      "kind": "logger",
+      "message": "Failed: Check Out Document",
+      "next": "finish"
+    },
+    {
+      "id": "failAttributes",
+      "name": "Failed: Edit CLM Agreement Attributes",
+      "kind": "logger",
+      "message": "Failed: Edit CLM Agreement Attributes",
+      "next": "finish"
+    },
+    {
+      "id": "failUnlock",
+      "name": "Failed: Check Out Document Cancellation",
+      "kind": "logger",
+      "message": "Failed: Check Out Document Cancellation",
+      "next": "finish"
+    },
+    {
+      "id": "failRename",
+      "name": "Failed: Rename Document",
+      "kind": "logger",
+      "message": "Failed: Rename Document",
+      "next": "finish"
+    },
+    {
+      "id": "failKeywords",
+      "name": "Failed: Update Document Keywords",
+      "kind": "logger",
+      "message": "Failed: Update Document Keywords",
+      "next": "finish"
+    },
+    {
+      "id": "failReminder",
+      "name": "Failed: Schedule Document Reminder",
+      "kind": "logger",
+      "message": "Failed: Schedule Document Reminder",
+      "next": "finish"
+    },
+    {
+      "id": "failWatch",
+      "name": "Failed: Add Documents to Watched Documen",
+      "kind": "logger",
+      "message": "Failed: Add Documents to Watched Documents List",
+      "next": "finish"
+    },
+    {
+      "id": "finish",
+      "name": "Finish",
+      "kind": "finish"
+    }
+  ]
+}

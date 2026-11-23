@@ -1,0 +1,16 @@
+{
+  "id": "clm-eform-contract-request",
+  "name": "CLM: contract request eForm that starts a CLM workflow",
+  "description": "A classic CLM eForm for contract requests: counterparty, entity and business unit as CLM attributes (searchable), request type, agreement type, value, date and purpose as form answers, and the counterparty's draft, shown and required only when the paper is theirs. Each submit starts the CLM workflow Contract Request to Legal, which emails the request to Legal with the answers.",
+  "clmWorkflows": [
+    "contract-request-to-legal"
+  ],
+  "clmEforms": [
+    "contract-request-intake"
+  ],
+  "prerequisites": [
+    "The attribute groups Internal Entity, External Party and Agreement (with Third Party: Yes/No) exist in CLM; the eForm's field ids come from Generate Sample Form (the steps file says how).",
+    "The folder Legal/Contract Requests/Submitted exists in CLM.",
+    "Legal (legal@example.com in the file) is a CLM user; replace the address and pick the user again after Import."
+  ]
+}

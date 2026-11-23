@@ -1,0 +1,352 @@
+{
+  "name": "Fontara IT Access Request",
+  "description": "A one-page internal request with no welcome and no review page: requester and worker type (a contractor needs a sponsor and contract end date), new/change/remove, a required multi-select of systems with a role field per system that only shows when that system is ticked (Salesforce profile, NetSuite role, GitHub team, Workday role, AWS role), permanent or temporary access with an end date, an ISO-format needed-by date, data classification with definitions, and — for administrator access — a required justification and privileged-access policy acknowledgement. The employee ID is hidden prefill.",
+  "welcome": false,
+  "hidden": [
+    {
+      "key": "employee_id",
+      "type": "text",
+      "label": "Employee ID"
+    }
+  ],
+  "pages": [
+    {
+      "key": "pg_request",
+      "title": "What do you need?",
+      "subtitle": "Requests are routed to your manager, then to the system owner",
+      "fields": [
+        {
+          "key": "requester_name",
+          "type": "text",
+          "label": "Your name",
+          "required": true
+        },
+        {
+          "key": "requester_email",
+          "type": "email",
+          "label": "Your Fontara email",
+          "required": true
+        },
+        {
+          "key": "worker_type",
+          "type": "radio",
+          "label": "You are a",
+          "options": [
+            "Fontara employee",
+            "Contractor or consultant"
+          ],
+          "required": true
+        },
+        {
+          "key": "sponsor_email",
+          "type": "email",
+          "label": "Your Fontara sponsor",
+          "required": true
+        },
+        {
+          "key": "contract_end",
+          "type": "date",
+          "label": "Contract end date",
+          "required": true,
+          "dateFormat": "yyyy_MM_dd",
+          "example": "2027/03/31"
+        },
+        {
+          "key": "access_type",
+          "type": "radio",
+          "label": "Request type",
+          "options": [
+            "New access",
+            "Change existing access",
+            "Remove access"
+          ],
+          "required": true
+        },
+        {
+          "key": "systems",
+          "type": "checkbox",
+          "label": "Systems",
+          "options": [
+            "Salesforce",
+            "NetSuite",
+            "Workday",
+            "GitHub",
+            "AWS console",
+            "Docusign",
+            "Slack",
+            "Google Workspace"
+          ],
+          "required": true,
+          "select": {
+            "atLeast": 1
+          }
+        },
+        {
+          "key": "sf_role",
+          "type": "dropdown",
+          "label": "Salesforce profile",
+          "options": [
+            "Standard User",
+            "Sales User",
+            "Service User",
+            "Solution Manager",
+            "System Administrator"
+          ],
+          "required": true
+        },
+        {
+          "key": "netsuite_role",
+          "type": "dropdown",
+          "label": "NetSuite role",
+          "options": [
+            "AP Clerk",
+            "AR Clerk",
+            "Accountant",
+            "Controller",
+            "Administrator"
+          ],
+          "required": true
+        },
+        {
+          "key": "workday_role",
+          "type": "dropdown",
+          "label": "Workday role",
+          "options": [
+            "Employee self-service",
+            "Manager",
+            "HR Partner",
+            "Payroll Administrator",
+            "Finance Approver"
+          ],
+          "required": true
+        },
+        {
+          "key": "github_team",
+          "type": "text",
+          "label": "GitHub organisation and team",
+          "required": true,
+          "placeholder": "fontara/platform-payments",
+          "example": "fontara/platform-payments"
+        },
+        {
+          "key": "aws_role",
+          "type": "dropdown",
+          "label": "AWS role",
+          "options": [
+            "ReadOnly",
+            "Developer",
+            "PowerUser",
+            "Admin"
+          ],
+          "required": true
+        },
+        {
+          "key": "duration",
+          "type": "radio",
+          "label": "For how long?",
+          "options": [
+            "Permanent (reviewed quarterly)",
+            "Temporary"
+          ],
+          "required": true
+        },
+        {
+          "key": "access_end",
+          "type": "date",
+          "label": "Remove access on",
+          "required": true,
+          "dateFormat": "yyyy_MM_dd",
+          "example": "2027/01/15"
+        },
+        {
+          "key": "needed_by",
+          "type": "date",
+          "label": "Needed by",
+          "required": true,
+          "dateFormat": "yyyy_MM_dd",
+          "example": "2026/12/01"
+        },
+        {
+          "key": "classification",
+          "type": "radio",
+          "label": "Most sensitive data you will see",
+          "options": [
+            {
+              "label": "Public",
+              "description": "Published, or approved for anyone."
+            },
+            {
+              "label": "Internal",
+              "description": "For Fontara staff: plans, policies, internal tools."
+            },
+            {
+              "label": "Confidential",
+              "description": "Customer data, contracts, financial results before release, employee records."
+            },
+            {
+              "label": "Restricted (special-category, children's or financial data)",
+              "description": "Payment card data, credentials and keys, health data, security findings."
+            }
+          ],
+          "required": true
+        },
+        {
+          "key": "justification",
+          "type": "longtext",
+          "label": "Business justification",
+          "required": true,
+          "maxLength": 1000
+        },
+        {
+          "key": "priv_sec",
+          "type": "section",
+          "label": "Privileged access",
+          "fields": [
+            {
+              "key": "priv_reason",
+              "type": "longtext",
+              "label": "Why do you need administrator access, and for which tasks?",
+              "required": true,
+              "maxLength": 1000
+            },
+            {
+              "key": "priv_ack",
+              "type": "checkbox",
+              "label": "I have read Fontara's Privileged Access Policy. I will use this access only for the tasks above, from a managed device with MFA, and I accept that privileged sessions are logged and reviewed every quarter.",
+              "options": [
+                "I acknowledge"
+              ],
+              "required": true
+            }
+          ]
+        },
+        {
+          "key": "manager_email",
+          "type": "email",
+          "label": "Manager's email",
+          "required": true
+        }
+      ]
+    }
+  ],
+  "summary": false,
+  "thankYou": {
+    "title": "Request received",
+    "text": "Your manager has 2 business days to approve. Standard access is provisioned within 1 business day of approval; administrator access also needs Security's approval, so allow 3 business days. You will get an IT ticket number by email straight away and a second email when access is ready."
+  },
+  "rules": [
+    {
+      "when": [
+        {
+          "field": "worker_type",
+          "is": "Contractor or consultant"
+        }
+      ],
+      "then": {
+        "sponsor_email": "show",
+        "contract_end": "show"
+      }
+    },
+    {
+      "when": [
+        {
+          "field": "systems",
+          "isAnyOf": [
+            "Salesforce"
+          ]
+        }
+      ],
+      "then": {
+        "sf_role": "show"
+      }
+    },
+    {
+      "when": [
+        {
+          "field": "systems",
+          "isAnyOf": [
+            "NetSuite"
+          ]
+        }
+      ],
+      "then": {
+        "netsuite_role": "show"
+      }
+    },
+    {
+      "when": [
+        {
+          "field": "systems",
+          "isAnyOf": [
+            "Workday"
+          ]
+        }
+      ],
+      "then": {
+        "workday_role": "show"
+      }
+    },
+    {
+      "when": [
+        {
+          "field": "systems",
+          "isAnyOf": [
+            "GitHub"
+          ]
+        }
+      ],
+      "then": {
+        "github_team": "show"
+      }
+    },
+    {
+      "when": [
+        {
+          "field": "systems",
+          "isAnyOf": [
+            "AWS console"
+          ]
+        }
+      ],
+      "then": {
+        "aws_role": "show"
+      }
+    },
+    {
+      "when": [
+        {
+          "field": "duration",
+          "is": "Temporary"
+        }
+      ],
+      "then": {
+        "access_end": "show"
+      }
+    },
+    {
+      "when": [
+        {
+          "field": "aws_role",
+          "isAnyOf": [
+            "Admin",
+            "PowerUser"
+          ]
+        },
+        {
+          "field": "sf_role",
+          "is": "System Administrator"
+        },
+        {
+          "field": "netsuite_role",
+          "is": "Administrator"
+        }
+      ],
+      "match": "any",
+      "then": {
+        "priv_sec": "show",
+        "priv_reason": "show",
+        "priv_ack": "show"
+      }
+    }
+  ]
+}

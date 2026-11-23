@@ -1,0 +1,276 @@
+{
+  "id": "fontara-platform-order-form",
+  "name": "Platform Order Form",
+  "description": "Fontara's order form for platform seats under an existing master agreement (sell side): customer, contracting entity, seats, price, term, payment terms, an optional dated one-time implementation fee and customer termination for convenience, and signers. The routing answers (total value, payment terms, DPA) feed the Contract Request to Execution approvals.",
+  "fields": [
+    {
+      "kind": "heading",
+      "label": "Customer"
+    },
+    {
+      "kind": "text",
+      "label": "Customer Legal Name",
+      "required": true
+    },
+    {
+      "kind": "text",
+      "label": "Customer Address",
+      "required": true
+    },
+    {
+      "kind": "text",
+      "label": "Master Agreement",
+      "required": true,
+      "help": "The master agreement this order is placed under, with its date, e.g. Platform MSA dated 14 March 2023."
+    },
+    {
+      "kind": "dropdown",
+      "label": "Legal Entity",
+      "options": [
+        "Fontara, Inc.",
+        "Fontara UK Ltd",
+        "Fontara Europe Ltd",
+        "Fontara GmbH"
+      ],
+      "required": true
+    },
+    {
+      "kind": "heading",
+      "label": "Order"
+    },
+    {
+      "kind": "text",
+      "label": "Order Number",
+      "required": true
+    },
+    {
+      "kind": "number",
+      "label": "Users",
+      "required": true
+    },
+    {
+      "kind": "currency",
+      "label": "Price per User per Month",
+      "required": true,
+      "decimals": 2
+    },
+    {
+      "kind": "number",
+      "label": "Term in Months",
+      "required": true
+    },
+    {
+      "kind": "number",
+      "label": "Total Order Value",
+      "required": true,
+      "help": "Users x price x term. Over 1,000,000 goes to the VP of Sales and the CFO."
+    },
+    {
+      "kind": "dropdown",
+      "label": "Currency",
+      "options": [
+        "USD",
+        "GBP",
+        "EUR"
+      ],
+      "required": true
+    },
+    {
+      "kind": "dropdown",
+      "label": "Payment Terms Days",
+      "options": [
+        "30",
+        "45",
+        "60",
+        "90"
+      ],
+      "required": true,
+      "help": "Net 45 and Net 60 are standard; beyond Net 60 goes to the Finance Director."
+    },
+    {
+      "kind": "date",
+      "label": "Order Effective Date",
+      "format": "MMMM d, yyyy",
+      "required": true
+    },
+    {
+      "kind": "radio",
+      "label": "Covered by an Existing DPA",
+      "options": [
+        "Yes",
+        "No"
+      ],
+      "required": true
+    },
+    {
+      "kind": "text",
+      "label": "Triage Verdict",
+      "hidden": true,
+      "default": "Green"
+    },
+    {
+      "kind": "text",
+      "label": "Side",
+      "hidden": true,
+      "default": "Sell"
+    },
+    {
+      "kind": "heading",
+      "label": "Additional terms"
+    },
+    {
+      "kind": "radio",
+      "label": "One-Time Implementation Fee",
+      "options": [
+        "Yes",
+        "No"
+      ],
+      "help": "Yes adds a dated one-time fee for onboarding the users above (Agreement Manager's AI tracks it as a one-time payment obligation)."
+    },
+    {
+      "kind": "number",
+      "label": "Implementation Fee",
+      "mergeIf": [
+        {
+          "field": "One-Time Implementation Fee",
+          "op": "equals",
+          "value": "Yes"
+        }
+      ]
+    },
+    {
+      "kind": "date",
+      "label": "Implementation Fee Due Date",
+      "format": "MMMM d, yyyy",
+      "mergeIf": [
+        {
+          "field": "One-Time Implementation Fee",
+          "op": "equals",
+          "value": "Yes"
+        }
+      ],
+      "help": "A business day; with Net 90, 90 days after the Order Effective Date."
+    },
+    {
+      "kind": "radio",
+      "label": "Customer Termination for Convenience",
+      "options": [
+        "Yes",
+        "No"
+      ],
+      "help": "Yes lets the customer end this order on 90 days' written notice."
+    },
+    {
+      "kind": "heading",
+      "label": "Signers"
+    },
+    {
+      "kind": "text",
+      "label": "Customer Signer Name",
+      "required": true
+    },
+    {
+      "kind": "text",
+      "label": "Customer Signer Email",
+      "required": true
+    },
+    {
+      "kind": "text",
+      "label": "Company Signer Name",
+      "required": true,
+      "help": "Signing authority: the VP of Sales up to 1,000,000; the CFO above; Marcus Chen for Fontara UK Ltd, Fontara Europe Ltd and Fontara GmbH."
+    },
+    {
+      "kind": "text",
+      "label": "Company Signer Email",
+      "required": true
+    }
+  ],
+  "template": [
+    "PLATFORM ORDER FORM {{Order Number}}",
+    "This Order Form is entered into by {{Legal Entity}} (\"Fontara\") and {{Customer Legal Name}}, {{Customer Address}} (\"Customer\"), under the {{Master Agreement}} (the \"Agreement\"). Terms not defined here have the meanings given in the Agreement.",
+    "1. Subscription. Fontara grants Customer access to the Fontara platform for {{Users}} named users for {{Term in Months}} months from {{Order Effective Date}} (the \"Subscription Term\").",
+    "2. Fees. The fee is {{Currency}} {{Price per User per Month}} per user per month, {{Currency}} {{Total Order Value}} for the Subscription Term, invoiced annually in advance.",
+    "3. Payment. Each invoice is payable {{Payment Terms Days}} days from the invoice date. Undisputed amounts more than 30 days overdue accrue interest at 1% per month.",
+    "4. Additional users. If Customer's active users exceed the number above for three consecutive months, Customer will place an order for the higher quantity at the same price per user.",
+    {
+      "text": "5. Data protection. Fontara will process Customer Personal Data only under a Data Processing Addendum signed by the parties before any Customer Personal Data is processed under this Order Form.",
+      "when": {
+        "field": "Covered by an Existing DPA",
+        "is": "No"
+      }
+    },
+    {
+      "text": "5. Data protection. Fontara processes Customer Personal Data under the Data Processing Addendum the parties have already signed.",
+      "when": {
+        "field": "Covered by an Existing DPA",
+        "is": "Yes"
+      }
+    },
+    {
+      "text": "6. Governing law. This Order Form is governed by the law that governs the Agreement.",
+      "when": {
+        "field": "Legal Entity",
+        "is": "Fontara, Inc."
+      }
+    },
+    {
+      "text": "6. Data location. Customer Data is stored and processed in the European Union, and the Agreement's data protection terms apply under the GDPR. This Order Form is governed by the laws of Ireland.",
+      "when": {
+        "field": "Legal Entity",
+        "is": "Fontara Europe Ltd"
+      }
+    },
+    {
+      "text": "6. Governing law. This Order Form is governed by the laws of England and Wales.",
+      "when": {
+        "field": "Legal Entity",
+        "is": "Fontara UK Ltd"
+      }
+    },
+    {
+      "text": "6. Data location. Customer Data is stored and processed in the European Union, and the Agreement's data protection terms apply under the GDPR. This Order Form is governed by the laws of the Federal Republic of Germany, and the courts of Munich have exclusive jurisdiction.",
+      "when": {
+        "field": "Legal Entity",
+        "is": "Fontara GmbH"
+      }
+    },
+    "7. Order of precedence. This Order Form is subject to the Agreement. If they conflict, this Order Form governs for the subscription it describes.",
+    {
+      "text": "8. Implementation fee. Customer will pay Fontara a one-time implementation fee of {{Currency}} {{Implementation Fee}}, due on {{Implementation Fee Due Date}}, for onboarding the users above.",
+      "when": {
+        "field": "One-Time Implementation Fee",
+        "is": "Yes"
+      }
+    },
+    {
+      "text": "9. Termination for convenience. Customer may terminate this Order Form for convenience on 90 days' written notice to Fontara.",
+      "when": {
+        "field": "Customer Termination for Convenience",
+        "is": "Yes"
+      }
+    },
+    "Signed for {{Customer Legal Name}}: {{Customer Signer Name}}",
+    "Signed for {{Legal Entity}}: {{Company Signer Name}}"
+  ],
+  "sample": {
+    "Customer Legal Name": "ClimbTech Financial",
+    "Customer Address": "800 Finance Street, Boston, MA 02110",
+    "Master Agreement": "ClimbTech Financial Platform MSA",
+    "Legal Entity": "Fontara, Inc.",
+    "Order Number": "FON-OF-0301",
+    "Users": "1380",
+    "Price per User per Month": "12.50",
+    "Term in Months": "12",
+    "Total Order Value": "207000",
+    "Currency": "USD",
+    "Payment Terms Days": "45",
+    "Order Effective Date": "12/04/2026",
+    "Covered by an Existing DPA": "Yes",
+    "Customer Signer Name": "Mina Collier",
+    "Customer Signer Email": "climbtech-financial.mina.collier@example.com",
+    "Company Signer Name": "Corey Ikso",
+    "Company Signer Email": "fontara.corey.ikso@example.com"
+  },
+  "templateOnly": true
+}

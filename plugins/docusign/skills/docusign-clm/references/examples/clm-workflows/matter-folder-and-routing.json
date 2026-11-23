@@ -1,0 +1,109 @@
+{
+  "id": "matter-folder-and-routing",
+  "name": "Matter Folder and Routing",
+  "description": "Legal intake files each incoming document in its own matter folder and asks the requester where it goes next. Create Folder makes (or reuses) the matter folder under /Parties/, named from the incoming Params, and stores it in a new Folder variable; the document is copied there. A Routing task asks the requester (all assignees must respond) to pick Standard review or Escalate to Legal; the task email comes from the requester, reminders go after 2 days and then every 24 hours from day 3, and the pick and the comment go into Text variables. A rule on the pick sets the workflow output.",
+  "variables": [
+    {
+      "name": "MatterFolder",
+      "type": "folder"
+    },
+    "Route",
+    "RouteComments"
+  ],
+  "paramsSchema": "<Params><Documents><Document><Id/><Name/></Document></Documents><MatterName/></Params>",
+  "steps": [
+    {
+      "id": "folder",
+      "name": "Matter folder",
+      "kind": "createFolder",
+      "folderName": "<%#XmlVariables.Params.MatterName%>",
+      "folderDescription": "Matter folder made by the intake workflow",
+      "parent": {
+        "path": "/Parties/"
+      },
+      "reuse": true,
+      "output": "MatterFolder",
+      "on": {
+        "success": "file",
+        "failure": "finish"
+      }
+    },
+    {
+      "id": "file",
+      "name": "File the document",
+      "kind": "copyOrMoveDocument",
+      "action": "copy",
+      "folder": {
+        "var": "MatterFolder"
+      },
+      "on": {
+        "success": "route",
+        "failure": "finish"
+      }
+    },
+    {
+      "id": "route",
+      "name": "Route the matter",
+      "kind": "routing",
+      "assignee": "submitter",
+      "options": [
+        "Standard review",
+        "Escalate to Legal"
+      ],
+      "output": "Route",
+      "commentsTo": "RouteComments",
+      "respond": "all",
+      "from": "submitter",
+      "subject": "Route <%#XmlVariables.Params.MatterName%>",
+      "body": "Pick where this matter goes next: Standard review or Escalate to Legal.",
+      "instructions": "Read the document, then pick Standard review or Escalate to Legal and complete the task.",
+      "comments": "Yes",
+      "reminders": [
+        {
+          "afterDays": 2
+        },
+        {
+          "afterDays": 3,
+          "everyHours": 24
+        }
+      ],
+      "on": {
+        "success": "check",
+        "failure": "finish"
+      }
+    },
+    {
+      "id": "check",
+      "name": "Escalated?",
+      "kind": "rule",
+      "condition": {
+        "left": "<%#Variable.Route%>",
+        "op": "equals",
+        "right": "Escalate to Legal"
+      },
+      "on": {
+        "true": "outEscalated",
+        "false": "outStandard"
+      }
+    },
+    {
+      "id": "outEscalated",
+      "name": "Output Escalated",
+      "kind": "setOutput",
+      "value": "Escalated: <%#Variable.RouteComments%>",
+      "next": "finish"
+    },
+    {
+      "id": "outStandard",
+      "name": "Output Standard",
+      "kind": "setOutput",
+      "value": "Standard review",
+      "next": "finish"
+    },
+    {
+      "id": "finish",
+      "name": "Finish",
+      "kind": "finish"
+    }
+  ]
+}

@@ -1,0 +1,182 @@
+{
+ "id": "nda-account",
+ "name": "NDA (Account)",
+ "summary": "Non-disclosure agreement from an Account: mutual for partners (reseller, technology or installation partner), one-way for everyone else (Fontara discloses, the Account receives). Contracting entity and governing law follow the Account's Fontara entity.",
+ "description": "Fontara NDA from an Account. Built from assets/salesforce-gen-templates/specs/nda-account.json.",
+ "sourceObject": "Account",
+ "partyName": "Name",
+ "button": {
+  "label": "Generate NDA"
+ },
+ "documents": [
+  {
+   "file": "Fontara_NDA.docx",
+   "output": {
+    "name": "Fontara NDA",
+    "suffix": "name_date",
+    "format": "PDF"
+   },
+   "footer": "Fontara NDA · {{Name}}",
+   "body": [
+    {
+     "if": {
+      "field": "Type",
+      "in": [
+       "Channel Partner / Reseller",
+       "Technology Partner",
+       "Installation Partner"
+      ]
+     },
+     "then": [
+      {
+       "title": "Mutual Non-Disclosure Agreement"
+      }
+     ],
+     "else": [
+      {
+       "title": "Non-Disclosure Agreement"
+      }
+     ]
+    },
+    {
+     "fields": [
+      [
+       "Fontara entity",
+       "{{Fontara_Entity__c}}"
+      ],
+      [
+       "Counterparty",
+       "{{Name}}"
+      ],
+      [
+       "Counterparty address",
+       "{{BillingStreet?}}, {{BillingCity?}}, {{BillingCountry?}}"
+      ],
+      [
+       "Relationship",
+       "{{Type}}"
+      ],
+      [
+       "Fontara contact",
+       "{{Owner.Name}}"
+      ]
+     ]
+    },
+    {
+     "if": {
+      "field": "Type",
+      "in": [
+       "Channel Partner / Reseller",
+       "Technology Partner",
+       "Installation Partner"
+      ]
+     },
+     "then": [
+      {
+       "h": "1. Purpose"
+      },
+      {
+       "p": "{{Fontara_Entity__c}} (\"Fontara\") and {{Name}} (\"Partner\") will share confidential information with each other to evaluate and carry out their partnership. Each party is a \"Discloser\" for what it shares and a \"Recipient\" for what it receives."
+      }
+     ],
+     "else": [
+      {
+       "h": "1. Purpose"
+      },
+      {
+       "p": "{{Fontara_Entity__c}} (\"Fontara\") will share confidential information with {{Name}} (\"Recipient\") so that Recipient can evaluate Fontara's products. Only Fontara discloses under this Agreement; information Recipient shares with Fontara is not covered."
+      }
+     ]
+    },
+    {
+     "h": "2. Obligations"
+    },
+    {
+     "p": "The Recipient uses confidential information only for the purpose above, protects it with at least reasonable care, and shares it only with employees and advisers who need to know it and are bound by duties of confidentiality at least as strict."
+    },
+    {
+     "h": "3. Term"
+    },
+    {
+     "if": {
+      "field": "Type",
+      "in": [
+       "Channel Partner / Reseller",
+       "Technology Partner",
+       "Installation Partner"
+      ]
+     },
+     "then": [
+      {
+       "p": "This Agreement lasts three years from the date of the last signature. Each party's obligations for information received continue for three years after it ends."
+      }
+     ],
+     "else": [
+      {
+       "p": "This Agreement lasts two years from the date of the last signature. Recipient's obligations continue for two years after it ends."
+      }
+     ]
+    },
+    {
+     "h": "4. Governing law"
+    },
+    {
+     "if": {
+      "field": "Fontara_Entity__c",
+      "equals": "Fontara, Inc."
+     },
+     "then": [
+      {
+       "p": "This Agreement is governed by the laws of the State of Delaware."
+      }
+     ]
+    },
+    {
+     "if": {
+      "field": "Fontara_Entity__c",
+      "equals": "Fontara UK Ltd"
+     },
+     "then": [
+      {
+       "p": "This Agreement is governed by the laws of England and Wales."
+      }
+     ]
+    },
+    {
+     "if": {
+      "field": "Fontara_Entity__c",
+      "equals": "Fontara Europe Ltd"
+     },
+     "then": [
+      {
+       "p": "This Agreement is governed by the laws of Ireland."
+      }
+     ]
+    },
+    {
+     "signature": {
+      "signer": 1,
+      "label": "Signed for {{Name}}",
+      "fields": [
+       "s",
+       "n",
+       "t",
+       "d"
+      ]
+     }
+    },
+    {
+     "signature": {
+      "signer": 2,
+      "label": "Signed for {{Fontara_Entity__c}}",
+      "fields": [
+       "s",
+       "n",
+       "d"
+      ]
+     }
+    }
+   ]
+  }
+ ]
+}

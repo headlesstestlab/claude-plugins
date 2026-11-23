@@ -1,0 +1,152 @@
+{
+  "id": "credit-application-guarantee",
+  "name": "Credit Application and Personal Guarantee",
+  "agreementType": "Other",
+  "description": "The applicant's credit application with the personal guarantee, signed by the applicant and the guarantor (limits over $50,000).",
+  "fields": {
+    "effective": {
+      "label": "Application date",
+      "type": "date",
+      "dateFormat": "MM/dd/yyyy",
+      "required": true,
+      "bind": {
+        "provision": "EffectiveDate"
+      }
+    },
+    "company": {
+      "label": "Company legal name",
+      "required": true,
+      "bind": {
+        "provision": "AgreementParty"
+      }
+    },
+    "address": {
+      "label": "Registered address",
+      "required": true
+    },
+    "ein": {
+      "label": "EIN",
+      "required": true
+    },
+    "limit": {
+      "label": "Credit limit requested (USD)",
+      "type": "number",
+      "money": true,
+      "required": true
+    },
+    "bank": {
+      "label": "Bank reference",
+      "required": true
+    },
+    "ref1": {
+      "label": "Trade reference 1",
+      "required": true
+    },
+    "ref2": {
+      "label": "Trade reference 2",
+      "required": true
+    },
+    "ref3": {
+      "label": "Trade reference 3",
+      "required": true
+    },
+    "guarantor": {
+      "label": "Guarantor's full name",
+      "required": true
+    }
+  },
+  "signers": [
+    "Applicant",
+    "Guarantor"
+  ],
+  "body": [
+    {
+      "title": "Business Credit Application"
+    },
+    {
+      "p": "Date: {{effective}}"
+    },
+    {
+      "h": "1. Applicant"
+    },
+    {
+      "table": {
+        "header": [
+          "Item",
+          "Answer"
+        ],
+        "rows": [
+          [
+            "Company",
+            "{{company}}"
+          ],
+          [
+            "Address",
+            "{{address}}"
+          ],
+          [
+            "EIN",
+            "{{ein}}"
+          ],
+          [
+            "Credit limit requested",
+            "USD {{limit}}"
+          ]
+        ]
+      }
+    },
+    {
+      "h": "2. References"
+    },
+    {
+      "list": [
+        "Bank: {{bank}}",
+        "{{ref1}}",
+        "{{ref2}}",
+        "{{ref3}}"
+      ]
+    },
+    {
+      "h": "3. Applicant's certification"
+    },
+    {
+      "p": "The applicant certifies that the information above is true and complete, authorizes us to contact the references named and to obtain business credit reports, and agrees to pay invoices on the terms we approve. Credit terms apply only once our credit team approves this application."
+    },
+    {
+      "sign": "Applicant",
+      "title": true,
+      "company": true
+    },
+    {
+      "h": "4. Personal guarantee"
+    },
+    {
+      "p": "In consideration of credit extended to {{company}}, the undersigned, {{guarantor}}, personally and unconditionally guarantees prompt payment of all amounts {{company}} owes under this credit account, up to the approved limit plus collection costs. This guarantee continues until revoked in writing; revocation does not affect amounts already owed. The guarantor authorizes us to obtain a consumer credit report about the guarantor to evaluate this application."
+    },
+    {
+      "sign": "Guarantor"
+    }
+  ],
+  "examples": [
+    {
+      "values": {
+        "effective": "11/02/2026",
+        "company": "Harbor Point Supply, Inc.",
+        "address": "2200 Commerce Way, Columbus, OH 43215",
+        "ein": "12-3456789",
+        "limit": "60000",
+        "bank": "First Example Bank, account manager Alex Sample, (614) 555-0142",
+        "ref1": "Acme Packaging Co., Jordan Example, (614) 555-0101",
+        "ref2": "Midwest Freight LLC, Casey Sample, (614) 555-0102",
+        "ref3": "Lakeside Industrial Supply, Riley Example, (614) 555-0103",
+        "guarantor": "Jordan Example"
+      },
+      "expect": [
+        "Business Credit Application",
+        "Harbor Point Supply, Inc.",
+        "4. Personal guarantee"
+      ],
+      "absent": []
+    }
+  ]
+}

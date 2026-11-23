@@ -1,0 +1,230 @@
+{
+  "id": "equipment-rental-agreement",
+  "name": "Equipment Rental Agreement",
+  "agreementType": "Lease",
+  "description": "A short-term rental of Fontara demo equipment to a customer: units and deposit, numbered customer duties, a delivery clause unless the customer collects, insurance by the customer or Fontara's cover (Otherwise), and an extra clause for a large or long rental.",
+  "fields": {
+    "customer": {
+      "bind": {
+        "provision": "AgreementParty"
+      },
+      "required": true
+    },
+    "equipment": {
+      "label": "Equipment",
+      "required": true
+    },
+    "units": {
+      "label": "Units",
+      "type": "number",
+      "numberFormat": "1,234.56",
+      "required": true
+    },
+    "deposit": {
+      "label": "Deposit (USD)",
+      "type": "number",
+      "money": true,
+      "required": true
+    },
+    "start": {
+      "label": "Rental start",
+      "type": "date",
+      "required": true
+    },
+    "weeks": {
+      "label": "Rental weeks",
+      "type": "number",
+      "required": true
+    },
+    "handover": {
+      "label": "Handover",
+      "type": "select",
+      "options": [
+        "Customer collects",
+        "Fontara delivers",
+        "Fontara delivers and installs"
+      ],
+      "required": true
+    },
+    "insurance": {
+      "label": "Insurance",
+      "type": "select",
+      "options": [
+        "Customer insurance",
+        "Fontara cover"
+      ],
+      "required": true
+    }
+  },
+  "signers": [
+    "Customer",
+    "Fontara"
+  ],
+  "body": [
+    {
+      "image": "assets/document-templates/images/fontara-logo.png",
+      "align": "left"
+    },
+    {
+      "title": "EQUIPMENT RENTAL AGREEMENT"
+    },
+    {
+      "p": "Fontara, Inc. (\"Fontara\") rents to {{customer}} (the \"Customer\") {{units}} units of {{equipment}} from {{start}} for {{weeks}} weeks. The Customer pays a refundable deposit of ${{deposit}} before handover."
+    },
+    {
+      "h": "1. Customer Duties"
+    },
+    {
+      "ol": [
+        "Use the equipment only at the Customer's own site and only for its business.",
+        "Keep the equipment in good condition and follow Fontara's operating instructions.",
+        "Report any damage or loss to Fontara within two business days.",
+        "Return the equipment, complete and clean, by the end of the rental."
+      ]
+    },
+    {
+      "h": "2. Handover"
+    },
+    {
+      "if": {
+        "field": "handover",
+        "isNot": "Customer collects"
+      },
+      "then": [
+        {
+          "p": "Fontara delivers the equipment to the Customer's site and collects it at the end of the rental. The Customer gives Fontara safe access at agreed times."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "handover",
+        "is": "Customer collects"
+      },
+      "then": [
+        {
+          "p": "The Customer collects the equipment from Fontara's depot and returns it there, at its own cost and risk in transit."
+        }
+      ]
+    },
+    {
+      "h": "3. Insurance"
+    },
+    {
+      "if": {
+        "field": "insurance",
+        "is": "Customer insurance"
+      },
+      "then": [
+        {
+          "p": "The Customer insures the equipment for its full replacement value from handover until return and names Fontara as loss payee."
+        }
+      ],
+      "else": [
+        {
+          "p": "Fontara's cover applies. The Customer pays the first $500 of any claim and remains liable for loss caused by its willful misconduct."
+        }
+      ]
+    },
+    {
+      "if": [
+        {
+          "field": "units",
+          "gt": 10
+        },
+        {
+          "field": "weeks",
+          "gt": 12
+        }
+      ],
+      "match": "any",
+      "then": [
+        {
+          "h": "4. Large or Long Rental"
+        },
+        {
+          "p": "For a rental of more than 10 units or more than 12 weeks, Fontara inspects the equipment on site once a quarter, at no extra cost."
+        }
+      ]
+    },
+    {
+      "if": [
+        {
+          "field": "handover",
+          "is": "Fontara delivers and installs"
+        },
+        {
+          "field": "insurance",
+          "is": "Fontara cover"
+        }
+      ],
+      "match": "all",
+      "then": [
+        {
+          "p": "Installation note: Fontara's cover includes the installation work."
+        }
+      ]
+    },
+    {
+      "p": "Signed by the parties:"
+    },
+    {
+      "sign": "Customer",
+      "title": true
+    },
+    {
+      "sign": "Fontara",
+      "title": true
+    }
+  ],
+  "examples": [
+    {
+      "values": {
+        "customer": "Baybridge Logistics LLC",
+        "equipment": "handheld scanners",
+        "units": "24",
+        "deposit": "4800",
+        "start": "11/09/2026",
+        "weeks": "6",
+        "handover": "Fontara delivers and installs",
+        "insurance": "Fontara cover"
+      },
+      "expect": [
+        "Fontara delivers the equipment",
+        "Fontara's cover applies",
+        "Large or Long Rental",
+        "Installation note",
+        "24",
+        "4,800.00"
+      ],
+      "absent": [
+        "The Customer collects",
+        "names Fontara as loss payee"
+      ]
+    },
+    {
+      "values": {
+        "customer": "Keranos Ceramics Ltd",
+        "equipment": "label printers",
+        "units": "3",
+        "deposit": "900",
+        "start": "12/01/2026",
+        "weeks": "4",
+        "handover": "Customer collects",
+        "insurance": "Customer insurance"
+      },
+      "expect": [
+        "The Customer collects",
+        "names Fontara as loss payee",
+        "label printers"
+      ],
+      "absent": [
+        "Fontara delivers the equipment",
+        "Fontara's cover applies",
+        "Large or Long Rental",
+        "Installation note"
+      ]
+    }
+  ],
+  "source": "written for the library — exercises a numbered list, isNot, Apply any / Apply all and an Otherwise branch"
+}

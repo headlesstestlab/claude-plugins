@@ -1,0 +1,73 @@
+{
+  "id": "settlement-signature-pages",
+  "from": {
+    "name": "Settlement Agreement Signature Pages",
+    "description": "The signature pages for a final settlement agreement that outside counsel uploads at send: the plaintiff signs, then the defendant, then both counsel.",
+    "fields": {},
+    "signers": [
+      "Plaintiff",
+      "Defendant",
+      "Plaintiff's Counsel",
+      "Defendant's Counsel"
+    ],
+    "body": [
+      {
+        "title": "SETTLEMENT AGREEMENT AND RELEASE — SIGNATURE PAGES"
+      },
+      {
+        "p": "These signature pages belong to the Settlement Agreement and Release that is sent with them in this envelope (the \"Agreement\"). By signing, each party confirms that it has read the Agreement, had the opportunity to consult counsel, and agrees to be bound by it."
+      },
+      {
+        "p": "The Agreement may be signed electronically and in counterparts; together they form one agreement. It takes effect when every person below has signed."
+      },
+      {
+        "p": "[[check:Plaintiff:I have read the entire Agreement, including the release of claims]]"
+      },
+      {
+        "sign": "Plaintiff",
+        "title": false
+      },
+      {
+        "sign": "Defendant",
+        "title": true,
+        "company": true
+      },
+      {
+        "h": "Counsel"
+      },
+      {
+        "sign": "Plaintiff's Counsel",
+        "title": false,
+        "company": true
+      },
+      {
+        "sign": "Defendant's Counsel",
+        "title": false,
+        "company": true
+      }
+    ],
+    "examples": [
+      {
+        "values": {}
+      }
+    ]
+  },
+  "name": "Settlement Agreement Signatures (plaintiff with IDV, then defendant, then both counsel)",
+  "summary": "Signature pages for an uploaded settlement agreement: the plaintiff signs first after Docusign ID Verification, then the defendant, then both counsel at the same time.",
+  "owners": {
+    "default": "Plaintiff"
+  },
+  "routingOrder": {
+    "Plaintiff": 1,
+    "Defendant": 2,
+    "Plaintiff's Counsel": 3,
+    "Defendant's Counsel": 3
+  },
+  "auth": {
+    "Plaintiff": {
+      "idv": "IDV (Standard)"
+    }
+  },
+  "emailSubject": "Settlement agreement for signature",
+  "emailBlurb": "Please read the settlement agreement and sign. The plaintiff verifies their identity before signing."
+}

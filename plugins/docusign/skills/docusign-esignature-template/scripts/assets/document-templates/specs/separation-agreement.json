@@ -1,0 +1,316 @@
+{
+  "id": "separation-agreement",
+  "name": "Employee Separation Agreement",
+  "agreementType": "EmploymentSeparation",
+  "description": "An employee’s departure: separation date, severance, COBRA, release with the §1542 waiver, protected rights, non-disparagement, and the 21- or 45-day review with OWBPA disclosure.",
+  "fields": {
+    "employee": {
+      "bind": {
+        "provision": "AgreementParty"
+      },
+      "required": true,
+      "description": "Employee name"
+    },
+    "separation": {
+      "bind": {
+        "provision": "TerminationDate"
+      },
+      "required": true
+    },
+    "severance": {
+      "label": "Severance (USD)",
+      "type": "number",
+      "money": true,
+      "required": true
+    },
+    "weeks": {
+      "label": "COBRA premiums paid (weeks)",
+      "type": "number"
+    },
+    "group": {
+      "label": "Part of a group termination program (employee 40 or over)",
+      "type": "select",
+      "options": [
+        "No",
+        "Yes"
+      ],
+      "required": true
+    },
+    "decisional_unit": {
+      "label": "Decisional unit (group program)"
+    },
+    "selected": {
+      "label": "Job titles and ages selected (group program)"
+    },
+    "not_selected": {
+      "label": "Job titles and ages not selected (group program)"
+    },
+    "governing_law": {
+      "bind": {
+        "provision": "GoverningLaw"
+      },
+      "required": true,
+      "description": "Written after \"the laws of\": for example, the State of Delaware, or England and Wales"
+    }
+  },
+  "signers": [
+    "Employee",
+    "Fontara"
+  ],
+  "body": [
+    {
+      "title": "SEPARATION AGREEMENT AND GENERAL RELEASE"
+    },
+    {
+      "p": "This Agreement is between Fontara, Inc., a Delaware corporation (\"Fontara\"), and **{{employee}}** (\"Employee\"). Employee’s employment ends on {{separation}} (the \"Separation Date\"). Fontara will pay Employee’s final wages and accrued, unused paid time off on the Separation Date whether or not Employee signs this Agreement."
+    },
+    {
+      "h": "1. Severance"
+    },
+    {
+      "p": "In exchange for the release below, Fontara will pay Employee US${{severance}}, less applicable withholdings, within 30 days after this Agreement becomes effective."
+    },
+    {
+      "if": {
+        "field": "severance",
+        "lt": 40000
+      },
+      "then": [
+        {
+          "p": "The severance is paid in one lump sum."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "severance",
+        "gte": 40000
+      },
+      "then": [
+        {
+          "p": "Because the severance is US$40,000 or more, half of it is paid as stated above and the other half 90 days later."
+        }
+      ]
+    },
+    {
+      "if": [
+        {
+          "field": "severance",
+          "gte": 30000
+        },
+        {
+          "field": "severance",
+          "lte": 45000
+        }
+      ],
+      "match": "all",
+      "then": [
+        {
+          "p": "Employee may ask in writing, before the payment date, to defer the second half of the severance into the next calendar year."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "weeks",
+        "gt": 0
+      },
+      "then": [
+        {
+          "p": "Fontara will also pay Employee’s COBRA premiums for {{weeks}} weeks after the Separation Date, or until Employee becomes eligible for another employer’s group health plan, if sooner."
+        }
+      ]
+    },
+    {
+      "h": "2. General Release"
+    },
+    {
+      "p": "Employee releases Fontara and its officers, employees and agents from all claims arising from Employee’s employment or its end, known or unknown, including claims under Title VII of the Civil Rights Act, the Age Discrimination in Employment Act and the California Fair Employment and Housing Act, except claims that cannot be released by law."
+    },
+    {
+      "p": "Employee initials acknowledging Section 2 (General Release): [[initials:Employee]]"
+    },
+    {
+      "h": "3. Waiver of Unknown Claims"
+    },
+    {
+      "p": "Employee waives the protection of California Civil Code section 1542 and any similar law. California Civil Code section 1542 provides: \"A GENERAL RELEASE DOES NOT EXTEND TO CLAIMS THAT THE CREDITOR OR RELEASING PARTY DOES NOT KNOW OR SUSPECT TO EXIST IN HIS OR HER FAVOR AT THE TIME OF EXECUTING THE RELEASE AND THAT, IF KNOWN BY HIM OR HER, WOULD HAVE MATERIALLY AFFECTED HIS OR HER SETTLEMENT WITH THE DEBTOR OR RELEASED PARTY.\""
+    },
+    {
+      "h": "4. Protected Rights"
+    },
+    {
+      "p": "Nothing in this Agreement prevents Employee from filing a charge with, reporting possible violations of law to, or participating in an investigation by the Equal Employment Opportunity Commission, the National Labor Relations Board, the Securities and Exchange Commission or any other government agency; from discussing or disclosing information about unlawful acts in the workplace, such as harassment or discrimination or any other conduct that Employee has reason to believe is unlawful; or from discussing wages and other terms and conditions of employment. Employee need not notify Fontara before doing so. Employee waives any right to recover individual monetary relief from Fontara in a charge or action brought by Employee or on Employee's behalf, to the extent the law permits, but not an award from a government agency for information provided to it. Nothing in this Agreement waives rights that cannot be waived by law, including claims for unemployment or workers' compensation benefits, or rights that arise after Employee signs."
+    },
+    {
+      "h": "5. Non-Disparagement"
+    },
+    {
+      "p": "Employee will not make statements that disparage Fontara or its products, officers or employees, and Fontara will instruct its executive leadership team not to disparage Employee. Nothing in this Agreement prevents Employee from discussing or disclosing information about unlawful acts in the workplace, such as harassment or discrimination or any other conduct that Employee has reason to believe is unlawful."
+    },
+    {
+      "h": "6. No Admission"
+    },
+    {
+      "p": "This Agreement is not an admission of wrongdoing or liability by either party."
+    },
+    {
+      "h": "7. Cooperation and Unemployment"
+    },
+    {
+      "p": "Employee will reasonably cooperate with Fontara, at mutually convenient times and at Fontara's expense, in transitioning Employee's work and in any legal matter of which Employee has knowledge. Fontara will not contest an application by Employee for unemployment insurance benefits, but will answer any agency inquiry truthfully."
+    },
+    {
+      "h": "8. Medicare"
+    },
+    {
+      "p": "Employee represents that Employee is not a Medicare beneficiary and that Medicare has made no conditional payment for any injury or illness related to Employee's employment."
+    },
+    {
+      "h": "9. Review and Revocation"
+    },
+    {
+      "if": {
+        "field": "group",
+        "is": "No"
+      },
+      "then": [
+        {
+          "p": "Employee has 21 days to consider this Agreement and is advised to consult an attorney before signing it."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "group",
+        "is": "Yes"
+      },
+      "then": [
+        {
+          "p": "Employee is offered this Agreement in connection with an employment termination program. Employee has 45 days to consider it and is advised to consult an attorney before signing it. Exhibit A lists the decisional unit, the eligibility factors and the job titles and ages of the employees selected and not selected for the program, as the Older Workers Benefit Protection Act requires."
+        }
+      ]
+    },
+    {
+      "p": "Employee may revoke this Agreement within 7 days after signing it by written notice to Fontara’s General Counsel; it becomes effective on the eighth day after Employee signs it, if not revoked."
+    },
+    {
+      "p": "[[check:Employee:Advised to consult an attorney:group=Acknowledgments;min=2]] I was advised to consult an attorney and given the review period stated above to consider this Agreement."
+    },
+    {
+      "p": "[[check:Employee:Signing voluntarily:group=Acknowledgments]] I am signing voluntarily and understand I am releasing claims."
+    },
+    {
+      "p": "Employee date of birth, for the age-discrimination release: [[date:Employee:Date of birth]]"
+    },
+    {
+      "h": "10. Continuing Obligations"
+    },
+    {
+      "p": "Employee’s Confidentiality and Invention Assignment Agreement continues in effect. Employee will return all Fontara property by the Separation Date."
+    },
+    {
+      "h": "11. Governing Law and Disputes"
+    },
+    {
+      "p": "This Agreement is governed by the laws of {{governing_law}}, without regard to its conflict-of-laws rules."
+    },
+    {
+      "h": "12. Entire Agreement and Amendment"
+    },
+    {
+      "p": "This Agreement is the entire agreement of the parties on its subject and supersedes all prior proposals, negotiations, representations and understandings about it. Each party confirms that in entering into it, it has not relied on any statement not set out in it. This Agreement may be amended only in a writing signed by authorized representatives of both parties."
+    },
+    {
+      "h": "13. General"
+    },
+    {
+      "p": "If any provision of this Agreement is held invalid or unenforceable, it is enforced to the maximum extent permitted and the rest of this Agreement continues in full force. No failure or delay in exercising a right is a waiver of it, and a waiver is effective only if it is in writing and signed. No person other than the parties and their permitted successors and assigns has any right to enforce any term of this Agreement. This Agreement may be signed in counterparts and by electronic signature, each of which is an original and all of which together are one instrument."
+    },
+    {
+      "sign": "Employee",
+      "title": false
+    },
+    {
+      "sign": "Fontara",
+      "title": true,
+      "company": true
+    },
+    {
+      "if": {
+        "field": "group",
+        "is": "Yes"
+      },
+      "then": [
+        {
+          "h": "Exhibit A — Disclosure Under the Older Workers Benefit Protection Act"
+        },
+        {
+          "p": "Decisional unit: {{decisional_unit}}. Eligibility factors: positions eliminated in the restructuring of the decisional unit. Time limits: 45 days to consider the agreement and 7 days to revoke it."
+        },
+        {
+          "p": "Job titles and ages of the employees selected for the program: {{selected}}."
+        },
+        {
+          "p": "Job titles and ages of the employees in the decisional unit not selected: {{not_selected}}."
+        },
+        {
+          "p": "Employee initials acknowledging receipt of this Exhibit A: [[initials:Employee]]"
+        }
+      ]
+    }
+  ],
+  "examples": [
+    {
+      "values": {
+        "employee": "Corey Ikso",
+        "separation": "07/31/2027",
+        "severance": "32308",
+        "weeks": "12",
+        "group": "No",
+        "governing_law": "the State of California"
+      },
+      "expect": [
+        "US$32,308.00",
+        "12 weeks",
+        "21 days",
+        "A GENERAL RELEASE DOES NOT EXTEND",
+        "unlawful acts in the workplace",
+        "paid in one lump sum",
+        "defer the second half"
+      ],
+      "absent": [
+        "45 days",
+        "Older Workers Benefit Protection Act",
+        "US$40,000 or more",
+        "receipt of this Exhibit A"
+      ]
+    },
+    {
+      "values": {
+        "employee": "Corey Ikso",
+        "separation": "08/15/2027",
+        "severance": "48462",
+        "group": "Yes",
+        "decisional_unit": "the Sales department, San Francisco",
+        "selected": "VP of Sales (age 52)",
+        "not_selected": "Regional Sales Director (ages 38 and 46); Account Executive (age 31)",
+        "governing_law": "the State of California"
+      },
+      "expect": [
+        "45 days",
+        "Older Workers Benefit Protection Act",
+        "Sales department",
+        "US$40,000 or more",
+        "receipt of this Exhibit A"
+      ],
+      "absent": [
+        "COBRA premiums",
+        "Employee has 21 days",
+        "paid in one lump sum",
+        "defer the second half"
+      ]
+    }
+  ],
+  "source": "written for the library — no vault clause set for this type"
+}

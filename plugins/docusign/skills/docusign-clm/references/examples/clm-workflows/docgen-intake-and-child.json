@@ -1,0 +1,85 @@
+{
+  "id": "docgen-intake-and-child",
+  "name": "Document Generation Intake",
+  "description": "A request form task creates the document from a Document Generation configuration (prefilled by input XML), an XPath reads one value, a user-free Document Generation step makes a cover sheet, and a child workflow takes the document further.",
+  "paramsSchema": "<Params><Documents><Document><Id/><Name/></Document></Documents><TemplateFieldData><Effective_Date/><Deal_Tier key=\"\"/></TemplateFieldData></Params>",
+  "variables": [
+    {
+      "name": "IntakeXml",
+      "type": "xml",
+      "schema": "<TemplateFieldData><Effective_Date/><Deal_Tier/></TemplateFieldData>"
+    },
+    {
+      "name": "NewDoc",
+      "type": "document"
+    },
+    {
+      "name": "DealTier",
+      "type": "xml"
+    },
+    {
+      "name": "CoverDoc",
+      "type": "document"
+    }
+  ],
+  "steps": [
+    {
+      "id": "intake",
+      "kind": "createOrUploadDoc",
+      "name": "Create the agreement",
+      "assignee": "submitter",
+      "configuration": "Contract - CREATE",
+      "inputXml": "IntakeXml",
+      "outputDocuments": "NewDoc",
+      "on": {
+        "completed": "read",
+        "canceled": "finish",
+        "failure": "finish"
+      }
+    },
+    {
+      "id": "read",
+      "kind": "evaluateXPath",
+      "name": "Read the deal tier",
+      "source": "Params",
+      "xpath": "//TemplateFieldData/Deal_Tier",
+      "output": "DealTier",
+      "on": {
+        "match": "cover",
+        "noMatch": "cover",
+        "failure": "finish"
+      }
+    },
+    {
+      "id": "cover",
+      "kind": "documentGeneration",
+      "name": "Generate the cover sheet",
+      "configuration": "Contract - CREATE",
+      "inputXml": "IntakeXml",
+      "outputDocuments": "CoverDoc",
+      "outputDocumentName": "Cover Sheet - <%#XmlVariables.Params.Documents.Document.Name%>",
+      "on": {
+        "success": "child",
+        "conditionalSuccess": "child",
+        "failure": "finish"
+      }
+    },
+    {
+      "id": "child",
+      "kind": "childWorkflow",
+      "name": "Start the negotiation",
+      "workflow": "MSA Negotiation with External Review",
+      "params": "Params",
+      "wait": false,
+      "on": {
+        "success": "finish",
+        "failure": "finish"
+      }
+    },
+    {
+      "id": "finish",
+      "kind": "finish",
+      "name": "Finish"
+    }
+  ]
+}

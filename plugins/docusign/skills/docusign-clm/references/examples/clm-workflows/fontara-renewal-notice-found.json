@@ -1,0 +1,110 @@
+{
+  "id": "fontara-renewal-notice-found",
+  "name": "Renewal notice found",
+  "description": "The enterprise way into a renewal review on CLM + IAM (the owner 11-21): Agreement Manager's AI reads every executed CLM contract, and when its obligation extraction finishes CLM's smart rule 'Renewal notice found' (event Document Obligation Extraction, In Subfolder /Contracts; assets/clm-smart-rules/specs/fontara-iamclm-renewals.json) starts this workflow on the document. Use Obligation Data reads the document's Agreement Manager obligations as XML; if one is a Renewal Notice, Renewal Status becomes Review due and 'Renewal review' starts on the same document (the owner's choice: Renew, Renegotiate or Let expire). Contracts whose renewal the AI does not find keep the date reminders (rule 'Schedule renewal reminders').",
+  "variables": [
+    {
+      "name": "ObligationData",
+      "type": "xml"
+    },
+    {
+      "name": "RenewalNotice",
+      "type": "xml"
+    },
+    {
+      "name": "ReviewIn",
+      "type": "xml",
+      "schema": "<Params><Documents><Document><Id/><Name/></Document></Documents><DocumentName/></Params>"
+    }
+  ],
+  "steps": [
+    {
+      "id": "name",
+      "name": "Name the run",
+      "kind": "setWorkflowProcessName",
+      "processName": "Renewal notice check - <%#XmlVariables.Params.Documents.Document.Name%>",
+      "on": {
+        "success": "obligations",
+        "failure": "obligations"
+      }
+    },
+    {
+      "id": "obligations",
+      "name": "Read the Agreement Manager obligations",
+      "kind": "useObligationData",
+      "output": "ObligationData",
+      "on": {
+        "success": "find",
+        "failure": "logNone"
+      }
+    },
+    {
+      "id": "find",
+      "name": "A Renewal Notice?",
+      "kind": "evaluateXPath",
+      "source": "ObligationData",
+      "xpath": "//*[contains(., 'Renewal')]",
+      "output": "RenewalNotice",
+      "on": {
+        "match": "due",
+        "noMatch": "logNone"
+      }
+    },
+    {
+      "id": "due",
+      "name": "Mark Review due",
+      "kind": "updateMetadata",
+      "set": [
+        {
+          "attribute": "Contract Process.Renewal Status",
+          "value": "Review due"
+        }
+      ],
+      "on": {
+        "success": "reviewIn"
+      }
+    },
+    {
+      "id": "reviewIn",
+      "name": "Hand the document to the review",
+      "kind": "prefillXml",
+      "output": "ReviewIn",
+      "fields": {
+        "DocumentName": "Params.Documents.Document.Name"
+      },
+      "root": "Params",
+      "copyDocument": true,
+      "next": "review"
+    },
+    {
+      "id": "review",
+      "name": "Renewal review",
+      "kind": "childWorkflow",
+      "workflow": "Renewal review",
+      "params": "ReviewIn",
+      "wait": false,
+      "on": {
+        "success": "logStarted"
+      }
+    },
+    {
+      "id": "logStarted",
+      "name": "Log review started",
+      "kind": "logger",
+      "message": "Renewal Notice found by Agreement Manager's AI: renewal review started",
+      "next": "finish"
+    },
+    {
+      "id": "logNone",
+      "name": "Log no renewal notice",
+      "kind": "logger",
+      "message": "No Renewal Notice among the Agreement Manager obligations: the date reminders cover this contract",
+      "next": "finish"
+    },
+    {
+      "id": "finish",
+      "name": "Finish",
+      "kind": "finish"
+    }
+  ]
+}

@@ -1,0 +1,8326 @@
+{
+ "org": "SET-YOUR-SALESFORCE-ORG-ID",
+ "readAt": "2026-11-23",
+ "note": "Read-only describe of the lab account Developer Edition org (Apps Launcher dfsle 8.8, CPQ SBQQ installed), slimmed: what the Gen compiler and lint need. Refresh: npx tsx captures/sf-gen-deploy.ts --refresh-describe.",
+ "objects": {
+  "Opportunity": {
+   "label": "Opportunity",
+   "fields": {
+    "Id": {
+     "type": "id",
+     "label": "Opportunity ID"
+    },
+    "IsDeleted": {
+     "type": "boolean",
+     "label": "Deleted"
+    },
+    "AccountId": {
+     "type": "reference",
+     "label": "Account ID",
+     "relationshipName": "Account",
+     "referenceTo": [
+      "Account"
+     ]
+    },
+    "IsPrivate": {
+     "type": "boolean",
+     "label": "Private"
+    },
+    "Name": {
+     "type": "string",
+     "label": "Name"
+    },
+    "Description": {
+     "type": "textarea",
+     "label": "Description"
+    },
+    "StageName": {
+     "type": "picklist",
+     "label": "Stage",
+     "values": [
+      "Prospecting",
+      "Qualification",
+      "Needs Analysis",
+      "Value Proposition",
+      "Id. Decision Makers",
+      "Perception Analysis",
+      "Proposal/Price Quote",
+      "Negotiation/Review",
+      "Closed Won",
+      "Closed Lost"
+     ]
+    },
+    "Amount": {
+     "type": "currency",
+     "label": "Amount",
+     "scale": 2
+    },
+    "Probability": {
+     "type": "percent",
+     "label": "Probability (%)",
+     "scale": 0
+    },
+    "ExpectedRevenue": {
+     "type": "currency",
+     "label": "Expected Amount",
+     "scale": 2
+    },
+    "TotalOpportunityQuantity": {
+     "type": "double",
+     "label": "Quantity",
+     "scale": 2
+    },
+    "CloseDate": {
+     "type": "date",
+     "label": "Close Date"
+    },
+    "Type": {
+     "type": "picklist",
+     "label": "Opportunity Type",
+     "values": [
+      "Existing Customer - Upgrade",
+      "Existing Customer - Replacement",
+      "Existing Customer - Downgrade",
+      "New Customer",
+      "Renewal"
+     ]
+    },
+    "NextStep": {
+     "type": "string",
+     "label": "Next Step"
+    },
+    "LeadSource": {
+     "type": "picklist",
+     "label": "Lead Source",
+     "values": [
+      "Web",
+      "Phone Inquiry",
+      "Partner Referral",
+      "Purchased List",
+      "Other"
+     ]
+    },
+    "IsClosed": {
+     "type": "boolean",
+     "label": "Closed"
+    },
+    "IsWon": {
+     "type": "boolean",
+     "label": "Won"
+    },
+    "ForecastCategory": {
+     "type": "picklist",
+     "label": "Forecast Category",
+     "values": [
+      "Omitted",
+      "Pipeline",
+      "BestCase",
+      "MostLikely",
+      "Forecast",
+      "Closed"
+     ]
+    },
+    "ForecastCategoryName": {
+     "type": "picklist",
+     "label": "Forecast Category",
+     "values": [
+      "Omitted",
+      "Pipeline",
+      "Best Case",
+      "Commit",
+      "Closed"
+     ]
+    },
+    "CampaignId": {
+     "type": "reference",
+     "label": "Campaign ID",
+     "relationshipName": "Campaign",
+     "referenceTo": [
+      "Campaign"
+     ]
+    },
+    "HasOpportunityLineItem": {
+     "type": "boolean",
+     "label": "Has Line Item"
+    },
+    "Pricebook2Id": {
+     "type": "reference",
+     "label": "Price Book ID",
+     "relationshipName": "Pricebook2",
+     "referenceTo": [
+      "Pricebook2"
+     ]
+    },
+    "OwnerId": {
+     "type": "reference",
+     "label": "Owner ID",
+     "relationshipName": "Owner",
+     "referenceTo": [
+      "User"
+     ]
+    },
+    "CreatedDate": {
+     "type": "datetime",
+     "label": "Created Date"
+    },
+    "CreatedById": {
+     "type": "reference",
+     "label": "Created By ID",
+     "relationshipName": "CreatedBy",
+     "referenceTo": [
+      "User"
+     ]
+    },
+    "LastModifiedDate": {
+     "type": "datetime",
+     "label": "Last Modified Date"
+    },
+    "LastModifiedById": {
+     "type": "reference",
+     "label": "Last Modified By ID",
+     "relationshipName": "LastModifiedBy",
+     "referenceTo": [
+      "User"
+     ]
+    },
+    "SystemModstamp": {
+     "type": "datetime",
+     "label": "System Modstamp"
+    },
+    "LastActivityDate": {
+     "type": "date",
+     "label": "Last Activity"
+    },
+    "PushCount": {
+     "type": "int",
+     "label": "Push Count"
+    },
+    "LastStageChangeDate": {
+     "type": "datetime",
+     "label": "Last Stage Change Date"
+    },
+    "FiscalQuarter": {
+     "type": "int",
+     "label": "Fiscal Quarter"
+    },
+    "FiscalYear": {
+     "type": "int",
+     "label": "Fiscal Year"
+    },
+    "Fiscal": {
+     "type": "string",
+     "label": "Fiscal Period"
+    },
+    "ContactId": {
+     "type": "reference",
+     "label": "Contact ID"
+    },
+    "LastViewedDate": {
+     "type": "datetime",
+     "label": "Last Viewed Date"
+    },
+    "LastReferencedDate": {
+     "type": "datetime",
+     "label": "Last Referenced Date"
+    },
+    "HasOpenActivity": {
+     "type": "boolean",
+     "label": "Has Open Activity"
+    },
+    "HasOverdueTask": {
+     "type": "boolean",
+     "label": "Has Overdue Task"
+    },
+    "LastAmountChangedHistoryId": {
+     "type": "reference",
+     "label": "Opportunity History ID",
+     "relationshipName": "LastAmountChangedHistory",
+     "referenceTo": [
+      "OpportunityHistory"
+     ]
+    },
+    "LastCloseDateChangedHistoryId": {
+     "type": "reference",
+     "label": "Opportunity History ID",
+     "relationshipName": "LastCloseDateChangedHistory",
+     "referenceTo": [
+      "OpportunityHistory"
+     ]
+    },
+    "DeliveryInstallationStatus__c": {
+     "type": "picklist",
+     "label": "Delivery/Installation Status",
+     "values": [
+      "In progress",
+      "Yet to begin",
+      "Completed"
+     ]
+    },
+    "TrackingNumber__c": {
+     "type": "string",
+     "label": "Tracking Number"
+    },
+    "OrderNumber__c": {
+     "type": "string",
+     "label": "Order Number"
+    },
+    "CurrentGenerators__c": {
+     "type": "string",
+     "label": "Current Generator(s)"
+    },
+    "MainCompetitors__c": {
+     "type": "string",
+     "label": "Main Competitor(s)"
+    },
+    "SBQQ__AmendedContract__c": {
+     "type": "reference",
+     "label": "Amended Contract",
+     "relationshipName": "SBQQ__AmendedContract__r",
+     "referenceTo": [
+      "Contract"
+     ]
+    },
+    "SBQQ__Contracted__c": {
+     "type": "boolean",
+     "label": "Contracted"
+    },
+    "SBQQ__CreateContractedPrices__c": {
+     "type": "boolean",
+     "label": "Create Contracted Prices"
+    },
+    "SBQQ__OrderGroupID__c": {
+     "type": "string",
+     "label": "Order Group ID"
+    },
+    "SBQQ__Ordered__c": {
+     "type": "boolean",
+     "label": "Ordered"
+    },
+    "SBQQ__PrimaryQuote__c": {
+     "type": "reference",
+     "label": "Primary Quote",
+     "relationshipName": "SBQQ__PrimaryQuote__r",
+     "referenceTo": [
+      "SBQQ__Quote__c"
+     ]
+    },
+    "SBQQ__QuotePricebookId__c": {
+     "type": "string",
+     "label": "Quote Pricebook Id"
+    },
+    "SBQQ__Renewal__c": {
+     "type": "boolean",
+     "label": "Renewal"
+    },
+    "SBQQ__RenewedContract__c": {
+     "type": "reference",
+     "label": "Renewed Contract",
+     "relationshipName": "SBQQ__RenewedContract__r",
+     "referenceTo": [
+      "Contract"
+     ]
+    },
+    "Approval_Status__c": {
+     "type": "picklist",
+     "label": "Approval status",
+     "values": [
+      "Not submitted",
+      "Pending",
+      "Approved",
+      "Sent back"
+     ]
+    },
+    "Deal_Size_Band__c": {
+     "type": "picklist",
+     "label": "Deal size band",
+     "values": [
+      "Up to 1,000,000 USD",
+      "Over 1,000,000 USD"
+     ]
+    },
+    "Existing_DPA__c": {
+     "type": "picklist",
+     "label": "Covered by an existing DPA",
+     "values": [
+      "Yes",
+      "No"
+     ]
+    },
+    "Non_Standard_Terms__c": {
+     "type": "picklist",
+     "label": "Non-standard legal terms",
+     "values": [
+      "Yes",
+      "No"
+     ]
+    },
+    "Personal_Data__c": {
+     "type": "picklist",
+     "label": "Personal data",
+     "values": [
+      "Yes",
+      "No"
+     ]
+    },
+    "Side__c": {
+     "type": "picklist",
+     "label": "Side",
+     "values": [
+      "Sell",
+      "Buy"
+     ]
+    },
+    "Send_to_Docusign__c": {
+     "type": "boolean",
+     "label": "Send to Docusign"
+    }
+   },
+   "children": {
+    "SBQQ__WebAccounts__r": {
+     "object": "Account",
+     "field": "SBQQ__DefaultOpportunity__c"
+    },
+    "SBQQ__Contracts__r": {
+     "object": "Contract",
+     "field": "SBQQ__Opportunity__c"
+    },
+    "SBQQ__RenewedContracts__r": {
+     "object": "Contract",
+     "field": "SBQQ__RenewalOpportunity__c"
+    },
+    "OpportunityContactRoles": {
+     "object": "OpportunityContactRole",
+     "field": "OpportunityId"
+    },
+    "OpportunityLineItems": {
+     "object": "OpportunityLineItem",
+     "field": "OpportunityId"
+    },
+    "SBQQ__Quotes2__r": {
+     "object": "SBQQ__Quote__c",
+     "field": "SBQQ__Opportunity2__c"
+    }
+   }
+  },
+  "Account": {
+   "label": "Account",
+   "fields": {
+    "Id": {
+     "type": "id",
+     "label": "Account ID"
+    },
+    "IsDeleted": {
+     "type": "boolean",
+     "label": "Deleted"
+    },
+    "MasterRecordId": {
+     "type": "reference",
+     "label": "Master Record ID",
+     "relationshipName": "MasterRecord",
+     "referenceTo": [
+      "Account"
+     ]
+    },
+    "Name": {
+     "type": "string",
+     "label": "Account Name"
+    },
+    "Type": {
+     "type": "picklist",
+     "label": "Account Type",
+     "values": [
+      "Prospect",
+      "Customer - Direct",
+      "Customer - Channel",
+      "Channel Partner / Reseller",
+      "Installation Partner",
+      "Technology Partner",
+      "Other"
+     ]
+    },
+    "ParentId": {
+     "type": "reference",
+     "label": "Parent Account ID",
+     "relationshipName": "Parent",
+     "referenceTo": [
+      "Account"
+     ]
+    },
+    "BillingStreet": {
+     "type": "textarea",
+     "label": "Billing Street"
+    },
+    "BillingCity": {
+     "type": "string",
+     "label": "Billing City"
+    },
+    "BillingState": {
+     "type": "string",
+     "label": "Billing State/Province"
+    },
+    "BillingPostalCode": {
+     "type": "string",
+     "label": "Billing Zip/Postal Code"
+    },
+    "BillingCountry": {
+     "type": "string",
+     "label": "Billing Country"
+    },
+    "BillingStateCode": {
+     "type": "picklist",
+     "label": "Billing State/Province Code",
+     "values": [
+      "AC",
+      "AG",
+      "AG",
+      "05",
+      "02",
+      "AL",
+      "AL",
+      "AK",
+      "AB",
+      "AL",
+      "AP",
+      "AM",
+      "AN",
+      "AN",
+      "AP",
+      "34",
+      "23",
+      "AO",
+      "AR",
+      "AZ",
+      "AR",
+      "AR",
+      "AP",
+      "AS",
+      "AT",
+      "ACT",
+      "AV",
+      "BA",
+      "BC",
+      "BS",
+      "BA",
+      "BT",
+      "11",
+      "BL",
+      "BN",
+      "BG",
+      "BI",
+      "BR",
+      "BO",
+      "BZ",
+      "BS",
+      "BR",
+      "BC",
+      "CA",
+      "CA",
+      "CL",
+      "CM",
+      "CB",
+      "CI",
+      "CW",
+      "CE",
+      "CT",
+      "CZ",
+      "CN",
+      "CE",
+      "CH",
+      "CT",
+      "CS",
+      "12",
+      "CH",
+      "CH",
+      "50",
+      "CE",
+      "CO",
+      "CL",
+      "CO",
+      "CO",
+      "CT",
+      "CO",
+      "CS",
+      "CR",
+      "KR",
+      "CN",
+      "DN",
+      "DD",
+      "DE",
+      "DL",
+      "DC",
+      "DF",
+      "DL",
+      "D",
+      "DG",
+      "38",
+      "EN",
+      "ES",
+      "DF",
+      "FM",
+      "FE",
+      "FI",
+      "FL",
+      "FG",
+      "FC",
+      "FR",
+      "35",
+      "18",
+      "40",
+      "07",
+      "G",
+      "62",
+      "GE",
+      "GA",
+      "21",
+      "GA",
+      "GO",
+      "GO",
+      "GR",
+      "GT",
+      "44",
+      "45",
+      "GR",
+      "52",
+      "GJ",
+      "10",
+      "46",
+      "HR",
+      "HI",
+      "13",
+      "23",
+      "41",
+      "HG",
+      "HP",
+      "34",
+      "01",
+      "91",
+      "42",
+      "43",
+      "28",
+      "08",
+      "ID",
+      "IL",
+      "IM",
+      "IN",
+      "IA",
+      "IS",
+      "17",
+      "03",
+      "JA",
+      "JK",
+      "JH",
+      "32",
+      "36",
+      "22",
+      "37",
+      "46",
+      "14",
+      "KS",
+      "KA",
+      "KY",
+      "KL",
+      "KY",
+      "KE",
+      "KK",
+      "39",
+      "43",
+      "26",
+      "AQ",
+      "LD",
+      "LS",
+      "SP",
+      "LT",
+      "LE",
+      "LC",
+      "LM",
+      "21",
+      "LK",
+      "LI",
+      "LO",
+      "LD",
+      "LA",
+      "LH",
+      "LU",
+      "92",
+      "MC",
+      "MP",
+      "MH",
+      "ME",
+      "MN",
+      "MB",
+      "MN",
+      "MA",
+      "MD",
+      "MS",
+      "MA",
+      "MT",
+      "MT",
+      "MS",
+      "MO",
+      "MH",
+      "VS",
+      "ML",
+      "ME",
+      "ME",
+      "MI",
+      "MI",
+      "24",
+      "MI",
+      "MG",
+      "MN",
+      "MS",
+      "MO",
+      "04",
+      "45",
+      "MZ",
+      "MO",
+      "MN",
+      "MT",
+      "MB",
+      "MO",
+      "NL",
+      "20",
+      "42",
+      "NA",
+      "29",
+      "NA",
+      "NE",
+      "15",
+      "NV",
+      "NB",
+      "NL",
+      "NH",
+      "NJ",
+      "NM",
+      "NSW",
+      "NY",
+      "15",
+      "64",
+      "NC",
+      "ND",
+      "NT",
+      "NT",
+      "NO",
+      "NS",
+      "NL",
+      "NU",
+      "NU",
+      "OA",
+      "OR",
+      "OY",
+      "OG",
+      "OH",
+      "44",
+      "33",
+      "47",
+      "OK",
+      "OT",
+      "ON",
+      "OR",
+      "OR",
+      "27",
+      "PD",
+      "PA",
+      "PA",
+      "PB",
+      "PR",
+      "PR",
+      "PV",
+      "PA",
+      "PE",
+      "PG",
+      "PU",
+      "PE",
+      "PC",
+      "PI",
+      "PI",
+      "PT",
+      "PN",
+      "PZ",
+      "PO",
+      "PE",
+      "PY",
+      "PB",
+      "PB",
+      "63",
+      "QC",
+      "QLD",
+      "QE",
+      "QR",
+      "RG",
+      "RJ",
+      "RA",
+      "RC",
+      "RE",
+      "RI",
+      "RI",
+      "RN",
+      "RJ",
+      "RN",
+      "RS",
+      "RM",
+      "RO",
+      "RR",
+      "RN",
+      "RO",
+      "41",
+      "11",
+      "SA",
+      "SL",
+      "SC",
+      "SP",
+      "SK",
+      "SS",
+      "SV",
+      "SE",
+      "61",
+      "37",
+      "31",
+      "14",
+      "25",
+      "32",
+      "22",
+      "51",
+      "SI",
+      "SK",
+      "SI",
+      "SO",
+      "SO",
+      "SO",
+      "SA",
+      "SC",
+      "SD",
+      "SR",
+      "TB",
+      "71",
+      "TM",
+      "TN",
+      "TA",
+      "TAS",
+      "TG",
+      "TN",
+      "TE",
+      "TR",
+      "TX",
+      "12",
+      "TA",
+      "TL",
+      "TO",
+      "09",
+      "36",
+      "13",
+      "31",
+      "16",
+      "TP",
+      "TN",
+      "TV",
+      "TS",
+      "TR",
+      "TO",
+      "UD",
+      "UT",
+      "UT",
+      "UP",
+      "VA",
+      "VE",
+      "VE",
+      "VB",
+      "VC",
+      "VT",
+      "VR",
+      "VV",
+      "VI",
+      "VIC",
+      "VA",
+      "VT",
+      "30",
+      "WA",
+      "WD",
+      "WB",
+      "WA",
+      "WH",
+      "WV",
+      "WX",
+      "WW",
+      "WI",
+      "WY",
+      "65",
+      "54",
+      "06",
+      "35",
+      "19",
+      "YU",
+      "YT",
+      "53",
+      "ZA",
+      "33"
+     ]
+    },
+    "BillingCountryCode": {
+     "type": "picklist",
+     "label": "Billing Country Code",
+     "values": [
+      "AF",
+      "AX",
+      "AL",
+      "DZ",
+      "AD",
+      "AO",
+      "AI",
+      "AQ",
+      "AG",
+      "AR",
+      "AM",
+      "AW",
+      "AU",
+      "AT",
+      "AZ",
+      "BS",
+      "BH",
+      "BD",
+      "BB",
+      "BY",
+      "BE",
+      "BZ",
+      "BJ",
+      "BM",
+      "BT",
+      "BO",
+      "BQ",
+      "BA",
+      "BW",
+      "BV",
+      "BR",
+      "IO",
+      "BN",
+      "BG",
+      "BF",
+      "BI",
+      "KH",
+      "CM",
+      "CA",
+      "CV",
+      "KY",
+      "CF",
+      "TD",
+      "CL",
+      "CN",
+      "CX",
+      "CC",
+      "CO",
+      "KM",
+      "CG",
+      "CD",
+      "CK",
+      "CR",
+      "CI",
+      "HR",
+      "CW",
+      "CY",
+      "CZ",
+      "DK",
+      "DJ",
+      "DM",
+      "DO",
+      "EC",
+      "EG",
+      "SV",
+      "GQ",
+      "ER",
+      "EE",
+      "SZ",
+      "ET",
+      "FK",
+      "FO",
+      "FJ",
+      "FI",
+      "FR",
+      "GF",
+      "PF",
+      "TF",
+      "GA",
+      "GM",
+      "GE",
+      "DE",
+      "GH",
+      "GI",
+      "GR",
+      "GL",
+      "GD",
+      "GP",
+      "GT",
+      "GG",
+      "GN",
+      "GW",
+      "GY",
+      "HT",
+      "HM",
+      "VA",
+      "HN",
+      "HU",
+      "IS",
+      "IN",
+      "ID",
+      "IQ",
+      "IE",
+      "IM",
+      "IL",
+      "IT",
+      "JM",
+      "JP",
+      "JE",
+      "JO",
+      "KZ",
+      "KE",
+      "KI",
+      "KR",
+      "XK",
+      "KW",
+      "KG",
+      "LA",
+      "LV",
+      "LB",
+      "LS",
+      "LR",
+      "LY",
+      "LI",
+      "LT",
+      "LU",
+      "MO",
+      "MG",
+      "MW",
+      "MY",
+      "MV",
+      "ML",
+      "MT",
+      "MQ",
+      "MR",
+      "MU",
+      "YT",
+      "MX",
+      "MD",
+      "MC",
+      "MN",
+      "ME",
+      "MS",
+      "MA",
+      "MZ",
+      "MM",
+      "NA",
+      "NR",
+      "NP",
+      "NL",
+      "NC",
+      "NZ",
+      "NI",
+      "NE",
+      "NG",
+      "NU",
+      "NF",
+      "MK",
+      "NO",
+      "OM",
+      "PK",
+      "PS",
+      "PA",
+      "PG",
+      "PY",
+      "PE",
+      "PH",
+      "PN",
+      "PL",
+      "PT",
+      "QA",
+      "RE",
+      "RO",
+      "RU",
+      "RW",
+      "BL",
+      "SH",
+      "KN",
+      "LC",
+      "MF",
+      "PM",
+      "VC",
+      "WS",
+      "SM",
+      "ST",
+      "SA",
+      "SN",
+      "RS",
+      "SC",
+      "SL",
+      "SG",
+      "SX",
+      "SK",
+      "SI",
+      "SB",
+      "SO",
+      "ZA",
+      "GS",
+      "SS",
+      "ES",
+      "LK",
+      "SR",
+      "SJ",
+      "SE",
+      "CH",
+      "TW",
+      "TJ",
+      "TZ",
+      "TH",
+      "TL",
+      "TG",
+      "TK",
+      "TO",
+      "TT",
+      "TN",
+      "TR",
+      "TM",
+      "TC",
+      "TV",
+      "UG",
+      "UA",
+      "AE",
+      "GB",
+      "US",
+      "UY",
+      "UZ",
+      "VU",
+      "VE",
+      "VN",
+      "VG",
+      "WF",
+      "EH",
+      "YE",
+      "ZM",
+      "ZW"
+     ]
+    },
+    "BillingLatitude": {
+     "type": "double",
+     "label": "Billing Latitude",
+     "scale": 15
+    },
+    "BillingLongitude": {
+     "type": "double",
+     "label": "Billing Longitude",
+     "scale": 15
+    },
+    "BillingGeocodeAccuracy": {
+     "type": "picklist",
+     "label": "Billing Geocode Accuracy",
+     "values": [
+      "Address",
+      "NearAddress",
+      "Block",
+      "Street",
+      "ExtendedZip",
+      "Zip",
+      "Neighborhood",
+      "City",
+      "County",
+      "State",
+      "Unknown"
+     ]
+    },
+    "BillingAddress": {
+     "type": "address",
+     "label": "Billing Address"
+    },
+    "ShippingStreet": {
+     "type": "textarea",
+     "label": "Shipping Street"
+    },
+    "ShippingCity": {
+     "type": "string",
+     "label": "Shipping City"
+    },
+    "ShippingState": {
+     "type": "string",
+     "label": "Shipping State/Province"
+    },
+    "ShippingPostalCode": {
+     "type": "string",
+     "label": "Shipping Zip/Postal Code"
+    },
+    "ShippingCountry": {
+     "type": "string",
+     "label": "Shipping Country"
+    },
+    "ShippingStateCode": {
+     "type": "picklist",
+     "label": "Shipping State/Province Code",
+     "values": [
+      "AC",
+      "AG",
+      "AG",
+      "05",
+      "02",
+      "AL",
+      "AL",
+      "AK",
+      "AB",
+      "AL",
+      "AP",
+      "AM",
+      "AN",
+      "AN",
+      "AP",
+      "34",
+      "23",
+      "AO",
+      "AR",
+      "AZ",
+      "AR",
+      "AR",
+      "AP",
+      "AS",
+      "AT",
+      "ACT",
+      "AV",
+      "BA",
+      "BC",
+      "BS",
+      "BA",
+      "BT",
+      "11",
+      "BL",
+      "BN",
+      "BG",
+      "BI",
+      "BR",
+      "BO",
+      "BZ",
+      "BS",
+      "BR",
+      "BC",
+      "CA",
+      "CA",
+      "CL",
+      "CM",
+      "CB",
+      "CI",
+      "CW",
+      "CE",
+      "CT",
+      "CZ",
+      "CN",
+      "CE",
+      "CH",
+      "CT",
+      "CS",
+      "12",
+      "CH",
+      "CH",
+      "50",
+      "CE",
+      "CO",
+      "CL",
+      "CO",
+      "CO",
+      "CT",
+      "CO",
+      "CS",
+      "CR",
+      "KR",
+      "CN",
+      "DN",
+      "DD",
+      "DE",
+      "DL",
+      "DC",
+      "DF",
+      "DL",
+      "D",
+      "DG",
+      "38",
+      "EN",
+      "ES",
+      "DF",
+      "FM",
+      "FE",
+      "FI",
+      "FL",
+      "FG",
+      "FC",
+      "FR",
+      "35",
+      "18",
+      "40",
+      "07",
+      "G",
+      "62",
+      "GE",
+      "GA",
+      "21",
+      "GA",
+      "GO",
+      "GO",
+      "GR",
+      "GT",
+      "44",
+      "45",
+      "GR",
+      "52",
+      "GJ",
+      "10",
+      "46",
+      "HR",
+      "HI",
+      "13",
+      "23",
+      "41",
+      "HG",
+      "HP",
+      "34",
+      "01",
+      "91",
+      "42",
+      "43",
+      "28",
+      "08",
+      "ID",
+      "IL",
+      "IM",
+      "IN",
+      "IA",
+      "IS",
+      "17",
+      "03",
+      "JA",
+      "JK",
+      "JH",
+      "32",
+      "36",
+      "22",
+      "37",
+      "46",
+      "14",
+      "KS",
+      "KA",
+      "KY",
+      "KL",
+      "KY",
+      "KE",
+      "KK",
+      "39",
+      "43",
+      "26",
+      "AQ",
+      "LD",
+      "LS",
+      "SP",
+      "LT",
+      "LE",
+      "LC",
+      "LM",
+      "21",
+      "LK",
+      "LI",
+      "LO",
+      "LD",
+      "LA",
+      "LH",
+      "LU",
+      "92",
+      "MC",
+      "MP",
+      "MH",
+      "ME",
+      "MN",
+      "MB",
+      "MN",
+      "MA",
+      "MD",
+      "MS",
+      "MA",
+      "MT",
+      "MT",
+      "MS",
+      "MO",
+      "MH",
+      "VS",
+      "ML",
+      "ME",
+      "ME",
+      "MI",
+      "MI",
+      "24",
+      "MI",
+      "MG",
+      "MN",
+      "MS",
+      "MO",
+      "04",
+      "45",
+      "MZ",
+      "MO",
+      "MN",
+      "MT",
+      "MB",
+      "MO",
+      "NL",
+      "20",
+      "42",
+      "NA",
+      "29",
+      "NA",
+      "NE",
+      "15",
+      "NV",
+      "NB",
+      "NL",
+      "NH",
+      "NJ",
+      "NM",
+      "NSW",
+      "NY",
+      "15",
+      "64",
+      "NC",
+      "ND",
+      "NT",
+      "NT",
+      "NO",
+      "NS",
+      "NL",
+      "NU",
+      "NU",
+      "OA",
+      "OR",
+      "OY",
+      "OG",
+      "OH",
+      "44",
+      "33",
+      "47",
+      "OK",
+      "OT",
+      "ON",
+      "OR",
+      "OR",
+      "27",
+      "PD",
+      "PA",
+      "PA",
+      "PB",
+      "PR",
+      "PR",
+      "PV",
+      "PA",
+      "PE",
+      "PG",
+      "PU",
+      "PE",
+      "PC",
+      "PI",
+      "PI",
+      "PT",
+      "PN",
+      "PZ",
+      "PO",
+      "PE",
+      "PY",
+      "PB",
+      "PB",
+      "63",
+      "QC",
+      "QLD",
+      "QE",
+      "QR",
+      "RG",
+      "RJ",
+      "RA",
+      "RC",
+      "RE",
+      "RI",
+      "RI",
+      "RN",
+      "RJ",
+      "RN",
+      "RS",
+      "RM",
+      "RO",
+      "RR",
+      "RN",
+      "RO",
+      "41",
+      "11",
+      "SA",
+      "SL",
+      "SC",
+      "SP",
+      "SK",
+      "SS",
+      "SV",
+      "SE",
+      "61",
+      "37",
+      "31",
+      "14",
+      "25",
+      "32",
+      "22",
+      "51",
+      "SI",
+      "SK",
+      "SI",
+      "SO",
+      "SO",
+      "SO",
+      "SA",
+      "SC",
+      "SD",
+      "SR",
+      "TB",
+      "71",
+      "TM",
+      "TN",
+      "TA",
+      "TAS",
+      "TG",
+      "TN",
+      "TE",
+      "TR",
+      "TX",
+      "12",
+      "TA",
+      "TL",
+      "TO",
+      "09",
+      "36",
+      "13",
+      "31",
+      "16",
+      "TP",
+      "TN",
+      "TV",
+      "TS",
+      "TR",
+      "TO",
+      "UD",
+      "UT",
+      "UT",
+      "UP",
+      "VA",
+      "VE",
+      "VE",
+      "VB",
+      "VC",
+      "VT",
+      "VR",
+      "VV",
+      "VI",
+      "VIC",
+      "VA",
+      "VT",
+      "30",
+      "WA",
+      "WD",
+      "WB",
+      "WA",
+      "WH",
+      "WV",
+      "WX",
+      "WW",
+      "WI",
+      "WY",
+      "65",
+      "54",
+      "06",
+      "35",
+      "19",
+      "YU",
+      "YT",
+      "53",
+      "ZA",
+      "33"
+     ]
+    },
+    "ShippingCountryCode": {
+     "type": "picklist",
+     "label": "Shipping Country Code",
+     "values": [
+      "AF",
+      "AX",
+      "AL",
+      "DZ",
+      "AD",
+      "AO",
+      "AI",
+      "AQ",
+      "AG",
+      "AR",
+      "AM",
+      "AW",
+      "AU",
+      "AT",
+      "AZ",
+      "BS",
+      "BH",
+      "BD",
+      "BB",
+      "BY",
+      "BE",
+      "BZ",
+      "BJ",
+      "BM",
+      "BT",
+      "BO",
+      "BQ",
+      "BA",
+      "BW",
+      "BV",
+      "BR",
+      "IO",
+      "BN",
+      "BG",
+      "BF",
+      "BI",
+      "KH",
+      "CM",
+      "CA",
+      "CV",
+      "KY",
+      "CF",
+      "TD",
+      "CL",
+      "CN",
+      "CX",
+      "CC",
+      "CO",
+      "KM",
+      "CG",
+      "CD",
+      "CK",
+      "CR",
+      "CI",
+      "HR",
+      "CW",
+      "CY",
+      "CZ",
+      "DK",
+      "DJ",
+      "DM",
+      "DO",
+      "EC",
+      "EG",
+      "SV",
+      "GQ",
+      "ER",
+      "EE",
+      "SZ",
+      "ET",
+      "FK",
+      "FO",
+      "FJ",
+      "FI",
+      "FR",
+      "GF",
+      "PF",
+      "TF",
+      "GA",
+      "GM",
+      "GE",
+      "DE",
+      "GH",
+      "GI",
+      "GR",
+      "GL",
+      "GD",
+      "GP",
+      "GT",
+      "GG",
+      "GN",
+      "GW",
+      "GY",
+      "HT",
+      "HM",
+      "VA",
+      "HN",
+      "HU",
+      "IS",
+      "IN",
+      "ID",
+      "IQ",
+      "IE",
+      "IM",
+      "IL",
+      "IT",
+      "JM",
+      "JP",
+      "JE",
+      "JO",
+      "KZ",
+      "KE",
+      "KI",
+      "KR",
+      "XK",
+      "KW",
+      "KG",
+      "LA",
+      "LV",
+      "LB",
+      "LS",
+      "LR",
+      "LY",
+      "LI",
+      "LT",
+      "LU",
+      "MO",
+      "MG",
+      "MW",
+      "MY",
+      "MV",
+      "ML",
+      "MT",
+      "MQ",
+      "MR",
+      "MU",
+      "YT",
+      "MX",
+      "MD",
+      "MC",
+      "MN",
+      "ME",
+      "MS",
+      "MA",
+      "MZ",
+      "MM",
+      "NA",
+      "NR",
+      "NP",
+      "NL",
+      "NC",
+      "NZ",
+      "NI",
+      "NE",
+      "NG",
+      "NU",
+      "NF",
+      "MK",
+      "NO",
+      "OM",
+      "PK",
+      "PS",
+      "PA",
+      "PG",
+      "PY",
+      "PE",
+      "PH",
+      "PN",
+      "PL",
+      "PT",
+      "QA",
+      "RE",
+      "RO",
+      "RU",
+      "RW",
+      "BL",
+      "SH",
+      "KN",
+      "LC",
+      "MF",
+      "PM",
+      "VC",
+      "WS",
+      "SM",
+      "ST",
+      "SA",
+      "SN",
+      "RS",
+      "SC",
+      "SL",
+      "SG",
+      "SX",
+      "SK",
+      "SI",
+      "SB",
+      "SO",
+      "ZA",
+      "GS",
+      "SS",
+      "ES",
+      "LK",
+      "SR",
+      "SJ",
+      "SE",
+      "CH",
+      "TW",
+      "TJ",
+      "TZ",
+      "TH",
+      "TL",
+      "TG",
+      "TK",
+      "TO",
+      "TT",
+      "TN",
+      "TR",
+      "TM",
+      "TC",
+      "TV",
+      "UG",
+      "UA",
+      "AE",
+      "GB",
+      "US",
+      "UY",
+      "UZ",
+      "VU",
+      "VE",
+      "VN",
+      "VG",
+      "WF",
+      "EH",
+      "YE",
+      "ZM",
+      "ZW"
+     ]
+    },
+    "ShippingLatitude": {
+     "type": "double",
+     "label": "Shipping Latitude",
+     "scale": 15
+    },
+    "ShippingLongitude": {
+     "type": "double",
+     "label": "Shipping Longitude",
+     "scale": 15
+    },
+    "ShippingGeocodeAccuracy": {
+     "type": "picklist",
+     "label": "Shipping Geocode Accuracy",
+     "values": [
+      "Address",
+      "NearAddress",
+      "Block",
+      "Street",
+      "ExtendedZip",
+      "Zip",
+      "Neighborhood",
+      "City",
+      "County",
+      "State",
+      "Unknown"
+     ]
+    },
+    "ShippingAddress": {
+     "type": "address",
+     "label": "Shipping Address"
+    },
+    "Phone": {
+     "type": "phone",
+     "label": "Account Phone"
+    },
+    "Fax": {
+     "type": "phone",
+     "label": "Account Fax"
+    },
+    "AccountNumber": {
+     "type": "string",
+     "label": "Account Number"
+    },
+    "Website": {
+     "type": "url",
+     "label": "Website"
+    },
+    "PhotoUrl": {
+     "type": "url",
+     "label": "Photo URL"
+    },
+    "Sic": {
+     "type": "string",
+     "label": "SIC Code"
+    },
+    "Industry": {
+     "type": "picklist",
+     "label": "Industry",
+     "values": [
+      "Agriculture",
+      "Apparel",
+      "Banking",
+      "Biotechnology",
+      "Chemicals",
+      "Communications",
+      "Construction",
+      "Consulting",
+      "Education",
+      "Electronics",
+      "Energy",
+      "Engineering",
+      "Entertainment",
+      "Environmental",
+      "Finance",
+      "Food & Beverage",
+      "Government",
+      "Healthcare",
+      "Hospitality",
+      "Insurance",
+      "Machinery",
+      "Manufacturing",
+      "Media",
+      "Not For Profit",
+      "Recreation",
+      "Retail",
+      "Shipping",
+      "Technology",
+      "Telecommunications",
+      "Transportation",
+      "Utilities",
+      "Other"
+     ]
+    },
+    "AnnualRevenue": {
+     "type": "currency",
+     "label": "Annual Revenue",
+     "scale": 0
+    },
+    "NumberOfEmployees": {
+     "type": "int",
+     "label": "Employees"
+    },
+    "Ownership": {
+     "type": "picklist",
+     "label": "Ownership",
+     "values": [
+      "Public",
+      "Private",
+      "Subsidiary",
+      "Other"
+     ]
+    },
+    "TickerSymbol": {
+     "type": "string",
+     "label": "Ticker Symbol"
+    },
+    "Description": {
+     "type": "textarea",
+     "label": "Account Description"
+    },
+    "Rating": {
+     "type": "picklist",
+     "label": "Account Rating",
+     "values": [
+      "Hot",
+      "Warm",
+      "Cold"
+     ]
+    },
+    "Site": {
+     "type": "string",
+     "label": "Account Site"
+    },
+    "OwnerId": {
+     "type": "reference",
+     "label": "Owner ID",
+     "relationshipName": "Owner",
+     "referenceTo": [
+      "User"
+     ]
+    },
+    "CreatedDate": {
+     "type": "datetime",
+     "label": "Created Date"
+    },
+    "CreatedById": {
+     "type": "reference",
+     "label": "Created By ID",
+     "relationshipName": "CreatedBy",
+     "referenceTo": [
+      "User"
+     ]
+    },
+    "LastModifiedDate": {
+     "type": "datetime",
+     "label": "Last Modified Date"
+    },
+    "LastModifiedById": {
+     "type": "reference",
+     "label": "Last Modified By ID",
+     "relationshipName": "LastModifiedBy",
+     "referenceTo": [
+      "User"
+     ]
+    },
+    "SystemModstamp": {
+     "type": "datetime",
+     "label": "System Modstamp"
+    },
+    "LastActivityDate": {
+     "type": "date",
+     "label": "Last Activity"
+    },
+    "LastViewedDate": {
+     "type": "datetime",
+     "label": "Last Viewed Date"
+    },
+    "LastReferencedDate": {
+     "type": "datetime",
+     "label": "Last Referenced Date"
+    },
+    "Jigsaw": {
+     "type": "string",
+     "label": "Data.com Key"
+    },
+    "JigsawCompanyId": {
+     "type": "string",
+     "label": "Jigsaw Company ID"
+    },
+    "CleanStatus": {
+     "type": "picklist",
+     "label": "Clean Status",
+     "values": [
+      "Matched",
+      "Different",
+      "Acknowledged",
+      "NotFound",
+      "Inactive",
+      "Pending",
+      "SelectMatch",
+      "Skipped"
+     ]
+    },
+    "AccountSource": {
+     "type": "picklist",
+     "label": "Account Source",
+     "values": [
+      "Web",
+      "Phone Inquiry",
+      "Partner Referral",
+      "Purchased List",
+      "Other"
+     ]
+    },
+    "DunsNumber": {
+     "type": "string",
+     "label": "D-U-N-S Number"
+    },
+    "Tradestyle": {
+     "type": "string",
+     "label": "Tradestyle"
+    },
+    "NaicsCode": {
+     "type": "string",
+     "label": "NAICS Code"
+    },
+    "NaicsDesc": {
+     "type": "string",
+     "label": "NAICS Description"
+    },
+    "YearStarted": {
+     "type": "string",
+     "label": "Year Started"
+    },
+    "SicDesc": {
+     "type": "string",
+     "label": "SIC Description"
+    },
+    "DandbCompanyId": {
+     "type": "reference",
+     "label": "D&B Company ID",
+     "relationshipName": "DandbCompany",
+     "referenceTo": [
+      "DandBCompany"
+     ]
+    },
+    "OperatingHoursId": {
+     "type": "reference",
+     "label": "Operating Hour ID",
+     "relationshipName": "OperatingHours",
+     "referenceTo": [
+      "OperatingHours"
+     ]
+    },
+    "CustomerPriority__c": {
+     "type": "picklist",
+     "label": "Customer Priority",
+     "values": [
+      "High",
+      "Low",
+      "Medium"
+     ]
+    },
+    "SLA__c": {
+     "type": "picklist",
+     "label": "SLA",
+     "values": [
+      "Gold",
+      "Silver",
+      "Platinum",
+      "Bronze"
+     ]
+    },
+    "Active__c": {
+     "type": "picklist",
+     "label": "Active",
+     "values": [
+      "No",
+      "Yes"
+     ]
+    },
+    "NumberofLocations__c": {
+     "type": "double",
+     "label": "Number of Locations",
+     "scale": 0
+    },
+    "UpsellOpportunity__c": {
+     "type": "picklist",
+     "label": "Upsell Opportunity",
+     "values": [
+      "Maybe",
+      "No",
+      "Yes"
+     ]
+    },
+    "SLASerialNumber__c": {
+     "type": "string",
+     "label": "SLA Serial Number"
+    },
+    "SLAExpirationDate__c": {
+     "type": "date",
+     "label": "SLA Expiration Date"
+    },
+    "Region__c": {
+     "type": "picklist",
+     "label": "Region",
+     "values": [
+      "US East",
+      "US Central & West",
+      "UK & Europe"
+     ]
+    },
+    "SBQQ__AssetQuantitiesCombined__c": {
+     "type": "boolean",
+     "label": "Combine Asset Quantities"
+    },
+    "SBQQ__CoTermedContractsCombined__c": {
+     "type": "boolean",
+     "label": "Combine Co-Termed Contracts"
+    },
+    "SBQQ__ContractCoTermination__c": {
+     "type": "picklist",
+     "label": "Contract Co-Termination",
+     "values": [
+      "Never",
+      "Always",
+      "Prompt"
+     ]
+    },
+    "SBQQ__DefaultOpportunity__c": {
+     "type": "reference",
+     "label": "Default Opportunity",
+     "relationshipName": "SBQQ__DefaultOpportunity__r",
+     "referenceTo": [
+      "Opportunity"
+     ]
+    },
+    "SBQQ__IgnoreParentContractedPrices__c": {
+     "type": "boolean",
+     "label": "Ignore Parent Contracted Prices"
+    },
+    "SBQQ__PreserveBundle__c": {
+     "type": "boolean",
+     "label": "Preserve Bundle Structure"
+    },
+    "SBQQ__PriceHoldEnd__c": {
+     "type": "date",
+     "label": "Price Hold End"
+    },
+    "SBQQ__RenewalModel__c": {
+     "type": "picklist",
+     "label": "Renewal Model",
+     "values": [
+      "Asset Based",
+      "Contract Based"
+     ]
+    },
+    "SBQQ__RenewalPricingMethod__c": {
+     "type": "picklist",
+     "label": "Renewal Pricing Method",
+     "values": [
+      "Same",
+      "List",
+      "Uplift"
+     ]
+    },
+    "SBQQ__TaxExempt__c": {
+     "type": "picklist",
+     "label": "Tax-Exempt",
+     "values": [
+      "No",
+      "Yes"
+     ]
+    },
+    "SBQQ__CoTerminationEvent__c": {
+     "type": "picklist",
+     "label": "Co-Termination Event",
+     "values": [
+      "Add-on",
+      "Renewal"
+     ]
+    },
+    "Tier__c": {
+     "type": "picklist",
+     "label": "Tier",
+     "values": [
+      "Strategic",
+      "Enterprise",
+      "Mid-market"
+     ]
+    },
+    "DPA_In_Place__c": {
+     "type": "picklist",
+     "label": "DPA in place",
+     "values": [
+      "Yes",
+      "No"
+     ]
+    },
+    "Fontara_Entity__c": {
+     "type": "picklist",
+     "label": "Fontara entity",
+     "values": [
+      "Fontara, Inc.",
+      "Fontara UK Ltd",
+      "Fontara Europe Ltd"
+     ]
+    },
+    "Legal_Entity_Type__c": {
+     "type": "string",
+     "label": "Legal entity type"
+    },
+    "MSA_Date__c": {
+     "type": "date",
+     "label": "MSA date"
+    }
+   },
+   "children": {
+    "ChildAccounts": {
+     "object": "Account",
+     "field": "ParentId"
+    },
+    "Cases": {
+     "object": "Case",
+     "field": "AccountId"
+    },
+    "Contacts": {
+     "object": "Contact",
+     "field": "AccountId"
+    },
+    "Contracts": {
+     "object": "Contract",
+     "field": "AccountId"
+    },
+    "Opportunities": {
+     "object": "Opportunity",
+     "field": "AccountId"
+    },
+    "SBQQ__Quotes__r": {
+     "object": "SBQQ__Quote__c",
+     "field": "SBQQ__Account__c"
+    },
+    "SBQQ__DistributorQuotes__r": {
+     "object": "SBQQ__Quote__c",
+     "field": "SBQQ__Distributor__c"
+    },
+    "SBQQ__PartnerQuotes__r": {
+     "object": "SBQQ__Quote__c",
+     "field": "SBQQ__Partner__c"
+    },
+    "Users": {
+     "object": "User",
+     "field": "AccountId"
+    }
+   }
+  },
+  "OpportunityLineItem": {
+   "label": "Opportunity Product",
+   "fields": {
+    "Id": {
+     "type": "id",
+     "label": "Line Item ID"
+    },
+    "OpportunityId": {
+     "type": "reference",
+     "label": "Opportunity ID",
+     "relationshipName": "Opportunity",
+     "referenceTo": [
+      "Opportunity"
+     ]
+    },
+    "SortOrder": {
+     "type": "int",
+     "label": "Sort Order"
+    },
+    "PricebookEntryId": {
+     "type": "reference",
+     "label": "Price Book Entry ID",
+     "relationshipName": "PricebookEntry",
+     "referenceTo": [
+      "PricebookEntry"
+     ]
+    },
+    "Product2Id": {
+     "type": "reference",
+     "label": "Product ID",
+     "relationshipName": "Product2",
+     "referenceTo": [
+      "Product2"
+     ]
+    },
+    "ProductCode": {
+     "type": "string",
+     "label": "Product Code"
+    },
+    "Name": {
+     "type": "string",
+     "label": "Opportunity Product Name"
+    },
+    "Quantity": {
+     "type": "double",
+     "label": "Quantity",
+     "scale": 2
+    },
+    "TotalPrice": {
+     "type": "currency",
+     "label": "Total Price",
+     "scale": 2
+    },
+    "UnitPrice": {
+     "type": "currency",
+     "label": "Sales Price",
+     "scale": 2
+    },
+    "ListPrice": {
+     "type": "currency",
+     "label": "List Price",
+     "scale": 2
+    },
+    "ServiceDate": {
+     "type": "date",
+     "label": "Date"
+    },
+    "Description": {
+     "type": "string",
+     "label": "Line Description"
+    },
+    "CreatedDate": {
+     "type": "datetime",
+     "label": "Created Date"
+    },
+    "CreatedById": {
+     "type": "reference",
+     "label": "Created By ID",
+     "relationshipName": "CreatedBy",
+     "referenceTo": [
+      "User"
+     ]
+    },
+    "LastModifiedDate": {
+     "type": "datetime",
+     "label": "Last Modified Date"
+    },
+    "LastModifiedById": {
+     "type": "reference",
+     "label": "Last Modified By ID",
+     "relationshipName": "LastModifiedBy",
+     "referenceTo": [
+      "User"
+     ]
+    },
+    "SystemModstamp": {
+     "type": "datetime",
+     "label": "System Modstamp"
+    },
+    "IsDeleted": {
+     "type": "boolean",
+     "label": "Deleted"
+    },
+    "LastViewedDate": {
+     "type": "datetime",
+     "label": "Last Viewed Date"
+    },
+    "LastReferencedDate": {
+     "type": "datetime",
+     "label": "Last Referenced Date"
+    },
+    "SBQQ__ParentID__c": {
+     "type": "string",
+     "label": "Parent ID"
+    },
+    "SBQQ__QuoteLine__c": {
+     "type": "reference",
+     "label": "Quote Line",
+     "relationshipName": "SBQQ__QuoteLine__r",
+     "referenceTo": [
+      "SBQQ__QuoteLine__c"
+     ]
+    },
+    "SBQQ__SubscriptionType__c": {
+     "type": "picklist",
+     "label": "Subscription Type",
+     "values": [
+      "Renewable",
+      "One-time",
+      "Renewable/Evergreen",
+      "Evergreen"
+     ]
+    }
+   },
+   "children": {}
+  },
+  "Product2": {
+   "label": "Product",
+   "fields": {
+    "Id": {
+     "type": "id",
+     "label": "Product ID"
+    },
+    "Name": {
+     "type": "string",
+     "label": "Product Name"
+    },
+    "ProductCode": {
+     "type": "string",
+     "label": "Product Code"
+    },
+    "Description": {
+     "type": "textarea",
+     "label": "Product Description"
+    },
+    "IsActive": {
+     "type": "boolean",
+     "label": "Active"
+    },
+    "CreatedDate": {
+     "type": "datetime",
+     "label": "Created Date"
+    },
+    "CreatedById": {
+     "type": "reference",
+     "label": "Created By ID",
+     "relationshipName": "CreatedBy",
+     "referenceTo": [
+      "User"
+     ]
+    },
+    "LastModifiedDate": {
+     "type": "datetime",
+     "label": "Last Modified Date"
+    },
+    "LastModifiedById": {
+     "type": "reference",
+     "label": "Last Modified By ID",
+     "relationshipName": "LastModifiedBy",
+     "referenceTo": [
+      "User"
+     ]
+    },
+    "SystemModstamp": {
+     "type": "datetime",
+     "label": "System Modstamp"
+    },
+    "Family": {
+     "type": "picklist",
+     "label": "Product Family",
+     "values": [
+      "None"
+     ]
+    },
+    "ExternalDataSourceId": {
+     "type": "reference",
+     "label": "External Data Source ID"
+    },
+    "ExternalId": {
+     "type": "string",
+     "label": "External ID"
+    },
+    "DisplayUrl": {
+     "type": "url",
+     "label": "Display URL"
+    },
+    "QuantityUnitOfMeasure": {
+     "type": "picklist",
+     "label": "Quantity Unit Of Measure",
+     "values": [
+      "Each"
+     ]
+    },
+    "IsDeleted": {
+     "type": "boolean",
+     "label": "Deleted"
+    },
+    "IsArchived": {
+     "type": "boolean",
+     "label": "Archived"
+    },
+    "LastViewedDate": {
+     "type": "datetime",
+     "label": "Last Viewed Date"
+    },
+    "LastReferencedDate": {
+     "type": "datetime",
+     "label": "Last Referenced Date"
+    },
+    "StockKeepingUnit": {
+     "type": "string",
+     "label": "Product SKU"
+    },
+    "Type": {
+     "type": "picklist",
+     "label": "Product Type",
+     "values": [
+      "Base",
+      "Bundle",
+      "Set"
+     ]
+    },
+    "ProductClass": {
+     "type": "picklist",
+     "label": "Product Class",
+     "values": [
+      "Simple",
+      "VariationParent",
+      "Variation",
+      "Bundle",
+      "Set"
+     ]
+    },
+    "SBQQ__AssetAmendmentBehavior__c": {
+     "type": "picklist",
+     "label": "Asset Amendment Behavior",
+     "values": [
+      "Default",
+      "Allow Refund"
+     ]
+    },
+    "SBQQ__AssetConversion__c": {
+     "type": "picklist",
+     "label": "Asset Conversion",
+     "values": [
+      "One per quote line",
+      "One per unit"
+     ]
+    },
+    "SBQQ__BatchQuantity__c": {
+     "type": "double",
+     "label": "Batch Quantity",
+     "scale": 2
+    },
+    "SBQQ__BillingFrequency__c": {
+     "type": "picklist",
+     "label": "Billing Frequency",
+     "values": [
+      "Monthly",
+      "Quarterly",
+      "Semiannual",
+      "Annual",
+      "Invoice Plan"
+     ]
+    },
+    "SBQQ__BillingType__c": {
+     "type": "picklist",
+     "label": "Billing Type",
+     "values": [
+      "Advance",
+      "Arrears"
+     ]
+    },
+    "SBQQ__BlockPricingField__c": {
+     "type": "picklist",
+     "label": "Block Pricing Field",
+     "values": [
+      "Quantity"
+     ]
+    },
+    "SBQQ__ChargeType__c": {
+     "type": "picklist",
+     "label": "Charge Type",
+     "values": [
+      "One-Time",
+      "Recurring",
+      "Usage"
+     ]
+    },
+    "SBQQ__Component__c": {
+     "type": "boolean",
+     "label": "Component"
+    },
+    "SBQQ__CompoundDiscountRate__c": {
+     "type": "percent",
+     "label": "Compound Discount (%)",
+     "scale": 3
+    },
+    "SBQQ__ConfigurationFieldSet__c": {
+     "type": "picklist",
+     "label": "Configuration Field Set",
+     "values": [
+      "OptionConfiguration"
+     ]
+    },
+    "SBQQ__ConfigurationFields__c": {
+     "type": "textarea",
+     "label": "Configuration Fields"
+    },
+    "SBQQ__ConfigurationFormTitle__c": {
+     "type": "string",
+     "label": "Configuration Form Title"
+    },
+    "SBQQ__ConfigurationType__c": {
+     "type": "picklist",
+     "label": "Configuration Type",
+     "values": [
+      "Required",
+      "Allowed",
+      "Disabled"
+     ]
+    },
+    "SBQQ__ConfigurationValidator__c": {
+     "type": "textarea",
+     "label": "Configuration Validator"
+    },
+    "SBQQ__ConfiguredCodePattern__c": {
+     "type": "string",
+     "label": "Configured Code Pattern"
+    },
+    "SBQQ__ConfiguredDescriptionPattern__c": {
+     "type": "textarea",
+     "label": "Configured Description Pattern"
+    },
+    "SBQQ__CostEditable__c": {
+     "type": "boolean",
+     "label": "Cost Editable"
+    },
+    "SBQQ__CostSchedule__c": {
+     "type": "reference",
+     "label": "Cost Schedule",
+     "relationshipName": "SBQQ__CostSchedule__r",
+     "referenceTo": [
+      "SBQQ__DiscountSchedule__c"
+     ]
+    },
+    "SBQQ__CustomConfigurationPage__c": {
+     "type": "string",
+     "label": "Custom Configuration Page"
+    },
+    "SBQQ__CustomConfigurationRequired__c": {
+     "type": "boolean",
+     "label": "Custom Configuration Required"
+    },
+    "SBQQ__CustomerCommunityAvailability__c": {
+     "type": "picklist",
+     "label": "Customer Community Availability",
+     "values": [
+      "Only when already owned",
+      "Always",
+      "Never"
+     ]
+    },
+    "SBQQ__DefaultPricingTable__c": {
+     "type": "picklist",
+     "label": "Default Pricing Table",
+     "values": [
+      "Segmented",
+      "Standard"
+     ]
+    },
+    "SBQQ__DefaultQuantity__c": {
+     "type": "double",
+     "label": "Default Quantity",
+     "scale": 5
+    },
+    "SBQQ__DescriptionLocked__c": {
+     "type": "boolean",
+     "label": "Lock Description"
+    },
+    "SBQQ__DiscountCategory__c": {
+     "type": "reference",
+     "label": "Discount Category",
+     "relationshipName": "SBQQ__DiscountCategory__r",
+     "referenceTo": [
+      "SBQQ__DiscountCategory__c"
+     ]
+    },
+    "SBQQ__DiscountSchedule__c": {
+     "type": "reference",
+     "label": "Discount Schedule",
+     "relationshipName": "SBQQ__DiscountSchedule__r",
+     "referenceTo": [
+      "SBQQ__DiscountSchedule__c"
+     ]
+    },
+    "SBQQ__DynamicPricingConstraint__c": {
+     "type": "picklist",
+     "label": "Percent Of Total Constraint",
+     "values": [
+      "List price is minimum",
+      "List price is maximum"
+     ]
+    },
+    "SBQQ__EnableLargeConfiguration__c": {
+     "type": "boolean",
+     "label": "Enable Large Configuration"
+    },
+    "SBQQ__ExcludeFromMaintenance__c": {
+     "type": "boolean",
+     "label": "Exclude From Percent Of Total"
+    },
+    "SBQQ__ExcludeFromOpportunity__c": {
+     "type": "boolean",
+     "label": "Exclude From Opportunity"
+    },
+    "SBQQ__ExternallyConfigurable__c": {
+     "type": "boolean",
+     "label": "Externally Configurable"
+    },
+    "SBQQ__GenerateContractedPrice__c": {
+     "type": "picklist",
+     "label": "Generate Contracted Price",
+     "values": [
+      "Price",
+      "Discount Schedule",
+      "Do Not Generate"
+     ]
+    },
+    "SBQQ__HasConfigurationAttributes__c": {
+     "type": "boolean",
+     "label": "Has Configuration Attributes"
+    },
+    "SBQQ__HasConsumptionSchedule__c": {
+     "type": "boolean",
+     "label": "Has Consumption Schedules"
+    },
+    "SBQQ__Hidden__c": {
+     "type": "boolean",
+     "label": "Hidden"
+    },
+    "SBQQ__HidePriceInSearchResults__c": {
+     "type": "boolean",
+     "label": "Hide Price in Search Results"
+    },
+    "SBQQ__IncludeInMaintenance__c": {
+     "type": "boolean",
+     "label": "Include In Percent Of Total"
+    },
+    "SBQQ__NewQuoteGroup__c": {
+     "type": "boolean",
+     "label": "New Quote Group"
+    },
+    "SBQQ__NonDiscountable__c": {
+     "type": "boolean",
+     "label": "Non Discountable"
+    },
+    "SBQQ__NonPartnerDiscountable__c": {
+     "type": "boolean",
+     "label": "Non Partner Discountable"
+    },
+    "SBQQ__OptionLayout__c": {
+     "type": "picklist",
+     "label": "Option Layout",
+     "values": [
+      "Sections",
+      "Tabs",
+      "Wizard"
+     ]
+    },
+    "SBQQ__OptionSelectionMethod__c": {
+     "type": "picklist",
+     "label": "Option Selection Method",
+     "values": [
+      "Click",
+      "Add"
+     ]
+    },
+    "SBQQ__Optional__c": {
+     "type": "boolean",
+     "label": "Optional"
+    },
+    "SBQQ__PriceEditable__c": {
+     "type": "boolean",
+     "label": "Price Editable"
+    },
+    "SBQQ__PricingGuidance__c": {
+     "type": "reference",
+     "label": "Pricing Guidance",
+     "relationshipName": "SBQQ__PricingGuidance__r",
+     "referenceTo": [
+      "SBQQ__PricingGuidance__c"
+     ]
+    },
+    "SBQQ__PricingMethodEditable__c": {
+     "type": "boolean",
+     "label": "Pricing Method Editable"
+    },
+    "SBQQ__PricingMethod__c": {
+     "type": "picklist",
+     "label": "Pricing Method",
+     "values": [
+      "List",
+      "Cost",
+      "Block",
+      "Percent Of Total"
+     ]
+    },
+    "SBQQ__ProductPictureID__c": {
+     "type": "string",
+     "label": "Product Picture Id"
+    },
+    "SBQQ__QuantityEditable__c": {
+     "type": "boolean",
+     "label": "Quantity Editable"
+    },
+    "SBQQ__QuantityScale__c": {
+     "type": "double",
+     "label": "Quantity Scale",
+     "scale": 0
+    },
+    "SBQQ__ReconfigurationDisabled__c": {
+     "type": "boolean",
+     "label": "Disable Reconfiguration"
+    },
+    "SBQQ__RenewalProduct__c": {
+     "type": "reference",
+     "label": "Renewal Product",
+     "relationshipName": "SBQQ__RenewalProduct__r",
+     "referenceTo": [
+      "Product2"
+     ]
+    },
+    "SBQQ__SortOrder__c": {
+     "type": "double",
+     "label": "Sort Order",
+     "scale": 0
+    },
+    "SBQQ__Specifications__c": {
+     "type": "textarea",
+     "label": "Specifications"
+    },
+    "SBQQ__SubscriptionBase__c": {
+     "type": "picklist",
+     "label": "Percent Of Total Base",
+     "values": [
+      "List",
+      "Regular",
+      "Customer",
+      "Net"
+     ]
+    },
+    "SBQQ__SubscriptionCategory__c": {
+     "type": "picklist",
+     "label": "Percent Of Total Category",
+     "values": [
+      "Hardware",
+      "Software"
+     ]
+    },
+    "SBQQ__SubscriptionPercent__c": {
+     "type": "percent",
+     "label": "Percent Of Total (%)",
+     "scale": 3
+    },
+    "SBQQ__SubscriptionPricing__c": {
+     "type": "picklist",
+     "label": "Subscription Pricing",
+     "values": [
+      "Fixed Price",
+      "Percent Of Total"
+     ]
+    },
+    "SBQQ__SubscriptionTarget__c": {
+     "type": "reference",
+     "label": "Percent Of Total Target",
+     "relationshipName": "SBQQ__SubscriptionTarget__r",
+     "referenceTo": [
+      "Product2"
+     ]
+    },
+    "SBQQ__SubscriptionTerm__c": {
+     "type": "double",
+     "label": "Subscription Term",
+     "scale": 0
+    },
+    "SBQQ__SubscriptionType__c": {
+     "type": "picklist",
+     "label": "Subscription Type",
+     "values": [
+      "Renewable",
+      "One-time",
+      "Renewable/Evergreen",
+      "Evergreen"
+     ]
+    },
+    "SBQQ__TaxCode__c": {
+     "type": "string",
+     "label": "Tax code"
+    },
+    "SBQQ__Taxable__c": {
+     "type": "boolean",
+     "label": "Taxable"
+    },
+    "SBQQ__TermDiscountLevel__c": {
+     "type": "picklist",
+     "label": "Term Discount Level",
+     "values": [
+      "Line",
+      "Group",
+      "Quote"
+     ]
+    },
+    "SBQQ__TermDiscountSchedule__c": {
+     "type": "reference",
+     "label": "Term Discount Schedule",
+     "relationshipName": "SBQQ__TermDiscountSchedule__r",
+     "referenceTo": [
+      "SBQQ__DiscountSchedule__c"
+     ]
+    },
+    "SBQQ__UpgradeCredit__c": {
+     "type": "reference",
+     "label": "Upgrade Credit",
+     "relationshipName": "SBQQ__UpgradeCredit__r",
+     "referenceTo": [
+      "Product2"
+     ]
+    },
+    "SBQQ__UpgradeRatio__c": {
+     "type": "double",
+     "label": "Upgrade Ratio",
+     "scale": 3
+    },
+    "SBQQ__UpgradeSource__c": {
+     "type": "reference",
+     "label": "Upgrade Source",
+     "relationshipName": "SBQQ__UpgradeSource__r",
+     "referenceTo": [
+      "Product2"
+     ]
+    },
+    "SBQQ__UpgradeTarget__c": {
+     "type": "reference",
+     "label": "Upgrade Target",
+     "relationshipName": "SBQQ__UpgradeTarget__r",
+     "referenceTo": [
+      "Product2"
+     ]
+    },
+    "SBQQ__ConfigurationEvent__c": {
+     "type": "picklist",
+     "label": "Configuration Event",
+     "values": [
+      "Always",
+      "Add",
+      "Edit"
+     ]
+    }
+   },
+   "children": {
+    "SBQQ__OriginalProducts__r": {
+     "object": "Product2",
+     "field": "SBQQ__RenewalProduct__c"
+    },
+    "SBQQ__SubscriptionTargetingProducts__r": {
+     "object": "Product2",
+     "field": "SBQQ__SubscriptionTarget__c"
+    },
+    "SBQQ__CreditedProducts__r": {
+     "object": "Product2",
+     "field": "SBQQ__UpgradeCredit__c"
+    },
+    "SBQQ__TargetUpgrades__r": {
+     "object": "Product2",
+     "field": "SBQQ__UpgradeSource__c"
+    },
+    "SBQQ__SourceUpgrades__r": {
+     "object": "Product2",
+     "field": "SBQQ__UpgradeTarget__c"
+    },
+    "SBQQ__R00N70000001lXB6EAM__r": {
+     "object": "SBQQ__QuoteLine__c",
+     "field": "SBQQ__Product__c"
+    }
+   }
+  },
+  "User": {
+   "label": "User",
+   "fields": {
+    "Id": {
+     "type": "id",
+     "label": "User ID"
+    },
+    "Username": {
+     "type": "string",
+     "label": "Username"
+    },
+    "LastName": {
+     "type": "string",
+     "label": "Last Name"
+    },
+    "FirstName": {
+     "type": "string",
+     "label": "First Name"
+    },
+    "Name": {
+     "type": "string",
+     "label": "Full Name"
+    },
+    "CompanyName": {
+     "type": "string",
+     "label": "Company Name"
+    },
+    "Division": {
+     "type": "string",
+     "label": "Division"
+    },
+    "Department": {
+     "type": "string",
+     "label": "Department"
+    },
+    "Title": {
+     "type": "string",
+     "label": "Title"
+    },
+    "Street": {
+     "type": "textarea",
+     "label": "Street"
+    },
+    "City": {
+     "type": "string",
+     "label": "City"
+    },
+    "State": {
+     "type": "string",
+     "label": "State/Province"
+    },
+    "PostalCode": {
+     "type": "string",
+     "label": "Zip/Postal Code"
+    },
+    "Country": {
+     "type": "string",
+     "label": "Country"
+    },
+    "StateCode": {
+     "type": "picklist",
+     "label": "State/Province Code",
+     "values": [
+      "AC",
+      "AG",
+      "AG",
+      "05",
+      "02",
+      "AL",
+      "AL",
+      "AK",
+      "AB",
+      "AL",
+      "AP",
+      "AM",
+      "AN",
+      "AN",
+      "AP",
+      "34",
+      "23",
+      "AO",
+      "AR",
+      "AZ",
+      "AR",
+      "AR",
+      "AP",
+      "AS",
+      "AT",
+      "ACT",
+      "AV",
+      "BA",
+      "BC",
+      "BS",
+      "BA",
+      "BT",
+      "11",
+      "BL",
+      "BN",
+      "BG",
+      "BI",
+      "BR",
+      "BO",
+      "BZ",
+      "BS",
+      "BR",
+      "BC",
+      "CA",
+      "CA",
+      "CL",
+      "CM",
+      "CB",
+      "CI",
+      "CW",
+      "CE",
+      "CT",
+      "CZ",
+      "CN",
+      "CE",
+      "CH",
+      "CT",
+      "CS",
+      "12",
+      "CH",
+      "CH",
+      "50",
+      "CE",
+      "CO",
+      "CL",
+      "CO",
+      "CO",
+      "CT",
+      "CO",
+      "CS",
+      "CR",
+      "KR",
+      "CN",
+      "DN",
+      "DD",
+      "DE",
+      "DL",
+      "DC",
+      "DF",
+      "DL",
+      "D",
+      "DG",
+      "38",
+      "EN",
+      "ES",
+      "DF",
+      "FM",
+      "FE",
+      "FI",
+      "FL",
+      "FG",
+      "FC",
+      "FR",
+      "35",
+      "18",
+      "40",
+      "07",
+      "G",
+      "62",
+      "GE",
+      "GA",
+      "21",
+      "GA",
+      "GO",
+      "GO",
+      "GR",
+      "GT",
+      "44",
+      "45",
+      "GR",
+      "52",
+      "GJ",
+      "10",
+      "46",
+      "HR",
+      "HI",
+      "13",
+      "23",
+      "41",
+      "HG",
+      "HP",
+      "34",
+      "01",
+      "91",
+      "42",
+      "43",
+      "28",
+      "08",
+      "ID",
+      "IL",
+      "IM",
+      "IN",
+      "IA",
+      "IS",
+      "17",
+      "03",
+      "JA",
+      "JK",
+      "JH",
+      "32",
+      "36",
+      "22",
+      "37",
+      "46",
+      "14",
+      "KS",
+      "KA",
+      "KY",
+      "KL",
+      "KY",
+      "KE",
+      "KK",
+      "39",
+      "43",
+      "26",
+      "AQ",
+      "LD",
+      "LS",
+      "SP",
+      "LT",
+      "LE",
+      "LC",
+      "LM",
+      "21",
+      "LK",
+      "LI",
+      "LO",
+      "LD",
+      "LA",
+      "LH",
+      "LU",
+      "92",
+      "MC",
+      "MP",
+      "MH",
+      "ME",
+      "MN",
+      "MB",
+      "MN",
+      "MA",
+      "MD",
+      "MS",
+      "MA",
+      "MT",
+      "MT",
+      "MS",
+      "MO",
+      "MH",
+      "VS",
+      "ML",
+      "ME",
+      "ME",
+      "MI",
+      "MI",
+      "24",
+      "MI",
+      "MG",
+      "MN",
+      "MS",
+      "MO",
+      "04",
+      "45",
+      "MZ",
+      "MO",
+      "MN",
+      "MT",
+      "MB",
+      "MO",
+      "NL",
+      "20",
+      "42",
+      "NA",
+      "29",
+      "NA",
+      "NE",
+      "15",
+      "NV",
+      "NB",
+      "NL",
+      "NH",
+      "NJ",
+      "NM",
+      "NSW",
+      "NY",
+      "15",
+      "64",
+      "NC",
+      "ND",
+      "NT",
+      "NT",
+      "NO",
+      "NS",
+      "NL",
+      "NU",
+      "NU",
+      "OA",
+      "OR",
+      "OY",
+      "OG",
+      "OH",
+      "44",
+      "33",
+      "47",
+      "OK",
+      "OT",
+      "ON",
+      "OR",
+      "OR",
+      "27",
+      "PD",
+      "PA",
+      "PA",
+      "PB",
+      "PR",
+      "PR",
+      "PV",
+      "PA",
+      "PE",
+      "PG",
+      "PU",
+      "PE",
+      "PC",
+      "PI",
+      "PI",
+      "PT",
+      "PN",
+      "PZ",
+      "PO",
+      "PE",
+      "PY",
+      "PB",
+      "PB",
+      "63",
+      "QC",
+      "QLD",
+      "QE",
+      "QR",
+      "RG",
+      "RJ",
+      "RA",
+      "RC",
+      "RE",
+      "RI",
+      "RI",
+      "RN",
+      "RJ",
+      "RN",
+      "RS",
+      "RM",
+      "RO",
+      "RR",
+      "RN",
+      "RO",
+      "41",
+      "11",
+      "SA",
+      "SL",
+      "SC",
+      "SP",
+      "SK",
+      "SS",
+      "SV",
+      "SE",
+      "61",
+      "37",
+      "31",
+      "14",
+      "25",
+      "32",
+      "22",
+      "51",
+      "SI",
+      "SK",
+      "SI",
+      "SO",
+      "SO",
+      "SO",
+      "SA",
+      "SC",
+      "SD",
+      "SR",
+      "TB",
+      "71",
+      "TM",
+      "TN",
+      "TA",
+      "TAS",
+      "TG",
+      "TN",
+      "TE",
+      "TR",
+      "TX",
+      "12",
+      "TA",
+      "TL",
+      "TO",
+      "09",
+      "36",
+      "13",
+      "31",
+      "16",
+      "TP",
+      "TN",
+      "TV",
+      "TS",
+      "TR",
+      "TO",
+      "UD",
+      "UT",
+      "UT",
+      "UP",
+      "VA",
+      "VE",
+      "VE",
+      "VB",
+      "VC",
+      "VT",
+      "VR",
+      "VV",
+      "VI",
+      "VIC",
+      "VA",
+      "VT",
+      "30",
+      "WA",
+      "WD",
+      "WB",
+      "WA",
+      "WH",
+      "WV",
+      "WX",
+      "WW",
+      "WI",
+      "WY",
+      "65",
+      "54",
+      "06",
+      "35",
+      "19",
+      "YU",
+      "YT",
+      "53",
+      "ZA",
+      "33"
+     ]
+    },
+    "CountryCode": {
+     "type": "picklist",
+     "label": "Country Code",
+     "values": [
+      "AF",
+      "AX",
+      "AL",
+      "DZ",
+      "AD",
+      "AO",
+      "AI",
+      "AQ",
+      "AG",
+      "AR",
+      "AM",
+      "AW",
+      "AU",
+      "AT",
+      "AZ",
+      "BS",
+      "BH",
+      "BD",
+      "BB",
+      "BY",
+      "BE",
+      "BZ",
+      "BJ",
+      "BM",
+      "BT",
+      "BO",
+      "BQ",
+      "BA",
+      "BW",
+      "BV",
+      "BR",
+      "IO",
+      "BN",
+      "BG",
+      "BF",
+      "BI",
+      "KH",
+      "CM",
+      "CA",
+      "CV",
+      "KY",
+      "CF",
+      "TD",
+      "CL",
+      "CN",
+      "CX",
+      "CC",
+      "CO",
+      "KM",
+      "CG",
+      "CD",
+      "CK",
+      "CR",
+      "CI",
+      "HR",
+      "CW",
+      "CY",
+      "CZ",
+      "DK",
+      "DJ",
+      "DM",
+      "DO",
+      "EC",
+      "EG",
+      "SV",
+      "GQ",
+      "ER",
+      "EE",
+      "SZ",
+      "ET",
+      "FK",
+      "FO",
+      "FJ",
+      "FI",
+      "FR",
+      "GF",
+      "PF",
+      "TF",
+      "GA",
+      "GM",
+      "GE",
+      "DE",
+      "GH",
+      "GI",
+      "GR",
+      "GL",
+      "GD",
+      "GP",
+      "GT",
+      "GG",
+      "GN",
+      "GW",
+      "GY",
+      "HT",
+      "HM",
+      "VA",
+      "HN",
+      "HU",
+      "IS",
+      "IN",
+      "ID",
+      "IQ",
+      "IE",
+      "IM",
+      "IL",
+      "IT",
+      "JM",
+      "JP",
+      "JE",
+      "JO",
+      "KZ",
+      "KE",
+      "KI",
+      "KR",
+      "XK",
+      "KW",
+      "KG",
+      "LA",
+      "LV",
+      "LB",
+      "LS",
+      "LR",
+      "LY",
+      "LI",
+      "LT",
+      "LU",
+      "MO",
+      "MG",
+      "MW",
+      "MY",
+      "MV",
+      "ML",
+      "MT",
+      "MQ",
+      "MR",
+      "MU",
+      "YT",
+      "MX",
+      "MD",
+      "MC",
+      "MN",
+      "ME",
+      "MS",
+      "MA",
+      "MZ",
+      "MM",
+      "NA",
+      "NR",
+      "NP",
+      "NL",
+      "NC",
+      "NZ",
+      "NI",
+      "NE",
+      "NG",
+      "NU",
+      "NF",
+      "MK",
+      "NO",
+      "OM",
+      "PK",
+      "PS",
+      "PA",
+      "PG",
+      "PY",
+      "PE",
+      "PH",
+      "PN",
+      "PL",
+      "PT",
+      "QA",
+      "RE",
+      "RO",
+      "RU",
+      "RW",
+      "BL",
+      "SH",
+      "KN",
+      "LC",
+      "MF",
+      "PM",
+      "VC",
+      "WS",
+      "SM",
+      "ST",
+      "SA",
+      "SN",
+      "RS",
+      "SC",
+      "SL",
+      "SG",
+      "SX",
+      "SK",
+      "SI",
+      "SB",
+      "SO",
+      "ZA",
+      "GS",
+      "SS",
+      "ES",
+      "LK",
+      "SR",
+      "SJ",
+      "SE",
+      "CH",
+      "TW",
+      "TJ",
+      "TZ",
+      "TH",
+      "TL",
+      "TG",
+      "TK",
+      "TO",
+      "TT",
+      "TN",
+      "TR",
+      "TM",
+      "TC",
+      "TV",
+      "UG",
+      "UA",
+      "AE",
+      "GB",
+      "US",
+      "UY",
+      "UZ",
+      "VU",
+      "VE",
+      "VN",
+      "VG",
+      "WF",
+      "EH",
+      "YE",
+      "ZM",
+      "ZW"
+     ]
+    },
+    "Latitude": {
+     "type": "double",
+     "label": "Latitude",
+     "scale": 15
+    },
+    "Longitude": {
+     "type": "double",
+     "label": "Longitude",
+     "scale": 15
+    },
+    "GeocodeAccuracy": {
+     "type": "picklist",
+     "label": "Geocode Accuracy",
+     "values": [
+      "Address",
+      "NearAddress",
+      "Block",
+      "Street",
+      "ExtendedZip",
+      "Zip",
+      "Neighborhood",
+      "City",
+      "County",
+      "State",
+      "Unknown"
+     ]
+    },
+    "Address": {
+     "type": "address",
+     "label": "Address"
+    },
+    "Email": {
+     "type": "email",
+     "label": "Email"
+    },
+    "EmailPreferencesAutoBcc": {
+     "type": "boolean",
+     "label": "AutoBcc"
+    },
+    "EmailPreferencesAutoBccStayInTouch": {
+     "type": "boolean",
+     "label": "AutoBccStayInTouch"
+    },
+    "EmailPreferencesStayInTouchReminder": {
+     "type": "boolean",
+     "label": "StayInTouchReminder"
+    },
+    "SenderEmail": {
+     "type": "email",
+     "label": "Email Sender Address"
+    },
+    "SenderName": {
+     "type": "string",
+     "label": "Email Sender Name"
+    },
+    "Signature": {
+     "type": "textarea",
+     "label": "Email Signature"
+    },
+    "StayInTouchSubject": {
+     "type": "string",
+     "label": "Stay-in-Touch Email Subject"
+    },
+    "StayInTouchSignature": {
+     "type": "textarea",
+     "label": "Stay-in-Touch Email Signature"
+    },
+    "StayInTouchNote": {
+     "type": "string",
+     "label": "Stay-in-Touch Email Note"
+    },
+    "Phone": {
+     "type": "phone",
+     "label": "Phone"
+    },
+    "Fax": {
+     "type": "phone",
+     "label": "Fax"
+    },
+    "MobilePhone": {
+     "type": "phone",
+     "label": "Mobile"
+    },
+    "Alias": {
+     "type": "string",
+     "label": "Alias"
+    },
+    "CommunityNickname": {
+     "type": "string",
+     "label": "Nickname"
+    },
+    "BadgeText": {
+     "type": "string",
+     "label": "User Photo badge text overlay"
+    },
+    "IsActive": {
+     "type": "boolean",
+     "label": "Active"
+    },
+    "TimeZoneSidKey": {
+     "type": "picklist",
+     "label": "Time Zone",
+     "values": [
+      "Pacific/Kiritimati",
+      "Pacific/Chatham",
+      "Antarctica/McMurdo",
+      "Pacific/Apia",
+      "Pacific/Auckland",
+      "Pacific/Fakaofo",
+      "Pacific/Kanton",
+      "Pacific/Tongatapu",
+      "Asia/Anadyr",
+      "Asia/Kamchatka",
+      "Pacific/Fiji",
+      "Pacific/Funafuti",
+      "Pacific/Kwajalein",
+      "Pacific/Majuro",
+      "Pacific/Nauru",
+      "Pacific/Norfolk",
+      "Pacific/Tarawa",
+      "Pacific/Wake",
+      "Pacific/Wallis",
+      "Antarctica/Macquarie",
+      "Asia/Magadan",
+      "Asia/Sakhalin",
+      "Asia/Srednekolymsk",
+      "Australia/Currie",
+      "Australia/Hobart",
+      "Australia/Lord_Howe",
+      "Australia/Melbourne",
+      "Australia/Sydney",
+      "Pacific/Bougainville",
+      "Pacific/Efate",
+      "Pacific/Guadalcanal",
+      "Pacific/Kosrae",
+      "Pacific/Noumea",
+      "Pacific/Pohnpei",
+      "Australia/Adelaide",
+      "Australia/Broken_Hill",
+      "Antarctica/DumontDUrville",
+      "Asia/Ust-Nera",
+      "Asia/Vladivostok",
+      "Australia/Brisbane",
+      "Australia/Lindeman",
+      "Pacific/Guam",
+      "Pacific/Port_Moresby",
+      "Pacific/Saipan",
+      "Pacific/Truk",
+      "Australia/Darwin",
+      "Asia/Chita",
+      "Asia/Dili",
+      "Asia/Jayapura",
+      "Asia/Khandyga",
+      "Asia/Seoul",
+      "Asia/Tokyo",
+      "Asia/Yakutsk",
+      "Pacific/Palau",
+      "Australia/Eucla",
+      "Antarctica/Casey",
+      "Asia/Brunei",
+      "Asia/Choibalsan",
+      "Asia/Hong_Kong",
+      "Asia/Irkutsk",
+      "Asia/Kuala_Lumpur",
+      "Asia/Kuching",
+      "Asia/Macau",
+      "Asia/Makassar",
+      "Asia/Manila",
+      "Asia/Shanghai",
+      "Asia/Singapore",
+      "Asia/Taipei",
+      "Asia/Ulaanbaatar",
+      "Australia/Perth",
+      "Antarctica/Davis",
+      "Asia/Bangkok",
+      "Asia/Barnaul",
+      "Asia/Ho_Chi_Minh",
+      "Asia/Hovd",
+      "Asia/Jakarta",
+      "Asia/Krasnoyarsk",
+      "Asia/Novokuznetsk",
+      "Asia/Novosibirsk",
+      "Asia/Phnom_Penh",
+      "Asia/Pontianak",
+      "Asia/Tomsk",
+      "Asia/Vientiane",
+      "Indian/Christmas",
+      "Asia/Yangon",
+      "Indian/Cocos",
+      "Asia/Bishkek",
+      "Asia/Dhaka",
+      "Asia/Omsk",
+      "Asia/Thimphu",
+      "Asia/Urumqi",
+      "Indian/Chagos",
+      "Asia/Kathmandu",
+      "Asia/Colombo",
+      "Asia/Kolkata",
+      "Antarctica/Mawson",
+      "Antarctica/Vostok",
+      "Asia/Almaty",
+      "Asia/Aqtau",
+      "Asia/Aqtobe",
+      "Asia/Ashgabat",
+      "Asia/Atyrau",
+      "Asia/Dushanbe",
+      "Asia/Karachi",
+      "Asia/Oral",
+      "Asia/Qostanay",
+      "Asia/Qyzylorda",
+      "Asia/Samarkand",
+      "Asia/Tashkent",
+      "Asia/Yekaterinburg",
+      "Indian/Kerguelen",
+      "Indian/Maldives",
+      "Asia/Kabul",
+      "Asia/Baku",
+      "Asia/Dubai",
+      "Asia/Muscat",
+      "Asia/Tbilisi",
+      "Asia/Yerevan",
+      "Europe/Astrakhan",
+      "Europe/Samara",
+      "Europe/Saratov",
+      "Europe/Ulyanovsk",
+      "Indian/Mahe",
+      "Indian/Mauritius",
+      "Indian/Reunion",
+      "Africa/Addis_Ababa",
+      "Africa/Asmera",
+      "Africa/Dar_es_Salaam",
+      "Africa/Djibouti",
+      "Africa/Kampala",
+      "Africa/Mogadishu",
+      "Africa/Nairobi",
+      "Antarctica/Syowa",
+      "Asia/Aden",
+      "Asia/Amman",
+      "Asia/Baghdad",
+      "Asia/Bahrain",
+      "Asia/Kuwait",
+      "Asia/Qatar",
+      "Asia/Riyadh",
+      "Europe/Istanbul",
+      "Europe/Kirov",
+      "Europe/Minsk",
+      "Europe/Moscow",
+      "Europe/Volgograd",
+      "Indian/Antananarivo",
+      "Indian/Comoro",
+      "Indian/Mayotte",
+      "Africa/Blantyre",
+      "Africa/Bujumbura",
+      "Africa/Cairo",
+      "Africa/Gaborone",
+      "Africa/Harare",
+      "Africa/Johannesburg",
+      "Africa/Juba",
+      "Africa/Khartoum",
+      "Africa/Kigali",
+      "Africa/Lubumbashi",
+      "Africa/Lusaka",
+      "Africa/Maputo",
+      "Africa/Maseru",
+      "Africa/Mbabane",
+      "Africa/Tripoli",
+      "Africa/Windhoek",
+      "Asia/Beirut",
+      "Asia/Famagusta",
+      "Asia/Gaza",
+      "Asia/Hebron",
+      "Asia/Jerusalem",
+      "Asia/Nicosia",
+      "Europe/Athens",
+      "Europe/Bucharest",
+      "Europe/Chisinau",
+      "Europe/Helsinki",
+      "Europe/Kaliningrad",
+      "Europe/Kyiv",
+      "Europe/Mariehamn",
+      "Europe/Riga",
+      "Europe/Sofia",
+      "Europe/Tallinn",
+      "Europe/Uzhgorod",
+      "Europe/Vilnius",
+      "Europe/Zaporozhye",
+      "Africa/Algiers",
+      "Africa/Bangui",
+      "Africa/Brazzaville",
+      "Africa/Ceuta",
+      "Africa/Douala",
+      "Africa/Kinshasa",
+      "Africa/Lagos",
+      "Africa/Libreville",
+      "Africa/Luanda",
+      "Africa/Malabo",
+      "Africa/Ndjamena",
+      "Africa/Niamey",
+      "Africa/Porto-Novo",
+      "Africa/Tunis",
+      "Arctic/Longyearbyen",
+      "Europe/Amsterdam",
+      "Europe/Andorra",
+      "Europe/Belgrade",
+      "Europe/Berlin",
+      "Europe/Bratislava",
+      "Europe/Brussels",
+      "Europe/Budapest",
+      "Europe/Busingen",
+      "Europe/Copenhagen",
+      "Europe/Gibraltar",
+      "Europe/Ljubljana",
+      "Europe/Luxembourg",
+      "Europe/Madrid",
+      "Europe/Malta",
+      "Europe/Monaco",
+      "Europe/Oslo",
+      "Europe/Paris",
+      "Europe/Podgorica",
+      "Europe/Prague",
+      "Europe/Rome",
+      "Europe/San_Marino",
+      "Europe/Sarajevo",
+      "Europe/Skopje",
+      "Europe/Stockholm",
+      "Europe/Tirane",
+      "Europe/Vaduz",
+      "Europe/Vatican",
+      "Europe/Vienna",
+      "Europe/Warsaw",
+      "Europe/Zagreb",
+      "Europe/Zurich",
+      "Africa/Abidjan",
+      "Africa/Accra",
+      "Africa/Bamako",
+      "Africa/Banjul",
+      "Africa/Bissau",
+      "Africa/Casablanca",
+      "Africa/Conakry",
+      "Africa/Dakar",
+      "Africa/El_Aaiun",
+      "Africa/Freetown",
+      "Africa/Lome",
+      "Africa/Monrovia",
+      "Africa/Nouakchott",
+      "Africa/Ouagadougou",
+      "Africa/Sao_Tome",
+      "America/Danmarkshavn",
+      "Antarctica/Troll",
+      "Atlantic/Canary",
+      "Atlantic/Faroe",
+      "Atlantic/Madeira",
+      "Atlantic/Reykjavik",
+      "Atlantic/St_Helena",
+      "Europe/Dublin",
+      "Europe/Guernsey",
+      "Europe/Isle_of_Man",
+      "Europe/Jersey",
+      "Europe/Lisbon",
+      "Europe/London",
+      "GMT",
+      "Atlantic/Azores",
+      "Atlantic/Cape_Verde",
+      "America/Noronha",
+      "America/Nuuk",
+      "America/Scoresbysund",
+      "Atlantic/South_Georgia",
+      "America/Araguaina",
+      "America/Argentina/Buenos_Aires",
+      "America/Argentina/Catamarca",
+      "America/Argentina/Cordoba",
+      "America/Argentina/Jujuy",
+      "America/Argentina/La_Rioja",
+      "America/Argentina/Mendoza",
+      "America/Argentina/Rio_Gallegos",
+      "America/Argentina/Salta",
+      "America/Argentina/San_Juan",
+      "America/Argentina/San_Luis",
+      "America/Argentina/Tucuman",
+      "America/Argentina/Ushuaia",
+      "America/Asuncion",
+      "America/Bahia",
+      "America/Belem",
+      "America/Cayenne",
+      "America/Fortaleza",
+      "America/Maceio",
+      "America/Miquelon",
+      "America/Montevideo",
+      "America/Paramaribo",
+      "America/Punta_Arenas",
+      "America/Recife",
+      "America/Santarem",
+      "America/Santiago",
+      "America/Sao_Paulo",
+      "Antarctica/Palmer",
+      "Antarctica/Rothera",
+      "Atlantic/Stanley",
+      "America/St_Johns",
+      "America/Anguilla",
+      "America/Antigua",
+      "America/Aruba",
+      "America/Barbados",
+      "America/Blanc-Sablon",
+      "America/Boa_Vista",
+      "America/Campo_Grande",
+      "America/Caracas",
+      "America/Cuiaba",
+      "America/Curacao",
+      "America/Dominica",
+      "America/Glace_Bay",
+      "America/Goose_Bay",
+      "America/Grenada",
+      "America/Guadeloupe",
+      "America/Guyana",
+      "America/Halifax",
+      "America/Kralendijk",
+      "America/La_Paz",
+      "America/Lower_Princes",
+      "America/Manaus",
+      "America/Marigot",
+      "America/Martinique",
+      "America/Moncton",
+      "America/Montserrat",
+      "America/Port_of_Spain",
+      "America/Porto_Velho",
+      "America/Puerto_Rico",
+      "America/Santo_Domingo",
+      "America/St_Barthelemy",
+      "America/St_Kitts",
+      "America/St_Lucia",
+      "America/St_Thomas",
+      "America/St_Vincent",
+      "America/Thule",
+      "America/Tortola",
+      "Atlantic/Bermuda",
+      "America/Bogota",
+      "America/Cancun",
+      "America/Cayman",
+      "America/Coral_Harbour",
+      "America/Detroit",
+      "America/Eirunepe",
+      "America/Grand_Turk",
+      "America/Guayaquil",
+      "America/Indiana/Indianapolis",
+      "America/Indiana/Marengo",
+      "America/Indiana/Petersburg",
+      "America/Indiana/Vevay",
+      "America/Indiana/Vincennes",
+      "America/Indiana/Winamac",
+      "America/Iqaluit",
+      "America/Jamaica",
+      "America/Kentucky/Louisville",
+      "America/Kentucky/Monticello",
+      "America/Lima",
+      "America/Montreal",
+      "America/Nassau",
+      "America/New_York",
+      "America/Nipigon",
+      "America/Panama",
+      "America/Pangnirtung",
+      "America/Port-au-Prince",
+      "America/Rainy_River",
+      "America/Rio_Branco",
+      "America/Thunder_Bay",
+      "America/Toronto",
+      "America/Winnipeg",
+      "Pacific/Easter",
+      "America/Bahia_Banderas",
+      "America/Belize",
+      "America/Chicago",
+      "America/Chihuahua",
+      "America/Costa_Rica",
+      "America/Edmonton",
+      "America/El_Salvador",
+      "America/Guatemala",
+      "America/Indiana/Knox",
+      "America/Indiana/Tell_City",
+      "America/Inuvik",
+      "America/Managua",
+      "America/Matamoros",
+      "America/Menominee",
+      "America/Merida",
+      "America/Mexico_City",
+      "America/Monterrey",
+      "America/North_Dakota/Beulah",
+      "America/North_Dakota/Center",
+      "America/North_Dakota/New_Salem",
+      "America/Ojinaga",
+      "America/Rankin_Inlet",
+      "America/Regina",
+      "America/Resolute",
+      "America/Swift_Current",
+      "America/Tegucigalpa",
+      "America/Yellowknife",
+      "Pacific/Galapagos",
+      "America/Boise",
+      "America/Cambridge_Bay",
+      "America/Creston",
+      "America/Dawson",
+      "America/Dawson_Creek",
+      "America/Denver",
+      "America/Fort_Nelson",
+      "America/Hermosillo",
+      "America/Mazatlan",
+      "America/Phoenix",
+      "America/Vancouver",
+      "America/Whitehorse",
+      "America/Los_Angeles",
+      "America/Santa_Isabel",
+      "America/Tijuana",
+      "Pacific/Pitcairn",
+      "America/Anchorage",
+      "America/Juneau",
+      "America/Metlakatla",
+      "America/Nome",
+      "America/Sitka",
+      "America/Yakutat",
+      "Pacific/Gambier",
+      "Pacific/Marquesas",
+      "America/Adak",
+      "Pacific/Honolulu",
+      "Pacific/Johnston",
+      "Pacific/Rarotonga",
+      "Pacific/Tahiti",
+      "Pacific/Midway",
+      "Pacific/Niue",
+      "Pacific/Pago_Pago"
+     ]
+    },
+    "UserRoleId": {
+     "type": "reference",
+     "label": "Role ID",
+     "relationshipName": "UserRole",
+     "referenceTo": [
+      "UserRole"
+     ]
+    },
+    "LocaleSidKey": {
+     "type": "picklist",
+     "label": "Locale",
+     "values": [
+      "af_ZA",
+      "sq_AL",
+      "am_ET",
+      "ar_DZ",
+      "ar_BH",
+      "ar_EG",
+      "ar_IQ",
+      "ar_JO",
+      "ar_KW",
+      "ar_LB",
+      "ar_LY",
+      "ar_MA",
+      "ar_OM",
+      "ar_QA",
+      "ar_SA",
+      "ar_SD",
+      "ar_TN",
+      "ar_AE",
+      "ar_YE",
+      "hy_AM",
+      "az_AZ",
+      "bn_BD",
+      "bn_IN",
+      "eu_ES",
+      "be_BY",
+      "bs_BA",
+      "bg_BG",
+      "my_MM",
+      "ca_ES",
+      "zh_CN_PINYIN",
+      "zh_CN_STROKE",
+      "zh_CN",
+      "zh_HK_STROKE",
+      "zh_HK",
+      "zh_MO",
+      "zh_MY",
+      "zh_SG",
+      "zh_TW_STROKE",
+      "zh_TW",
+      "hr_HR",
+      "cs_CZ",
+      "da_DK",
+      "nl_AW",
+      "nl_BE",
+      "nl_NL",
+      "nl_SR",
+      "dz_BT",
+      "en_AG",
+      "en_AU",
+      "en_BS",
+      "en_BB",
+      "en_BE",
+      "en_BZ",
+      "en_BM",
+      "en_BW",
+      "en_CM",
+      "en_CA",
+      "en_KY",
+      "en_CY",
+      "en_CZ",
+      "en_DK",
+      "en_ER",
+      "en_SZ",
+      "en_FK",
+      "en_FJ",
+      "en_FR",
+      "en_GM",
+      "en_DE",
+      "en_GH",
+      "en_GI",
+      "en_GY",
+      "en_HK",
+      "en_HU",
+      "en_IN",
+      "en_ID",
+      "en_IE",
+      "en_IL",
+      "en_IT",
+      "en_JM",
+      "en_KE",
+      "en_LR",
+      "en_MG",
+      "en_MW",
+      "en_MY",
+      "en_MT",
+      "en_MU",
+      "en_NA",
+      "en_NL",
+      "en_NZ",
+      "en_NG",
+      "en_NO",
+      "en_PK",
+      "en_PG",
+      "en_PH",
+      "en_PL",
+      "en_RO",
+      "en_RW",
+      "en_WS",
+      "en_SC",
+      "en_SL",
+      "en_SG",
+      "en_SX",
+      "en_SK",
+      "en_SB",
+      "en_ZA",
+      "en_ES",
+      "en_SH",
+      "en_SE",
+      "en_CH",
+      "en_TZ",
+      "en_TO",
+      "en_TT",
+      "en_UG",
+      "en_AE",
+      "en_GB",
+      "en_US",
+      "en_VU",
+      "et_EE",
+      "fi_FI",
+      "fr_BE",
+      "fr_CA",
+      "fr_KM",
+      "fr_FR",
+      "fr_GN",
+      "fr_HT",
+      "fr_LU",
+      "fr_MR",
+      "fr_MC",
+      "fr_MA",
+      "fr_CH",
+      "fr_WF",
+      "ka_GE",
+      "de_AT",
+      "de_BE",
+      "de_DE",
+      "de_LU",
+      "de_CH",
+      "el_CY",
+      "el_GR",
+      "gu_IN",
+      "ht_HT",
+      "ht_US",
+      "haw_US",
+      "iw_IL",
+      "hi_IN",
+      "hmn_US",
+      "hu_HU",
+      "is_IS",
+      "in_ID",
+      "ga_IE",
+      "it_IT",
+      "it_CH",
+      "ja_JP",
+      "kl_GL",
+      "kn_IN",
+      "kk_KZ",
+      "km_KH",
+      "ko_KR",
+      "ky_KG",
+      "lo_LA",
+      "lv_LV",
+      "lt_LT",
+      "lu_CD",
+      "lb_LU",
+      "mk_MK",
+      "ms_BN",
+      "ms_MY",
+      "ml_IN",
+      "mt_MT",
+      "mr_IN",
+      "sh_ME",
+      "ne_NP",
+      "no_NO",
+      "ps_AF",
+      "pl_PL",
+      "pt_AO",
+      "pt_BR",
+      "pt_CV",
+      "pt_MZ",
+      "pt_PT",
+      "pt_ST",
+      "pa_IN",
+      "ro_MD",
+      "ro_RO",
+      "rm_CH",
+      "rn_BI",
+      "ru_AM",
+      "ru_BY",
+      "ru_KZ",
+      "ru_KG",
+      "ru_LT",
+      "ru_MD",
+      "ru_PL",
+      "ru_RU",
+      "ru_UA",
+      "sm_WS",
+      "sm_US",
+      "sr_BA",
+      "sr_CS",
+      "sh_BA",
+      "sh_CS",
+      "sr_RS",
+      "sk_SK",
+      "sl_SI",
+      "so_DJ",
+      "so_SO",
+      "es_AR",
+      "es_BO",
+      "es_CL",
+      "es_CO",
+      "es_CR",
+      "es_DO",
+      "es_EC",
+      "es_SV",
+      "es_GT",
+      "es_HN",
+      "es_MX",
+      "es_NI",
+      "es_PA",
+      "es_PY",
+      "es_PE",
+      "es_PR",
+      "es_ES",
+      "es_US",
+      "es_UY",
+      "es_VE",
+      "sw_KE",
+      "sv_SE",
+      "tl_PH",
+      "tg_TJ",
+      "ta_IN",
+      "ta_LK",
+      "te_IN",
+      "mi_NZ",
+      "th_TH",
+      "ti_ET",
+      "tr_TR",
+      "uk_UA",
+      "ur_PK",
+      "uz_LATN_UZ",
+      "vi_VN",
+      "cy_GB",
+      "xh_ZA",
+      "ji_US",
+      "yo_BJ",
+      "zu_ZA"
+     ]
+    },
+    "ReceivesInfoEmails": {
+     "type": "boolean",
+     "label": "Info Emails"
+    },
+    "ReceivesAdminInfoEmails": {
+     "type": "boolean",
+     "label": "Admin Info Emails"
+    },
+    "EmailEncodingKey": {
+     "type": "picklist",
+     "label": "Email Encoding",
+     "values": [
+      "UTF-8",
+      "ISO-8859-1",
+      "Shift_JIS",
+      "ISO-2022-JP",
+      "EUC-JP",
+      "ks_c_5601-1987",
+      "Big5",
+      "GB2312",
+      "Big5-HKSCS",
+      "x-SJIS_0213"
+     ]
+    },
+    "ProfileId": {
+     "type": "reference",
+     "label": "Profile ID",
+     "relationshipName": "Profile",
+     "referenceTo": [
+      "Profile"
+     ]
+    },
+    "UserType": {
+     "type": "picklist",
+     "label": "User Type",
+     "values": [
+      "Standard",
+      "PowerPartner",
+      "PowerCustomerSuccess",
+      "CustomerSuccess",
+      "Guest",
+      "CspLitePortal",
+      "CsnOnly",
+      "SelfService"
+     ]
+    },
+    "StartDay": {
+     "type": "picklist",
+     "label": "Start of Day",
+     "values": [
+      "0",
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "7",
+      "8",
+      "9",
+      "10",
+      "11",
+      "12",
+      "13",
+      "14",
+      "15",
+      "16",
+      "17",
+      "18",
+      "19",
+      "20",
+      "21",
+      "22",
+      "23"
+     ]
+    },
+    "EndDay": {
+     "type": "picklist",
+     "label": "End of Day",
+     "values": [
+      "0",
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "7",
+      "8",
+      "9",
+      "10",
+      "11",
+      "12",
+      "13",
+      "14",
+      "15",
+      "16",
+      "17",
+      "18",
+      "19",
+      "20",
+      "21",
+      "22",
+      "23"
+     ]
+    },
+    "LanguageLocaleKey": {
+     "type": "picklist",
+     "label": "Language",
+     "values": [
+      "en_US",
+      "de",
+      "es",
+      "fr",
+      "it",
+      "ja",
+      "sv",
+      "ko",
+      "zh_TW",
+      "zh_CN",
+      "pt_BR",
+      "nl_NL",
+      "da",
+      "th",
+      "fi",
+      "ru",
+      "es_MX",
+      "no"
+     ]
+    },
+    "EmployeeNumber": {
+     "type": "string",
+     "label": "Employee Number"
+    },
+    "DelegatedApproverId": {
+     "type": "reference",
+     "label": "Delegated Approver ID"
+    },
+    "ManagerId": {
+     "type": "reference",
+     "label": "Manager ID",
+     "relationshipName": "Manager",
+     "referenceTo": [
+      "User"
+     ]
+    },
+    "LastLoginDate": {
+     "type": "datetime",
+     "label": "Last Login"
+    },
+    "LastPasswordChangeDate": {
+     "type": "datetime",
+     "label": "Last Password Change or Reset"
+    },
+    "CreatedDate": {
+     "type": "datetime",
+     "label": "Created Date"
+    },
+    "CreatedById": {
+     "type": "reference",
+     "label": "Created By ID",
+     "relationshipName": "CreatedBy",
+     "referenceTo": [
+      "User"
+     ]
+    },
+    "LastModifiedDate": {
+     "type": "datetime",
+     "label": "Last Modified Date"
+    },
+    "LastModifiedById": {
+     "type": "reference",
+     "label": "Last Modified By ID",
+     "relationshipName": "LastModifiedBy",
+     "referenceTo": [
+      "User"
+     ]
+    },
+    "SystemModstamp": {
+     "type": "datetime",
+     "label": "System Modstamp"
+    },
+    "PasswordExpirationDate": {
+     "type": "datetime",
+     "label": "Password Expiration Date"
+    },
+    "NumberOfFailedLogins": {
+     "type": "int",
+     "label": "Failed Login Attempts"
+    },
+    "SuAccessExpirationDate": {
+     "type": "date",
+     "label": "SU Access Expiration Date"
+    },
+    "OfflineTrialExpirationDate": {
+     "type": "datetime",
+     "label": "Offline Edition Trial Expiration Date"
+    },
+    "OfflinePdaTrialExpirationDate": {
+     "type": "datetime",
+     "label": "Sales Anywhere Trial Expiration Date"
+    },
+    "UserPermissionsMarketingUser": {
+     "type": "boolean",
+     "label": "Marketing User"
+    },
+    "UserPermissionsOfflineUser": {
+     "type": "boolean",
+     "label": "Offline User"
+    },
+    "UserPermissionsCallCenterAutoLogin": {
+     "type": "boolean",
+     "label": "Auto-login To Call Center"
+    },
+    "UserPermissionsSFContentUser": {
+     "type": "boolean",
+     "label": "Salesforce CRM Content User"
+    },
+    "UserPermissionsKnowledgeUser": {
+     "type": "boolean",
+     "label": "Knowledge User"
+    },
+    "UserPermissionsInteractionUser": {
+     "type": "boolean",
+     "label": "Flow User"
+    },
+    "UserPermissionsSupportUser": {
+     "type": "boolean",
+     "label": "Service Cloud User"
+    },
+    "UserPermissionsJigsawProspectingUser": {
+     "type": "boolean",
+     "label": "Data.com User"
+    },
+    "UserPermissionsSiteforceContributorUser": {
+     "type": "boolean",
+     "label": "Site.com Contributor User"
+    },
+    "UserPermissionsSiteforcePublisherUser": {
+     "type": "boolean",
+     "label": "Site.com Publisher User"
+    },
+    "UserPermissionsWorkDotComUserFeature": {
+     "type": "boolean",
+     "label": "WDC User"
+    },
+    "ForecastEnabled": {
+     "type": "boolean",
+     "label": "Allow Forecasting"
+    },
+    "UserPreferencesActivityRemindersPopup": {
+     "type": "boolean",
+     "label": "ActivityRemindersPopup"
+    },
+    "UserPreferencesEventRemindersCheckboxDefault": {
+     "type": "boolean",
+     "label": "EventRemindersCheckboxDefault"
+    },
+    "UserPreferencesTaskRemindersCheckboxDefault": {
+     "type": "boolean",
+     "label": "TaskRemindersCheckboxDefault"
+    },
+    "UserPreferencesReminderSoundOff": {
+     "type": "boolean",
+     "label": "ReminderSoundOff"
+    },
+    "UserPreferencesDisableAllFeedsEmail": {
+     "type": "boolean",
+     "label": "DisableAllFeedsEmail"
+    },
+    "UserPreferencesDisableFollowersEmail": {
+     "type": "boolean",
+     "label": "DisableFollowersEmail"
+    },
+    "UserPreferencesDisableProfilePostEmail": {
+     "type": "boolean",
+     "label": "DisableProfilePostEmail"
+    },
+    "UserPreferencesDisableChangeCommentEmail": {
+     "type": "boolean",
+     "label": "DisableChangeCommentEmail"
+    },
+    "UserPreferencesDisableLaterCommentEmail": {
+     "type": "boolean",
+     "label": "DisableLaterCommentEmail"
+    },
+    "UserPreferencesDisProfPostCommentEmail": {
+     "type": "boolean",
+     "label": "DisProfPostCommentEmail"
+    },
+    "UserPreferencesContentNoEmail": {
+     "type": "boolean",
+     "label": "ContentNoEmail"
+    },
+    "UserPreferencesContentEmailAsAndWhen": {
+     "type": "boolean",
+     "label": "ContentEmailAsAndWhen"
+    },
+    "UserPreferencesApexPagesDeveloperMode": {
+     "type": "boolean",
+     "label": "ApexPagesDeveloperMode"
+    },
+    "UserPreferencesReceiveNoNotificationsAsApprover": {
+     "type": "boolean",
+     "label": "ReceiveNoNotificationsAsApprover"
+    },
+    "UserPreferencesReceiveNotificationsAsDelegatedApprover": {
+     "type": "boolean",
+     "label": "ReceiveNotificationsAsDelegatedApprover"
+    },
+    "UserPreferencesHideCSNGetChatterMobileTask": {
+     "type": "boolean",
+     "label": "HideCSNGetChatterMobileTask"
+    },
+    "UserPreferencesDisableMentionsPostEmail": {
+     "type": "boolean",
+     "label": "DisableMentionsPostEmail"
+    },
+    "UserPreferencesDisMentionsCommentEmail": {
+     "type": "boolean",
+     "label": "DisMentionsCommentEmail"
+    },
+    "UserPreferencesHideCSNDesktopTask": {
+     "type": "boolean",
+     "label": "HideCSNDesktopTask"
+    },
+    "UserPreferencesHideChatterOnboardingSplash": {
+     "type": "boolean",
+     "label": "HideChatterOnboardingSplash"
+    },
+    "UserPreferencesHideSecondChatterOnboardingSplash": {
+     "type": "boolean",
+     "label": "HideSecondChatterOnboardingSplash"
+    },
+    "UserPreferencesDisCommentAfterLikeEmail": {
+     "type": "boolean",
+     "label": "DisCommentAfterLikeEmail"
+    },
+    "UserPreferencesDisableLikeEmail": {
+     "type": "boolean",
+     "label": "DisableLikeEmail"
+    },
+    "UserPreferencesSortFeedByComment": {
+     "type": "boolean",
+     "label": "SortFeedByComment"
+    },
+    "UserPreferencesDisableMessageEmail": {
+     "type": "boolean",
+     "label": "DisableMessageEmail"
+    },
+    "UserPreferencesJigsawListUser": {
+     "type": "boolean",
+     "label": "JigsawListUser"
+    },
+    "UserPreferencesDisableBookmarkEmail": {
+     "type": "boolean",
+     "label": "DisableBookmarkEmail"
+    },
+    "UserPreferencesDisableSharePostEmail": {
+     "type": "boolean",
+     "label": "DisableSharePostEmail"
+    },
+    "UserPreferencesActionLauncherEinsteinGptConsent": {
+     "type": "boolean",
+     "label": "ActionLauncherEinsteinGptConsent"
+    },
+    "UserPreferencesAssistiveActionsEnabledInActionLauncher": {
+     "type": "boolean",
+     "label": "AssistiveActionsEnabledInActionLauncher"
+    },
+    "UserPreferencesEnableAutoSubForFeeds": {
+     "type": "boolean",
+     "label": "EnableAutoSubForFeeds"
+    },
+    "UserPreferencesDisableFileShareNotificationsForApi": {
+     "type": "boolean",
+     "label": "DisableFileShareNotificationsForApi"
+    },
+    "UserPreferencesShowTitleToExternalUsers": {
+     "type": "boolean",
+     "label": "ShowTitleToExternalUsers"
+    },
+    "UserPreferencesShowManagerToExternalUsers": {
+     "type": "boolean",
+     "label": "ShowManagerToExternalUsers"
+    },
+    "UserPreferencesShowEmailToExternalUsers": {
+     "type": "boolean",
+     "label": "ShowEmailToExternalUsers"
+    },
+    "UserPreferencesShowWorkPhoneToExternalUsers": {
+     "type": "boolean",
+     "label": "ShowWorkPhoneToExternalUsers"
+    },
+    "UserPreferencesShowMobilePhoneToExternalUsers": {
+     "type": "boolean",
+     "label": "ShowMobilePhoneToExternalUsers"
+    },
+    "UserPreferencesShowFaxToExternalUsers": {
+     "type": "boolean",
+     "label": "ShowFaxToExternalUsers"
+    },
+    "UserPreferencesShowStreetAddressToExternalUsers": {
+     "type": "boolean",
+     "label": "ShowStreetAddressToExternalUsers"
+    },
+    "UserPreferencesShowCityToExternalUsers": {
+     "type": "boolean",
+     "label": "ShowCityToExternalUsers"
+    },
+    "UserPreferencesShowStateToExternalUsers": {
+     "type": "boolean",
+     "label": "ShowStateToExternalUsers"
+    },
+    "UserPreferencesShowPostalCodeToExternalUsers": {
+     "type": "boolean",
+     "label": "ShowPostalCodeToExternalUsers"
+    },
+    "UserPreferencesShowCountryToExternalUsers": {
+     "type": "boolean",
+     "label": "ShowCountryToExternalUsers"
+    },
+    "UserPreferencesShowProfilePicToGuestUsers": {
+     "type": "boolean",
+     "label": "ShowProfilePicToGuestUsers"
+    },
+    "UserPreferencesShowTitleToGuestUsers": {
+     "type": "boolean",
+     "label": "ShowTitleToGuestUsers"
+    },
+    "UserPreferencesShowCityToGuestUsers": {
+     "type": "boolean",
+     "label": "ShowCityToGuestUsers"
+    },
+    "UserPreferencesShowStateToGuestUsers": {
+     "type": "boolean",
+     "label": "ShowStateToGuestUsers"
+    },
+    "UserPreferencesShowPostalCodeToGuestUsers": {
+     "type": "boolean",
+     "label": "ShowPostalCodeToGuestUsers"
+    },
+    "UserPreferencesShowCountryToGuestUsers": {
+     "type": "boolean",
+     "label": "ShowCountryToGuestUsers"
+    },
+    "UserPreferencesShowForecastingChangeSignals": {
+     "type": "boolean",
+     "label": "ShowForecastingChangeSignals"
+    },
+    "UserPreferencesLiveAgentMiawSetupDeflection": {
+     "type": "boolean",
+     "label": "LiveAgentMiawSetupDeflection"
+    },
+    "UserPreferencesHideS1BrowserUI": {
+     "type": "boolean",
+     "label": "HideS1BrowserUI"
+    },
+    "UserPreferencesDisableEndorsementEmail": {
+     "type": "boolean",
+     "label": "DisableEndorsementEmail"
+    },
+    "UserPreferencesPathAssistantCollapsed": {
+     "type": "boolean",
+     "label": "PathAssistantCollapsed"
+    },
+    "UserPreferencesCacheDiagnostics": {
+     "type": "boolean",
+     "label": "CacheDiagnostics"
+    },
+    "UserPreferencesShowEmailToGuestUsers": {
+     "type": "boolean",
+     "label": "ShowEmailToGuestUsers"
+    },
+    "UserPreferencesShowManagerToGuestUsers": {
+     "type": "boolean",
+     "label": "ShowManagerToGuestUsers"
+    },
+    "UserPreferencesShowWorkPhoneToGuestUsers": {
+     "type": "boolean",
+     "label": "ShowWorkPhoneToGuestUsers"
+    },
+    "UserPreferencesShowMobilePhoneToGuestUsers": {
+     "type": "boolean",
+     "label": "ShowMobilePhoneToGuestUsers"
+    },
+    "UserPreferencesShowFaxToGuestUsers": {
+     "type": "boolean",
+     "label": "ShowFaxToGuestUsers"
+    },
+    "UserPreferencesShowStreetAddressToGuestUsers": {
+     "type": "boolean",
+     "label": "ShowStreetAddressToGuestUsers"
+    },
+    "UserPreferencesLightningExperiencePreferred": {
+     "type": "boolean",
+     "label": "LightningExperiencePreferred"
+    },
+    "UserPreferencesPreviewLightning": {
+     "type": "boolean",
+     "label": "PreviewLightning"
+    },
+    "UserPreferencesHideEndUserOnboardingAssistantModal": {
+     "type": "boolean",
+     "label": "HideEndUserOnboardingAssistantModal"
+    },
+    "UserPreferencesHideLightningMigrationModal": {
+     "type": "boolean",
+     "label": "HideLightningMigrationModal"
+    },
+    "UserPreferencesHideSfxWelcomeMat": {
+     "type": "boolean",
+     "label": "HideSfxWelcomeMat"
+    },
+    "UserPreferencesHideBiggerPhotoCallout": {
+     "type": "boolean",
+     "label": "HideBiggerPhotoCallout"
+    },
+    "UserPreferencesGlobalNavBarWTShown": {
+     "type": "boolean",
+     "label": "GlobalNavBarWTShown"
+    },
+    "UserPreferencesGlobalNavGridMenuWTShown": {
+     "type": "boolean",
+     "label": "GlobalNavGridMenuWTShown"
+    },
+    "UserPreferencesCreateLEXAppsWTShown": {
+     "type": "boolean",
+     "label": "CreateLEXAppsWTShown"
+    },
+    "UserPreferencesFavoritesWTShown": {
+     "type": "boolean",
+     "label": "FavoritesWTShown"
+    },
+    "UserPreferencesRecordHomeSectionCollapseWTShown": {
+     "type": "boolean",
+     "label": "RecordHomeSectionCollapseWTShown"
+    },
+    "UserPreferencesRecordHomeReservedWTShown": {
+     "type": "boolean",
+     "label": "RecordHomeReservedWTShown"
+    },
+    "UserPreferencesFavoritesShowTopFavorites": {
+     "type": "boolean",
+     "label": "FavoritesShowTopFavorites"
+    },
+    "UserPreferencesExcludeMailAppAttachments": {
+     "type": "boolean",
+     "label": "ExcludeMailAppAttachments"
+    },
+    "UserPreferencesSuppressTaskSFXReminders": {
+     "type": "boolean",
+     "label": "SuppressTaskSFXReminders"
+    },
+    "UserPreferencesSuppressEventSFXReminders": {
+     "type": "boolean",
+     "label": "SuppressEventSFXReminders"
+    },
+    "UserPreferencesPreviewCustomTheme": {
+     "type": "boolean",
+     "label": "PreviewCustomTheme"
+    },
+    "UserPreferencesHasCelebrationBadge": {
+     "type": "boolean",
+     "label": "HasCelebrationBadge"
+    },
+    "UserPreferencesUserDebugModePref": {
+     "type": "boolean",
+     "label": "UserDebugModePref"
+    },
+    "UserPreferencesSRHOverrideActivities": {
+     "type": "boolean",
+     "label": "SRHOverrideActivities"
+    },
+    "UserPreferencesNewLightningReportRunPageEnabled": {
+     "type": "boolean",
+     "label": "NewLightningReportRunPageEnabled"
+    },
+    "UserPreferencesReverseOpenActivitiesView": {
+     "type": "boolean",
+     "label": "ReverseOpenActivitiesView"
+    },
+    "UserPreferencesShowTerritoryTimeZoneShifts": {
+     "type": "boolean",
+     "label": "ShowTerritoryTimeZoneShifts"
+    },
+    "UserPreferencesHasSentWarningEmail": {
+     "type": "boolean",
+     "label": "HasSentWarningEmail"
+    },
+    "UserPreferencesHasSentWarningEmail238": {
+     "type": "boolean",
+     "label": "HasSentWarningEmail238"
+    },
+    "UserPreferencesHasSentWarningEmail240": {
+     "type": "boolean",
+     "label": "HasSentWarningEmail240"
+    },
+    "UserPreferencesNativeEmailClient": {
+     "type": "boolean",
+     "label": "NativeEmailClient"
+    },
+    "UserPreferencesShowForecastingRoundedAmounts": {
+     "type": "boolean",
+     "label": "ShowForecastingRoundedAmounts"
+    },
+    "ContactId": {
+     "type": "reference",
+     "label": "Contact ID",
+     "relationshipName": "Contact",
+     "referenceTo": [
+      "Contact"
+     ]
+    },
+    "AccountId": {
+     "type": "reference",
+     "label": "Account ID",
+     "relationshipName": "Account",
+     "referenceTo": [
+      "Account"
+     ]
+    },
+    "CallCenterId": {
+     "type": "reference",
+     "label": "Call Center ID"
+    },
+    "Extension": {
+     "type": "phone",
+     "label": "Extension"
+    },
+    "FederationIdentifier": {
+     "type": "string",
+     "label": "SAML Federation ID"
+    },
+    "AboutMe": {
+     "type": "textarea",
+     "label": "About Me"
+    },
+    "FullPhotoUrl": {
+     "type": "url",
+     "label": "Url for full-sized Photo"
+    },
+    "SmallPhotoUrl": {
+     "type": "url",
+     "label": "Photo"
+    },
+    "IsExtIndicatorVisible": {
+     "type": "boolean",
+     "label": "Show external indicator"
+    },
+    "OutOfOfficeMessage": {
+     "type": "string",
+     "label": "Out of office message"
+    },
+    "MediumPhotoUrl": {
+     "type": "url",
+     "label": "URL for medium profile photo"
+    },
+    "DigestFrequency": {
+     "type": "picklist",
+     "label": "Chatter Email Highlights Frequency",
+     "values": [
+      "D",
+      "W",
+      "N"
+     ]
+    },
+    "DefaultGroupNotificationFrequency": {
+     "type": "picklist",
+     "label": "Default Notification Frequency when Joining Groups",
+     "values": [
+      "P",
+      "D",
+      "W",
+      "N"
+     ]
+    },
+    "JigsawImportLimitOverride": {
+     "type": "int",
+     "label": "Data.com Monthly Addition Limit"
+    },
+    "LastViewedDate": {
+     "type": "datetime",
+     "label": "Last Viewed Date"
+    },
+    "LastReferencedDate": {
+     "type": "datetime",
+     "label": "Last Referenced Date"
+    },
+    "BannerPhotoUrl": {
+     "type": "url",
+     "label": "URL for banner photo"
+    },
+    "SmallBannerPhotoUrl": {
+     "type": "url",
+     "label": "URL for IOS banner photo"
+    },
+    "MediumBannerPhotoUrl": {
+     "type": "url",
+     "label": "URL for Android banner photo"
+    },
+    "IsProfilePhotoActive": {
+     "type": "boolean",
+     "label": "Has Profile Photo"
+    },
+    "IndividualId": {
+     "type": "reference",
+     "label": "Individual ID",
+     "relationshipName": "Individual",
+     "referenceTo": [
+      "Individual"
+     ]
+    },
+    "dfsle__CanManageAccount__c": {
+     "type": "boolean",
+     "label": "Can Manage DocuSign Account"
+    },
+    "dfsle__Provisioned__c": {
+     "type": "date",
+     "label": "DocuSign Provisioned Date"
+    },
+    "dfsle__Status__c": {
+     "type": "picklist",
+     "label": "DocuSign User Status",
+     "values": [
+      "Inactive",
+      "Pending",
+      "Active"
+     ]
+    },
+    "dfsle__Username__c": {
+     "type": "string",
+     "label": "DocuSign Username"
+    },
+    "SBQQ__DefaultProductLookupTab__c": {
+     "type": "picklist",
+     "label": "Default Product Lookup Tab",
+     "values": [
+      "Guided Selling",
+      "Search Filters"
+     ]
+    },
+    "SBQQ__DiagnosticToolEnabled__c": {
+     "type": "boolean",
+     "label": "Enable Diagnostic Tool"
+    },
+    "SBQQ__OutputFormatChangeAllowed__c": {
+     "type": "boolean",
+     "label": "Allow Output Format Change"
+    },
+    "SBQQ__ProductSortPreference__c": {
+     "type": "picklist",
+     "label": "Product Sort Preference",
+     "values": [
+      "Followed"
+     ]
+    },
+    "SBQQ__ResetProductLookup__c": {
+     "type": "boolean",
+     "label": "Reset Product Lookup"
+    },
+    "SBQQ__Theme__c": {
+     "type": "string",
+     "label": "Theme"
+    }
+   },
+   "children": {
+    "ContractsSigned": {
+     "object": "Contract",
+     "field": "CompanySignedId"
+    },
+    "SBQQ__AmendmentContracts__r": {
+     "object": "Contract",
+     "field": "SBQQ__AmendmentOwner__c"
+    },
+    "SBQQ__RenewalContracts__r": {
+     "object": "Contract",
+     "field": "SBQQ__RenewalOwner__c"
+    },
+    "SBQQ__Quotes__r": {
+     "object": "SBQQ__Quote__c",
+     "field": "SBQQ__SalesRep__c"
+    },
+    "DelegatedUsers": {
+     "object": "User",
+     "field": "DelegatedApproverId"
+    },
+    "ManagedUsers": {
+     "object": "User",
+     "field": "ManagerId"
+    }
+   }
+  },
+  "Contact": {
+   "label": "Contact",
+   "fields": {
+    "Id": {
+     "type": "id",
+     "label": "Contact ID"
+    },
+    "IsDeleted": {
+     "type": "boolean",
+     "label": "Deleted"
+    },
+    "MasterRecordId": {
+     "type": "reference",
+     "label": "Master Record ID",
+     "relationshipName": "MasterRecord",
+     "referenceTo": [
+      "Contact"
+     ]
+    },
+    "AccountId": {
+     "type": "reference",
+     "label": "Account ID",
+     "relationshipName": "Account",
+     "referenceTo": [
+      "Account"
+     ]
+    },
+    "LastName": {
+     "type": "string",
+     "label": "Last Name"
+    },
+    "FirstName": {
+     "type": "string",
+     "label": "First Name"
+    },
+    "Salutation": {
+     "type": "picklist",
+     "label": "Salutation",
+     "values": [
+      "Mr.",
+      "Ms.",
+      "Mrs.",
+      "Dr.",
+      "Prof.",
+      "Mx."
+     ]
+    },
+    "Name": {
+     "type": "string",
+     "label": "Full Name"
+    },
+    "OtherStreet": {
+     "type": "textarea",
+     "label": "Other Street"
+    },
+    "OtherCity": {
+     "type": "string",
+     "label": "Other City"
+    },
+    "OtherState": {
+     "type": "string",
+     "label": "Other State/Province"
+    },
+    "OtherPostalCode": {
+     "type": "string",
+     "label": "Other Zip/Postal Code"
+    },
+    "OtherCountry": {
+     "type": "string",
+     "label": "Other Country"
+    },
+    "OtherStateCode": {
+     "type": "picklist",
+     "label": "Other State/Province Code",
+     "values": [
+      "AC",
+      "AG",
+      "AG",
+      "05",
+      "02",
+      "AL",
+      "AL",
+      "AK",
+      "AB",
+      "AL",
+      "AP",
+      "AM",
+      "AN",
+      "AN",
+      "AP",
+      "34",
+      "23",
+      "AO",
+      "AR",
+      "AZ",
+      "AR",
+      "AR",
+      "AP",
+      "AS",
+      "AT",
+      "ACT",
+      "AV",
+      "BA",
+      "BC",
+      "BS",
+      "BA",
+      "BT",
+      "11",
+      "BL",
+      "BN",
+      "BG",
+      "BI",
+      "BR",
+      "BO",
+      "BZ",
+      "BS",
+      "BR",
+      "BC",
+      "CA",
+      "CA",
+      "CL",
+      "CM",
+      "CB",
+      "CI",
+      "CW",
+      "CE",
+      "CT",
+      "CZ",
+      "CN",
+      "CE",
+      "CH",
+      "CT",
+      "CS",
+      "12",
+      "CH",
+      "CH",
+      "50",
+      "CE",
+      "CO",
+      "CL",
+      "CO",
+      "CO",
+      "CT",
+      "CO",
+      "CS",
+      "CR",
+      "KR",
+      "CN",
+      "DN",
+      "DD",
+      "DE",
+      "DL",
+      "DC",
+      "DF",
+      "DL",
+      "D",
+      "DG",
+      "38",
+      "EN",
+      "ES",
+      "DF",
+      "FM",
+      "FE",
+      "FI",
+      "FL",
+      "FG",
+      "FC",
+      "FR",
+      "35",
+      "18",
+      "40",
+      "07",
+      "G",
+      "62",
+      "GE",
+      "GA",
+      "21",
+      "GA",
+      "GO",
+      "GO",
+      "GR",
+      "GT",
+      "44",
+      "45",
+      "GR",
+      "52",
+      "GJ",
+      "10",
+      "46",
+      "HR",
+      "HI",
+      "13",
+      "23",
+      "41",
+      "HG",
+      "HP",
+      "34",
+      "01",
+      "91",
+      "42",
+      "43",
+      "28",
+      "08",
+      "ID",
+      "IL",
+      "IM",
+      "IN",
+      "IA",
+      "IS",
+      "17",
+      "03",
+      "JA",
+      "JK",
+      "JH",
+      "32",
+      "36",
+      "22",
+      "37",
+      "46",
+      "14",
+      "KS",
+      "KA",
+      "KY",
+      "KL",
+      "KY",
+      "KE",
+      "KK",
+      "39",
+      "43",
+      "26",
+      "AQ",
+      "LD",
+      "LS",
+      "SP",
+      "LT",
+      "LE",
+      "LC",
+      "LM",
+      "21",
+      "LK",
+      "LI",
+      "LO",
+      "LD",
+      "LA",
+      "LH",
+      "LU",
+      "92",
+      "MC",
+      "MP",
+      "MH",
+      "ME",
+      "MN",
+      "MB",
+      "MN",
+      "MA",
+      "MD",
+      "MS",
+      "MA",
+      "MT",
+      "MT",
+      "MS",
+      "MO",
+      "MH",
+      "VS",
+      "ML",
+      "ME",
+      "ME",
+      "MI",
+      "MI",
+      "24",
+      "MI",
+      "MG",
+      "MN",
+      "MS",
+      "MO",
+      "04",
+      "45",
+      "MZ",
+      "MO",
+      "MN",
+      "MT",
+      "MB",
+      "MO",
+      "NL",
+      "20",
+      "42",
+      "NA",
+      "29",
+      "NA",
+      "NE",
+      "15",
+      "NV",
+      "NB",
+      "NL",
+      "NH",
+      "NJ",
+      "NM",
+      "NSW",
+      "NY",
+      "15",
+      "64",
+      "NC",
+      "ND",
+      "NT",
+      "NT",
+      "NO",
+      "NS",
+      "NL",
+      "NU",
+      "NU",
+      "OA",
+      "OR",
+      "OY",
+      "OG",
+      "OH",
+      "44",
+      "33",
+      "47",
+      "OK",
+      "OT",
+      "ON",
+      "OR",
+      "OR",
+      "27",
+      "PD",
+      "PA",
+      "PA",
+      "PB",
+      "PR",
+      "PR",
+      "PV",
+      "PA",
+      "PE",
+      "PG",
+      "PU",
+      "PE",
+      "PC",
+      "PI",
+      "PI",
+      "PT",
+      "PN",
+      "PZ",
+      "PO",
+      "PE",
+      "PY",
+      "PB",
+      "PB",
+      "63",
+      "QC",
+      "QLD",
+      "QE",
+      "QR",
+      "RG",
+      "RJ",
+      "RA",
+      "RC",
+      "RE",
+      "RI",
+      "RI",
+      "RN",
+      "RJ",
+      "RN",
+      "RS",
+      "RM",
+      "RO",
+      "RR",
+      "RN",
+      "RO",
+      "41",
+      "11",
+      "SA",
+      "SL",
+      "SC",
+      "SP",
+      "SK",
+      "SS",
+      "SV",
+      "SE",
+      "61",
+      "37",
+      "31",
+      "14",
+      "25",
+      "32",
+      "22",
+      "51",
+      "SI",
+      "SK",
+      "SI",
+      "SO",
+      "SO",
+      "SO",
+      "SA",
+      "SC",
+      "SD",
+      "SR",
+      "TB",
+      "71",
+      "TM",
+      "TN",
+      "TA",
+      "TAS",
+      "TG",
+      "TN",
+      "TE",
+      "TR",
+      "TX",
+      "12",
+      "TA",
+      "TL",
+      "TO",
+      "09",
+      "36",
+      "13",
+      "31",
+      "16",
+      "TP",
+      "TN",
+      "TV",
+      "TS",
+      "TR",
+      "TO",
+      "UD",
+      "UT",
+      "UT",
+      "UP",
+      "VA",
+      "VE",
+      "VE",
+      "VB",
+      "VC",
+      "VT",
+      "VR",
+      "VV",
+      "VI",
+      "VIC",
+      "VA",
+      "VT",
+      "30",
+      "WA",
+      "WD",
+      "WB",
+      "WA",
+      "WH",
+      "WV",
+      "WX",
+      "WW",
+      "WI",
+      "WY",
+      "65",
+      "54",
+      "06",
+      "35",
+      "19",
+      "YU",
+      "YT",
+      "53",
+      "ZA",
+      "33"
+     ]
+    },
+    "OtherCountryCode": {
+     "type": "picklist",
+     "label": "Other Country Code",
+     "values": [
+      "AF",
+      "AX",
+      "AL",
+      "DZ",
+      "AD",
+      "AO",
+      "AI",
+      "AQ",
+      "AG",
+      "AR",
+      "AM",
+      "AW",
+      "AU",
+      "AT",
+      "AZ",
+      "BS",
+      "BH",
+      "BD",
+      "BB",
+      "BY",
+      "BE",
+      "BZ",
+      "BJ",
+      "BM",
+      "BT",
+      "BO",
+      "BQ",
+      "BA",
+      "BW",
+      "BV",
+      "BR",
+      "IO",
+      "BN",
+      "BG",
+      "BF",
+      "BI",
+      "KH",
+      "CM",
+      "CA",
+      "CV",
+      "KY",
+      "CF",
+      "TD",
+      "CL",
+      "CN",
+      "CX",
+      "CC",
+      "CO",
+      "KM",
+      "CG",
+      "CD",
+      "CK",
+      "CR",
+      "CI",
+      "HR",
+      "CW",
+      "CY",
+      "CZ",
+      "DK",
+      "DJ",
+      "DM",
+      "DO",
+      "EC",
+      "EG",
+      "SV",
+      "GQ",
+      "ER",
+      "EE",
+      "SZ",
+      "ET",
+      "FK",
+      "FO",
+      "FJ",
+      "FI",
+      "FR",
+      "GF",
+      "PF",
+      "TF",
+      "GA",
+      "GM",
+      "GE",
+      "DE",
+      "GH",
+      "GI",
+      "GR",
+      "GL",
+      "GD",
+      "GP",
+      "GT",
+      "GG",
+      "GN",
+      "GW",
+      "GY",
+      "HT",
+      "HM",
+      "VA",
+      "HN",
+      "HU",
+      "IS",
+      "IN",
+      "ID",
+      "IQ",
+      "IE",
+      "IM",
+      "IL",
+      "IT",
+      "JM",
+      "JP",
+      "JE",
+      "JO",
+      "KZ",
+      "KE",
+      "KI",
+      "KR",
+      "XK",
+      "KW",
+      "KG",
+      "LA",
+      "LV",
+      "LB",
+      "LS",
+      "LR",
+      "LY",
+      "LI",
+      "LT",
+      "LU",
+      "MO",
+      "MG",
+      "MW",
+      "MY",
+      "MV",
+      "ML",
+      "MT",
+      "MQ",
+      "MR",
+      "MU",
+      "YT",
+      "MX",
+      "MD",
+      "MC",
+      "MN",
+      "ME",
+      "MS",
+      "MA",
+      "MZ",
+      "MM",
+      "NA",
+      "NR",
+      "NP",
+      "NL",
+      "NC",
+      "NZ",
+      "NI",
+      "NE",
+      "NG",
+      "NU",
+      "NF",
+      "MK",
+      "NO",
+      "OM",
+      "PK",
+      "PS",
+      "PA",
+      "PG",
+      "PY",
+      "PE",
+      "PH",
+      "PN",
+      "PL",
+      "PT",
+      "QA",
+      "RE",
+      "RO",
+      "RU",
+      "RW",
+      "BL",
+      "SH",
+      "KN",
+      "LC",
+      "MF",
+      "PM",
+      "VC",
+      "WS",
+      "SM",
+      "ST",
+      "SA",
+      "SN",
+      "RS",
+      "SC",
+      "SL",
+      "SG",
+      "SX",
+      "SK",
+      "SI",
+      "SB",
+      "SO",
+      "ZA",
+      "GS",
+      "SS",
+      "ES",
+      "LK",
+      "SR",
+      "SJ",
+      "SE",
+      "CH",
+      "TW",
+      "TJ",
+      "TZ",
+      "TH",
+      "TL",
+      "TG",
+      "TK",
+      "TO",
+      "TT",
+      "TN",
+      "TR",
+      "TM",
+      "TC",
+      "TV",
+      "UG",
+      "UA",
+      "AE",
+      "GB",
+      "US",
+      "UY",
+      "UZ",
+      "VU",
+      "VE",
+      "VN",
+      "VG",
+      "WF",
+      "EH",
+      "YE",
+      "ZM",
+      "ZW"
+     ]
+    },
+    "OtherLatitude": {
+     "type": "double",
+     "label": "Other Latitude",
+     "scale": 15
+    },
+    "OtherLongitude": {
+     "type": "double",
+     "label": "Other Longitude",
+     "scale": 15
+    },
+    "OtherGeocodeAccuracy": {
+     "type": "picklist",
+     "label": "Other Geocode Accuracy",
+     "values": [
+      "Address",
+      "NearAddress",
+      "Block",
+      "Street",
+      "ExtendedZip",
+      "Zip",
+      "Neighborhood",
+      "City",
+      "County",
+      "State",
+      "Unknown"
+     ]
+    },
+    "OtherAddress": {
+     "type": "address",
+     "label": "Other Address"
+    },
+    "MailingStreet": {
+     "type": "textarea",
+     "label": "Mailing Street"
+    },
+    "MailingCity": {
+     "type": "string",
+     "label": "Mailing City"
+    },
+    "MailingState": {
+     "type": "string",
+     "label": "Mailing State/Province"
+    },
+    "MailingPostalCode": {
+     "type": "string",
+     "label": "Mailing Zip/Postal Code"
+    },
+    "MailingCountry": {
+     "type": "string",
+     "label": "Mailing Country"
+    },
+    "MailingStateCode": {
+     "type": "picklist",
+     "label": "Mailing State/Province Code",
+     "values": [
+      "AC",
+      "AG",
+      "AG",
+      "05",
+      "02",
+      "AL",
+      "AL",
+      "AK",
+      "AB",
+      "AL",
+      "AP",
+      "AM",
+      "AN",
+      "AN",
+      "AP",
+      "34",
+      "23",
+      "AO",
+      "AR",
+      "AZ",
+      "AR",
+      "AR",
+      "AP",
+      "AS",
+      "AT",
+      "ACT",
+      "AV",
+      "BA",
+      "BC",
+      "BS",
+      "BA",
+      "BT",
+      "11",
+      "BL",
+      "BN",
+      "BG",
+      "BI",
+      "BR",
+      "BO",
+      "BZ",
+      "BS",
+      "BR",
+      "BC",
+      "CA",
+      "CA",
+      "CL",
+      "CM",
+      "CB",
+      "CI",
+      "CW",
+      "CE",
+      "CT",
+      "CZ",
+      "CN",
+      "CE",
+      "CH",
+      "CT",
+      "CS",
+      "12",
+      "CH",
+      "CH",
+      "50",
+      "CE",
+      "CO",
+      "CL",
+      "CO",
+      "CO",
+      "CT",
+      "CO",
+      "CS",
+      "CR",
+      "KR",
+      "CN",
+      "DN",
+      "DD",
+      "DE",
+      "DL",
+      "DC",
+      "DF",
+      "DL",
+      "D",
+      "DG",
+      "38",
+      "EN",
+      "ES",
+      "DF",
+      "FM",
+      "FE",
+      "FI",
+      "FL",
+      "FG",
+      "FC",
+      "FR",
+      "35",
+      "18",
+      "40",
+      "07",
+      "G",
+      "62",
+      "GE",
+      "GA",
+      "21",
+      "GA",
+      "GO",
+      "GO",
+      "GR",
+      "GT",
+      "44",
+      "45",
+      "GR",
+      "52",
+      "GJ",
+      "10",
+      "46",
+      "HR",
+      "HI",
+      "13",
+      "23",
+      "41",
+      "HG",
+      "HP",
+      "34",
+      "01",
+      "91",
+      "42",
+      "43",
+      "28",
+      "08",
+      "ID",
+      "IL",
+      "IM",
+      "IN",
+      "IA",
+      "IS",
+      "17",
+      "03",
+      "JA",
+      "JK",
+      "JH",
+      "32",
+      "36",
+      "22",
+      "37",
+      "46",
+      "14",
+      "KS",
+      "KA",
+      "KY",
+      "KL",
+      "KY",
+      "KE",
+      "KK",
+      "39",
+      "43",
+      "26",
+      "AQ",
+      "LD",
+      "LS",
+      "SP",
+      "LT",
+      "LE",
+      "LC",
+      "LM",
+      "21",
+      "LK",
+      "LI",
+      "LO",
+      "LD",
+      "LA",
+      "LH",
+      "LU",
+      "92",
+      "MC",
+      "MP",
+      "MH",
+      "ME",
+      "MN",
+      "MB",
+      "MN",
+      "MA",
+      "MD",
+      "MS",
+      "MA",
+      "MT",
+      "MT",
+      "MS",
+      "MO",
+      "MH",
+      "VS",
+      "ML",
+      "ME",
+      "ME",
+      "MI",
+      "MI",
+      "24",
+      "MI",
+      "MG",
+      "MN",
+      "MS",
+      "MO",
+      "04",
+      "45",
+      "MZ",
+      "MO",
+      "MN",
+      "MT",
+      "MB",
+      "MO",
+      "NL",
+      "20",
+      "42",
+      "NA",
+      "29",
+      "NA",
+      "NE",
+      "15",
+      "NV",
+      "NB",
+      "NL",
+      "NH",
+      "NJ",
+      "NM",
+      "NSW",
+      "NY",
+      "15",
+      "64",
+      "NC",
+      "ND",
+      "NT",
+      "NT",
+      "NO",
+      "NS",
+      "NL",
+      "NU",
+      "NU",
+      "OA",
+      "OR",
+      "OY",
+      "OG",
+      "OH",
+      "44",
+      "33",
+      "47",
+      "OK",
+      "OT",
+      "ON",
+      "OR",
+      "OR",
+      "27",
+      "PD",
+      "PA",
+      "PA",
+      "PB",
+      "PR",
+      "PR",
+      "PV",
+      "PA",
+      "PE",
+      "PG",
+      "PU",
+      "PE",
+      "PC",
+      "PI",
+      "PI",
+      "PT",
+      "PN",
+      "PZ",
+      "PO",
+      "PE",
+      "PY",
+      "PB",
+      "PB",
+      "63",
+      "QC",
+      "QLD",
+      "QE",
+      "QR",
+      "RG",
+      "RJ",
+      "RA",
+      "RC",
+      "RE",
+      "RI",
+      "RI",
+      "RN",
+      "RJ",
+      "RN",
+      "RS",
+      "RM",
+      "RO",
+      "RR",
+      "RN",
+      "RO",
+      "41",
+      "11",
+      "SA",
+      "SL",
+      "SC",
+      "SP",
+      "SK",
+      "SS",
+      "SV",
+      "SE",
+      "61",
+      "37",
+      "31",
+      "14",
+      "25",
+      "32",
+      "22",
+      "51",
+      "SI",
+      "SK",
+      "SI",
+      "SO",
+      "SO",
+      "SO",
+      "SA",
+      "SC",
+      "SD",
+      "SR",
+      "TB",
+      "71",
+      "TM",
+      "TN",
+      "TA",
+      "TAS",
+      "TG",
+      "TN",
+      "TE",
+      "TR",
+      "TX",
+      "12",
+      "TA",
+      "TL",
+      "TO",
+      "09",
+      "36",
+      "13",
+      "31",
+      "16",
+      "TP",
+      "TN",
+      "TV",
+      "TS",
+      "TR",
+      "TO",
+      "UD",
+      "UT",
+      "UT",
+      "UP",
+      "VA",
+      "VE",
+      "VE",
+      "VB",
+      "VC",
+      "VT",
+      "VR",
+      "VV",
+      "VI",
+      "VIC",
+      "VA",
+      "VT",
+      "30",
+      "WA",
+      "WD",
+      "WB",
+      "WA",
+      "WH",
+      "WV",
+      "WX",
+      "WW",
+      "WI",
+      "WY",
+      "65",
+      "54",
+      "06",
+      "35",
+      "19",
+      "YU",
+      "YT",
+      "53",
+      "ZA",
+      "33"
+     ]
+    },
+    "MailingCountryCode": {
+     "type": "picklist",
+     "label": "Mailing Country Code",
+     "values": [
+      "AF",
+      "AX",
+      "AL",
+      "DZ",
+      "AD",
+      "AO",
+      "AI",
+      "AQ",
+      "AG",
+      "AR",
+      "AM",
+      "AW",
+      "AU",
+      "AT",
+      "AZ",
+      "BS",
+      "BH",
+      "BD",
+      "BB",
+      "BY",
+      "BE",
+      "BZ",
+      "BJ",
+      "BM",
+      "BT",
+      "BO",
+      "BQ",
+      "BA",
+      "BW",
+      "BV",
+      "BR",
+      "IO",
+      "BN",
+      "BG",
+      "BF",
+      "BI",
+      "KH",
+      "CM",
+      "CA",
+      "CV",
+      "KY",
+      "CF",
+      "TD",
+      "CL",
+      "CN",
+      "CX",
+      "CC",
+      "CO",
+      "KM",
+      "CG",
+      "CD",
+      "CK",
+      "CR",
+      "CI",
+      "HR",
+      "CW",
+      "CY",
+      "CZ",
+      "DK",
+      "DJ",
+      "DM",
+      "DO",
+      "EC",
+      "EG",
+      "SV",
+      "GQ",
+      "ER",
+      "EE",
+      "SZ",
+      "ET",
+      "FK",
+      "FO",
+      "FJ",
+      "FI",
+      "FR",
+      "GF",
+      "PF",
+      "TF",
+      "GA",
+      "GM",
+      "GE",
+      "DE",
+      "GH",
+      "GI",
+      "GR",
+      "GL",
+      "GD",
+      "GP",
+      "GT",
+      "GG",
+      "GN",
+      "GW",
+      "GY",
+      "HT",
+      "HM",
+      "VA",
+      "HN",
+      "HU",
+      "IS",
+      "IN",
+      "ID",
+      "IQ",
+      "IE",
+      "IM",
+      "IL",
+      "IT",
+      "JM",
+      "JP",
+      "JE",
+      "JO",
+      "KZ",
+      "KE",
+      "KI",
+      "KR",
+      "XK",
+      "KW",
+      "KG",
+      "LA",
+      "LV",
+      "LB",
+      "LS",
+      "LR",
+      "LY",
+      "LI",
+      "LT",
+      "LU",
+      "MO",
+      "MG",
+      "MW",
+      "MY",
+      "MV",
+      "ML",
+      "MT",
+      "MQ",
+      "MR",
+      "MU",
+      "YT",
+      "MX",
+      "MD",
+      "MC",
+      "MN",
+      "ME",
+      "MS",
+      "MA",
+      "MZ",
+      "MM",
+      "NA",
+      "NR",
+      "NP",
+      "NL",
+      "NC",
+      "NZ",
+      "NI",
+      "NE",
+      "NG",
+      "NU",
+      "NF",
+      "MK",
+      "NO",
+      "OM",
+      "PK",
+      "PS",
+      "PA",
+      "PG",
+      "PY",
+      "PE",
+      "PH",
+      "PN",
+      "PL",
+      "PT",
+      "QA",
+      "RE",
+      "RO",
+      "RU",
+      "RW",
+      "BL",
+      "SH",
+      "KN",
+      "LC",
+      "MF",
+      "PM",
+      "VC",
+      "WS",
+      "SM",
+      "ST",
+      "SA",
+      "SN",
+      "RS",
+      "SC",
+      "SL",
+      "SG",
+      "SX",
+      "SK",
+      "SI",
+      "SB",
+      "SO",
+      "ZA",
+      "GS",
+      "SS",
+      "ES",
+      "LK",
+      "SR",
+      "SJ",
+      "SE",
+      "CH",
+      "TW",
+      "TJ",
+      "TZ",
+      "TH",
+      "TL",
+      "TG",
+      "TK",
+      "TO",
+      "TT",
+      "TN",
+      "TR",
+      "TM",
+      "TC",
+      "TV",
+      "UG",
+      "UA",
+      "AE",
+      "GB",
+      "US",
+      "UY",
+      "UZ",
+      "VU",
+      "VE",
+      "VN",
+      "VG",
+      "WF",
+      "EH",
+      "YE",
+      "ZM",
+      "ZW"
+     ]
+    },
+    "MailingLatitude": {
+     "type": "double",
+     "label": "Mailing Latitude",
+     "scale": 15
+    },
+    "MailingLongitude": {
+     "type": "double",
+     "label": "Mailing Longitude",
+     "scale": 15
+    },
+    "MailingGeocodeAccuracy": {
+     "type": "picklist",
+     "label": "Mailing Geocode Accuracy",
+     "values": [
+      "Address",
+      "NearAddress",
+      "Block",
+      "Street",
+      "ExtendedZip",
+      "Zip",
+      "Neighborhood",
+      "City",
+      "County",
+      "State",
+      "Unknown"
+     ]
+    },
+    "MailingAddress": {
+     "type": "address",
+     "label": "Mailing Address"
+    },
+    "Phone": {
+     "type": "phone",
+     "label": "Business Phone"
+    },
+    "Fax": {
+     "type": "phone",
+     "label": "Business Fax"
+    },
+    "MobilePhone": {
+     "type": "phone",
+     "label": "Mobile Phone"
+    },
+    "HomePhone": {
+     "type": "phone",
+     "label": "Home Phone"
+    },
+    "OtherPhone": {
+     "type": "phone",
+     "label": "Other Phone"
+    },
+    "AssistantPhone": {
+     "type": "phone",
+     "label": "Asst. Phone"
+    },
+    "ReportsToId": {
+     "type": "reference",
+     "label": "Reports To ID",
+     "relationshipName": "ReportsTo",
+     "referenceTo": [
+      "Contact"
+     ]
+    },
+    "Email": {
+     "type": "email",
+     "label": "Email"
+    },
+    "Title": {
+     "type": "string",
+     "label": "Title"
+    },
+    "Department": {
+     "type": "string",
+     "label": "Department"
+    },
+    "AssistantName": {
+     "type": "string",
+     "label": "Assistant's Name"
+    },
+    "LeadSource": {
+     "type": "picklist",
+     "label": "Lead Source",
+     "values": [
+      "Web",
+      "Phone Inquiry",
+      "Partner Referral",
+      "Purchased List",
+      "Other"
+     ]
+    },
+    "Birthdate": {
+     "type": "date",
+     "label": "Birthdate"
+    },
+    "Description": {
+     "type": "textarea",
+     "label": "Contact Description"
+    },
+    "OwnerId": {
+     "type": "reference",
+     "label": "Owner ID",
+     "relationshipName": "Owner",
+     "referenceTo": [
+      "User"
+     ]
+    },
+    "CreatedDate": {
+     "type": "datetime",
+     "label": "Created Date"
+    },
+    "CreatedById": {
+     "type": "reference",
+     "label": "Created By ID",
+     "relationshipName": "CreatedBy",
+     "referenceTo": [
+      "User"
+     ]
+    },
+    "LastModifiedDate": {
+     "type": "datetime",
+     "label": "Last Modified Date"
+    },
+    "LastModifiedById": {
+     "type": "reference",
+     "label": "Last Modified By ID",
+     "relationshipName": "LastModifiedBy",
+     "referenceTo": [
+      "User"
+     ]
+    },
+    "SystemModstamp": {
+     "type": "datetime",
+     "label": "System Modstamp"
+    },
+    "LastActivityDate": {
+     "type": "date",
+     "label": "Last Activity"
+    },
+    "LastCURequestDate": {
+     "type": "datetime",
+     "label": "Last Stay-in-Touch Request Date"
+    },
+    "LastCUUpdateDate": {
+     "type": "datetime",
+     "label": "Last Stay-in-Touch Save Date"
+    },
+    "LastViewedDate": {
+     "type": "datetime",
+     "label": "Last Viewed Date"
+    },
+    "LastReferencedDate": {
+     "type": "datetime",
+     "label": "Last Referenced Date"
+    },
+    "EmailBouncedReason": {
+     "type": "string",
+     "label": "Email Bounced Reason"
+    },
+    "EmailBouncedDate": {
+     "type": "datetime",
+     "label": "Email Bounced Date"
+    },
+    "IsEmailBounced": {
+     "type": "boolean",
+     "label": "Is Email Bounced"
+    },
+    "PhotoUrl": {
+     "type": "url",
+     "label": "Photo URL"
+    },
+    "Jigsaw": {
+     "type": "string",
+     "label": "Data.com Key"
+    },
+    "JigsawContactId": {
+     "type": "string",
+     "label": "Jigsaw Contact ID"
+    },
+    "CleanStatus": {
+     "type": "picklist",
+     "label": "Clean Status",
+     "values": [
+      "Matched",
+      "Different",
+      "Acknowledged",
+      "NotFound",
+      "Inactive",
+      "Pending",
+      "SelectMatch",
+      "Skipped"
+     ]
+    },
+    "IndividualId": {
+     "type": "reference",
+     "label": "Individual ID",
+     "relationshipName": "Individual",
+     "referenceTo": [
+      "Individual"
+     ]
+    },
+    "IsPriorityRecord": {
+     "type": "boolean",
+     "label": "Important"
+    },
+    "ContactSource": {
+     "type": "picklist",
+     "label": "Creation Source",
+     "values": [
+      "Auto Create",
+      "Email Message",
+      "Meeting Digest",
+      "Seller Home"
+     ]
+    },
+    "Level__c": {
+     "type": "picklist",
+     "label": "Level",
+     "values": [
+      "Secondary",
+      "Tertiary",
+      "Primary"
+     ]
+    },
+    "Languages__c": {
+     "type": "string",
+     "label": "Languages"
+    },
+    "Signer_Role__c": {
+     "type": "picklist",
+     "label": "Signer role",
+     "values": [
+      "First signer",
+      "Second signer",
+      "Approver",
+      "Sender"
+     ]
+    }
+   },
+   "children": {
+    "Cases": {
+     "object": "Case",
+     "field": "ContactId"
+    },
+    "ContractsSigned": {
+     "object": "Contract",
+     "field": "CustomerSignedId"
+    },
+    "Opportunities": {
+     "object": "Opportunity",
+     "field": "ContactId"
+    },
+    "OpportunityContactRoles": {
+     "object": "OpportunityContactRole",
+     "field": "ContactId"
+    },
+    "SBQQ__Quotes__r": {
+     "object": "SBQQ__Quote__c",
+     "field": "SBQQ__PrimaryContact__c"
+    },
+    "Users": {
+     "object": "User",
+     "field": "ContactId"
+    }
+   }
+  },
+  "OpportunityContactRole": {
+   "label": "Opportunity Contact Role",
+   "fields": {
+    "Id": {
+     "type": "id",
+     "label": "Contact Role ID"
+    },
+    "OpportunityId": {
+     "type": "reference",
+     "label": "Opportunity ID",
+     "relationshipName": "Opportunity",
+     "referenceTo": [
+      "Opportunity"
+     ]
+    },
+    "ContactId": {
+     "type": "reference",
+     "label": "Contact ID",
+     "relationshipName": "Contact",
+     "referenceTo": [
+      "Contact"
+     ]
+    },
+    "Role": {
+     "type": "picklist",
+     "label": "Role",
+     "values": [
+      "Business User",
+      "Decision Maker",
+      "Economic Buyer",
+      "Economic Decision Maker",
+      "Evaluator",
+      "Executive Sponsor",
+      "Influencer",
+      "Technical Buyer",
+      "Other"
+     ]
+    },
+    "IsPrimary": {
+     "type": "boolean",
+     "label": "Primary"
+    },
+    "CreatedDate": {
+     "type": "datetime",
+     "label": "Created Date"
+    },
+    "CreatedById": {
+     "type": "reference",
+     "label": "Created By ID",
+     "relationshipName": "CreatedBy",
+     "referenceTo": [
+      "User"
+     ]
+    },
+    "LastModifiedDate": {
+     "type": "datetime",
+     "label": "Last Modified Date"
+    },
+    "LastModifiedById": {
+     "type": "reference",
+     "label": "Last Modified By ID",
+     "relationshipName": "LastModifiedBy",
+     "referenceTo": [
+      "User"
+     ]
+    },
+    "SystemModstamp": {
+     "type": "datetime",
+     "label": "System Modstamp"
+    },
+    "IsDeleted": {
+     "type": "boolean",
+     "label": "Deleted"
+    }
+   },
+   "children": {}
+  },
+  "SBQQ__Quote__c": {
+   "label": "Quote",
+   "fields": {
+    "Id": {
+     "type": "id",
+     "label": "Record ID"
+    },
+    "OwnerId": {
+     "type": "reference",
+     "label": "Owner ID",
+     "relationshipName": "Owner",
+     "referenceTo": [
+      "Group",
+      "User"
+     ]
+    },
+    "IsDeleted": {
+     "type": "boolean",
+     "label": "Deleted"
+    },
+    "Name": {
+     "type": "string",
+     "label": "Quote Number"
+    },
+    "CreatedDate": {
+     "type": "datetime",
+     "label": "Created Date"
+    },
+    "CreatedById": {
+     "type": "reference",
+     "label": "Created By ID",
+     "relationshipName": "CreatedBy",
+     "referenceTo": [
+      "User"
+     ]
+    },
+    "LastModifiedDate": {
+     "type": "datetime",
+     "label": "Last Modified Date"
+    },
+    "LastModifiedById": {
+     "type": "reference",
+     "label": "Last Modified By ID",
+     "relationshipName": "LastModifiedBy",
+     "referenceTo": [
+      "User"
+     ]
+    },
+    "SystemModstamp": {
+     "type": "datetime",
+     "label": "System Modstamp"
+    },
+    "LastActivityDate": {
+     "type": "date",
+     "label": "Last Activity Date"
+    },
+    "LastViewedDate": {
+     "type": "datetime",
+     "label": "Last Viewed Date"
+    },
+    "LastReferencedDate": {
+     "type": "datetime",
+     "label": "Last Referenced Date"
+    },
+    "SBQQ__Account__c": {
+     "type": "reference",
+     "label": "Account",
+     "relationshipName": "SBQQ__Account__r",
+     "referenceTo": [
+      "Account"
+     ]
+    },
+    "SBQQ__BillingCity__c": {
+     "type": "string",
+     "label": "Bill To City"
+    },
+    "SBQQ__BillingCountry__c": {
+     "type": "string",
+     "label": "Bill To Country"
+    },
+    "SBQQ__BillingFrequency__c": {
+     "type": "picklist",
+     "label": "Billing Frequency",
+     "values": [
+      "Monthly",
+      "Quarterly",
+      "Semiannual",
+      "Annual",
+      "Invoice Plan"
+     ]
+    },
+    "SBQQ__BillingName__c": {
+     "type": "string",
+     "label": "Bill To Name"
+    },
+    "SBQQ__BillingPostalCode__c": {
+     "type": "string",
+     "label": "Bill To Postal Code"
+    },
+    "SBQQ__BillingState__c": {
+     "type": "string",
+     "label": "Bill To State"
+    },
+    "SBQQ__BillingStreet__c": {
+     "type": "textarea",
+     "label": "Bill To Street"
+    },
+    "SBQQ__ConsumptionRateOverride__c": {
+     "type": "boolean",
+     "label": "Consumption Rate Override"
+    },
+    "SBQQ__ContractingMethod__c": {
+     "type": "picklist",
+     "label": "Contracting Method",
+     "values": [
+      "By Subscription End Date",
+      "Single Contract"
+     ]
+    },
+    "SBQQ__CustomerDiscount__c": {
+     "type": "percent",
+     "label": "Additional Disc. (%)",
+     "scale": 2
+    },
+    "SBQQ__DefaultTemplate__c": {
+     "type": "reference",
+     "label": "Default Template",
+     "relationshipName": "SBQQ__DefaultTemplate__r",
+     "referenceTo": [
+      "SBQQ__QuoteTemplate__c"
+     ]
+    },
+    "SBQQ__DeliveryMethod__c": {
+     "type": "picklist",
+     "label": "Delivery Method",
+     "values": [
+      "Download",
+      "Ship"
+     ]
+    },
+    "SBQQ__DistributorDiscount__c": {
+     "type": "percent",
+     "label": "Distributor Discount",
+     "scale": 2
+    },
+    "SBQQ__Distributor__c": {
+     "type": "reference",
+     "label": "Distributor",
+     "relationshipName": "SBQQ__Distributor__r",
+     "referenceTo": [
+      "Account"
+     ]
+    },
+    "SBQQ__DocumentStatus__c": {
+     "type": "picklist",
+     "label": "Document Status",
+     "values": [
+      "Pending",
+      "Sent",
+      "Failed"
+     ]
+    },
+    "SBQQ__EmailTemplateId__c": {
+     "type": "string",
+     "label": "Email Template Id"
+    },
+    "SBQQ__EndDate__c": {
+     "type": "date",
+     "label": "End Date"
+    },
+    "SBQQ__FirstSegmentTermEndDate__c": {
+     "type": "date",
+     "label": "First Segment Term End Date"
+    },
+    "SBQQ__GenerateContractedPrice__c": {
+     "type": "picklist",
+     "label": "Generate Contracted Price",
+     "values": [
+      "Price",
+      "Discount Schedule",
+      "Do Not Generate"
+     ]
+    },
+    "SBQQ__Introduction__c": {
+     "type": "textarea",
+     "label": "Introduction"
+    },
+    "SBQQ__Key__c": {
+     "type": "string",
+     "label": "Key"
+    },
+    "SBQQ__LastCalculatedOn__c": {
+     "type": "datetime",
+     "label": "Last Calculated On"
+    },
+    "SBQQ__LastSavedOn__c": {
+     "type": "datetime",
+     "label": "Last Saved On"
+    },
+    "SBQQ__LineItemsGrouped__c": {
+     "type": "boolean",
+     "label": "Group Line Items"
+    },
+    "SBQQ__LineItemsPrinted__c": {
+     "type": "boolean",
+     "label": "Print Line Items"
+    },
+    "SBQQ__MarkupRate__c": {
+     "type": "percent",
+     "label": "Markup (%)",
+     "scale": 2
+    },
+    "SBQQ__MasterContract__c": {
+     "type": "reference",
+     "label": "Master Contract",
+     "relationshipName": "SBQQ__MasterContract__r",
+     "referenceTo": [
+      "Contract"
+     ]
+    },
+    "SBQQ__MasterEvergreenContract__c": {
+     "type": "reference",
+     "label": "Master Evergreen Contract",
+     "relationshipName": "SBQQ__MasterEvergreenContract__r",
+     "referenceTo": [
+      "Contract"
+     ]
+    },
+    "SBQQ__Notes__c": {
+     "type": "textarea",
+     "label": "Notes"
+    },
+    "SBQQ__Opportunity2__c": {
+     "type": "reference",
+     "label": "Opportunity",
+     "relationshipName": "SBQQ__Opportunity2__r",
+     "referenceTo": [
+      "Opportunity"
+     ]
+    },
+    "SBQQ__OrderByQuoteLineGroup__c": {
+     "type": "boolean",
+     "label": "Order By Quote Line Group"
+    },
+    "SBQQ__OrderBy__c": {
+     "type": "picklist",
+     "label": "Order By",
+     "values": [
+      "ProductFamily__c",
+      "QuantityBasedFormulaField__c"
+     ]
+    },
+    "SBQQ__OrderGroupID__c": {
+     "type": "string",
+     "label": "Order Group ID"
+    },
+    "SBQQ__Ordered__c": {
+     "type": "boolean",
+     "label": "Ordered"
+    },
+    "SBQQ__OriginalQuote__c": {
+     "type": "reference",
+     "label": "Original Quote",
+     "relationshipName": "SBQQ__OriginalQuote__r",
+     "referenceTo": [
+      "SBQQ__Quote__c"
+     ]
+    },
+    "SBQQ__PaperSize__c": {
+     "type": "picklist",
+     "label": "Paper Size",
+     "values": [
+      "Default",
+      "Letter",
+      "Legal",
+      "A4"
+     ]
+    },
+    "SBQQ__PartnerDiscount__c": {
+     "type": "percent",
+     "label": "Partner Discount",
+     "scale": 2
+    },
+    "SBQQ__Partner__c": {
+     "type": "reference",
+     "label": "Partner",
+     "relationshipName": "SBQQ__Partner__r",
+     "referenceTo": [
+      "Account"
+     ]
+    },
+    "SBQQ__PaymentTerms__c": {
+     "type": "picklist",
+     "label": "Payment Terms",
+     "values": [
+      "Due on receipt",
+      "Net 15",
+      "Net 30",
+      "Net 45",
+      "Net 60",
+      "Net 90"
+     ]
+    },
+    "SBQQ__PriceBook__c": {
+     "type": "reference",
+     "label": "Price Book",
+     "relationshipName": "SBQQ__PriceBook__r",
+     "referenceTo": [
+      "Pricebook2"
+     ]
+    },
+    "SBQQ__PricebookId__c": {
+     "type": "string",
+     "label": "Pricebook ID"
+    },
+    "SBQQ__PrimaryContact__c": {
+     "type": "reference",
+     "label": "Primary Contact",
+     "relationshipName": "SBQQ__PrimaryContact__r",
+     "referenceTo": [
+      "Contact"
+     ]
+    },
+    "SBQQ__Primary__c": {
+     "type": "boolean",
+     "label": "Primary"
+    },
+    "SBQQ__ProrationDayOfMonth__c": {
+     "type": "picklist",
+     "label": "Proration Day Of Month",
+     "values": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "7",
+      "8",
+      "9",
+      "10",
+      "11",
+      "12",
+      "13",
+      "14",
+      "15",
+      "16",
+      "17",
+      "18",
+      "19",
+      "20",
+      "21",
+      "22",
+      "23",
+      "24",
+      "25",
+      "26",
+      "27",
+      "28",
+      "29",
+      "30",
+      "31"
+     ]
+    },
+    "SBQQ__QuoteLanguage__c": {
+     "type": "picklist",
+     "label": "Quote Language",
+     "values": [
+      "Danish",
+      "German",
+      "English",
+      "Spanish",
+      "Spanish (Mexican)",
+      "Finnish",
+      "French",
+      "Italian",
+      "Japanese",
+      "Korean",
+      "Dutch",
+      "Norwegian",
+      "Portuguese (Brazilian)",
+      "Russian",
+      "Swedish",
+      "Thai",
+      "Chinese (Simplified)",
+      "Chinese (Traditional)"
+     ]
+    },
+    "SBQQ__QuoteProcessId__c": {
+     "type": "string",
+     "label": "Quote Process Id"
+    },
+    "SBQQ__QuoteTemplateId__c": {
+     "type": "string",
+     "label": "Quote Template Id"
+    },
+    "SBQQ__RenewalTerm__c": {
+     "type": "double",
+     "label": "Renewal Term",
+     "scale": 0
+    },
+    "SBQQ__RenewalUpliftRate__c": {
+     "type": "percent",
+     "label": "Renewal Uplift (%)",
+     "scale": 3
+    },
+    "SBQQ__SalesRep__c": {
+     "type": "reference",
+     "label": "Sales Rep",
+     "relationshipName": "SBQQ__SalesRep__r",
+     "referenceTo": [
+      "User"
+     ]
+    },
+    "SBQQ__ShippingCity__c": {
+     "type": "string",
+     "label": "Ship To City"
+    },
+    "SBQQ__ShippingCountry__c": {
+     "type": "string",
+     "label": "Ship To Country"
+    },
+    "SBQQ__ShippingName__c": {
+     "type": "string",
+     "label": "Ship To Name"
+    },
+    "SBQQ__ShippingPostalCode__c": {
+     "type": "string",
+     "label": "Ship To Postal Code"
+    },
+    "SBQQ__ShippingState__c": {
+     "type": "string",
+     "label": "Ship To State"
+    },
+    "SBQQ__ShippingStreet__c": {
+     "type": "textarea",
+     "label": "Ship To Street"
+    },
+    "SBQQ__Source__c": {
+     "type": "reference",
+     "label": "Source",
+     "relationshipName": "SBQQ__Source__r",
+     "referenceTo": [
+      "SBQQ__Quote__c"
+     ]
+    },
+    "SBQQ__StartDate__c": {
+     "type": "date",
+     "label": "Start Date"
+    },
+    "SBQQ__Status__c": {
+     "type": "picklist",
+     "label": "Status",
+     "values": [
+      "Draft",
+      "In Review",
+      "Approved",
+      "Denied",
+      "Presented",
+      "Accepted",
+      "Rejected"
+     ]
+    },
+    "SBQQ__SubscriptionTerm__c": {
+     "type": "double",
+     "label": "Subscription Term",
+     "scale": 0
+    },
+    "SBQQ__TargetCustomerAmount__c": {
+     "type": "currency",
+     "label": "Target Customer Amount",
+     "scale": 2
+    },
+    "SBQQ__Type__c": {
+     "type": "picklist",
+     "label": "Type",
+     "values": [
+      "Quote",
+      "Renewal",
+      "Amendment",
+      "Re-Quote"
+     ]
+    },
+    "SBQQ__Unopened__c": {
+     "type": "boolean",
+     "label": "Unopened"
+    },
+    "SBQQ__WatermarkShown__c": {
+     "type": "boolean",
+     "label": "Watermark Shown"
+    },
+    "SBQQ__LineItemCount__c": {
+     "type": "double",
+     "label": "Line Item Count",
+     "scale": 0
+    },
+    "SBQQ__AdditionalDiscountAmount__c": {
+     "type": "currency",
+     "label": "Addl. Disc. Amount",
+     "scale": 2
+    },
+    "SBQQ__AverageCustomerDiscount__c": {
+     "type": "percent",
+     "label": "Avg. Customer Disc. (%)",
+     "scale": 1
+    },
+    "SBQQ__AveragePartnerDiscount__c": {
+     "type": "percent",
+     "label": "Avg. Partner Disc. (%)",
+     "scale": 1
+    },
+    "SBQQ__DaysQuoteOpen__c": {
+     "type": "double",
+     "label": "Days Quote Open",
+     "scale": 0
+    },
+    "SBQQ__ExpirationDate__c": {
+     "type": "date",
+     "label": "Expires On"
+    },
+    "SBQQ__TotalCustomerDiscountAmount__c": {
+     "type": "currency",
+     "label": "Total Customer Disc. Amount",
+     "scale": 2
+    },
+    "SBQQ__Uncalculated__c": {
+     "type": "boolean",
+     "label": "Uncalculated"
+    },
+    "SBQQ__CustomerAmount__c": {
+     "type": "currency",
+     "label": "Customer Amount",
+     "scale": 2
+    },
+    "SBQQ__ListAmount__c": {
+     "type": "currency",
+     "label": "List Amount",
+     "scale": 2
+    },
+    "SBQQ__NetAmount__c": {
+     "type": "currency",
+     "label": "Net Amount",
+     "scale": 2
+    },
+    "SBQQ__RegularAmount__c": {
+     "type": "currency",
+     "label": "Regular Amount",
+     "scale": 2
+    }
+   },
+   "children": {
+    "SBQQ__Contracts__r": {
+     "object": "Contract",
+     "field": "SBQQ__Quote__c"
+    },
+    "SBQQ__PrimaryOpportunities__r": {
+     "object": "Opportunity",
+     "field": "SBQQ__PrimaryQuote__c"
+    },
+    "SBQQ__LineItems__r": {
+     "object": "SBQQ__QuoteLine__c",
+     "field": "SBQQ__Quote__c"
+    },
+    "SBQQ__ChangeOrders__r": {
+     "object": "SBQQ__Quote__c",
+     "field": "SBQQ__OriginalQuote__c"
+    },
+    "SBQQ__Clones__r": {
+     "object": "SBQQ__Quote__c",
+     "field": "SBQQ__Source__c"
+    }
+   }
+  },
+  "SBQQ__QuoteLine__c": {
+   "label": "Quote Line",
+   "fields": {
+    "Id": {
+     "type": "id",
+     "label": "Record ID"
+    },
+    "IsDeleted": {
+     "type": "boolean",
+     "label": "Deleted"
+    },
+    "Name": {
+     "type": "string",
+     "label": "Line Name"
+    },
+    "CreatedDate": {
+     "type": "datetime",
+     "label": "Created Date"
+    },
+    "CreatedById": {
+     "type": "reference",
+     "label": "Created By ID",
+     "relationshipName": "CreatedBy",
+     "referenceTo": [
+      "User"
+     ]
+    },
+    "LastModifiedDate": {
+     "type": "datetime",
+     "label": "Last Modified Date"
+    },
+    "LastModifiedById": {
+     "type": "reference",
+     "label": "Last Modified By ID",
+     "relationshipName": "LastModifiedBy",
+     "referenceTo": [
+      "User"
+     ]
+    },
+    "SystemModstamp": {
+     "type": "datetime",
+     "label": "System Modstamp"
+    },
+    "SBQQ__Quote__c": {
+     "type": "reference",
+     "label": "Quote",
+     "relationshipName": "SBQQ__Quote__r",
+     "referenceTo": [
+      "SBQQ__Quote__c"
+     ]
+    },
+    "SBQQ__AdditionalDiscountAmount__c": {
+     "type": "currency",
+     "label": "Additional Disc. (Amt)",
+     "scale": 2
+    },
+    "SBQQ__AdditionalQuantity__c": {
+     "type": "double",
+     "label": "Additional Quantity",
+     "scale": 2
+    },
+    "SBQQ__AllowAssetRefund__c": {
+     "type": "boolean",
+     "label": "Allow Asset Refunds"
+    },
+    "SBQQ__BatchQuantity__c": {
+     "type": "double",
+     "label": "Batch Quantity",
+     "scale": 2
+    },
+    "SBQQ__BillingFrequency__c": {
+     "type": "picklist",
+     "label": "Billing Frequency",
+     "values": [
+      "Monthly",
+      "Quarterly",
+      "Semiannual",
+      "Annual",
+      "Invoice Plan"
+     ]
+    },
+    "SBQQ__BillingType__c": {
+     "type": "picklist",
+     "label": "Billing Type",
+     "values": [
+      "Advance",
+      "Arrears"
+     ]
+    },
+    "SBQQ__BlockPrice__c": {
+     "type": "reference",
+     "label": "Block Price",
+     "relationshipName": "SBQQ__BlockPrice__r",
+     "referenceTo": [
+      "SBQQ__BlockPrice__c"
+     ]
+    },
+    "SBQQ__Bundle__c": {
+     "type": "boolean",
+     "label": "Package"
+    },
+    "SBQQ__BundledQuantity__c": {
+     "type": "double",
+     "label": "Original Quantity",
+     "scale": 2
+    },
+    "SBQQ__Bundled__c": {
+     "type": "boolean",
+     "label": "Bundled"
+    },
+    "SBQQ__CarryoverLine__c": {
+     "type": "boolean",
+     "label": "Carry-Over Line"
+    },
+    "SBQQ__ChargeType__c": {
+     "type": "picklist",
+     "label": "Charge Type",
+     "values": [
+      "One-Time",
+      "Recurring",
+      "Usage"
+     ]
+    },
+    "SBQQ__ComponentCost__c": {
+     "type": "currency",
+     "label": "Component Cost",
+     "scale": 2
+    },
+    "SBQQ__ComponentDiscountedByPackage__c": {
+     "type": "boolean",
+     "label": "Component Discounted By Package"
+    },
+    "SBQQ__ComponentListTotal__c": {
+     "type": "currency",
+     "label": "Component List Total",
+     "scale": 2
+    },
+    "SBQQ__ComponentSubscriptionScope__c": {
+     "type": "picklist",
+     "label": "Component Percent of Total Scope",
+     "values": [
+      "Package",
+      "Components",
+      "Both",
+      "Entire Hierarchy"
+     ]
+    },
+    "SBQQ__ComponentTotal__c": {
+     "type": "currency",
+     "label": "Component Net Total",
+     "scale": 2
+    },
+    "SBQQ__ComponentUpliftedByPackage__c": {
+     "type": "boolean",
+     "label": "Component Uplifted By Package"
+    },
+    "SBQQ__CompoundDiscountRate__c": {
+     "type": "percent",
+     "label": "Compound Discount (%)",
+     "scale": 3
+    },
+    "SBQQ__ConfigurationRequired__c": {
+     "type": "boolean",
+     "label": "Configuration Required"
+    },
+    "SBQQ__ContractedPrice__c": {
+     "type": "reference",
+     "label": "Contracted Price",
+     "relationshipName": "SBQQ__ContractedPrice__r",
+     "referenceTo": [
+      "SBQQ__ContractedPrice__c"
+     ]
+    },
+    "SBQQ__CostEditable__c": {
+     "type": "boolean",
+     "label": "Cost Editable"
+    },
+    "SBQQ__Cost__c": {
+     "type": "reference",
+     "label": "Cost",
+     "relationshipName": "SBQQ__Cost__r",
+     "referenceTo": [
+      "SBQQ__Cost__c"
+     ]
+    },
+    "SBQQ__CustomerPrice__c": {
+     "type": "currency",
+     "label": "Customer Unit Price",
+     "scale": 2
+    },
+    "SBQQ__DefaultSubscriptionTerm__c": {
+     "type": "double",
+     "label": "Default Subscription Term",
+     "scale": 0
+    },
+    "SBQQ__Description__c": {
+     "type": "textarea",
+     "label": "Description"
+    },
+    "SBQQ__Dimension__c": {
+     "type": "reference",
+     "label": "Price Dimension",
+     "relationshipName": "SBQQ__Dimension__r",
+     "referenceTo": [
+      "SBQQ__Dimension__c"
+     ]
+    },
+    "SBQQ__DiscountScheduleType__c": {
+     "type": "picklist",
+     "label": "Discount Schedule Type",
+     "values": [
+      "Range",
+      "Slab"
+     ]
+    },
+    "SBQQ__DiscountSchedule__c": {
+     "type": "reference",
+     "label": "Discount Schedule",
+     "relationshipName": "SBQQ__DiscountSchedule__r",
+     "referenceTo": [
+      "SBQQ__DiscountSchedule__c"
+     ]
+    },
+    "SBQQ__DiscountTier__c": {
+     "type": "reference",
+     "label": "Discount Tier",
+     "relationshipName": "SBQQ__DiscountTier__r",
+     "referenceTo": [
+      "SBQQ__DiscountTier__c"
+     ]
+    },
+    "SBQQ__Discount__c": {
+     "type": "percent",
+     "label": "Additional Disc. (%)",
+     "scale": 2
+    },
+    "SBQQ__DistributorDiscount__c": {
+     "type": "percent",
+     "label": "Distributor Discount",
+     "scale": 2
+    },
+    "SBQQ__DynamicOptionId__c": {
+     "type": "string",
+     "label": "Dynamic Option ID"
+    },
+    "SBQQ__EarliestValidAmendmentStartDate__c": {
+     "type": "date",
+     "label": "Earliest Valid Amendment Start Date"
+    },
+    "SBQQ__EndDate__c": {
+     "type": "date",
+     "label": "End Date"
+    },
+    "SBQQ__Existing__c": {
+     "type": "boolean",
+     "label": "Existing"
+    },
+    "SBQQ__Favorite__c": {
+     "type": "reference",
+     "label": "Favorite",
+     "relationshipName": "SBQQ__Favorite__r",
+     "referenceTo": [
+      "SBQQ__Favorite__c"
+     ]
+    },
+    "SBQQ__GenerateContractedPrice__c": {
+     "type": "picklist",
+     "label": "Generate Contracted Price",
+     "values": [
+      "Price",
+      "Discount Schedule",
+      "Do Not Generate"
+     ]
+    },
+    "SBQQ__GrossProfit__c": {
+     "type": "currency",
+     "label": "Gross Profit",
+     "scale": 2
+    },
+    "SBQQ__Group__c": {
+     "type": "reference",
+     "label": "Group",
+     "relationshipName": "SBQQ__Group__r",
+     "referenceTo": [
+      "SBQQ__QuoteLineGroup__c"
+     ]
+    },
+    "SBQQ__Guidance__c": {
+     "type": "percent",
+     "label": "Guidance",
+     "scale": 2
+    },
+    "SBQQ__HasConsumptionSchedule__c": {
+     "type": "boolean",
+     "label": "Has Consumption Schedules"
+    },
+    "SBQQ__Hidden__c": {
+     "type": "boolean",
+     "label": "Hidden"
+    },
+    "SBQQ__Incomplete__c": {
+     "type": "boolean",
+     "label": "Incomplete"
+    },
+    "SBQQ__ListPrice__c": {
+     "type": "currency",
+     "label": "List Unit Price",
+     "scale": 2
+    },
+    "SBQQ__MarkupAmount__c": {
+     "type": "currency",
+     "label": "Markup (Amt)",
+     "scale": 2
+    },
+    "SBQQ__MarkupRate__c": {
+     "type": "percent",
+     "label": "Markup (%)",
+     "scale": 2
+    },
+    "SBQQ__MaximumPrice__c": {
+     "type": "currency",
+     "label": "Maximum List Unit Price",
+     "scale": 2
+    },
+    "SBQQ__MinimumPrice__c": {
+     "type": "currency",
+     "label": "Minimum List Unit Price",
+     "scale": 0
+    },
+    "SBQQ__NetPrice__c": {
+     "type": "currency",
+     "label": "Net Unit Price",
+     "scale": 2
+    },
+    "SBQQ__NonDiscountable__c": {
+     "type": "boolean",
+     "label": "Non Discountable"
+    },
+    "SBQQ__NonPartnerDiscountable__c": {
+     "type": "boolean",
+     "label": "Non Partner Discountable"
+    },
+    "SBQQ__Number__c": {
+     "type": "double",
+     "label": "Number",
+     "scale": 0
+    },
+    "SBQQ__OptionDiscountAmount__c": {
+     "type": "currency",
+     "label": "Option Discount (Amt)",
+     "scale": 2
+    },
+    "SBQQ__OptionDiscount__c": {
+     "type": "percent",
+     "label": "Option Discount (%)",
+     "scale": 2
+    },
+    "SBQQ__OptionLevel__c": {
+     "type": "double",
+     "label": "Option Level",
+     "scale": 0
+    },
+    "SBQQ__OptionType__c": {
+     "type": "picklist",
+     "label": "Option Type",
+     "values": [
+      "Component",
+      "Accessory",
+      "Related Product"
+     ]
+    },
+    "SBQQ__Optional__c": {
+     "type": "boolean",
+     "label": "Optional"
+    },
+    "SBQQ__OriginalPrice__c": {
+     "type": "currency",
+     "label": "Original Price",
+     "scale": 2
+    },
+    "SBQQ__OriginalQuoteLineId__c": {
+     "type": "string",
+     "label": "Original Quote Line Id"
+    },
+    "SBQQ__OriginalUnitCost__c": {
+     "type": "currency",
+     "label": "Original Unit Cost",
+     "scale": 2
+    },
+    "SBQQ__PackageProductCode__c": {
+     "type": "string",
+     "label": "Package Product Code"
+    },
+    "SBQQ__PackageProductDescription__c": {
+     "type": "textarea",
+     "label": "Package Product Description"
+    },
+    "SBQQ__PartnerDiscount__c": {
+     "type": "percent",
+     "label": "Partner Discount",
+     "scale": 2
+    },
+    "SBQQ__PartnerPrice__c": {
+     "type": "currency",
+     "label": "Partner Unit Price",
+     "scale": 2
+    },
+    "SBQQ__PreviousSegmentPrice__c": {
+     "type": "currency",
+     "label": "Previous Segment Regular Price",
+     "scale": 2
+    },
+    "SBQQ__PreviousSegmentUplift__c": {
+     "type": "currency",
+     "label": "Previous Segment Uplift",
+     "scale": 2
+    },
+    "SBQQ__PriceEditable__c": {
+     "type": "boolean",
+     "label": "Price Editable"
+    },
+    "SBQQ__PricebookEntryId__c": {
+     "type": "string",
+     "label": "Pricebook Entry Id"
+    },
+    "SBQQ__PricingMethodEditable__c": {
+     "type": "boolean",
+     "label": "Pricing Method Editable"
+    },
+    "SBQQ__PricingMethod__c": {
+     "type": "picklist",
+     "label": "Pricing Method",
+     "values": [
+      "List",
+      "Cost",
+      "Block",
+      "Percent Of Total",
+      "Custom"
+     ]
+    },
+    "SBQQ__PriorQuantity__c": {
+     "type": "double",
+     "label": "Prior Quantity",
+     "scale": 2
+    },
+    "SBQQ__ProductOption__c": {
+     "type": "reference",
+     "label": "Product Option",
+     "relationshipName": "SBQQ__ProductOption__r",
+     "referenceTo": [
+      "SBQQ__ProductOption__c"
+     ]
+    },
+    "SBQQ__ProductSubscriptionType__c": {
+     "type": "picklist",
+     "label": "Product Subscription Type",
+     "values": [
+      "Renewable",
+      "One-time",
+      "Renewable/Evergreen",
+      "Evergreen"
+     ]
+    },
+    "SBQQ__Product__c": {
+     "type": "reference",
+     "label": "Product",
+     "relationshipName": "SBQQ__Product__r",
+     "referenceTo": [
+      "Product2"
+     ]
+    },
+    "SBQQ__ProrateMultiplier__c": {
+     "type": "double",
+     "label": "Prorate Multiplier",
+     "scale": 4
+    },
+    "SBQQ__ProratedListPrice__c": {
+     "type": "currency",
+     "label": "Prorated List Price",
+     "scale": 2
+    },
+    "SBQQ__ProratedPrice__c": {
+     "type": "currency",
+     "label": "Prorated Unit Price",
+     "scale": 2
+    },
+    "SBQQ__Quantity__c": {
+     "type": "double",
+     "label": "Quantity",
+     "scale": 2
+    },
+    "SBQQ__RegularPrice__c": {
+     "type": "currency",
+     "label": "Regular Unit Price",
+     "scale": 2
+    },
+    "SBQQ__Renewal__c": {
+     "type": "boolean",
+     "label": "Renewal"
+    },
+    "SBQQ__RenewedAsset__c": {
+     "type": "reference",
+     "label": "Renewed Asset",
+     "relationshipName": "SBQQ__RenewedAsset__r",
+     "referenceTo": [
+      "Asset"
+     ]
+    },
+    "SBQQ__RenewedSubscription__c": {
+     "type": "reference",
+     "label": "Renewed Subscription",
+     "relationshipName": "SBQQ__RenewedSubscription__r",
+     "referenceTo": [
+      "SBQQ__Subscription__c"
+     ]
+    },
+    "SBQQ__RequiredBy__c": {
+     "type": "reference",
+     "label": "Required By",
+     "relationshipName": "SBQQ__RequiredBy__r",
+     "referenceTo": [
+      "SBQQ__QuoteLine__c"
+     ]
+    },
+    "SBQQ__SegmentIndex__c": {
+     "type": "double",
+     "label": "Segment Index",
+     "scale": 0
+    },
+    "SBQQ__SegmentKey__c": {
+     "type": "string",
+     "label": "Segment Key"
+    },
+    "SBQQ__SegmentLabel__c": {
+     "type": "string",
+     "label": "Segment Label"
+    },
+    "SBQQ__Source__c": {
+     "type": "reference",
+     "label": "Source",
+     "relationshipName": "SBQQ__Source__r",
+     "referenceTo": [
+      "SBQQ__QuoteLine__c"
+     ]
+    },
+    "SBQQ__SpecialPriceDescription__c": {
+     "type": "string",
+     "label": "Special Price Description"
+    },
+    "SBQQ__SpecialPriceType__c": {
+     "type": "picklist",
+     "label": "Special Price Type",
+     "values": [
+      "Contracted Price",
+      "Renewal",
+      "Custom"
+     ]
+    },
+    "SBQQ__SpecialPrice__c": {
+     "type": "currency",
+     "label": "Special Price",
+     "scale": 2
+    },
+    "SBQQ__StartDate__c": {
+     "type": "date",
+     "label": "Start Date"
+    },
+    "SBQQ__SubscribedAssetIds__c": {
+     "type": "textarea",
+     "label": "Subscribed Asset IDs"
+    },
+    "SBQQ__SubscriptionBase__c": {
+     "type": "string",
+     "label": "Percent of Total Base"
+    },
+    "SBQQ__SubscriptionCategory__c": {
+     "type": "picklist",
+     "label": "Percent of Total Category",
+     "values": [
+      "Hardware",
+      "Software"
+     ]
+    },
+    "SBQQ__SubscriptionPercent__c": {
+     "type": "percent",
+     "label": "Percent of Total (%)",
+     "scale": 3
+    },
+    "SBQQ__SubscriptionPricing__c": {
+     "type": "picklist",
+     "label": "Subscription Pricing",
+     "values": [
+      "Fixed Price",
+      "Percent Of Total"
+     ]
+    },
+    "SBQQ__SubscriptionScope__c": {
+     "type": "picklist",
+     "label": "Percent of Total Scope",
+     "values": [
+      "Quote",
+      "Group"
+     ]
+    },
+    "SBQQ__SubscriptionTargetPrice__c": {
+     "type": "currency",
+     "label": "Percent of Total Target Price",
+     "scale": 2
+    },
+    "SBQQ__SubscriptionTerm__c": {
+     "type": "double",
+     "label": "Subscription Term",
+     "scale": 0
+    },
+    "SBQQ__TaxCode__c": {
+     "type": "string",
+     "label": "Tax code"
+    },
+    "SBQQ__Taxable__c": {
+     "type": "boolean",
+     "label": "Taxable"
+    },
+    "SBQQ__TermDiscountSchedule__c": {
+     "type": "reference",
+     "label": "Term Discount Schedule",
+     "relationshipName": "SBQQ__TermDiscountSchedule__r",
+     "referenceTo": [
+      "SBQQ__DiscountSchedule__c"
+     ]
+    },
+    "SBQQ__TermDiscountTier__c": {
+     "type": "reference",
+     "label": "Term Discount Tier",
+     "relationshipName": "SBQQ__TermDiscountTier__r",
+     "referenceTo": [
+      "SBQQ__DiscountTier__c"
+     ]
+    },
+    "SBQQ__TermDiscount__c": {
+     "type": "currency",
+     "label": "Term Discount",
+     "scale": 2
+    },
+    "SBQQ__UnitCost__c": {
+     "type": "currency",
+     "label": "Unit Cost",
+     "scale": 2
+    },
+    "SBQQ__UnproratedNetPrice__c": {
+     "type": "currency",
+     "label": "Unprorated Net Price",
+     "scale": 2
+    },
+    "SBQQ__UpgradedAsset__c": {
+     "type": "reference",
+     "label": "Upgraded Asset",
+     "relationshipName": "SBQQ__UpgradedAsset__r",
+     "referenceTo": [
+      "Asset"
+     ]
+    },
+    "SBQQ__UpgradedQuantity__c": {
+     "type": "double",
+     "label": "Upgraded Quantity",
+     "scale": 2
+    },
+    "SBQQ__UpgradedSubscription__c": {
+     "type": "reference",
+     "label": "Upgraded Subscription",
+     "relationshipName": "SBQQ__UpgradedSubscription__r",
+     "referenceTo": [
+      "SBQQ__Subscription__c"
+     ]
+    },
+    "SBQQ__UpliftAmount__c": {
+     "type": "currency",
+     "label": "Uplift (Amt)",
+     "scale": 2
+    },
+    "SBQQ__Uplift__c": {
+     "type": "percent",
+     "label": "Uplift",
+     "scale": 2
+    },
+    "SBQQ__VolumeDiscount__c": {
+     "type": "percent",
+     "label": "Volume Discount",
+     "scale": 2
+    },
+    "SBQQ__AdditionalDiscount__c": {
+     "type": "currency",
+     "label": "Additional Disc.",
+     "scale": 2
+    },
+    "SBQQ__ComponentVisibility__c": {
+     "type": "string",
+     "label": "Component Visibility"
+    },
+    "SBQQ__CustomerTotal__c": {
+     "type": "currency",
+     "label": "Customer Total",
+     "scale": 2
+    },
+    "SBQQ__EffectiveEndDate__c": {
+     "type": "date",
+     "label": "Effective End Date"
+    },
+    "SBQQ__EffectiveQuantity__c": {
+     "type": "double",
+     "label": "Effective Quantity",
+     "scale": 2
+    },
+    "SBQQ__EffectiveStartDate__c": {
+     "type": "date",
+     "label": "Effective Start Date"
+    },
+    "SBQQ__EffectiveSubscriptionTerm__c": {
+     "type": "double",
+     "label": "Effective Subscription Term",
+     "scale": 0
+    },
+    "SBQQ__ListTotal__c": {
+     "type": "currency",
+     "label": "List Total",
+     "scale": 2
+    },
+    "SBQQ__Markup__c": {
+     "type": "currency",
+     "label": "Markup",
+     "scale": 2
+    },
+    "SBQQ__NetTotal__c": {
+     "type": "currency",
+     "label": "Net Total",
+     "scale": 2
+    },
+    "SBQQ__PackageCost__c": {
+     "type": "currency",
+     "label": "Package Cost",
+     "scale": 2
+    },
+    "SBQQ__PackageListTotal__c": {
+     "type": "currency",
+     "label": "Package List Total",
+     "scale": 2
+    },
+    "SBQQ__PackageTotal__c": {
+     "type": "currency",
+     "label": "Package Total",
+     "scale": 2
+    },
+    "SBQQ__PartnerTotal__c": {
+     "type": "currency",
+     "label": "Partner Total",
+     "scale": 2
+    },
+    "SBQQ__ProductCode__c": {
+     "type": "string",
+     "label": "Product Code"
+    },
+    "SBQQ__ProductFamily__c": {
+     "type": "string",
+     "label": "Product Family"
+    },
+    "SBQQ__ProductName__c": {
+     "type": "string",
+     "label": "Product Name"
+    },
+    "SBQQ__RegularTotal__c": {
+     "type": "currency",
+     "label": "Regular Total",
+     "scale": 2
+    },
+    "SBQQ__SubscriptionType__c": {
+     "type": "picklist",
+     "label": "Subscription Type",
+     "values": [
+      "Renewable",
+      "One-time",
+      "Renewable/Evergreen",
+      "Evergreen"
+     ]
+    },
+    "SBQQ__TotalDiscountAmount__c": {
+     "type": "currency",
+     "label": "Total Discount (Amt)",
+     "scale": 2
+    },
+    "SBQQ__TotalDiscountRate__c": {
+     "type": "percent",
+     "label": "Total Discount (%)",
+     "scale": 3
+    }
+   },
+   "children": {
+    "SBQQ__OpportunityProducts__r": {
+     "object": "OpportunityLineItem",
+     "field": "SBQQ__QuoteLine__c"
+    },
+    "SBQQ__Quote_Lines__r": {
+     "object": "SBQQ__QuoteLine__c",
+     "field": "SBQQ__RequiredBy__c"
+    },
+    "SBQQ__Clones__r": {
+     "object": "SBQQ__QuoteLine__c",
+     "field": "SBQQ__Source__c"
+    }
+   }
+  }
+ }
+}

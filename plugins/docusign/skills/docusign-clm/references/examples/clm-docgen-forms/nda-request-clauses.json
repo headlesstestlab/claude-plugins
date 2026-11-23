@@ -1,0 +1,51 @@
+{
+  "id": "nda-request-clauses",
+  "name": "NDA Request Clauses",
+  "description": "An NDA request form whose Word template prints a clause only when it applies: the mutual-disclosure clause for a Mutual NDA, the one-way clause otherwise (Conditional / EndConditional merge tags around each paragraph). Proven live 2026-10-31.",
+  "fields": [
+    {
+      "kind": "text",
+      "label": "Counterparty Legal Name",
+      "required": true
+    },
+    {
+      "kind": "radio",
+      "label": "NDA Type",
+      "options": [
+        "Mutual",
+        "One-way"
+      ]
+    },
+    {
+      "kind": "text",
+      "label": "Purpose"
+    },
+    {
+      "kind": "date",
+      "label": "Effective Date"
+    }
+  ],
+  "template": [
+    "This Non-Disclosure Agreement is made between Fontara, Inc. and {{Counterparty Legal Name}}, effective {{Effective Date}}, for this purpose: {{Purpose}}.",
+    {
+      "text": "Mutual disclosure. Each party may disclose Confidential Information to the other, and each protects what it receives.",
+      "when": {
+        "field": "NDA Type",
+        "is": "Mutual"
+      }
+    },
+    {
+      "text": "One-way disclosure. Only the Disclosing Party discloses Confidential Information, and only the Receiving Party protects it.",
+      "when": {
+        "field": "NDA Type",
+        "isNot": "Mutual"
+      }
+    }
+  ],
+  "sample": {
+    "Counterparty Legal Name": "Discrete Quantum Mechanics",
+    "NDA Type": "Mutual",
+    "Purpose": "Evaluate a joint research partnership",
+    "Effective Date": "11/01/2026"
+  }
+}

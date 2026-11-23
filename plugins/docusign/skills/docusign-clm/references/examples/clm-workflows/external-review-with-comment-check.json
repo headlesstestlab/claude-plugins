@@ -1,0 +1,82 @@
+{
+  "id": "external-review-with-comment-check",
+  "name": "External Review Comment Check",
+  "description": "A smaller external review: send, wait, then a Rule checks whether the counterparty left a comment and records the result.",
+  "variables": [
+    "Comments"
+  ],
+  "steps": [
+    {
+      "id": "review",
+      "kind": "externalReview",
+      "name": "Send for External Review",
+      "assignee": "submitter",
+      "subject": "Please review the attached agreement",
+      "body": "Please review the attached document and reply with your changes.",
+      "on": {
+        "sent": "wait",
+        "rejected": "outRejected",
+        "canceled": "outRejected",
+        "failure": "outRejected"
+      }
+    },
+    {
+      "id": "wait",
+      "kind": "waitExternalReview",
+      "name": "Wait for External Review",
+      "on": {
+        "completedWithDocument": "check",
+        "completedWithoutDocument": "check",
+        "expired": "outNoReply",
+        "failure": "outNoReply"
+      }
+    },
+    {
+      "id": "check",
+      "kind": "rule",
+      "name": "Comment left?",
+      "condition": {
+        "left": "<%#Variable.Comments%>",
+        "op": "equals",
+        "right": ""
+      },
+      "on": {
+        "true": "outNoComment",
+        "false": "outComment"
+      }
+    },
+    {
+      "id": "outComment",
+      "kind": "setOutput",
+      "name": "Returned with a comment",
+      "value": "Returned with a comment",
+      "next": "finish"
+    },
+    {
+      "id": "outNoComment",
+      "kind": "setOutput",
+      "name": "Returned without a comment",
+      "value": "Returned without a comment",
+      "next": "finish"
+    },
+    {
+      "id": "outNoReply",
+      "kind": "setOutput",
+      "name": "No reply",
+      "value": "No reply",
+      "next": "finish"
+    },
+    {
+      "id": "outRejected",
+      "kind": "setOutput",
+      "name": "Not sent",
+      "value": "Rejected or failed before sending",
+      "next": "finish"
+    },
+    {
+      "id": "finish",
+      "kind": "finish",
+      "name": "Finish"
+    }
+  ]
+}

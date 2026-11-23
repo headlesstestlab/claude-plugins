@@ -1,0 +1,207 @@
+{
+  "id": "fontara-amendment",
+  "name": "Amendment",
+  "description": "An amendment to an existing Fontara agreement (sell side): only the paragraphs for what changes print: a term extension, a new annual fee, or a new limitation of liability picked from the Clause Library's pre-approved options (Standard, Acceptable, Fallback). Everything else in the original agreement stays.",
+  "templateOnly": true,
+  "fields": [
+    {
+      "kind": "heading",
+      "label": "Customer"
+    },
+    {
+      "kind": "text",
+      "label": "Customer Legal Name",
+      "required": true
+    },
+    {
+      "kind": "text",
+      "label": "Customer Address",
+      "required": true
+    },
+    {
+      "kind": "dropdown",
+      "label": "Legal Entity",
+      "options": [
+        "Fontara, Inc.",
+        "Fontara UK Ltd",
+        "Fontara Europe Ltd",
+        "Fontara GmbH"
+      ],
+      "required": true
+    },
+    {
+      "kind": "heading",
+      "label": "Amendment"
+    },
+    {
+      "kind": "text",
+      "label": "Original Agreement",
+      "required": true
+    },
+    {
+      "kind": "text",
+      "label": "Amendment Number",
+      "required": true
+    },
+    {
+      "kind": "date",
+      "label": "Amendment Effective Date",
+      "format": "MMMM d, yyyy",
+      "required": true
+    },
+    {
+      "kind": "checkbox",
+      "label": "Extend the Term"
+    },
+    {
+      "kind": "date",
+      "label": "New Expiration Date",
+      "format": "MMMM d, yyyy",
+      "mergeIf": [
+        {
+          "field": "Extend the Term",
+          "op": "equals",
+          "value": "true"
+        }
+      ]
+    },
+    {
+      "kind": "checkbox",
+      "label": "Change the Fees"
+    },
+    {
+      "kind": "dropdown",
+      "label": "Currency",
+      "options": [
+        "USD",
+        "GBP",
+        "EUR"
+      ],
+      "mergeIf": [
+        {
+          "field": "Change the Fees",
+          "op": "equals",
+          "value": "true"
+        }
+      ]
+    },
+    {
+      "kind": "currency",
+      "label": "New Annual Fee",
+      "decimals": 2,
+      "mergeIf": [
+        {
+          "field": "Change the Fees",
+          "op": "equals",
+          "value": "true"
+        }
+      ]
+    },
+    {
+      "kind": "dropdown",
+      "label": "Liability Position",
+      "options": [
+        "No change",
+        "Standard",
+        "Acceptable",
+        "Fallback"
+      ],
+      "required": true,
+      "help": "Pick a new limitation of liability only if it changes. Standard: sign. Acceptable: legal operations reviews. Fallback: the furthest Fontara goes, general counsel's approval. Wording from the Clause Library (sell side)."
+    },
+    {
+      "kind": "heading",
+      "label": "Signers"
+    },
+    {
+      "kind": "text",
+      "label": "Customer Signer Name",
+      "required": true
+    },
+    {
+      "kind": "text",
+      "label": "Customer Signer Email",
+      "required": true
+    },
+    {
+      "kind": "text",
+      "label": "Company Signer Name",
+      "required": true
+    },
+    {
+      "kind": "text",
+      "label": "Company Signer Email",
+      "required": true
+    },
+    {
+      "kind": "text",
+      "label": "Agreement Type",
+      "hidden": true,
+      "default": "Amendment"
+    },
+    {
+      "kind": "text",
+      "label": "Line of Business",
+      "hidden": true,
+      "default": "Sales"
+    }
+  ],
+  "template": [
+    "AMENDMENT {{Amendment Number}} TO THE {{Original Agreement}}",
+    "This Amendment is made on {{Amendment Effective Date}} between {{Legal Entity}} (\"Vendor\") and {{Customer Legal Name}}, {{Customer Address}} (\"Customer\"), and amends the {{Original Agreement}} (the \"Agreement\").",
+    {
+      "text": "Term. The Agreement's term is extended to {{New Expiration Date}}. The renewal and notice provisions apply to the extended term.",
+      "when": {
+        "field": "Extend the Term",
+        "is": "true"
+      }
+    },
+    {
+      "text": "Fees. From the Amendment Effective Date the annual fee is {{Currency}} {{New Annual Fee}}, invoiced as the Agreement provides.",
+      "when": {
+        "field": "Change the Fees",
+        "is": "true"
+      }
+    },
+    {
+      "text": "Limitation of liability. The Agreement's limitation of liability clause is replaced with: Vendor's aggregate liability is capped at fees paid in the prior 3 months. Vendor is not liable for any indirect, incidental, special or consequential damages, including lost profits, lost data and lost revenue, even if Vendor was advised of the possibility of such loss. Vendor's IP indemnity obligations are subject to the separate cap the Indemnification clause states, and no other claim is excluded from the cap.",
+      "when": {
+        "field": "Liability Position",
+        "is": "Standard"
+      }
+    },
+    {
+      "text": "Limitation of liability. The Agreement's limitation of liability clause is replaced with: Each party's total aggregate liability is capped at fees paid in the prior 12 months. Neither party is liable for indirect, incidental, or consequential damages including lost profits. Confidentiality breaches, IP infringement, and fraud are excluded from the cap and consequential damages waiver.",
+      "when": {
+        "field": "Liability Position",
+        "is": "Acceptable"
+      }
+    },
+    {
+      "text": "Limitation of liability. The Agreement's limitation of liability clause is replaced with: Vendor's aggregate liability is capped at 2 times the fees paid in the prior 12 months. Neither party is liable for indirect, incidental or consequential damages, except as this clause provides. Liability for breach of confidentiality obligations, for data breaches, under indemnification obligations and for IP infringement is excluded from both the cap and that exclusion of damages. Vendor is liable for direct lost profits caused by service outages that exceed the agreed service level thresholds.",
+      "when": {
+        "field": "Liability Position",
+        "is": "Fallback"
+      }
+    },
+    "Everything else in the Agreement stays in force. If this Amendment and the Agreement conflict, this Amendment governs.",
+    "Signed for {{Customer Legal Name}}: {{Customer Signer Name}}",
+    "Signed for {{Legal Entity}}: {{Company Signer Name}}"
+  ],
+  "sample": {
+    "Customer Legal Name": "ClimbTech Financial",
+    "Customer Address": "800 Finance Street, Boston, MA 02110",
+    "Legal Entity": "Fontara, Inc.",
+    "Original Agreement": "ClimbTech Financial Managed Services MSA",
+    "Amendment Number": "2",
+    "Amendment Effective Date": "01/04/2027",
+    "Extend the Term": "true",
+    "New Expiration Date": "12/31/2028",
+    "Change the Fees": "false",
+    "Liability Position": "No change",
+    "Customer Signer Name": "Mina Collier",
+    "Customer Signer Email": "climbtech-financial.mina.collier@example.com",
+    "Company Signer Name": "Corey Ikso",
+    "Company Signer Email": "fontara.corey.ikso@example.com"
+  }
+}

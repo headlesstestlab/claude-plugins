@@ -1,0 +1,108 @@
+{
+  "id": "proc-sourcing-rfp-nda-bulk",
+  "prompt": "We're running an RFP with 25 suppliers. Each must sign our bid NDA before getting the RFP pack. When an NDA is signed, email them the RFP link automatically.",
+  "industry": "construction",
+  "department": "procurement",
+  "variation_tags": {
+    "start": [
+      "event"
+    ],
+    "routing": [
+      "bulk"
+    ],
+    "approvals": [
+      "none"
+    ],
+    "data_source": [
+      "csv"
+    ],
+    "locale": [
+      "en-US"
+    ],
+    "currency": [
+      "USD"
+    ],
+    "platform": "iam",
+    "ai": [
+      "none"
+    ],
+    "documents": [
+      "esign-template"
+    ],
+    "logic": [
+      "none"
+    ],
+    "notifications": [
+      "email"
+    ],
+    "identity": [
+      "none"
+    ],
+    "payment": false,
+    "agreement_desk": false
+  },
+  "expected_assets": [
+    {
+      "kind": "esign-template",
+      "purpose": "bid NDA",
+      "features": [
+        "one signer"
+      ]
+    },
+    {
+      "kind": "workflow",
+      "purpose": "on NDA completed, email the RFP",
+      "features": [
+        "From an Event: envelope-completed, filtered by sender",
+        "Send an Email with the RFP link"
+      ]
+    }
+  ],
+  "acceptance": [
+    "each completed NDA triggers exactly one RFP email to that signer",
+    "NDAs from other senders do not trigger the email"
+  ],
+  "hard_parts": [
+    "the Envelope Completed start must fire only for the bid NDA: narrow it by the bundle's NDA template, whose new id the deploy writes into the start (workflow.start.event-template-condition-at-deploy, proven)"
+  ],
+  "clarifying_questions": [
+    {
+      "question": "Use a dedicated sending user for RFPs?",
+      "default": "yes, to make the event filter safe"
+    }
+  ],
+  "capabilities": [
+    "esign-template.setting.upload-json",
+    "esign-template.setting.email-subject",
+    "esign-template.setting.email-message",
+    "esign-template.recipient.signer-role",
+    "esign-template.tab.sign-here",
+    "esign-template.tab.full-name",
+    "esign-template.tab.date-signed",
+    "esign-template.tab-setting.anchor",
+    "esign-template.tab-setting.required",
+    "esign-template.tab-setting.owner",
+    "esign-template.tab.company",
+    "workflow.setting.participants",
+    "workflow.setting.description",
+    "workflow.setting.publish",
+    "workflow.setting.import-package",
+    "workflow.setting.workflow-name-rules",
+    "workflow.limit.size",
+    "workflow.variable.text",
+    "workflow.step.path-end",
+    "workflow.step-setting.done-screens",
+    "account.plan.iam-plan",
+    "account.limit.published-workflows",
+    "workflow.limit.connect-required",
+    "account.connection.connect",
+    "workflow.step.prepare-esign-template",
+    "esign-template.workflow.prepare-fill",
+    "workflow.step.send-email",
+    "workflow.step-setting.email-variables",
+    "workflow.step-setting.email-bold",
+    "workflow.setting.integration-notes",
+    "esign-template.setting.from-new-document",
+    "workflow.start.event-template-condition-at-deploy"
+  ]
+}

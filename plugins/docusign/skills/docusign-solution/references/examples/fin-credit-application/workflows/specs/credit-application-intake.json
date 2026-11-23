@@ -1,0 +1,148 @@
+{
+  "id": "credit-application-intake",
+  "name": "Credit Application Intake",
+  "description": "A new B2B customer applies on the website. The application is generated from the answers and signed by the applicant; over $50,000 the guarantor signs the personal guarantee too. Once signed, a Credit Application Review request is opened for the credit team with the signed document.",
+  "participants": [
+    {
+      "role": "Applicant",
+      "name": "b2b-credit-application.contact_name",
+      "email": "b2b-credit-application.contact_email"
+    },
+    {
+      "role": "Guarantor",
+      "name": "b2b-credit-application.guarantor_name",
+      "email": "b2b-credit-application.guarantor_email"
+    }
+  ],
+  "steps": [
+    {
+      "form": "b2b-credit-application"
+    },
+    {
+      "if": {
+        "field": "b2b-credit-application.over_50k",
+        "is": "Yes"
+      },
+      "name": "Limit over $50,000?",
+      "then": [
+        {
+          "generate": "credit-application-guarantee",
+          "hideForm": true,
+          "fill": {
+            "effective": "run.startDate",
+            "company": "b2b-credit-application.legal_name",
+            "address": "b2b-credit-application.address",
+            "ein": "b2b-credit-application.ein",
+            "limit": "b2b-credit-application.limit",
+            "bank": "b2b-credit-application.bank_name",
+            "ref1": "b2b-credit-application.ref1_company",
+            "ref2": "b2b-credit-application.ref2_company",
+            "ref3": "b2b-credit-application.ref3_company",
+            "guarantor": "b2b-credit-application.guarantor_name"
+          }
+        },
+        {
+          "sign": {
+            "Applicant": "Applicant",
+            "Guarantor": "Guarantor"
+          },
+          "as": "application",
+          "subject": "Your credit application",
+          "message": "Please review and sign the credit application and personal guarantee."
+        },
+        {
+          "if": {
+            "field": "application.status",
+            "is": "completed"
+          },
+          "then": [
+            {
+              "createRequest": {
+                "type": "credit-application-review",
+                "title": "Credit application: {{b2b-credit-application.legal_name}}",
+                "documents": "all",
+                "map": {
+                  "applicant": "b2b-credit-application.legal_name",
+                  "ein": "b2b-credit-application.ein",
+                  "limit": "b2b-credit-application.limit",
+                  "guarantee": "b2b-credit-application.over_50k",
+                  "contact_email": "b2b-credit-application.contact_email"
+                }
+              }
+            }
+          ],
+          "else": [
+            {
+              "email": {
+                "to": [
+                  "credit.team@example.com"
+                ],
+                "subject": "Credit application not signed",
+                "body": "The credit application for {{b2b-credit-application.legal_name}} was declined or voided before signing."
+              }
+            }
+          ]
+        }
+      ],
+      "else": [
+        {
+          "generate": "credit-application-only",
+          "hideForm": true,
+          "fill": {
+            "effective": "run.startDate",
+            "company": "b2b-credit-application.legal_name",
+            "address": "b2b-credit-application.address",
+            "ein": "b2b-credit-application.ein",
+            "limit": "b2b-credit-application.limit",
+            "bank": "b2b-credit-application.bank_name",
+            "ref1": "b2b-credit-application.ref1_company",
+            "ref2": "b2b-credit-application.ref2_company",
+            "ref3": "b2b-credit-application.ref3_company"
+          }
+        },
+        {
+          "sign": {
+            "Applicant": "Applicant"
+          },
+          "as": "application",
+          "subject": "Your credit application",
+          "message": "Please review and sign the credit application."
+        },
+        {
+          "if": {
+            "field": "application.status",
+            "is": "completed"
+          },
+          "then": [
+            {
+              "createRequest": {
+                "type": "credit-application-review",
+                "title": "Credit application: {{b2b-credit-application.legal_name}}",
+                "documents": "all",
+                "map": {
+                  "applicant": "b2b-credit-application.legal_name",
+                  "ein": "b2b-credit-application.ein",
+                  "limit": "b2b-credit-application.limit",
+                  "guarantee": "b2b-credit-application.over_50k",
+                  "contact_email": "b2b-credit-application.contact_email"
+                }
+              }
+            }
+          ],
+          "else": [
+            {
+              "email": {
+                "to": [
+                  "credit.team@example.com"
+                ],
+                "subject": "Credit application not signed",
+                "body": "The credit application for {{b2b-credit-application.legal_name}} was declined or voided before signing."
+              }
+            }
+          ]
+        }
+      ],
+      "merge": false
+    }
+  ]
+}

@@ -1,0 +1,87 @@
+{
+  "id": "field-trip-permission",
+  "from": {
+    "name": "Field Trip Permission",
+    "description": "A parent or guardian's permission for a school field trip, with emergency contact, allergies and medical consent.",
+    "fields": {
+      "student": {
+        "label": "Student",
+        "required": true
+      },
+      "trip": {
+        "label": "Trip",
+        "required": true
+      },
+      "trip_date": {
+        "label": "Trip date",
+        "type": "date",
+        "required": true
+      },
+      "cost": {
+        "label": "Cost (USD)",
+        "required": true
+      }
+    },
+    "signers": [
+      "Parent or Guardian"
+    ],
+    "body": [
+      {
+        "title": "FIELD TRIP PERMISSION"
+      },
+      {
+        "p": "Student: {{student}}"
+      },
+      {
+        "p": "Trip: {{trip}}, on {{trip_date}}. Cost: ${{cost}}, payable to the school office before the trip."
+      },
+      {
+        "h": "1. Permission"
+      },
+      {
+        "p": "I give permission for the student named above to take part in this trip, travel with school staff and follow their directions."
+      },
+      {
+        "h": "2. Emergency Contact"
+      },
+      {
+        "p": "Name: [[text:Parent or Guardian:Emergency contact name]]  Phone: [[text:Parent or Guardian:Emergency contact phone]]"
+      },
+      {
+        "h": "3. Allergies and Medical Needs"
+      },
+      {
+        "p": "Allergies or medical needs staff should know about: [[text?:Parent or Guardian:Allergies and medical needs]]"
+      },
+      {
+        "p": "[[check:Parent or Guardian:Medical consent]] In an emergency, I authorize staff to obtain medical treatment for the student if I cannot be reached."
+      },
+      {
+        "sign": "Parent or Guardian",
+        "title": false
+      }
+    ],
+    "examples": [
+      {
+        "values": {
+          "student": "Mina Collier",
+          "trip": "Visit to the Museum of Science",
+          "trip_date": "11/18/2026",
+          "cost": "15"
+        }
+      }
+    ]
+  },
+  "name": "Field Trip Permission",
+  "summary": "A NEW document written inline (not a library document template): a parent or guardian gives permission for a school trip, with an emergency contact, allergies and a medical consent; it expires in 7 days with a warning 2 days before. Sent in bulk: one envelope per student, the student, trip, date and cost from the list.",
+  "owners": {
+    "default": "Parent or Guardian"
+  },
+  "expiration": {
+    "afterDays": 7,
+    "warnDays": 2
+  },
+  "bulkSend": true,
+  "emailSubject": "Field trip permission",
+  "emailBlurb": "Please complete the emergency contact and sign the permission slip."
+}

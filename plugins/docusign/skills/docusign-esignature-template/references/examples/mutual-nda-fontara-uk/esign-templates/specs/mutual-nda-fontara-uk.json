@@ -1,0 +1,20 @@
+{
+  "id": "mutual-nda-fontara-uk",
+  "from": "mutual-nda",
+  "variant": {
+    "fontara_entity": "Fontara UK Ltd",
+    "disclosure_period": "2 years",
+    "confidentiality_period": "3 years"
+  },
+  "variantLabel": "Fontara UK Ltd",
+  "summary": "The same mutual NDA for Fontara's UK company — the variant changes the contracting entity and with it the governing-law and dispute clauses.",
+  "owners": {
+    "default": "Counterparty",
+    "fields": {
+      "effective": "Fontara",
+      "purpose": "Fontara"
+    }
+  },
+  "emailSubject": "Mutual NDA with Fontara UK Ltd",
+  "emailBlurb": "Please complete your company details and sign the mutual NDA."
+}

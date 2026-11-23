@@ -1,0 +1,400 @@
+{
+  "id": "mutual-release",
+  "name": "Mutual Release",
+  "description": "Two businesses resolve a dispute under an agreement and release each other’s claims, with any payment, stated exclusions and no admission.",
+  "agreementType": "ReleaseWaiver",
+  "fields": {
+    "fontara_entity": {
+      "label": "Fontara contracting entity",
+      "type": "select",
+      "options": [
+        "Fontara, Inc.",
+        "Fontara UK Ltd",
+        "Fontara Europe Ltd"
+      ],
+      "optionValues": {
+        "Fontara, Inc.": "Fontara, Inc., a Delaware corporation with its principal place of business at 1500 Harbor Boulevard, Suite 1200, San Francisco, CA 94111",
+        "Fontara UK Ltd": "Fontara UK Ltd, a company registered in England and Wales with its registered office at 48 Ashcombe Street, London EC2A 4NE, United Kingdom",
+        "Fontara Europe Ltd": "Fontara Europe Ltd, a company registered in Ireland with its registered office at 3 Riverside Quay, Dublin 2, D02 X285, Ireland"
+      },
+      "required": true,
+      "description": "Prints the entity’s full legal description and address"
+    },
+    "currency": {
+      "label": "Currency",
+      "type": "select",
+      "options": [
+        "US$",
+        "£",
+        "€"
+      ],
+      "required": true,
+      "description": "The signing entity’s: US$ for Fontara, Inc., £ for Fontara UK Ltd, € for Fontara Europe Ltd"
+    },
+    "effective": {
+      "bind": {
+        "provision": "EffectiveDate"
+      },
+      "required": true
+    },
+    "counterparty": {
+      "bind": {
+        "provision": "AgreementParty"
+      },
+      "required": true,
+      "description": "Counterparty legal name"
+    },
+    "counterparty_entity": {
+      "label": "Counterparty entity type",
+      "required": true,
+      "description": "For example: a Delaware corporation"
+    },
+    "counterparty_address": {
+      "label": "Counterparty street address",
+      "required": true
+    },
+    "counterparty_city": {
+      "label": "Counterparty city",
+      "required": true
+    },
+    "counterparty_region": {
+      "label": "Counterparty state",
+      "required": true
+    },
+    "counterparty_postal": {
+      "label": "Counterparty ZIP code",
+      "required": true
+    },
+    "agreement": {
+      "label": "Agreement the release concerns",
+      "required": true
+    },
+    "dispute_summary": {
+      "label": "What the dispute concerns",
+      "required": true
+    },
+    "payer": {
+      "label": "Settlement payment",
+      "type": "select",
+      "options": [
+        "No payment",
+        "Fontara pays",
+        "Counterparty pays"
+      ],
+      "required": true
+    },
+    "settlement_amount": {
+      "label": "Settlement amount",
+      "type": "number",
+      "money": true
+    },
+    "position": {
+      "label": "Negotiated position",
+      "type": "select",
+      "options": [
+        "Balanced",
+        "Favours Fontara",
+        "Favours the counterparty"
+      ],
+      "required": true,
+      "description": "For the clauses most often negotiated"
+    }
+  },
+  "signers": [
+    "Counterparty",
+    "Fontara"
+  ],
+  "body": [
+    {
+      "title": "MUTUAL RELEASE"
+    },
+    {
+      "p": "This Mutual Release (this \"Release\"), effective {{effective}}, is between {{fontara_entity}} (\"Fontara\"), and **{{counterparty}}**, {{counterparty_entity}} with its principal place of business at {{counterparty_address}}, {{counterparty_city}}, {{counterparty_region}} {{counterparty_postal}} (\"Counterparty\")."
+    },
+    {
+      "p": "Background. The parties are party to the {{agreement}} (the \"Agreement\", and the services under it the \"Services\"). A dispute has arisen between them concerning {{dispute_summary}}. The parties wish to resolve it, and all other claims arising out of the Agreement, on the terms of this Release and without any admission of liability."
+    },
+    {
+      "h": "1. Payment"
+    },
+    {
+      "if": {
+        "field": "payer",
+        "is": "No payment"
+      },
+      "then": [
+        {
+          "p": "Neither party makes any payment under this Release."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "payer",
+        "is": "Fontara pays"
+      },
+      "then": [
+        {
+          "p": "Within 15 business days after the effective date of this Release, Fontara shall pay Counterparty {{currency}}{{settlement_amount}} in full and final settlement of the released claims."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "payer",
+        "is": "Counterparty pays"
+      },
+      "then": [
+        {
+          "p": "Within 15 business days after the effective date of this Release, Counterparty shall pay Fontara {{currency}}{{settlement_amount}} in full and final settlement of the released claims."
+        }
+      ]
+    },
+    {
+      "h": "2. Released Claims"
+    },
+    {
+      "if": {
+        "field": "position",
+        "is": "Balanced"
+      },
+      "then": [
+        {
+          "p": "Except for the claims excluded in this Release, each party, for itself and its affiliates, releases the other and its affiliates, officers, employees and agents from all claims, demands and liabilities arising out of the Agreement or the Services before the effective date of this Release. Each party represents that it has not assigned or transferred any claim it releases."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "position",
+        "is": "Favours Fontara"
+      },
+      "then": [
+        {
+          "p": "Fontara releases Counterparty only from claims for fees, service credits and delay that Fontara knew of and that arose before the effective date of this Release. Counterparty, for itself and its affiliates, releases Fontara and its affiliates, officers and employees from all claims arising out of the Agreement before that date, including any claim for unpaid or unbilled fees."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "position",
+        "is": "Favours the counterparty"
+      },
+      "then": [
+        {
+          "p": "Fontara, for itself and its affiliates, successors and assigns, releases Counterparty and its affiliates, officers, employees and subcontractors from all claims arising out of or relating to the Agreement or the Services before the effective date of this Release, including claims for service credits, refunds, data loss and defective deliverables. Counterparty releases Fontara only from claims for fees that Fontara has paid in full."
+        }
+      ]
+    },
+    {
+      "h": "3. Claims Excluded from the Release"
+    },
+    {
+      "if": {
+        "field": "position",
+        "is": "Balanced"
+      },
+      "then": [
+        {
+          "p": "The release in this Release does not cover obligations under this Release, obligations under the Agreement that continue after the effective date of this Release, claims for fraud or willful misconduct, indemnification against third-party claims, breach of confidentiality or data-protection obligations, infringement of intellectual property, or any claim that cannot be released by law."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "position",
+        "is": "Favours Fontara"
+      },
+      "then": [
+        {
+          "p": "The release does not cover any claim for indemnification, breach of confidentiality, data-protection or security obligations, infringement, defects in deliverables, fraud or willful misconduct, whenever it arises, or any claim Fontara notified to Counterparty in writing before the effective date of this Release. Counterparty's warranties and indemnities under the Agreement continue in full."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "position",
+        "is": "Favours the counterparty"
+      },
+      "then": [
+        {
+          "p": "The release excludes only Counterparty's claims for unpaid fees, Fontara's confidentiality and payment obligations under the Agreement, and any claim that cannot be released by law. No other claim of Fontara, including any claim for indemnification, data loss or a security incident, survives the effective date of this Release."
+        }
+      ]
+    },
+    {
+      "h": "4. Waiver of Unknown Claims"
+    },
+    {
+      "if": {
+        "field": "fontara_entity",
+        "is": "Fontara, Inc."
+      },
+      "then": [
+        {
+          "p": "Each party acknowledges that it may later discover facts different from those it now knows or believes, and intends the release in this Release to cover the released claims whether or not known or suspected. Each party expressly waives California Civil Code §1542 and any similar law, which provide that a general release does not extend to claims the releasing party does not know or suspect to exist in its favor when it gives the release."
+        },
+        {
+          "p": "California Civil Code section 1542 provides: \"A GENERAL RELEASE DOES NOT EXTEND TO CLAIMS THAT THE CREDITOR OR RELEASING PARTY DOES NOT KNOW OR SUSPECT TO EXIST IN HIS OR HER FAVOR AT THE TIME OF EXECUTING THE RELEASE AND THAT, IF KNOWN BY HIM OR HER, WOULD HAVE MATERIALLY AFFECTED HIS OR HER SETTLEMENT WITH THE DEBTOR OR RELEASED PARTY.\""
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "fontara_entity",
+        "is": "Fontara UK Ltd"
+      },
+      "then": [
+        {
+          "p": "Each party acknowledges that it may later discover facts different from those it now knows or believes, and intends the release in this Release to cover the released claims whether or not they are known or suspected at the date of this Release, and whether or not they could have been known."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "fontara_entity",
+        "is": "Fontara Europe Ltd"
+      },
+      "then": [
+        {
+          "p": "Each party acknowledges that it may later discover facts different from those it now knows or believes, and intends the release in this Release to cover the released claims whether or not they are known or suspected at the date of this Release, and whether or not they could have been known."
+        }
+      ]
+    },
+    {
+      "p": "Initials acknowledging Section 4 (Waiver of Unknown Claims) — Counterparty: [[initials:Counterparty]]   Fontara: [[initials:Fontara]]"
+    },
+    {
+      "h": "5. Covenant Not to Sue"
+    },
+    {
+      "p": "Neither party shall bring, or assist any third party to bring, any action, arbitration or claim against the other on a released claim, except as required by law or legal process. A party may plead this Release as a complete defense to any such action, and a party that breaches this covenant shall pay the other's reasonable legal fees of defending it."
+    },
+    {
+      "h": "6. No Admission of Liability"
+    },
+    {
+      "p": "This Release is a compromise of disputed and potential claims, and neither its terms nor its performance is an admission of liability, fault or wrongdoing by either party. Neither party may offer this Release as evidence in any proceeding except to enforce it or to plead the release as a defense."
+    },
+    {
+      "h": "7. Authority"
+    },
+    {
+      "p": "Each party represents that it has full power and authority to enter into this Release, and that the individual signing it on its behalf is authorized to do so."
+    },
+    {
+      "h": "8. Governing Law and Disputes"
+    },
+    {
+      "if": {
+        "field": "fontara_entity",
+        "is": "Fontara, Inc."
+      },
+      "then": [
+        {
+          "p": "This Release is governed by the laws of the State of Delaware, without regard to its conflict-of-laws rules. The parties shall first try to resolve any dispute arising out of or relating to this Release by good-faith negotiation between senior executives for 30 days. A dispute not resolved in that time shall be finally settled by binding arbitration administered by the American Arbitration Association under its Commercial Arbitration Rules, before a single arbitrator, seated in San Francisco, California, and judgment on the award may be entered in any court of competent jurisdiction. Either party may seek injunctive relief from a court to protect its confidential information or intellectual property."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "fontara_entity",
+        "is": "Fontara UK Ltd"
+      },
+      "then": [
+        {
+          "p": "This Release, and any non-contractual obligation arising out of or in connection with it, is governed by the law of England and Wales. The parties shall first try to resolve any dispute arising out of or in connection with this Release by good-faith negotiation between senior executives for 30 days. A dispute not resolved in that time shall be referred to and finally resolved by arbitration under the LCIA Rules, which are incorporated by reference into this section, before a sole arbitrator, with the seat of arbitration in London and English as the language of the arbitration. Either party may seek urgent injunctive relief from a court."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "fontara_entity",
+        "is": "Fontara Europe Ltd"
+      },
+      "then": [
+        {
+          "p": "This Release, and any non-contractual obligation arising out of or in connection with it, is governed by the laws of Ireland. The parties shall first try to resolve any dispute arising out of or in connection with this Release by good-faith negotiation between senior executives for 30 days, after which the courts of Ireland have exclusive jurisdiction to settle it."
+        }
+      ]
+    },
+    {
+      "h": "9. Entire Agreement and Amendment"
+    },
+    {
+      "p": "This Release is the entire agreement of the parties on its subject and supersedes all prior proposals, negotiations, representations and understandings about it. Each party confirms that in entering into it, it has not relied on any statement not set out in it. This Release may be amended only in a writing signed by authorized representatives of both parties."
+    },
+    {
+      "h": "10. General"
+    },
+    {
+      "p": "If any provision of this Release is held invalid or unenforceable, it is enforced to the maximum extent permitted and the rest of this Release continues in full force. No failure or delay in exercising a right is a waiver of it, and a waiver is effective only if it is in writing and signed. No person other than the parties and their permitted successors and assigns has any right to enforce any term of this Release. This Release may be signed in counterparts and by electronic signature, each of which is an original and all of which together are one instrument."
+    },
+    {
+      "sign": "Counterparty",
+      "title": true,
+      "company": true
+    },
+    {
+      "sign": "Fontara",
+      "title": true,
+      "company": true
+    }
+  ],
+  "examples": [
+    {
+      "values": {
+        "effective": "06/15/2027",
+        "counterparty": "Stellogica",
+        "counterparty_entity": "a Delaware corporation",
+        "counterparty_address": "4200 Innovation Circle",
+        "agreement": "Subscription Order Form dated 03/01/2025",
+        "dispute_summary": "service credits claimed for platform outages in 2026",
+        "payer": "Counterparty pays",
+        "settlement_amount": "18500",
+        "fontara_entity": "Fontara, Inc.",
+        "currency": "US$",
+        "position": "Balanced",
+        "counterparty_city": "Bellevue",
+        "counterparty_region": "WA",
+        "counterparty_postal": "98004"
+      },
+      "expect": [
+        "service credits claimed for platform outages",
+        "Counterparty shall pay Fontara US$18,500.00",
+        "A GENERAL RELEASE DOES NOT EXTEND"
+      ],
+      "absent": [
+        "Customer",
+        "Vendor"
+      ]
+    },
+    {
+      "values": {
+        "effective": "08/01/2027",
+        "counterparty": "Precisys Health Analytics",
+        "counterparty_entity": "a Delaware corporation",
+        "counterparty_address": "2100 Medical Plaza",
+        "agreement": "Master Services Agreement dated 10/27/2025",
+        "dispute_summary": "invoices for analytics reports delivered after the agreed deadlines",
+        "payer": "No payment",
+        "fontara_entity": "Fontara UK Ltd",
+        "currency": "£",
+        "position": "Balanced",
+        "counterparty_city": "San Diego",
+        "counterparty_region": "CA",
+        "counterparty_postal": "92121"
+      },
+      "expect": [
+        "Neither party makes any payment",
+        "LCIA Rules"
+      ],
+      "absent": [
+        "A GENERAL RELEASE DOES NOT EXTEND",
+        "California Civil Code",
+        "in full and final settlement"
+      ]
+    }
+  ],
+  "source": "vault: Contracts/Clauses/Release and Waiver"
+}

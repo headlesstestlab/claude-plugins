@@ -1,0 +1,100 @@
+{
+  "id": "webform-volunteer-waiver-from-template",
+  "prompt": "We already have a volunteer waiver as a Docusign template. Turn it into a web form we can link from our volunteer sign-up page, so volunteers fill it in and sign right on the form. Pass the event code from the link so we know which event they signed up for.",
+  "industry": "nonprofit",
+  "department": "volunteer programs",
+  "variation_tags": {
+    "start": [
+      "web-form"
+    ],
+    "routing": [
+      "single-signer"
+    ],
+    "approvals": [
+      "none"
+    ],
+    "data_source": [
+      "form"
+    ],
+    "locale": [
+      "en-US"
+    ],
+    "currency": [
+      "USD"
+    ],
+    "platform": "iam",
+    "ai": [
+      "none"
+    ],
+    "documents": [
+      "esign-template"
+    ],
+    "logic": [
+      "none"
+    ],
+    "notifications": [
+      "email"
+    ],
+    "identity": [
+      "none"
+    ],
+    "payment": false,
+    "agreement_desk": false
+  },
+  "expected_assets": [
+    {
+      "kind": "webform",
+      "purpose": "template-linked waiver form",
+      "features": [
+        "created from the eSignature template (Transform a template)",
+        "signature page with template and recipient connections",
+        "hidden data field event_code prefilled from the URL",
+        "phone and emergency contact fields"
+      ]
+    },
+    {
+      "kind": "esign-template",
+      "purpose": "volunteer waiver",
+      "features": [
+        "signer role Volunteer",
+        "text tabs mapped to form fields"
+      ]
+    }
+  ],
+  "acceptance": [
+    "the form is linked to the eSignature template and every form field maps to a tab",
+    "the event code arrives in a hidden data field and prints on the waiver",
+    "the volunteer signs on the form; no email round trip"
+  ],
+  "hard_parts": [
+    "Upload refuses a web form linked to an eSignature template: the bundle must say the form is made in the builder from the template, not uploaded",
+    "URL prefill on a live form is not proven (the bot check needs a real browser)"
+  ],
+  "clarifying_questions": [
+    {
+      "question": "Under-18 volunteers?",
+      "default": "out of scope: adults only"
+    }
+  ],
+  "capabilities": [
+    "webform.template.template-linked",
+    "webform.template.template-connections",
+    "webform.page.signature-page",
+    "webform.field.signature",
+    "webform.page.hidden-data",
+    "webform.prefill.public-link",
+    "webform.setting.activate-public",
+    "webform.field.phone",
+    "webform.field.text",
+    "webform.field-setting.label",
+    "webform.field-setting.required",
+    "webform.page.pages",
+    "webform.page.thank-you",
+    "esign-template.recipient.signer-role",
+    "esign-template.tab.sign-here",
+    "esign-template.tab.text",
+    "esign-template.tab.date-signed",
+    "esign-template.setting.upload-json",
+    "esign-template.setting.from-new-document"
+  ]
+}

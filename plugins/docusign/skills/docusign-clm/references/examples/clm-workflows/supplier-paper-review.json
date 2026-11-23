@@ -1,0 +1,74 @@
+{
+  "id": "supplier-paper-review",
+  "name": "Supplier Paper Review",
+  "description": "Procurement sends a supplier's paper straight to the supplier's contact for review, with no sender task in between: Send for External Review emails the contract from the starter to the address in Params, keeps the reviewer's comments and the returned and updated documents, and waits; the answer sets the workflow output.",
+  "variables": [
+    "ReviewerEmail",
+    "Comments",
+    {
+      "name": "Returned",
+      "type": "document"
+    },
+    {
+      "name": "Updated",
+      "type": "document"
+    }
+  ],
+  "paramsSchema": "<Params><Documents><Document><Id/><Name/></Document></Documents><ReviewerEmail/><Supplier/></Params>",
+  "steps": [
+    {
+      "id": "reviewer",
+      "name": "Reviewer email",
+      "kind": "setVariable",
+      "set": {
+        "ReviewerEmail": "<%#XmlVariables.Params.ReviewerEmail%>"
+      },
+      "next": "send"
+    },
+    {
+      "id": "send",
+      "name": "Send to the supplier",
+      "kind": "sendForExternalReview",
+      "toVar": "ReviewerEmail",
+      "subject": "Please review: <%#XmlVariables.Params.Supplier%> agreement",
+      "body": "Please review the attached agreement and send it back with your changes.",
+      "expirationDays": 14,
+      "commentsTo": "Comments",
+      "outputDocuments": "Returned",
+      "updatedDocuments": "Updated",
+      "on": {
+        "completedWithDocument": "outChanged",
+        "completedWithoutDocument": "outAccepted",
+        "expired": "outExpired",
+        "failure": "outExpired",
+        "manualOverride": "outExpired",
+        "invalidRecipient": "outExpired"
+      }
+    },
+    {
+      "id": "outChanged",
+      "name": "Output Changed",
+      "kind": "setOutput",
+      "value": "Returned with changes: <%#Variable.Comments%>",
+      "next": "finish"
+    },
+    {
+      "id": "outAccepted",
+      "name": "Output Accepted",
+      "kind": "setOutput",
+      "value": "Accepted as is",
+      "next": "finish"
+    },
+    {
+      "id": "outExpired",
+      "name": "Output Not returned",
+      "kind": "setOutput",
+      "value": "Not returned",
+      "next": "finish"
+    },
+    {
+      "id": "finish",
+      "kind": "finish"
+    }
+  ]
+}

@@ -1,0 +1,86 @@
+{
+  "id": "service-order-defaults",
+  "name": "Service Order",
+  "description": "A service order form with prefilled values: a read-only agreement type, an order value with two decimals, a hidden internal reference that still merges, the start date in words, and three fields that follow the service tier.",
+  "fields": [
+    {
+      "kind": "text",
+      "label": "Agreement Type",
+      "default": "Service Order",
+      "readOnly": true
+    },
+    {
+      "kind": "text",
+      "label": "Customer Name",
+      "required": true
+    },
+    {
+      "kind": "currency",
+      "label": "Order Value",
+      "default": "10,000.00",
+      "decimals": 2
+    },
+    {
+      "kind": "text",
+      "label": "Internal Reference",
+      "hidden": true,
+      "default": "SO-REF-0042"
+    },
+    {
+      "kind": "dropdown",
+      "label": "Service Tier",
+      "options": [
+        "Standard",
+        "Premium Plus"
+      ]
+    },
+    {
+      "kind": "text",
+      "label": "Standard SLA",
+      "mergeIf": [
+        {
+          "field": "Service Tier",
+          "op": "equals",
+          "value": "Standard"
+        }
+      ]
+    },
+    {
+      "kind": "text",
+      "label": "Premium Terms",
+      "mergeIf": [
+        {
+          "field": "Service Tier",
+          "op": "contains",
+          "value": "Premium"
+        }
+      ]
+    },
+    {
+      "kind": "text",
+      "label": "Delivery Notes",
+      "mergeIf": [
+        {
+          "field": "Service Tier",
+          "op": "hasValue"
+        }
+      ]
+    },
+    {
+      "kind": "date",
+      "label": "Start Date",
+      "format": "MMMM d, yyyy"
+    }
+  ],
+  "template": [
+    "This Service Order is made between Fontara, Inc. and {{Customer Name}} and starts on {{Start Date}}.",
+    "Reference: {{Internal Reference}}."
+  ],
+  "sample": {
+    "Customer Name": "Brindlemoor Traders",
+    "Service Tier": "Premium Plus",
+    "Premium Terms": "Dedicated support manager",
+    "Delivery Notes": "Deliver to the north dock",
+    "Start Date": "11/01/2026"
+  }
+}

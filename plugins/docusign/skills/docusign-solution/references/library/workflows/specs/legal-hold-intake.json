@@ -1,0 +1,13 @@
+{
+  "id": "legal-hold-intake",
+  "name": "Legal Hold Intake",
+  "summary": "A Legal Hold Request moves to Hold Notice Pending, with the notice due the next business day, or the same day once a claim is filed.",
+  "description": "When a Legal Hold Request is submitted, the requester owns it, the status moves to Hold Notice Pending, and the hold notice is due the next business day — the same day when a claim has been filed.",
+  "trigger": { "request": "legal-hold-request" },
+  "steps": [
+    { "owner": "submitter" },
+    { "if": { "field": "C_DeskHoldTrigger", "is": "Claim filed" },
+      "then": [ { "status": "Hold Notice Urgent", "color": "alert" }, { "due": { "days": 0 } } ],
+      "else": [ { "status": "Hold Notice Pending", "color": "warning" }, { "due": { "days": 1 } } ] }
+  ]
+}

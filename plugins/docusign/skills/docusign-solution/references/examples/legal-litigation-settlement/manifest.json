@@ -1,0 +1,18 @@
+{
+  "id": "legal-litigation-settlement",
+  "name": "Settlement agreement signing: plaintiff, defendant, then both counsel",
+  "description": "A standalone eSignature template with the signature pages and the routing. Outside counsel sends it and uploads the final settlement agreement into the same envelope at send. The Plaintiff signs first after Docusign ID Verification. The Defendant signs second. Then Plaintiff's Counsel and Defendant's Counsel sign at the same time (both at routing order 3). Only the plaintiff has ID verification.",
+  "esignTemplates": [
+    "settlement-signature-pages"
+  ],
+  "prerequisites": [
+    "Docusign ID Verification is on the account, and its workflow is \"IDV (Standard)\". The template names that workflow; check the id on your account and pick it again on the Plaintiff role if it differs.",
+    "Outside counsel has a sending seat, and the template is shared with them after upload."
+  ],
+  "gaps": [
+    {
+      "need": "outside counsel uploads the final settlement",
+      "instead": "the template carries the signature pages and the routing; counsel adds the final settlement agreement as a document at send (Upload, before the signature pages). Its pages carry no tabs: the parties sign on the signature pages"
+    }
+  ]
+}

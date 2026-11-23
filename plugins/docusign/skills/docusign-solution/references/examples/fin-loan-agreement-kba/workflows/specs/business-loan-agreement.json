@@ -1,0 +1,109 @@
+{
+  "id": "business-loan-agreement",
+  "name": "Business Loan Agreement",
+  "description": "The loan system starts it with the borrower, principal, APR and term (and a co-borrower when there is one). The loan agreement eSignature template is prepared with those values; the borrower and any co-borrower pass knowledge-based authentication (US KBA) and sign, then the loan officer who started it countersigns.",
+  "trigger": {
+    "api": {
+      "variables": [
+        {
+          "name": "borrower",
+          "type": "String"
+        },
+        {
+          "name": "borrowerSigner",
+          "type": "String"
+        },
+        {
+          "name": "borrowerEmail",
+          "type": "Email"
+        },
+        {
+          "name": "principal",
+          "type": "Number"
+        },
+        {
+          "name": "apr",
+          "type": "String"
+        },
+        {
+          "name": "termMonths",
+          "type": "Number"
+        },
+        {
+          "name": "coBorrower",
+          "type": "String"
+        },
+        {
+          "name": "coBorrowerSigner",
+          "type": "String"
+        },
+        {
+          "name": "coBorrowerEmail",
+          "type": "String"
+        }
+      ]
+    }
+  },
+  "participants": [
+    {
+      "role": "Borrower signer",
+      "name": "start.borrowerSigner",
+      "email": "start.borrowerEmail"
+    },
+    {
+      "role": "Co-borrower signer",
+      "name": "start.coBorrowerSigner",
+      "email": "start.coBorrowerEmail"
+    }
+  ],
+  "steps": [
+    {
+      "if": {
+        "field": "start.coBorrowerEmail",
+        "notEmpty": true
+      },
+      "name": "Co-borrower?",
+      "then": [
+        {
+          "esign": "business-loan-agreement-co-kba",
+          "fill": {
+            "borrower": "start.borrower",
+            "principal": "start.principal",
+            "apr": "start.apr",
+            "term": "start.termMonths",
+            "co_borrower": "start.coBorrower"
+          }
+        },
+        {
+          "sign": {
+            "Borrower": "Borrower signer",
+            "Co-Borrower": "Co-borrower signer",
+            "Lender": "starter"
+          },
+          "subject": "Your business loan agreement",
+          "message": "Please review and sign your loan agreement. The bank's officer countersigns after the borrowers."
+        }
+      ],
+      "else": [
+        {
+          "esign": "business-loan-agreement-kba",
+          "fill": {
+            "borrower": "start.borrower",
+            "principal": "start.principal",
+            "apr": "start.apr",
+            "term": "start.termMonths"
+          }
+        },
+        {
+          "sign": {
+            "Borrower": "Borrower signer",
+            "Lender": "starter"
+          },
+          "subject": "Your business loan agreement",
+          "message": "Please review and sign your loan agreement. The bank's officer countersigns after you."
+        }
+      ],
+      "merge": false
+    }
+  ]
+}

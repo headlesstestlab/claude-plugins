@@ -1,0 +1,74 @@
+{
+  "id": "routing-template",
+  "name": "Routing Template",
+  "description": "The Routing template's pattern (help mro1684518339413: Update Variable Value, Routing, Email Document, Rule, Workflow): the requester routes the document to Legal or Finance; Legal starts the negotiation workflow, Finance gets the document by email.",
+  "variables": [
+    "Route",
+    "Requested"
+  ],
+  "steps": [
+    {
+      "id": "requested",
+      "name": "Requested on",
+      "kind": "setVariable",
+      "set": {
+        "Requested": "<%#System.Date%>"
+      },
+      "next": "route"
+    },
+    {
+      "id": "route",
+      "name": "Route the document",
+      "kind": "routing",
+      "assignee": "submitter",
+      "options": [
+        "Legal",
+        "Finance"
+      ],
+      "output": "Route",
+      "instructions": "Pick who handles the document next.",
+      "on": {
+        "success": "legal",
+        "failure": "finish"
+      }
+    },
+    {
+      "id": "legal",
+      "name": "Legal",
+      "kind": "rule",
+      "condition": {
+        "left": "<%#Variable.Route%>",
+        "op": "equals",
+        "right": "Legal"
+      },
+      "on": {
+        "true": "negotiate",
+        "false": "mail"
+      }
+    },
+    {
+      "id": "negotiate",
+      "name": "Start the negotiation",
+      "kind": "childWorkflow",
+      "workflow": "MSA Negotiation with External Review",
+      "params": "Params",
+      "wait": false,
+      "on": {
+        "success": "finish",
+        "failure": "finish"
+      }
+    },
+    {
+      "id": "mail",
+      "name": "Email Finance",
+      "kind": "emailDocument",
+      "to": "submitter",
+      "subject": "For Finance: <%#XmlVariables.Params.Documents.Document.Name%>",
+      "next": "finish"
+    },
+    {
+      "id": "finish",
+      "kind": "finish"
+    }
+  ]
+}

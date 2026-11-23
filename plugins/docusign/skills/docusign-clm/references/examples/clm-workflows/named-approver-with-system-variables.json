@@ -1,0 +1,52 @@
+{
+  "id": "named-approver-with-system-variables",
+  "name": "Named Approver with System Variables",
+  "description": "A named account user approves the incoming document, and every notice carries the workflow's system variables: the task link, the date and time, and the instance ID for support.",
+  "variables": [
+    "Outcome"
+  ],
+  "steps": [
+    {
+      "id": "approve",
+      "kind": "approve",
+      "name": "Deal desk approval",
+      "assignee": {
+        "user": "fontara.deal-desk@example.com"
+      },
+      "instructions": "Approve or reject. Your task: <%#System.Link%>",
+      "subject": "Approval needed (instance <%#System.Uid%>)",
+      "body": "Started <%#System.Date%> at <%#System.Time%>. Open the task: <%#System.Link%>",
+      "on": {
+        "approved": "mailOk",
+        "rejected": "mailNo",
+        "canceled": "mailNo",
+        "failure": "mailNo"
+      }
+    },
+    {
+      "id": "mailOk",
+      "kind": "email",
+      "name": "Approved notice",
+      "to": {
+        "user": "fontara.deal-desk@example.com"
+      },
+      "subject": "Approved on <%#System.Date%>",
+      "body": "Approved at <%#System.Time%>. Instance <%#System.Uid%>.",
+      "next": "finish"
+    },
+    {
+      "id": "mailNo",
+      "kind": "email",
+      "name": "Not approved notice",
+      "to": "submitter",
+      "subject": "Not approved (instance <%#System.Uid%>)",
+      "body": "See <%#System.Link%>. Quote instance <%#System.Uid%> to support.",
+      "next": "finish"
+    },
+    {
+      "id": "finish",
+      "kind": "finish",
+      "name": "Finish"
+    }
+  ]
+}

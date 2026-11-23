@@ -1,0 +1,147 @@
+{
+  "id": "ai-risk-scoring-routing",
+  "prompt": "AI scores each incoming vendor contract 1–10 for risk. 1–3 auto approve, 4–7 legal ops, 8–10 general counsel.",
+  "industry": "software",
+  "department": "legal",
+  "variation_tags": {
+    "start": [
+      "request"
+    ],
+    "routing": [
+      "single-signer"
+    ],
+    "approvals": [
+      "conditional"
+    ],
+    "data_source": [
+      "none"
+    ],
+    "locale": [
+      "en-US"
+    ],
+    "currency": [
+      "USD"
+    ],
+    "platform": "iam",
+    "ai": [
+      "risk-scoring"
+    ],
+    "documents": [
+      "counterparty-paper"
+    ],
+    "logic": [
+      "multi-branch"
+    ],
+    "notifications": [
+      "email"
+    ],
+    "identity": [
+      "none"
+    ],
+    "payment": false,
+    "agreement_desk": true
+  },
+  "expected_assets": [
+    {
+      "kind": "agent",
+      "purpose": "risk scorer",
+      "features": [
+        "numeric output 1–10"
+      ]
+    },
+    {
+      "kind": "workflow",
+      "purpose": "route by score",
+      "features": [
+        "branch gte/lte on agent output"
+      ]
+    }
+  ],
+  "acceptance": [
+    "score 3 → no approval; 4 → legal ops; 8 → GC",
+    "the agent output is a number from 1 to 10",
+    "an unreadable document routes to legal ops, never auto-approve"
+  ],
+  "hard_parts": [
+    "the score bands compare the agent's Number output with lte/gte (workflow.variable.op-number-compare, proven); an unreadable contract must route to a person, never auto-approve"
+  ],
+  "clarifying_questions": [],
+  "capabilities": [
+    "agent.setting.name",
+    "agent.setting.name-charset-refusal",
+    "agent.setting.description",
+    "agent.setting.instructions-blocks",
+    "agent.setting.instructions-headings",
+    "agent.setting.starter-prompts",
+    "agent.setting.maestro-enabled",
+    "agent.setting.unknown-key-refusal",
+    "agent.output.string",
+    "agent.output.description",
+    "agent.output.name-rule",
+    "agent.status.publish",
+    "agent.test.prompt",
+    "agent.revision.update-in-place",
+    "agent.revision.portability",
+    "agent.limit.agent-quota",
+    "agent.limit.region-language",
+    "agent.sharing.access",
+    "agent.workflow.execute-step",
+    "agent.workflow.prompt-merge",
+    "agent.workflow.prompt-limit",
+    "agent.workflow.output-merge",
+    "agent.workflow.unknown-output",
+    "agent.workflow.cross-package",
+    "agent.tool.unknown-capability",
+    "account.limit.agents",
+    "account.plan.agents-eligible",
+    "account.setting.ai-controls",
+    "account.region.us",
+    "workflow.step.ai-agent",
+    "workflow.variable.agent-outputs",
+    "workflow.step-setting.ai-agent-prompt-variables",
+    "agent.tool.agreements",
+    "account.am.portfolio",
+    "account.limit.am-processing-allowance",
+    "agent.workflow.output-branch",
+    "agent.tool.multiple",
+    "workflow.setting.participants",
+    "workflow.setting.description",
+    "workflow.setting.publish",
+    "workflow.setting.import-package",
+    "workflow.setting.workflow-name-rules",
+    "workflow.limit.size",
+    "workflow.variable.text",
+    "workflow.step.path-end",
+    "workflow.step-setting.done-screens",
+    "account.plan.iam-plan",
+    "account.limit.published-workflows",
+    "workflow.start.agreement-desk-submitted",
+    "request-type.automation.request-trigger",
+    "workflow.variable.request-fields",
+    "workflow.variable.op-request-dropdown",
+    "workflow.limit.connect-required",
+    "account.connection.connect",
+    "workflow.step.send-envelope",
+    "workflow.step-setting.send-envelope-recipients",
+    "workflow.step-setting.send-envelope-subject-message",
+    "workflow.step.confirmation-screen",
+    "workflow.step-setting.confirm-participant",
+    "workflow.step-setting.send-envelope-under-request",
+    "workflow.step-setting.send-envelope-sender-automatic",
+    "workflow.step.ad-approval",
+    "request-type.approval.approval-step",
+    "request-type.approval.approval-branch",
+    "workflow.variable.op-approval-outcome",
+    "workflow.step-setting.ad-approver-user-group",
+    "workflow.step.ad-assign-owner",
+    "request-type.assignment.owner-submitter",
+    "workflow.step-setting.ad-approver-submitter-owner",
+    "workflow.variable.op-number-compare",
+    "workflow.variable.op-request-custom-number",
+    "workflow.step.multi-branch",
+    "workflow.variable.op-is",
+    "workflow.limit.merge-scope",
+    "workflow.step.ad-change-status",
+    "request-type.assignment.owner-user"
+  ]
+}

@@ -1,0 +1,322 @@
+{
+  "id": "ip-assignment-agreement",
+  "name": "Intellectual Property Assignment Agreement",
+  "agreementType": "IntellectualPropertyAssignment",
+  "description": "Assign specific intellectual property (Schedule A) to Fontara, with moral-rights waiver, warranties, further assurances, a power of attorney and an optional notary acknowledgment.",
+  "fields": {
+    "fontara_entity": {
+      "label": "Fontara contracting entity",
+      "type": "select",
+      "options": [
+        "Fontara, Inc.",
+        "Fontara UK Ltd",
+        "Fontara Europe Ltd"
+      ],
+      "optionValues": {
+        "Fontara, Inc.": "Fontara, Inc., a Delaware corporation with its principal place of business at 1500 Harbor Boulevard, Suite 1200, San Francisco, CA 94111",
+        "Fontara UK Ltd": "Fontara UK Ltd, a company registered in England and Wales with its registered office at 48 Ashcombe Street, London EC2A 4NE, United Kingdom",
+        "Fontara Europe Ltd": "Fontara Europe Ltd, a company registered in Ireland with its registered office at 3 Riverside Quay, Dublin 2, D02 X285, Ireland"
+      },
+      "required": true,
+      "description": "Prints the entity’s full legal description and address"
+    },
+    "currency": {
+      "label": "Currency",
+      "type": "select",
+      "options": [
+        "US$",
+        "£",
+        "€"
+      ],
+      "required": true,
+      "description": "The signing entity’s: US$ for Fontara, Inc., £ for Fontara UK Ltd, € for Fontara Europe Ltd"
+    },
+    "effective": {
+      "bind": {
+        "provision": "EffectiveDate"
+      },
+      "required": true
+    },
+    "assignor": {
+      "bind": {
+        "provision": "AgreementParty"
+      },
+      "required": true,
+      "description": "Assignor legal name"
+    },
+    "assignor_entity": {
+      "label": "Assignor entity type",
+      "required": true,
+      "description": "For example: a Delaware corporation"
+    },
+    "assignor_address": {
+      "label": "Assignor street address",
+      "required": true
+    },
+    "assignor_city": {
+      "label": "Assignor city",
+      "required": true
+    },
+    "assignor_region": {
+      "label": "Assignor state",
+      "required": true
+    },
+    "assignor_postal": {
+      "label": "Assignor ZIP code",
+      "required": true
+    },
+    "ip": {
+      "label": "Intellectual property assigned",
+      "required": true
+    },
+    "consideration": {
+      "label": "Consideration",
+      "type": "number",
+      "money": true,
+      "required": true
+    },
+    "notary": {
+      "label": "Notary acknowledgment",
+      "type": "select",
+      "options": [
+        "No",
+        "Yes"
+      ],
+      "required": true,
+      "description": "For recording in some registries"
+    }
+  },
+  "signers": [
+    "Assignor",
+    "Fontara"
+  ],
+  "body": [
+    {
+      "title": "INTELLECTUAL PROPERTY ASSIGNMENT AGREEMENT"
+    },
+    {
+      "p": "This Agreement is made as of {{effective}} between **{{assignor}}**, {{assignor_entity}} with its principal place of business at {{assignor_address}}, {{assignor_city}}, {{assignor_region}} {{assignor_postal}} (\"Assignor\"), and {{fontara_entity}} (\"Assignee\")."
+    },
+    {
+      "h": "1. Assignment of Intellectual Property"
+    },
+    {
+      "p": "For {{currency}}{{consideration}}, the receipt of which Assignor acknowledges, Assignor irrevocably assigns to Assignee all right, title and interest in {{ip}}, including the registrations and applications listed in Schedule A, all copyrights, patents, trademarks (with the goodwill they symbolize) and other rights in it, and the right to sue for past, present and future infringement (together, the \"Assigned IP\")."
+    },
+    {
+      "p": "Assignor initials acknowledging Section 1 (Assignment of Intellectual Property): [[initials:Assignor]]"
+    },
+    {
+      "h": "2. Moral Rights"
+    },
+    {
+      "p": "To the extent the law permits, Assignor waives, and shall procure that each author waives, all moral rights in the Assigned IP, and agrees not to assert them against Assignee or its licensees."
+    },
+    {
+      "h": "3. Further Assurances and Power of Attorney"
+    },
+    {
+      "p": "Assignor will sign any document and take any step Assignee reasonably requests to record or perfect this assignment in any registry. If Assignor does not do so within 10 business days after a request, Assignor irrevocably appoints Assignee as its attorney-in-fact to sign and file that document in Assignor's name; this power is coupled with an interest."
+    },
+    {
+      "h": "4. Warranties"
+    },
+    {
+      "p": "Assignor warrants that it is the sole owner of the Assigned IP, has not granted any license, lien or other conflicting right in it, and knows of no claim that it infringes the rights of others or of any infringement of it."
+    },
+    {
+      "h": "5. Notices"
+    },
+    {
+      "p": "Notices under this Agreement must be in writing and delivered by hand, by recognized overnight courier or by email to the addresses stated in this Agreement or later notified in writing. A notice is effective on confirmed delivery or, for email, when the recipient acknowledges it. Notices of breach, termination or a legal claim must be sent by courier, with a copy by email."
+    },
+    {
+      "h": "6. Assignment"
+    },
+    {
+      "p": "Neither party may assign or transfer this Agreement without the other party's prior written consent, which may not be unreasonably withheld, except that either party may assign it on written notice to an affiliate, or to a successor to all or substantially all of the business or assets to which it relates that assumes it in writing. Any other attempted assignment is void. This Agreement binds and benefits the parties and their permitted successors and assigns."
+    },
+    {
+      "h": "7. Governing Law and Disputes"
+    },
+    {
+      "if": {
+        "field": "fontara_entity",
+        "is": "Fontara, Inc."
+      },
+      "then": [
+        {
+          "p": "This Agreement is governed by the laws of the State of Delaware, without regard to its conflict-of-laws rules. The parties shall first try to resolve any dispute arising out of or relating to this Agreement by good-faith negotiation between senior executives for 30 days. A dispute not resolved in that time shall be finally settled by binding arbitration administered by the American Arbitration Association under its Commercial Arbitration Rules, before a single arbitrator, seated in San Francisco, California, and judgment on the award may be entered in any court of competent jurisdiction. Either party may seek injunctive relief from a court to protect its confidential information or intellectual property."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "fontara_entity",
+        "is": "Fontara UK Ltd"
+      },
+      "then": [
+        {
+          "p": "This Agreement, and any non-contractual obligation arising out of or in connection with it, is governed by the law of England and Wales. The parties shall first try to resolve any dispute arising out of or in connection with this Agreement by good-faith negotiation between senior executives for 30 days. A dispute not resolved in that time shall be referred to and finally resolved by arbitration under the LCIA Rules, which are incorporated by reference into this section, before a sole arbitrator, with the seat of arbitration in London and English as the language of the arbitration. Either party may seek urgent injunctive relief from a court."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "fontara_entity",
+        "is": "Fontara Europe Ltd"
+      },
+      "then": [
+        {
+          "p": "This Agreement, and any non-contractual obligation arising out of or in connection with it, is governed by the laws of Ireland. The parties shall first try to resolve any dispute arising out of or in connection with this Agreement by good-faith negotiation between senior executives for 30 days, after which the courts of Ireland have exclusive jurisdiction to settle it."
+        }
+      ]
+    },
+    {
+      "h": "8. Entire Agreement and Amendment"
+    },
+    {
+      "p": "This Agreement, including its schedules, is the entire agreement of the parties on its subject and supersedes all prior proposals, negotiations, representations and understandings about it. Each party confirms that in entering into it, it has not relied on any statement not set out in it. This Agreement may be amended only in a writing signed by authorized representatives of both parties."
+    },
+    {
+      "h": "9. Survival"
+    },
+    {
+      "p": "Any provision of this Agreement that by its nature is intended to survive its termination or expiration survives it, including the Warranties and Further Assurances and Power of Attorney sections, together with any payment obligation accrued before termination."
+    },
+    {
+      "h": "10. General"
+    },
+    {
+      "p": "If any provision of this Agreement is held invalid or unenforceable, it is enforced to the maximum extent permitted and the rest of this Agreement continues in full force. No failure or delay in exercising a right is a waiver of it, and a waiver is effective only if it is in writing and signed. No person other than the parties and their permitted successors and assigns has any right to enforce any term of this Agreement. This Agreement may be signed in counterparts and by electronic signature, each of which is an original and all of which together are one instrument."
+    },
+    {
+      "sign": "Assignor",
+      "title": true,
+      "company": true
+    },
+    {
+      "sign": "Fontara",
+      "title": true,
+      "company": true
+    },
+    {
+      "if": {
+        "field": "notary",
+        "is": "Yes"
+      },
+      "then": [
+        {
+          "h": "Notary Acknowledgment"
+        },
+        {
+          "p": "State of ______________ ) County of ______________ ) On ______________ before me, ______________, a notary public, personally appeared ______________, who proved to me on the basis of satisfactory evidence to be the person whose name is subscribed to this instrument, and acknowledged that he or she signed it in his or her authorized capacity on behalf of Assignor. Notary signature: ______________ (Seal)"
+        }
+      ]
+    },
+    {
+      "h": "Schedule A — Assigned Intellectual Property"
+    },
+    {
+      "lineItems": {
+        "name": "AssignedIp",
+        "label": "Assigned intellectual property",
+        "columns": [
+          {
+            "key": "type",
+            "label": "Type"
+          },
+          {
+            "key": "reg_or_app_no",
+            "label": "Reg. or App. No."
+          },
+          {
+            "key": "jurisdiction",
+            "label": "Jurisdiction"
+          },
+          {
+            "key": "title",
+            "label": "Title"
+          }
+        ]
+      }
+    }
+  ],
+  "examples": [
+    {
+      "values": {
+        "effective": "05/20/2027",
+        "assignor": "Keranos Digital Media",
+        "assignor_entity": "a Delaware limited liability company",
+        "assignor_address": "2250 Innovation Parkway",
+        "ip": "the \"Signal\" campaign logo, its variants and design files",
+        "consideration": "5000",
+        "notary": "Yes",
+        "fontara_entity": "Fontara, Inc.",
+        "currency": "US$",
+        "assignor_city": "Austin",
+        "assignor_region": "TX",
+        "assignor_postal": "78731"
+      },
+      "tables": {
+        "AssignedIp": [
+          [
+            "Trademark",
+            "US 98/123,456",
+            "United States",
+            "SIGNAL"
+          ],
+          [
+            "Copyright",
+            "none",
+            "Worldwide",
+            "Signal logo art"
+          ]
+        ]
+      },
+      "expect": [
+        "US$5,000.00",
+        "Signal",
+        "Schedule A",
+        "attorney-in-fact",
+        "Notary Acknowledgment",
+        "US 98/123,456"
+      ]
+    },
+    {
+      "values": {
+        "effective": "06/10/2027",
+        "assignor": "Precisys Health Analytics",
+        "assignor_entity": "a Delaware corporation",
+        "assignor_address": "2100 Medical Plaza",
+        "ip": "the \"Precisys UK\" benchmark dataset and its documentation",
+        "consideration": "12000",
+        "notary": "No",
+        "fontara_entity": "Fontara UK Ltd",
+        "currency": "£",
+        "assignor_city": "San Diego",
+        "assignor_region": "CA",
+        "assignor_postal": "92121"
+      },
+      "tables": {
+        "AssignedIp": [
+          [
+            "Database right",
+            "none",
+            "United Kingdom",
+            "Precisys UK dataset"
+          ]
+        ]
+      },
+      "expect": [
+        "£12,000.00",
+        "LCIA Rules",
+        "Precisys UK dataset"
+      ],
+      "absent": [
+        "Notary Acknowledgment"
+      ]
+    }
+  ],
+  "source": "written for the library — no vault clause set for this type"
+}

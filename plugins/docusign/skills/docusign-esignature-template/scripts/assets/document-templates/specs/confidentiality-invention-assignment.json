@@ -1,0 +1,162 @@
+{
+  "id": "confidentiality-invention-assignment",
+  "name": "Employee Confidentiality and Invention Assignment Agreement",
+  "agreementType": "CIIANCA",
+  "description": "Every new employee’s confidentiality, invention disclosure and assignment, power of attorney and non-solicitation commitments, with the DTSA notice, protected rights and the §2870 exhibit.",
+  "fields": {
+    "effective": {
+      "bind": {
+        "provision": "EffectiveDate"
+      },
+      "required": true
+    },
+    "employee": {
+      "bind": {
+        "provision": "AgreementParty"
+      },
+      "required": true,
+      "description": "Employee name"
+    },
+    "nonsolicit": {
+      "label": "Non-solicitation period (months)",
+      "type": "number",
+      "required": true
+    },
+    "governing_law": {
+      "bind": {
+        "provision": "GoverningLaw"
+      },
+      "required": true,
+      "description": "The state where the Employee primarily works, for example: the State of California"
+    }
+  },
+  "signers": [
+    "Employee",
+    "Fontara"
+  ],
+  "body": [
+    {
+      "title": "EMPLOYEE CONFIDENTIALITY AND INVENTION ASSIGNMENT AGREEMENT"
+    },
+    {
+      "p": "This Agreement is entered into as of {{effective}} between Fontara, Inc., a Delaware corporation (\"Fontara\"), and **{{employee}}** (\"Employee\"), in consideration of Employee’s employment."
+    },
+    {
+      "h": "1. Confidential Information"
+    },
+    {
+      "p": "Employee will hold Fontara’s Confidential Information — non-public technical, business, customer and personnel information — in strict confidence during and after employment, and use it only for Fontara’s benefit."
+    },
+    {
+      "h": "2. Protected Rights"
+    },
+    {
+      "p": "Nothing in this Agreement prevents Employee from filing a charge with, reporting possible violations of law to, or participating in an investigation by the Equal Employment Opportunity Commission, the National Labor Relations Board, the Securities and Exchange Commission or any other government agency; from discussing or disclosing information about unlawful acts in the workplace, such as harassment or discrimination or any other conduct that Employee has reason to believe is unlawful; or from discussing wages and other terms and conditions of employment. Employee need not notify Fontara before doing so."
+    },
+    {
+      "h": "3. Defend Trade Secrets Act Notice"
+    },
+    {
+      "p": "Under 18 U.S.C. § 1833(b): An individual shall not be held criminally or civilly liable under any federal or state trade secret law for the disclosure of a trade secret that is made (i) in confidence to a federal, state, or local government official, either directly or indirectly, or to an attorney, solely for the purpose of reporting or investigating a suspected violation of law; or (ii) in a complaint or other document filed in a lawsuit or other proceeding, if such filing is made under seal. An individual who files a lawsuit for retaliation by an employer for reporting a suspected violation of law may disclose the trade secret to the attorney of the individual and use the trade secret information in the court proceeding, if the individual files any document containing the trade secret under seal and does not disclose the trade secret, except pursuant to court order."
+    },
+    {
+      "h": "4. Disclosure and Assignment of Inventions"
+    },
+    {
+      "p": "Employee will promptly disclose to Fontara in writing every invention Employee conceives or reduces to practice during employment, including any Employee believes is excluded below, so that Fontara can assess it. Employee assigns to Fontara all inventions Employee conceives or reduces to practice during employment that relate to Fontara’s business or result from work for Fontara, except inventions that qualify for protection under California Labor Code section 2870 (set out in Exhibit B) or a similar law, which this Agreement does not cover."
+    },
+    {
+      "h": "5. Prior Inventions"
+    },
+    {
+      "p": "Inventions made before employment that Employee wishes to exclude must be disclosed in Exhibit A."
+    },
+    {
+      "h": "6. Power of Attorney and Moral Rights"
+    },
+    {
+      "p": "If Fontara cannot obtain Employee's signature on a document needed to perfect or record its rights in an assigned invention, Employee irrevocably appoints Fontara and its authorized officers as Employee's agent and attorney-in-fact to sign and file that document on Employee's behalf. To the extent the law permits, Employee waives, and will not assert against Fontara or its licensees, any moral rights in assigned inventions and works."
+    },
+    {
+      "h": "7. Non-Solicitation"
+    },
+    {
+      "p": "For {{nonsolicit}} months after employment ends, Employee will not solicit any Fontara employee to leave Fontara, to the extent the law permits."
+    },
+    {
+      "h": "8. Return of Property"
+    },
+    {
+      "p": "When employment ends, Employee will return all Fontara property and documents and delete Fontara information from personal devices."
+    },
+    {
+      "h": "9. At-Will Employment"
+    },
+    {
+      "p": "Nothing in this Agreement changes the at-will nature of Employee's employment or gives Employee any right to continued employment."
+    },
+    {
+      "h": "10. Governing Law and Disputes"
+    },
+    {
+      "p": "This Agreement is governed by the laws of {{governing_law}}, without regard to its conflict-of-laws rules."
+    },
+    {
+      "h": "11. Entire Agreement and Amendment"
+    },
+    {
+      "p": "This Agreement is the entire agreement of the parties on its subject and supersedes all prior proposals, negotiations, representations and understandings about it. Each party confirms that in entering into it, it has not relied on any statement not set out in it. This Agreement may be amended only in a writing signed by authorized representatives of both parties."
+    },
+    {
+      "h": "12. General"
+    },
+    {
+      "p": "If any provision of this Agreement is held invalid or unenforceable, it is enforced to the maximum extent permitted and the rest of this Agreement continues in full force. No failure or delay in exercising a right is a waiver of it, and a waiver is effective only if it is in writing and signed. No person other than the parties and their permitted successors and assigns has any right to enforce any term of this Agreement. This Agreement may be signed in counterparts and by electronic signature, each of which is an original and all of which together are one instrument."
+    },
+    {
+      "p": "Employee initials: [[initials:Employee]]"
+    },
+    {
+      "sign": "Employee",
+      "title": false
+    },
+    {
+      "sign": "Fontara",
+      "title": true,
+      "company": true
+    },
+    {
+      "h": "Exhibit A — Prior Inventions"
+    },
+    {
+      "p": "Prior inventions: [[radio:Employee:Prior inventions:I have no prior inventions to disclose|I have listed my prior inventions in the attachment]]"
+    },
+    {
+      "p": "Prior inventions list (if any): [[attach?:Employee:Prior inventions list]]"
+    },
+    {
+      "h": "Exhibit B — California Labor Code Section 2870"
+    },
+    {
+      "p": "Section 2870 of the California Labor Code provides: \"(a) Any provision in an employment agreement which provides that an employee shall assign, or offer to assign, any of his or her rights in an invention to his or her employer shall not apply to an invention that the employee developed entirely on his or her own time without using the employer's equipment, supplies, facilities, or trade secret information except for those inventions that either: (1) Relate at the time of conception or reduction to practice of the invention to the employer's business, or actual or demonstrably anticipated research or development of the employer; or (2) Result from any work performed by the employee for the employer. (b) To the extent a provision in an employment agreement purports to require an employee to assign an invention otherwise excluded from being required to be assigned under subdivision (a), the provision is against the public policy of this state and is unenforceable.\""
+    }
+  ],
+  "examples": [
+    {
+      "values": {
+        "effective": "06/07/2027",
+        "employee": "Payal Tanaka",
+        "nonsolicit": "12",
+        "governing_law": "the State of California"
+      },
+      "expect": [
+        "For 12 months",
+        "18 U.S.C. § 1833(b)",
+        "attorney-in-fact",
+        "Exhibit B",
+        "unlawful acts in the workplace"
+      ]
+    }
+  ],
+  "source": "written for the library — no vault clause set for this type"
+}

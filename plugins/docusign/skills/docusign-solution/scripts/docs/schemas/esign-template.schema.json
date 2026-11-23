@@ -1,0 +1,173 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.com/docusign-skills/docs/schemas/esign-template.schema.json",
+  "title": "eSignature envelope template (Download / Upload Template JSON; esign/<id>.json in a workflow package)",
+  "type": "object",
+  "required": [
+    "name",
+    "documents",
+    "recipients"
+  ],
+  "properties": {
+    "templateId": {
+      "type": "string",
+      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "description": {
+      "type": "string"
+    },
+    "shared": {
+      "enum": [
+        "true",
+        "false"
+      ]
+    },
+    "emailSubject": {
+      "type": "string"
+    },
+    "emailBlurb": {
+      "type": "string"
+    },
+    "brandId": {
+      "type": "string",
+      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+    },
+    "brandLock": {
+      "enum": [
+        "true",
+        "false"
+      ]
+    },
+    "notification": {
+      "type": "object",
+      "properties": {
+        "useAccountDefaults": {
+          "enum": [
+            "true",
+            "false"
+          ]
+        },
+        "reminders": {
+          "type": "object",
+          "properties": {
+            "reminderEnabled": {
+              "enum": [
+                "true",
+                "false"
+              ]
+            },
+            "reminderDelay": {
+              "type": "string",
+              "pattern": "^\\d+$"
+            },
+            "reminderFrequency": {
+              "type": "string",
+              "pattern": "^\\d+$"
+            }
+          }
+        },
+        "expirations": {
+          "type": "object",
+          "properties": {
+            "expireEnabled": {
+              "enum": [
+                "true",
+                "false"
+              ]
+            },
+            "expireAfter": {
+              "type": "string",
+              "pattern": "^\\d+$"
+            },
+            "expireWarn": {
+              "type": "string",
+              "pattern": "^\\d+$"
+            }
+          }
+        }
+      }
+    },
+    "documents": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "documentId",
+          "name"
+        ],
+        "properties": {
+          "documentId": {
+            "type": "string",
+            "pattern": "^\\d+$"
+          },
+          "name": {
+            "type": "string"
+          },
+          "fileExtension": {
+            "type": "string"
+          },
+          "order": {
+            "type": "string"
+          },
+          "documentBase64": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "recipients": {
+      "type": "object",
+      "properties": {
+        "signers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/recipient"
+          }
+        },
+        "carbonCopies": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/recipient"
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "recipient": {
+      "type": "object",
+      "required": [
+        "recipientId",
+        "roleName"
+      ],
+      "properties": {
+        "recipientId": {
+          "type": "string",
+          "pattern": "^\\d+$"
+        },
+        "roleName": {
+          "type": "string",
+          "minLength": 1
+        },
+        "routingOrder": {
+          "type": "string",
+          "pattern": "^\\d+$"
+        },
+        "tabs": {
+          "type": "object",
+          "propertyNames": {
+            "pattern": "^[a-zA-Z]+Tabs$|^tabGroups$"
+          },
+          "additionalProperties": {
+            "type": "array"
+          }
+        }
+      }
+    }
+  }
+}

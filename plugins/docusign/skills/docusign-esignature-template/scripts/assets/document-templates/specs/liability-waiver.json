@@ -1,0 +1,152 @@
+{
+  "id": "liability-waiver",
+  "name": "Participant Release and Waiver of Liability",
+  "agreementType": "ReleaseWaiver",
+  "description": "A customer-event participant’s assumption of risk, release, indemnity and medical authorization for an optional activity, with emergency contact, photo consent and a parent or guardian for a minor.",
+  "fields": {
+    "activity": {
+      "label": "Activity",
+      "required": true
+    },
+    "event": {
+      "label": "Event",
+      "required": true
+    },
+    "date": {
+      "label": "Activity date",
+      "type": "date",
+      "required": true
+    },
+    "minor": {
+      "label": "Participant is a minor",
+      "type": "select",
+      "options": [
+        "No",
+        "Yes"
+      ],
+      "required": true
+    },
+    "governing_law": {
+      "bind": {
+        "provision": "GoverningLaw"
+      },
+      "required": true,
+      "description": "Written after \"the laws of\": for example, the State of Delaware, or England and Wales"
+    }
+  },
+  "signers": [
+    "Participant"
+  ],
+  "body": [
+    {
+      "title": "PARTICIPANT RELEASE AND WAIVER OF LIABILITY"
+    },
+    {
+      "p": "Activity: **{{activity}}**, on {{date}}, an optional activity offered to guests of {{event}}, organized by Fontara, Inc. (\"Fontara\")."
+    },
+    {
+      "p": "Participant name: [[text:Participant:Participant name]]  Date of birth: [[text:Participant:Date of birth]]"
+    },
+    {
+      "p": "Signing as: [[radio:Participant:Signing as:The participant (18 or older)|Parent or legal guardian of a minor participant]]"
+    },
+    {
+      "h": "1. Assumption of Risk"
+    },
+    {
+      "p": "I understand the activity involves risks, including physical injury and damage to property, and I voluntarily assume them."
+    },
+    {
+      "p": "[[check:Participant:Understands the risks]] I have read this release and understand the risks."
+    },
+    {
+      "h": "2. Release"
+    },
+    {
+      "p": "I release Fontara, its affiliates, employees and agents, the activity provider and the venue operator from claims arising from participation in the activity, except claims caused by their gross negligence or willful misconduct."
+    },
+    {
+      "h": "3. Indemnity"
+    },
+    {
+      "p": "I will indemnify Fontara against any claim by a third party arising from the participant's own negligent or wrongful conduct during the activity."
+    },
+    {
+      "h": "4. Medical Treatment"
+    },
+    {
+      "p": "I authorize Fontara and the activity provider to obtain emergency medical treatment for the participant if they reasonably believe it is needed and I cannot be reached, and I am responsible for its cost."
+    },
+    {
+      "h": "5. Emergency Contact"
+    },
+    {
+      "p": "Name: [[text:Participant:Emergency contact name]]  Phone: [[text:Participant:Emergency contact phone]]"
+    },
+    {
+      "h": "6. Photography"
+    },
+    {
+      "p": "Photo consent: [[radio:Participant:Media consent:I consent to Fontara using photos of the participant from the event|I do not consent to photos]]"
+    },
+    {
+      "h": "7. Governing Law and Severability"
+    },
+    {
+      "p": "This release is governed by the laws of {{governing_law}}, and is intended to be as broad and inclusive as those laws allow. If any part of it is held unenforceable, the rest remains in effect."
+    },
+    {
+      "if": {
+        "field": "minor",
+        "is": "Yes"
+      },
+      "then": [
+        {
+          "h": "Parent or Guardian"
+        },
+        {
+          "p": "The participant is under 18. I am the participant’s parent or legal guardian; I give this release, indemnity and authorization on the participant’s behalf and on my own, and I consent to the participant’s taking part."
+        }
+      ]
+    },
+    {
+      "p": "Signature of the participant, or of a parent or legal guardian if the participant is a minor:"
+    },
+    {
+      "sign": "Participant",
+      "title": false
+    }
+  ],
+  "examples": [
+    {
+      "values": {
+        "activity": "guided sea-kayak tour",
+        "event": "the Fontara Connect 2027 customer conference",
+        "date": "09/22/2027",
+        "minor": "No",
+        "governing_law": "the State of California"
+      },
+      "expect": [
+        "guided sea-kayak tour",
+        "Medical Treatment"
+      ],
+      "absent": [
+        "Parent or Guardian"
+      ]
+    },
+    {
+      "values": {
+        "activity": "family climbing session",
+        "event": "the Fontara Connect 2027 family day",
+        "date": "09/23/2027",
+        "minor": "Yes",
+        "governing_law": "the State of California"
+      },
+      "expect": [
+        "Parent or Guardian",
+        "family climbing session"
+      ]
+    }
+  ],
+  "source": "written for the library — no vault clause set for this type"
+}

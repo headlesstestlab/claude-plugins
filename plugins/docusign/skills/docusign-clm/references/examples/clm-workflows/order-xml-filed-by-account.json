@@ -1,0 +1,108 @@
+{
+  "id": "order-xml-filed-by-account",
+  "name": "Order XML Filed by Account",
+  "description": "An ERP starts this workflow by the CLM API with an order XML document and the customer's account id and name and the order year in Params. Update Variable From XML loads the order's Customer node into a variable; Find Folder finds the year's folder under Order Archive by its path (the year from Params) and a copy of the order is filed there; Find or Create EOS Parent Folder finds the customer's account folder, or makes it, and the order is moved into it. Find Folder, Find or Create EOS Parent Folder and Update Variable From XML are built from the designer catalogue and run-proven (2026-10-31; Find Folder by path 2026-11-01).",
+  "variables": [
+    {
+      "name": "Order",
+      "type": "document"
+    },
+    {
+      "name": "Customer",
+      "type": "xml"
+    },
+    {
+      "name": "Archive",
+      "type": "folder"
+    },
+    {
+      "name": "AccountFolder",
+      "type": "folder"
+    }
+  ],
+  "steps": [
+    {
+      "id": "find",
+      "name": "Find the order",
+      "kind": "findDocument",
+      "output": "Order",
+      "next": "customer"
+    },
+    {
+      "id": "customer",
+      "name": "Load the customer",
+      "kind": "updateVariableFromXml",
+      "documents": {
+        "var": "Order"
+      },
+      "xpath": "/Order/Customer",
+      "output": "Customer",
+      "on": {
+        "success": "archive",
+        "failure": "finish"
+      }
+    },
+    {
+      "id": "archive",
+      "name": "Find the order archive",
+      "kind": "findFolder",
+      "folder": {
+        "path": "/Order Archive/<%#XmlVariables.Params.OrderYear%>"
+      },
+      "output": "Archive",
+      "on": {
+        "success": "copy",
+        "failure": "finish"
+      }
+    },
+    {
+      "id": "copy",
+      "name": "Copy to the archive",
+      "kind": "copyOrMoveDocument",
+      "action": "copy",
+      "documents": {
+        "var": "Order"
+      },
+      "folder": {
+        "var": "Archive"
+      },
+      "on": {
+        "success": "account",
+        "failure": "finish"
+      }
+    },
+    {
+      "id": "account",
+      "name": "Find or create the account folder",
+      "kind": "findOrCreateEosFolder",
+      "objectType": "Account",
+      "objectId": "<%#XmlVariables.Params.AccountId%>",
+      "folderName": "<%#XmlVariables.Params.AccountName%>",
+      "output": "AccountFolder",
+      "on": {
+        "success": "file",
+        "failure": "finish"
+      }
+    },
+    {
+      "id": "file",
+      "name": "File the order",
+      "kind": "copyOrMoveDocument",
+      "action": "move",
+      "documents": {
+        "var": "Order"
+      },
+      "folder": {
+        "var": "AccountFolder"
+      },
+      "on": {
+        "success": "finish"
+      }
+    },
+    {
+      "id": "finish",
+      "name": "Finish",
+      "kind": "finish"
+    }
+  ]
+}

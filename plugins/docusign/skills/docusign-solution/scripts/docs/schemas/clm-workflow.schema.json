@@ -1,0 +1,166 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.com/docusign-skills/docs/schemas/clm-workflow.schema.json",
+  "title": "CLM workflow, the Workflow Designer's Export JSON (<workflow name>_ V<n>.json)",
+  "description": "A JointJS graph: one array of cells. Steps, the Start and Finish circles and Rule diamonds are nodes; springcm.Link cells are the paths between them, labelled with the source step's outcome. Shape read from one export on 2026-10-29 (docs/ASSET-FORMATS.md, 'CLM workflow (Export JSON)').",
+  "type": "object",
+  "required": [
+    "cells"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "cells": {
+      "type": "array",
+      "minItems": 2,
+      "items": {
+        "$ref": "#/$defs/cell"
+      }
+    }
+  },
+  "$defs": {
+    "guid": {
+      "type": "string",
+      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+    },
+    "typed": {
+      "description": "Every setting is a typed value: { type, value }. templateTag marks a value a template wizard owns (#workflowName, #assignedUsers \u2026).",
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string"
+        },
+        "templateTag": {
+          "type": "string",
+          "pattern": "^#"
+        }
+      },
+      "additionalProperties": true
+    },
+    "end": {
+      "type": "object",
+      "required": [
+        "id"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/guid"
+        },
+        "port": {
+          "type": "string"
+        },
+        "selector": {
+          "type": "string"
+        }
+      }
+    },
+    "cell": {
+      "type": "object",
+      "required": [
+        "type",
+        "id",
+        "z",
+        "name",
+        "attrs"
+      ],
+      "properties": {
+        "type": {
+          "enum": [
+            "springcm.Step",
+            "springcm.Circle",
+            "springcm.Diamond",
+            "springcm.Link",
+            "springcm.Group",
+            "springcm.Lane",
+            "springcm.Pool"
+          ]
+        },
+        "id": {
+          "$ref": "#/$defs/guid"
+        },
+        "z": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "object",
+          "required": [
+            "type",
+            "value"
+          ],
+          "properties": {
+            "type": {
+              "const": "String"
+            },
+            "value": {
+              "type": "string"
+            }
+          }
+        },
+        "attrs": {
+          "type": "object"
+        },
+        "activityName": {
+          "type": "string",
+          "pattern": "^([A-Za-z]+Activity|EvaluateDocumentText|WaitForSignal)$",
+          "description": "The designer catalogue names two steps without the Activity suffix: Evaluate Document Text and Wait for Signal"
+        },
+        "group": {
+          "type": "string"
+        },
+        "position": {
+          "type": "object",
+          "required": [
+            "x",
+            "y"
+          ],
+          "properties": {
+            "x": {
+              "type": "number"
+            },
+            "y": {
+              "type": "number"
+            }
+          }
+        },
+        "size": {
+          "type": "object",
+          "required": [
+            "width",
+            "height"
+          ]
+        },
+        "source": {
+          "$ref": "#/$defs/end"
+        },
+        "target": {
+          "$ref": "#/$defs/end"
+        },
+        "output": {
+          "$ref": "#/$defs/typed"
+        },
+        "stepDescription": {
+          "$ref": "#/$defs/typed"
+        }
+      },
+      "if": {
+        "properties": {
+          "type": {
+            "const": "springcm.Link"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "source",
+          "target"
+        ]
+      },
+      "else": {
+        "required": [
+          "activityName",
+          "position",
+          "size"
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "id": "contracts-folder-sweep",
+  "name": "Contracts Folder Sweep",
+  "description": "A sweep that starts without content (by hand, a schedule or the API with no Params): Find Documents by Folder lists the Contracts folder, Update Information shows that it ran, and a Logger line closes each path. No step reads Params.",
+  "noContent": true,
+  "variables": [
+    {
+      "name": "Contracts",
+      "type": "document"
+    }
+  ],
+  "steps": [
+    {
+      "id": "list",
+      "name": "List the contracts",
+      "kind": "findDocumentsByFolder",
+      "folder": {
+        "name": "Contracts"
+      },
+      "output": "Contracts",
+      "on": {
+        "match": "info",
+        "noMatch": "logEmpty",
+        "failure": "finish"
+      }
+    },
+    {
+      "id": "info",
+      "name": "Show the sweep",
+      "kind": "updateInformation",
+      "information": "Contracts swept on <%#System.Date%>",
+      "on": {
+        "success": "logDone",
+        "failure": "finish"
+      }
+    },
+    {
+      "id": "logDone",
+      "name": "Log swept",
+      "kind": "logger",
+      "message": "Contracts swept",
+      "next": "finish"
+    },
+    {
+      "id": "logEmpty",
+      "name": "Log empty",
+      "kind": "logger",
+      "message": "No contracts to sweep",
+      "next": "finish"
+    },
+    {
+      "id": "finish",
+      "kind": "finish"
+    }
+  ]
+}

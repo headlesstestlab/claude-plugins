@@ -1,0 +1,68 @@
+{
+  "id": "credit-application-approval",
+  "name": "Credit Application Approval",
+  "description": "A Credit Application Review request is owned by the credit team lead and approved by the Credit Team group; the outcome is recorded on the request as its status.",
+  "trigger": {
+    "request": "credit-application-review"
+  },
+  "steps": [
+    {
+      "owner": {
+        "user": "credit.lead@example.com"
+      }
+    },
+    {
+      "status": "Credit Review",
+      "color": "warning"
+    },
+    {
+      "due": {
+        "days": 5
+      }
+    },
+    {
+      "approval": {
+        "title": "Credit approval",
+        "description": "Review the signed application, references and the requested limit, then approve or decline the credit terms.",
+        "approvers": [
+          {
+            "group": "Credit Team"
+          }
+        ]
+      }
+    },
+    {
+      "if": {
+        "approved": "Credit approval"
+      },
+      "then": [
+        {
+          "status": "Credit Approved",
+          "color": "success"
+        },
+        {
+          "message": {
+            "to": [
+              "owner"
+            ],
+            "body": "Credit approved for {{TicketTitle}}. Tell the customer their limit and terms."
+          }
+        }
+      ],
+      "else": [
+        {
+          "status": "Credit Declined",
+          "color": "alert"
+        },
+        {
+          "message": {
+            "to": [
+              "owner"
+            ],
+            "body": "Credit declined for {{TicketTitle}}. Send the customer the adverse-action notice within 30 days."
+          }
+        }
+      ]
+    }
+  ]
+}

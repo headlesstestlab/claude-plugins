@@ -1,0 +1,72 @@
+{
+  "id": "volunteer-waiver-signup",
+  "name": "Volunteer waiver",
+  "summary": "Linked from the volunteer sign-up page: the volunteer enters the event code, their phone and an emergency contact, then signs the waiver on the form's Signature page in the same session.",
+  "esign": "volunteer-waiver",
+  "filler": "Volunteer",
+  "signing": {
+    "fromEmail": false,
+    "fieldEditing": false
+  },
+  "welcome": {
+    "title": "Volunteer waiver",
+    "text": "Thank you for volunteering. Fill in a few details, then sign the waiver on the last page.",
+    "button": "Start"
+  },
+  "thankYou": {
+    "title": "Thank you",
+    "text": "Your signed waiver is emailed to you. See you at the event."
+  },
+  "pages": [
+    {
+      "title": "Your event",
+      "fields": [
+        "event_code"
+      ]
+    },
+    {
+      "title": "About you",
+      "fields": [
+        "Volunteer_name",
+        "Volunteer_email",
+        "volunteer_phone"
+      ]
+    },
+    {
+      "title": "Emergency contact",
+      "fields": [
+        "emergency_name",
+        "emergency_relationship",
+        "emergency_phone"
+      ]
+    },
+    {
+      "title": "Photos",
+      "fields": [
+        "Media_consent"
+      ]
+    }
+  ],
+  "labels": {
+    "event_code": "Event code",
+    "Volunteer_name": "Your full name",
+    "Volunteer_email": "Your email",
+    "volunteer_phone": "Your phone",
+    "emergency_name": "Emergency contact name",
+    "emergency_relationship": "Relationship to you",
+    "emergency_phone": "Emergency contact phone",
+    "Media_consent": "Photo consent"
+  },
+  "descriptions": {
+    "event_code": "The code on the sign-up page for your event, e.g. PARK-CLEANUP-1114"
+  },
+  "sender": {
+    "volunteer_phone": "display",
+    "emergency_phone": "hide"
+  },
+  "envelopeCustomFields": {
+    "event_code": {
+      "certificate": true
+    }
+  }
+}

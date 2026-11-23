@@ -1,0 +1,202 @@
+{
+  "schema": "docusign-gallery/workflow-export-keys@1",
+  "note": "Key names (never values) that at least 90% of real exported steps of each type carry, for types seen 3+ times. Counts are how many steps carried the key. Built by captures/workflow-export-keys.ts; lab workflows excluded.",
+  "generatedAt": "2026-10-23T22:30:33.703Z",
+  "counts": {
+    "workflows": 46,
+    "types": 20
+  },
+  "types": {
+    "DS-ActFileArchive": {
+      "steps": 4,
+      "input": {
+        "httpType": 4,
+        "payload": 4
+      },
+      "config": {
+        "contentType": 4,
+        "contract": 4
+      }
+    },
+    "DS-CallServiceStep": {
+      "steps": 33,
+      "input": {
+        "httpType": 33,
+        "payload": 33
+      },
+      "config": {
+        "apiUrl": 33,
+        "scopes": 33
+      }
+    },
+    "DS-DocumentGenerationExperience": {
+      "steps": 18,
+      "input": {
+        "documentTemplates": 17,
+        "isFormHidden": 17,
+        "referrerUrl": 17
+      },
+      "config": {
+        "allowRecordIdOverride": 17,
+        "preview": 17
+      }
+    },
+    "DS-EmailNotification": {
+      "steps": 4,
+      "input": {
+        "mergeValues": 4,
+        "recipients": 4
+      },
+      "config": {
+        "language": 4,
+        "participantId": 4,
+        "sender_alias": 4,
+        "sender_name": 4,
+        "templateType": 4,
+        "templateVersion": 4
+      }
+    },
+    "DS-End": {
+      "steps": 45,
+      "input": {},
+      "config": {}
+    },
+    "DS-IDV": {
+      "steps": 4,
+      "input": {},
+      "config": {
+        "enableStandardOutput": 4,
+        "participantId": 4
+      }
+    },
+    "DS-IfElse": {
+      "steps": 12,
+      "input": {},
+      "config": {}
+    },
+    "DS-ShowScreenStep": {
+      "steps": 19,
+      "input": {
+        "httpType": 19,
+        "payload": 19
+      },
+      "config": {
+        "participantId": 19
+      }
+    },
+    "DS-SignPrepareESignTemplate": {
+      "steps": 4,
+      "input": {
+        "recipients": 4
+      },
+      "config": {
+        "templateId": 4
+      }
+    },
+    "DS-SignSendDocumentsForSignature": {
+      "steps": 14,
+      "input": {
+        "emailSubject": 13,
+        "isEmbeddedSign": 13,
+        "preparedTemplates": 13,
+        "recipients": 13
+      },
+      "config": {
+        "participantId": 13
+      }
+    },
+    "DS-SwitchCase": {
+      "steps": 4,
+      "input": {},
+      "config": {}
+    },
+    "DS-TicketAddApproval": {
+      "steps": 7,
+      "input": {
+        "approvers": 7,
+        "ticketId": 7
+      },
+      "config": {
+        "approvalMode": 7,
+        "description": 7,
+        "title": 7
+      }
+    },
+    "DS-TicketAddFollowers": {
+      "steps": 3,
+      "input": {
+        "followers": 3,
+        "ticketId": 3
+      },
+      "config": {}
+    },
+    "DS-TicketCreateRequest": {
+      "steps": 12,
+      "input": {
+        "externalSource": 11,
+        "fieldMappings": 11
+      },
+      "config": {
+        "requestTypeId": 11
+      }
+    },
+    "DS-TicketSendRequestMessage": {
+      "steps": 7,
+      "input": {
+        "ccEmails": 7,
+        "ccRecipients": 7,
+        "messageBody": 7,
+        "ticketId": 7,
+        "toEmails": 7,
+        "toRecipients": 7
+      },
+      "config": {
+        "attachRequestDocuments": 7
+      }
+    },
+    "DS-TicketSetDueDate": {
+      "steps": 7,
+      "input": {
+        "ticketDueDate": 7,
+        "ticketId": 7
+      },
+      "config": {
+        "ticketDueDateOffset": 7
+      }
+    },
+    "DS-TicketSetOwner": {
+      "steps": 12,
+      "input": {
+        "owner": 12,
+        "ticketId": 12
+      },
+      "config": {}
+    },
+    "DS-TicketSetStatus": {
+      "steps": 19,
+      "input": {
+        "ticketId": 19
+      },
+      "config": {}
+    },
+    "DS-UseCustomAIAgent": {
+      "steps": 5,
+      "input": {
+        "content": 5
+      },
+      "config": {
+        "resourceKey": 5
+      }
+    },
+    "DS-WebForms": {
+      "steps": 9,
+      "input": {},
+      "config": {
+        "participantId": 9,
+        "webFormId": 9,
+        "webFormName": 9,
+        "webFormSlug": 9
+      }
+    }
+  }
+}

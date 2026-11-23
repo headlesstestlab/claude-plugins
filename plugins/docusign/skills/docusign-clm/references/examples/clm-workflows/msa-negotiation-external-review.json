@@ -1,0 +1,157 @@
+{
+  "id": "msa-negotiation-external-review",
+  "name": "MSA Negotiation with External Review",
+  "description": "Mirrors the live workflow made from CLM's Negotiation template: an internal reviewer checks the document and sends it out for external review, the workflow waits for the counterparty, and every outcome is recorded and emailed to the person who started it.",
+  "variables": [
+    "Comments",
+    "EmailBody"
+  ],
+  "steps": [
+    {
+      "id": "prep",
+      "kind": "setVariable",
+      "name": "Update Variable Value 1",
+      "set": {
+        "EmailBody": "Hi — attached is Fontara's markup of the MSA. Please upload your revised version or accept it as is, and add any comments for our legal team."
+      },
+      "next": "review"
+    },
+    {
+      "id": "review",
+      "kind": "externalReview",
+      "name": "Review and Send for External Review",
+      "assignee": "submitter",
+      "subject": "Fontara - Master Services Agreement - your review, please",
+      "body": "Negotiation review requested: <%#Variable.EmailBody%>",
+      "instructions": "Review this document and make sure it is ready to be sent out for negotiation.",
+      "timeoutDays": 5,
+      "on": {
+        "sent": "notifySent",
+        "rejected": "outRejected",
+        "canceled": "notifyFailure",
+        "failure": "notifyFailure",
+        "timeout": "outTimeout"
+      }
+    },
+    {
+      "id": "notifySent",
+      "kind": "emailDocument",
+      "name": "Email Document 1",
+      "description": "Notify negotiation sent",
+      "to": "submitter",
+      "subject": "<%#XmlVariables.Params.Documents.Document.Name%> was sent for external review",
+      "next": "wait"
+    },
+    {
+      "id": "wait",
+      "kind": "waitExternalReview",
+      "name": "Wait for External Review",
+      "on": {
+        "completedWithDocument": "outCompleted",
+        "completedWithoutDocument": "outCompleted",
+        "expired": "outExpired",
+        "failure": "notifyFailure",
+        "manualOverride": "outCancelled",
+        "invalidRecipient": "outCancelled"
+      }
+    },
+    {
+      "id": "outRejected",
+      "kind": "setOutput",
+      "name": "Set Workflow Output 1",
+      "value": "Rejected - not sent",
+      "next": "mailRejected"
+    },
+    {
+      "id": "outTimeout",
+      "kind": "setOutput",
+      "name": "Set Workflow Output 4",
+      "value": "Timed out - not sent",
+      "next": "mailTimeout"
+    },
+    {
+      "id": "outCompleted",
+      "kind": "setOutput",
+      "name": "Set Workflow Output 3",
+      "value": "Completed",
+      "next": "mailCompleted"
+    },
+    {
+      "id": "outExpired",
+      "kind": "setOutput",
+      "name": "Set Workflow Output 2",
+      "value": "Expired",
+      "next": "mailExpired"
+    },
+    {
+      "id": "outCancelled",
+      "kind": "setOutput",
+      "name": "Set Workflow Output 5",
+      "value": "Cancelled",
+      "next": "mailExpired"
+    },
+    {
+      "id": "mailRejected",
+      "kind": "emailDocument",
+      "name": "Email Document 7",
+      "description": "Notify review was rejected",
+      "to": "submitter",
+      "subject": "The negotiation review for <%#XmlVariables.Params.Documents.Document.Name%> was rejected",
+      "next": "finish"
+    },
+    {
+      "id": "mailTimeout",
+      "kind": "emailDocument",
+      "name": "Email Document 2",
+      "description": "Notify review timed out",
+      "to": "submitter",
+      "subject": "The negotiation review for <%#XmlVariables.Params.Documents.Document.Name%> timed out",
+      "next": "finish"
+    },
+    {
+      "id": "mailCompleted",
+      "kind": "emailDocument",
+      "name": "Email Document 6",
+      "description": "Notify negotiation completed",
+      "to": "submitter",
+      "subject": "The counterparty returned <%#XmlVariables.Params.Documents.Document.Name%>",
+      "next": "finish"
+    },
+    {
+      "id": "mailExpired",
+      "kind": "emailDocument",
+      "name": "Email Document 5",
+      "description": "Notify failure or expiration",
+      "to": "submitter",
+      "subject": "The external review of <%#XmlVariables.Params.Documents.Document.Name%> ended without a reply",
+      "next": "finish"
+    },
+    {
+      "id": "notifyFailure",
+      "kind": "emailDocument",
+      "name": "Email Document 4",
+      "description": "Notify failure or cancellation of task",
+      "to": "submitter",
+      "subject": "The negotiation review for <%#XmlVariables.Params.Documents.Document.Name%> failed",
+      "on": {
+        "success": "finish",
+        "failure": "mailFailure"
+      }
+    },
+    {
+      "id": "mailFailure",
+      "kind": "email",
+      "name": "Email 1",
+      "description": "Notify failure with document",
+      "to": "submitter",
+      "subject": "Negotiation review has failed",
+      "body": "The negotiation review failed and its notice could not attach the document.",
+      "next": "finish"
+    },
+    {
+      "id": "finish",
+      "kind": "finish",
+      "name": "Finish 1"
+    }
+  ]
+}

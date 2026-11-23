@@ -1,0 +1,157 @@
+{
+  "id": "key-terms-schedule",
+  "name": "Key Terms Schedule",
+  "agreementType": "Other",
+  "description": "A one-page schedule to a Fontara services agreement that states its key commercial terms — initial term, renewal, notice periods, late fee and price cap — each bound to Docusign's standard agreement field, so Agreement Manager reads them from the signed copy.",
+  "fields": {
+    "fontara_entity": {
+      "label": "Fontara contracting entity",
+      "type": "select",
+      "options": [
+        "Fontara, Inc.",
+        "Fontara UK Ltd",
+        "Fontara Europe Ltd"
+      ],
+      "optionValues": {
+        "Fontara, Inc.": "Fontara, Inc., a Delaware corporation with its principal place of business at 1500 Harbor Boulevard, Suite 1200, San Francisco, CA 94111",
+        "Fontara UK Ltd": "Fontara UK Ltd, a company registered in England and Wales with its registered office at 48 Ashcombe Street, London EC2A 4NE, United Kingdom",
+        "Fontara Europe Ltd": "Fontara Europe Ltd, a company registered in Ireland with its registered office at 3 Riverside Quay, Dublin 2, D02 X285, Ireland"
+      },
+      "required": true,
+      "description": "Prints the entity’s full legal description and address"
+    },
+    "effective": {
+      "bind": {
+        "provision": "EffectiveDate"
+      },
+      "required": true,
+      "dateFormat": "MM/dd/yyyy"
+    },
+    "customer": {
+      "bind": {
+        "provision": "AgreementParty"
+      },
+      "required": true,
+      "description": "The customer's legal name"
+    },
+    "term": {
+      "bind": {
+        "provision": "Term"
+      },
+      "required": true,
+      "description": "For example: 24 months"
+    },
+    "renewal_term": {
+      "bind": {
+        "provision": "RenewalTerm"
+      },
+      "required": true,
+      "description": "For example: 12 months"
+    },
+    "renewal_notice": {
+      "bind": {
+        "provision": "RenewalNoticePeriod"
+      },
+      "required": true,
+      "description": "For example: 60 days"
+    },
+    "renewal_extension": {
+      "bind": {
+        "provision": "RenewalExtensionPeriod"
+      },
+      "required": true,
+      "description": "For example: 6 months"
+    },
+    "convenience_notice": {
+      "bind": {
+        "provision": "ConvenienceNoticePeriod"
+      },
+      "required": true,
+      "description": "For example: 30 days"
+    },
+    "cause_notice": {
+      "bind": {
+        "provision": "CauseNoticePeriod"
+      },
+      "required": true,
+      "description": "For example: 15 days"
+    },
+    "late_fee": {
+      "bind": {
+        "provision": "LatePaymentFeePercent"
+      },
+      "required": true,
+      "description": "Percent per month, for example 1.5"
+    },
+    "price_cap": {
+      "bind": {
+        "provision": "PriceCapIncrease"
+      },
+      "required": true,
+      "description": "Most the price may rise per renewal, in percent"
+    }
+  },
+  "signers": [
+    "Customer",
+    "Fontara"
+  ],
+  "body": [
+    {
+      "title": "KEY TERMS SCHEDULE"
+    },
+    {
+      "p": "This schedule forms part of the services agreement between {{fontara_entity}} (\"Fontara\") and **{{customer}}** dated {{effective}}."
+    },
+    {
+      "h": "Term and renewal"
+    },
+    {
+      "p": "Initial term: {{term}}. The agreement then renews for successive periods of {{renewal_term}} unless either party gives notice at least {{renewal_notice}} before the end of the current period. The customer may extend the current period once by {{renewal_extension}}."
+    },
+    {
+      "h": "Termination"
+    },
+    {
+      "p": "Either party may terminate for convenience on {{convenience_notice}} written notice, and for cause if a material breach is not cured within {{cause_notice}} of written notice."
+    },
+    {
+      "h": "Fees"
+    },
+    {
+      "p": "Late payments bear a fee of {{late_fee}}% per month. On each renewal Fontara may raise its prices by at most {{price_cap}}%."
+    },
+    {
+      "sign": "Customer"
+    },
+    {
+      "sign": "Fontara"
+    }
+  ],
+  "examples": [
+    {
+      "values": {
+        "effective": "11/02/2026",
+        "customer": "Vitality Horizons Medical",
+        "term": "24 months",
+        "renewal_term": "12 months",
+        "renewal_notice": "60 days",
+        "renewal_extension": "6 months",
+        "convenience_notice": "30 days",
+        "cause_notice": "15 days",
+        "late_fee": "1.5",
+        "price_cap": "3",
+        "fontara_entity": "Fontara, Inc."
+      },
+      "expect": [
+        "KEY TERMS SCHEDULE",
+        "Vitality Horizons Medical",
+        "24 months",
+        "60 days",
+        "1.5%",
+        "3%"
+      ],
+      "absent": []
+    }
+  ],
+  "source": "written for the library — no vault clause set for this type"
+}

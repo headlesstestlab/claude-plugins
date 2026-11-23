@@ -1,0 +1,50 @@
+{
+  "id": "mutual-nda-salesforce",
+  "from": "mutual-nda",
+  "name": "Mutual NDA (Fontara, Inc.), from a Salesforce Opportunity",
+  "variant": {
+    "fontara_entity": "Fontara, Inc.",
+    "disclosure_period": "2 years",
+    "confidentiality_period": "3 years"
+  },
+  "variantLabel": "Fontara, Inc.",
+  "summary": "The mutual NDA (Fontara, Inc.) as an eSignature for Salesforce envelope template on the Opportunity: the counterparty is the opportunity's primary Decision Maker contact role, Fontara's sender countersigns, and the signed NDA is saved to the opportunity's Files.",
+  "owners": {
+    "default": "Counterparty",
+    "fields": {
+      "effective": "Fontara",
+      "purpose": "Fontara"
+    }
+  },
+  "emailSubject": "Mutual NDA with Fontara",
+  "emailBlurb": "Please complete your company details and sign the mutual NDA.",
+  "salesforce": {
+    "sourceObject": "Opportunity",
+    "recipients": {
+      "Counterparty": {
+        "relationship": "OpportunityContactRoles",
+        "relatesTo": "OpportunityContactRole",
+        "filter": "Role = 'Decision Maker' AND IsPrimary = true"
+      },
+      "Fontara": {
+        "sender": true
+      }
+    },
+    "writeBack": {
+      "nameFormat": "Name",
+      "includeCertificateOfCompletion": true
+    },
+    "mergeFields": {
+      "counterparty": {
+        "path": "Opportunity.Account.Name"
+      },
+      "purpose": {
+        "path": "Opportunity.Name",
+        "editable": true
+      }
+    },
+    "button": {
+      "label": "Send Mutual NDA"
+    }
+  }
+}

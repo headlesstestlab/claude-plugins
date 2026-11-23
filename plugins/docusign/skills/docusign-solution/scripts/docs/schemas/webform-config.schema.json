@@ -1,0 +1,595 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.com/docusign-skills/docs/schemas/webform-config.schema.json",
+  "title": "Web Forms configuration file (Download Configuration / Upload Web Form), also webform/<id>.json in packages",
+  "type": "object",
+  "required": [
+    "formProperties",
+    "formContent",
+    "eSignTemplates"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+    },
+    "accountId": {
+      "type": "string",
+      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+    },
+    "versionId": {
+      "type": "integer"
+    },
+    "formState": {
+      "enum": [
+        "draft",
+        "active",
+        "inactive"
+      ]
+    },
+    "status": {
+      "type": "string"
+    },
+    "isPublished": {
+      "type": "boolean"
+    },
+    "isEnabled": {
+      "type": "boolean"
+    },
+    "hasDraftChanges": {
+      "type": "boolean"
+    },
+    "formProperties": {
+      "type": "object",
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "isPrivateAccess": {
+          "type": "boolean"
+        },
+        "allowSending": {
+          "type": "boolean"
+        }
+      }
+    },
+    "formMetadata": {
+      "type": "object",
+      "properties": {
+        "source": {
+          "enum": [
+            "blank",
+            "tickets",
+            "template",
+            "uploaded"
+          ]
+        },
+        "type": {
+          "enum": [
+            "standalone",
+            "template"
+          ]
+        },
+        "publishedSlug": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{32}$"
+        },
+        "publishedComponentNames": {
+          "type": "object",
+          "additionalProperties": {
+            "enum": [
+              "Root",
+              "Step",
+              "Welcome",
+              "Section",
+              "Summary",
+              "FormSubmitAction",
+              "Thankyou",
+              "TextBox",
+              "Number",
+              "Currency",
+              "Date",
+              "Email",
+              "PhoneNumber",
+              "Select",
+              "RadioButtonGroup",
+              "CheckboxGroup",
+              "FileInput",
+              "TextDescription",
+              "DynamicList"
+            ]
+          }
+        },
+        "admModelNamespace": {
+          "type": "string"
+        },
+        "admModelVersion": {
+          "type": "string"
+        }
+      }
+    },
+    "formContent": {
+      "type": "object",
+      "required": [
+        "isStandalone",
+        "templates",
+        "components"
+      ],
+      "properties": {
+        "isStandalone": {
+          "type": "boolean"
+        },
+        "templates": {
+          "type": "array"
+        },
+        "components": {
+          "type": "object",
+          "required": [
+            "Root_Of_Journey"
+          ],
+          "additionalProperties": {
+            "$ref": "#/$defs/component"
+          }
+        }
+      }
+    },
+    "formLocale": {
+      "type": "string"
+    },
+    "eSignTemplates": {
+      "type": "array"
+    }
+  },
+  "$defs": {
+    "option": {
+      "type": "object",
+      "required": [
+        "label",
+        "value",
+        "optionKey"
+      ],
+      "properties": {
+        "label": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        },
+        "optionKey": {
+          "type": "string"
+        },
+        "selected": {
+          "type": "boolean"
+        },
+        "description": {
+          "type": "string"
+        }
+      }
+    },
+    "externalField": {
+      "type": "object",
+      "required": [
+        "createdBy",
+        "fieldGroupName",
+        "fullyQualifiedPath",
+        "propertyType"
+      ],
+      "properties": {
+        "createdBy": {
+          "enum": [
+            "Docusign",
+            "User"
+          ]
+        },
+        "fieldGroupName": {
+          "type": "string"
+        },
+        "fullyQualifiedPath": {
+          "type": "string",
+          "pattern": "^(com\\.docusign\\.platform[a-z.]*@[0-9.]+|account\\._[0-9a-f_]{36}\\.custom\\.fields@[0-9.]+)/"
+        },
+        "isArray": {
+          "type": "boolean"
+        },
+        "isMultiPropertyField": {
+          "type": "boolean"
+        },
+        "libraryName": {
+          "type": "string"
+        },
+        "localizedPropertyTerm": {
+          "type": "string"
+        },
+        "propertyType": {
+          "enum": [
+            "StringProperty",
+            "DateTimeProperty",
+            "DoubleProperty",
+            "IntegerProperty",
+            "BooleanProperty",
+            "ObjectProperty"
+          ]
+        }
+      }
+    },
+    "component": {
+      "type": "object",
+      "required": [
+        "componentKey",
+        "componentType"
+      ],
+      "properties": {
+        "componentKey": {
+          "type": "string",
+          "pattern": "^(Root_Of_Journey|[A-Za-z]+_[A-Za-z0-9_-]{8})$"
+        },
+        "componentType": {
+          "enum": [
+            "Root",
+            "Step",
+            "Welcome",
+            "Section",
+            "Summary",
+            "FormSubmitAction",
+            "Thankyou",
+            "TextBox",
+            "Number",
+            "Currency",
+            "Date",
+            "Email",
+            "PhoneNumber",
+            "Select",
+            "RadioButtonGroup",
+            "CheckboxGroup",
+            "FileInput",
+            "TextDescription",
+            "DynamicList"
+          ]
+        },
+        "componentName": {
+          "type": "string",
+          "minLength": 1
+        },
+        "children": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "label": {
+          "type": "string"
+        },
+        "required": {
+          "type": "boolean"
+        },
+        "readOnly": {
+          "type": "boolean"
+        },
+        "options": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/option"
+          }
+        },
+        "externalField": {
+          "$ref": "#/$defs/externalField"
+        },
+        "stepMode": {
+          "const": "prefill"
+        },
+        "maxFileSizeInMB": {
+          "type": "number"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "componentType": {
+                "const": "Root"
+              }
+            },
+            "required": [
+              "componentType"
+            ]
+          },
+          "then": {
+            "required": [
+              "children"
+            ],
+            "properties": {
+              "schemaVersion": {
+                "const": 1
+              },
+              "componentRules": {
+                "type": "object",
+                "properties": {
+                  "componentRulesMap": {
+                    "type": "object",
+                    "additionalProperties": {
+                      "$ref": "#/$defs/rule"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "componentType": {
+                "const": "Step"
+              }
+            },
+            "required": [
+              "componentType"
+            ]
+          },
+          "then": {
+            "required": [
+              "children"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "componentType": {
+                "const": "Section"
+              }
+            },
+            "required": [
+              "componentType"
+            ]
+          },
+          "then": {
+            "required": [
+              "children"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "componentType": {
+                "const": "Select"
+              }
+            },
+            "required": [
+              "componentType"
+            ]
+          },
+          "then": {
+            "required": [
+              "options"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "componentType": {
+                "const": "RadioButtonGroup"
+              }
+            },
+            "required": [
+              "componentType"
+            ]
+          },
+          "then": {
+            "required": [
+              "options"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "componentType": {
+                "const": "CheckboxGroup"
+              }
+            },
+            "required": [
+              "componentType"
+            ]
+          },
+          "then": {
+            "required": [
+              "options"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "componentType": {
+                "const": "TextBox"
+              }
+            },
+            "required": [
+              "componentType"
+            ]
+          },
+          "then": {
+            "properties": {
+              "predefinedValidation": {
+                "enum": [
+                  "zip",
+                  "extendedZip",
+                  "ssn"
+                ]
+              },
+              "maxLength": {
+                "type": "integer"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "componentType": {
+                "const": "Number"
+              }
+            },
+            "required": [
+              "componentType"
+            ]
+          },
+          "then": {
+            "properties": {
+              "predefinedValidation": {
+                "enum": [
+                  "periodSeparatedNumber",
+                  "commaSeparatedNumber",
+                  "spacePeriod",
+                  "spaceComma"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "componentType": {
+                "const": "Date"
+              }
+            },
+            "required": [
+              "componentType"
+            ]
+          },
+          "then": {
+            "properties": {
+              "predefinedValidation": {
+                "enum": [
+                  "MM_dd_yyyy",
+                  "dd_MM_yyyy",
+                  "yyyy_MM_dd"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "componentType": {
+                "const": "Currency"
+              }
+            },
+            "required": [
+              "componentType"
+            ]
+          },
+          "then": {
+            "properties": {
+              "defaultValue": {
+                "type": "object",
+                "properties": {
+                  "currency": {
+                    "type": "string",
+                    "pattern": "^[a-z]{3}$"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "componentType": {
+                "const": "DynamicList"
+              }
+            },
+            "required": [
+              "componentType"
+            ]
+          },
+          "then": {
+            "required": [
+              "externalField"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "componentType": {
+                "enum": [
+                  "TextBox",
+                  "Number",
+                  "Currency",
+                  "Date",
+                  "Email",
+                  "PhoneNumber",
+                  "Select",
+                  "RadioButtonGroup",
+                  "CheckboxGroup",
+                  "FileInput",
+                  "DynamicList"
+                ]
+              }
+            },
+            "required": [
+              "componentType"
+            ]
+          },
+          "then": {
+            "required": [
+              "componentName"
+            ]
+          }
+        }
+      ]
+    },
+    "rule": {
+      "type": "object",
+      "required": [
+        "conditionComponentKeys",
+        "conditions",
+        "effects",
+        "relation"
+      ],
+      "properties": {
+        "conditionComponentKeys": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "conditions": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "pattern": "^dj[A-Za-z]+\\("
+          }
+        },
+        "effects": {
+          "type": "object",
+          "additionalProperties": {
+            "enum": [
+              "show",
+              "hide"
+            ]
+          }
+        },
+        "relation": {
+          "enum": [
+            "and",
+            "or"
+          ]
+        }
+      }
+    }
+  }
+}

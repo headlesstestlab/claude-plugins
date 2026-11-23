@@ -1,0 +1,209 @@
+{
+  "id": "counterparty-redline-package",
+  "name": "Counterparty Redline Package",
+  "description": "Legal receives the counterparty's revision of a contract and builds the review package. Find Documents by Folder picks the revision from the Counterparty Inbound folder and the exhibits from the Exhibits folder; Compare Documents writes a redline of the incoming draft against the revision as a new document; the draft is checked out and the revision checked in as its new version (Check In Document), and Compare Document Versions writes what changed from the previous version; Combine Documents joins the exhibits into one PDF, Watermark Document stamps a DRAFT copy, and Split Document keeps its first page as a cover sheet. A Logger line closes each path.",
+  "variables": [
+    {
+      "name": "Revision",
+      "type": "document"
+    },
+    {
+      "name": "Exhibits",
+      "type": "document"
+    },
+    {
+      "name": "Redline",
+      "type": "document"
+    },
+    {
+      "name": "VersionChanges",
+      "type": "document"
+    },
+    {
+      "name": "Package",
+      "type": "document"
+    },
+    {
+      "name": "Stamped",
+      "type": "document"
+    },
+    {
+      "name": "Cover",
+      "type": "document"
+    }
+  ],
+  "paramsSchema": "<Params><Documents><Document><Id/><Name/></Document></Documents><ContractName/></Params>",
+  "steps": [
+    {
+      "id": "revision",
+      "name": "Find the revision",
+      "kind": "findDocumentsByFolder",
+      "folder": {
+        "name": "Counterparty Inbound"
+      },
+      "output": "Revision",
+      "on": {
+        "match": "exhibits",
+        "noMatch": "logFailed",
+        "failure": "logFailed"
+      }
+    },
+    {
+      "id": "exhibits",
+      "name": "Find the exhibits",
+      "kind": "findDocumentsByFolder",
+      "folder": {
+        "name": "Exhibits"
+      },
+      "output": "Exhibits",
+      "on": {
+        "match": "redline",
+        "noMatch": "logFailed",
+        "failure": "logFailed"
+      }
+    },
+    {
+      "id": "redline",
+      "name": "Redline against the revision",
+      "kind": "compareDocuments",
+      "revised": {
+        "var": "Revision"
+      },
+      "newDocument": {
+        "name": "<%#XmlVariables.Params.ContractName%> - redline.docx",
+        "folder": {
+          "path": "/Parties/"
+        }
+      },
+      "output": "Redline",
+      "on": {
+        "success": "checkOut",
+        "failure": "logFailed",
+        "timedOut": "logFailed",
+        "compareTimeout": "logFailed"
+      }
+    },
+    {
+      "id": "checkOut",
+      "name": "Check out the draft",
+      "kind": "checkOutDocument",
+      "user": "submitter",
+      "on": {
+        "success": "checkIn",
+        "failure": "logFailed"
+      }
+    },
+    {
+      "id": "checkIn",
+      "name": "Check in the revision",
+      "kind": "checkInDocument",
+      "revision": {
+        "var": "Revision"
+      },
+      "user": "submitter",
+      "on": {
+        "success": "versions",
+        "failure": "logFailed"
+      }
+    },
+    {
+      "id": "versions",
+      "name": "Changes since the previous version",
+      "kind": "compareDocumentVersions",
+      "with": "previous",
+      "newDocument": {
+        "name": "<%#XmlVariables.Params.ContractName%> - version changes.docx",
+        "folder": {
+          "path": "/Parties/"
+        }
+      },
+      "output": "VersionChanges",
+      "on": {
+        "success": "combine",
+        "failure": "logFailed",
+        "timedOut": "logFailed",
+        "compareTimeout": "logFailed",
+        "noVersion": "logFailed"
+      }
+    },
+    {
+      "id": "combine",
+      "name": "Combine the exhibits",
+      "kind": "combineDocuments",
+      "documents": {
+        "var": "Exhibits"
+      },
+      "documentName": "<%#XmlVariables.Params.ContractName%> - exhibits",
+      "folder": {
+        "path": "/Parties/"
+      },
+      "as": "pdf",
+      "output": "Package",
+      "on": {
+        "success": "stamp",
+        "failure": "logFailed",
+        "timedOut": "logFailed"
+      }
+    },
+    {
+      "id": "stamp",
+      "name": "Stamp DRAFT",
+      "kind": "watermarkDocument",
+      "documents": {
+        "var": "Package"
+      },
+      "folder": {
+        "path": "/Parties/"
+      },
+      "documentName": "<%#XmlVariables.Params.ContractName%> - exhibits DRAFT",
+      "text": "DRAFT",
+      "color": "red",
+      "fontSize": 48,
+      "opacity": "40",
+      "rotation": "45",
+      "output": "Stamped",
+      "on": {
+        "success": "cover",
+        "failure": "logFailed",
+        "timedOut": "logFailed"
+      }
+    },
+    {
+      "id": "cover",
+      "name": "Cover sheet",
+      "kind": "splitDocument",
+      "documents": {
+        "var": "Stamped"
+      },
+      "folder": {
+        "path": "/Parties/"
+      },
+      "pages": "1",
+      "newName": "<%#XmlVariables.Params.ContractName%> - cover",
+      "output": "Cover",
+      "on": {
+        "success": "logReady",
+        "failure": "logFailed",
+        "timedOut": "logFailed"
+      }
+    },
+    {
+      "id": "logReady",
+      "name": "Log package ready",
+      "kind": "logger",
+      "message": "Review package ready for <%#XmlVariables.Params.ContractName%>",
+      "next": "finish"
+    },
+    {
+      "id": "logFailed",
+      "name": "Log failed",
+      "kind": "logger",
+      "message": "Failed: the review package for <%#XmlVariables.Params.ContractName%> is not complete",
+      "next": "finish"
+    },
+    {
+      "id": "finish",
+      "kind": "finish"
+    }
+  ]
+}

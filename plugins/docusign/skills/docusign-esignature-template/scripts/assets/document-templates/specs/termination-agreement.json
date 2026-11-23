@@ -1,0 +1,325 @@
+{
+  "id": "termination-agreement",
+  "name": "Termination Agreement",
+  "description": "End an agreement by mutual agreement: the documents ended (Schedule 1), the termination date, final deliverables (Schedule 2), settlement, release, survival and data return.",
+  "agreementType": "Termination",
+  "fields": {
+    "fontara_entity": {
+      "label": "Fontara contracting entity",
+      "type": "select",
+      "options": [
+        "Fontara, Inc.",
+        "Fontara UK Ltd",
+        "Fontara Europe Ltd"
+      ],
+      "optionValues": {
+        "Fontara, Inc.": "Fontara, Inc., a Delaware corporation with its principal place of business at 1500 Harbor Boulevard, Suite 1200, San Francisco, CA 94111",
+        "Fontara UK Ltd": "Fontara UK Ltd, a company registered in England and Wales with its registered office at 48 Ashcombe Street, London EC2A 4NE, United Kingdom",
+        "Fontara Europe Ltd": "Fontara Europe Ltd, a company registered in Ireland with its registered office at 3 Riverside Quay, Dublin 2, D02 X285, Ireland"
+      },
+      "required": true,
+      "description": "Prints the entity’s full legal description and address"
+    },
+    "customer": {
+      "bind": {
+        "provision": "AgreementParty"
+      },
+      "required": true,
+      "description": "Customer legal name"
+    },
+    "customer_address": {
+      "label": "Customer street address",
+      "required": true
+    },
+    "customer_city": {
+      "label": "Customer city",
+      "required": true
+    },
+    "customer_region": {
+      "label": "Customer state",
+      "required": true
+    },
+    "customer_postal": {
+      "label": "Customer ZIP code",
+      "required": true
+    },
+    "customer_entity": {
+      "label": "Customer entity type",
+      "required": true,
+      "description": "For example: an Illinois corporation"
+    },
+    "agreement": {
+      "label": "Agreement being terminated",
+      "required": true
+    },
+    "termination_date": {
+      "label": "Termination Date",
+      "type": "date",
+      "required": true
+    },
+    "position": {
+      "label": "Negotiated position",
+      "type": "select",
+      "options": [
+        "Balanced",
+        "Favours Fontara",
+        "Favours the counterparty"
+      ],
+      "required": true,
+      "description": "For the clauses most often negotiated"
+    },
+    "effective": {
+      "bind": {
+        "provision": "EffectiveDate"
+      },
+      "required": true
+    }
+  },
+  "signers": [
+    "Customer",
+    "Fontara"
+  ],
+  "body": [
+    {
+      "title": "TERMINATION AGREEMENT"
+    },
+    {
+      "p": "This Termination Agreement (this \"Termination Agreement\"), dated {{effective}}, is between {{fontara_entity}} (\"Vendor\") and **{{customer}}**, {{customer_entity}} with its principal place of business at {{customer_address}}, {{customer_city}}, {{customer_region}} {{customer_postal}} (\"Customer\"). By it the parties end the {{agreement}} (the \"Agreement\") and the documents under it listed in Schedule 1, with effect on {{termination_date}} (the \"Termination Date\")."
+    },
+    {
+      "h": "1. Effective Date and Wind-Down"
+    },
+    {
+      "p": "The Agreement and the Statements of Work and Order Forms listed in Schedule 1 terminate on the Termination Date; any document not listed continues on its terms. Until the Termination Date Vendor continues to provide the Services, and Customer pays for them, at the rates in effect. Vendor completes the deliverables listed in Schedule 2 before the Termination Date, and Customer accepts or rejects them under the Agreement."
+    },
+    {
+      "h": "2. Settlement Payment"
+    },
+    {
+      "if": {
+        "field": "position",
+        "is": "Balanced"
+      },
+      "then": [
+        {
+          "p": "Within 30 days after the Termination Date, Customer pays all undisputed fees accrued through the Termination Date, and Vendor refunds the unused portion of any prepaid fees for periods after it. Customer also pays an early-termination fee of 25% of the committed fees for the remainder of the Initial Term (as the Agreement defines it). These payments are in full satisfaction of all amounts owed under the terminated documents."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "position",
+        "is": "Favours Fontara"
+      },
+      "then": [
+        {
+          "p": "Within 15 days after signature Customer pays all fees invoiced or accrued and the fees for the remainder of the committed term, discounted to present value at 3% a year. Prepaid fees are non-refundable, and Vendor's acceptance of payment doesn't waive amounts later found to be owed."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "position",
+        "is": "Favours the counterparty"
+      },
+      "then": [
+        {
+          "p": "Within 15 days Vendor refunds all prepaid fees for any period after the Termination Date. No early-termination fee or other charge applies. Customer pays only undisputed fees for Services actually delivered and accepted before the Termination Date, and may set off any service credits owed."
+        }
+      ]
+    },
+    {
+      "h": "3. Mutual Release of Claims"
+    },
+    {
+      "if": {
+        "field": "position",
+        "is": "Balanced"
+      },
+      "then": [
+        {
+          "p": "Except for the obligations in this Termination Agreement and the Surviving Obligations, each party releases the other and its affiliates, officers and employees from all claims, known or unknown, arising out of the terminated documents before the date of this Termination Agreement. The release does not cover claims for fraud, willful misconduct, indemnification against third-party claims, breach of confidentiality or data-protection obligations, or infringement of intellectual property. Each party waives California Civil Code §1542 to the extent it applies."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "position",
+        "is": "Favours Fontara"
+      },
+      "then": [
+        {
+          "p": "Customer, for itself and its affiliates, releases Vendor and its affiliates, officers, employees and subcontractors from all claims, known or unknown, arising out of or relating to the terminated documents or the Services, including claims for service credits, refunds and data loss, and waives California Civil Code §1542. Vendor releases Customer from claims for fees only once Customer has paid the settlement payment in full."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "position",
+        "is": "Favours the counterparty"
+      },
+      "then": [
+        {
+          "p": "Customer releases Vendor only from claims for fees and service credits under the terminated documents that Customer knows of at signature. Customer does not release any claim for indemnification, breach of confidentiality, data-protection or security obligations, infringement, or defects in deliverables discovered after the Termination Date. Vendor releases Customer from all claims arising out of the terminated documents, known or unknown."
+        }
+      ]
+    },
+    {
+      "p": "Initials acknowledging Section 3 (Mutual Release of Claims) — Customer: [[initials:Customer]]   Fontara: [[initials:Fontara]]"
+    },
+    {
+      "h": "4. Obligations Surviving Termination"
+    },
+    {
+      "p": "The following (the \"Surviving Obligations\") survive the Termination Date for the periods stated in the Agreement, or indefinitely where none is stated: confidentiality, data protection and return of data, intellectual property ownership and licenses to delivered work product, limitation of liability, indemnification for third-party claims, accrued payment obligations, and governing law and dispute resolution."
+    },
+    {
+      "h": "5. Transition and Data Return"
+    },
+    {
+      "p": "Within 30 days after the Termination Date Vendor gives Customer a complete export of Customer data in a commonly used, machine-readable format at no charge. If Customer asks, Vendor provides up to 60 days of transition assistance at the rates in the Agreement. Within 30 days after Customer confirms receipt of the export, Vendor deletes Customer data, including copies in backups as they cycle out, and certifies the deletion in writing."
+    },
+    {
+      "h": "6. Confidentiality and Non-Disparagement"
+    },
+    {
+      "p": "Each party keeps the terms of this Termination Agreement confidential, except as required by law, regulators or auditors, or in confidence to its professional advisers. Neither party makes any public statement disparaging the other in connection with the terminated documents, without restricting truthful statements required by law or made in legal proceedings. Vendor removes Customer from its customer lists and references within 30 days."
+    },
+    {
+      "h": "7. General"
+    },
+    {
+      "p": "This Termination Agreement is governed by the law that governs the Agreement, any dispute under it is resolved in the manner the Agreement provides, and notices under it are given as the Agreement provides. This Termination Agreement is the entire agreement of the parties on its subject and may be amended only in a writing signed by both parties. It may be signed in counterparts and by electronic signature, each of which is an original."
+    },
+    {
+      "sign": "Customer",
+      "title": true,
+      "company": true
+    },
+    {
+      "sign": "Fontara",
+      "title": true,
+      "company": true
+    },
+    {
+      "h": "Schedule 1 — Terminated Documents"
+    },
+    {
+      "lineItems": {
+        "name": "TerminatedDocuments",
+        "label": "Terminated documents",
+        "columns": [
+          {
+            "key": "document",
+            "label": "Document"
+          },
+          {
+            "key": "dated",
+            "label": "Dated"
+          }
+        ]
+      }
+    },
+    {
+      "h": "Schedule 2 — Final Deliverables"
+    },
+    {
+      "lineItems": {
+        "name": "FinalDeliverables",
+        "label": "Final deliverables",
+        "columns": [
+          {
+            "key": "deliverable",
+            "label": "Deliverable"
+          },
+          {
+            "key": "due_by",
+            "label": "Due By"
+          }
+        ]
+      }
+    }
+  ],
+  "examples": [
+    {
+      "values": {
+        "effective": "06/01/2027",
+        "customer": "Marc Kline Ultra Learning",
+        "customer_entity": "a Massachusetts limited liability company",
+        "customer_address": "350 Education Way",
+        "agreement": "Master Services Agreement dated 03/01/2025",
+        "termination_date": "06/30/2027",
+        "fontara_entity": "Fontara, Inc.",
+        "position": "Balanced",
+        "customer_city": "Cambridge",
+        "customer_region": "MA",
+        "customer_postal": "02142"
+      },
+      "tables": {
+        "TerminatedDocuments": [
+          [
+            "Master Services Agreement",
+            "03/01/2025"
+          ],
+          [
+            "Order Form Q-2025-0118",
+            "03/01/2025"
+          ]
+        ],
+        "FinalDeliverables": [
+          [
+            "Final analytics report",
+            "06/15/2027"
+          ]
+        ]
+      },
+      "expect": [
+        "06/30/2027",
+        "Q-2025-0118",
+        "Final analytics report",
+        "25% of the committed fees",
+        "as the Agreement defines it"
+      ],
+      "absent": [
+        "No early-termination fee"
+      ]
+    },
+    {
+      "values": {
+        "effective": "06/01/2027",
+        "customer": "Pine Care",
+        "customer_entity": "a Massachusetts nonprofit corporation",
+        "customer_address": "455 Medical Center Drive",
+        "agreement": "Order Form dated 02/01/2026",
+        "termination_date": "07/31/2027",
+        "position": "Favours the counterparty",
+        "fontara_entity": "Fontara, Inc.",
+        "customer_city": "Boston",
+        "customer_region": "MA",
+        "customer_postal": "02115"
+      },
+      "tables": {
+        "TerminatedDocuments": [
+          [
+            "Order Form",
+            "02/01/2026"
+          ]
+        ],
+        "FinalDeliverables": [
+          [
+            "Data export",
+            "07/31/2027"
+          ]
+        ]
+      },
+      "expect": [
+        "No early-termination fee",
+        "07/31/2027"
+      ],
+      "absent": [
+        "25% of the committed fees"
+      ]
+    }
+  ],
+  "source": "vault: Contracts/Clauses/Termination Agreement"
+}

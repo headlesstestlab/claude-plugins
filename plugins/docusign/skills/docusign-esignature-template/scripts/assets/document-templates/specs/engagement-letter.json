@@ -1,0 +1,323 @@
+{
+  "id": "engagement-letter",
+  "name": "Advisory Engagement Letter",
+  "description": "Fontara engages a tax firm: non-attest scope (Schedule A), fees (Schedule B), management responsibility, reliance, taxpayer consent, liability and records.",
+  "agreementType": "EngagementLetter",
+  "fields": {
+    "effective": {
+      "bind": {
+        "provision": "EffectiveDate"
+      },
+      "required": true
+    },
+    "firm": {
+      "bind": {
+        "provision": "AgreementParty"
+      },
+      "required": true,
+      "description": "Firm legal name"
+    },
+    "firm_address": {
+      "label": "Firm street address",
+      "required": true
+    },
+    "firm_city": {
+      "label": "Firm city",
+      "required": true
+    },
+    "firm_region": {
+      "label": "Firm state",
+      "required": true
+    },
+    "firm_postal": {
+      "label": "Firm ZIP code",
+      "required": true
+    },
+    "client_contact": {
+      "label": "Fontara contact",
+      "required": true
+    },
+    "fee_type": {
+      "label": "Fee basis",
+      "type": "select",
+      "options": [
+        "Fixed fee",
+        "Hourly"
+      ],
+      "required": true
+    },
+    "fee": {
+      "label": "Fixed fee or fee estimate (USD)",
+      "type": "number",
+      "money": true,
+      "required": true
+    },
+    "governing_law": {
+      "bind": {
+        "provision": "GoverningLaw"
+      },
+      "required": true,
+      "description": "Written after \"the laws of\": for example, the State of Delaware, or England and Wales"
+    }
+  },
+  "signers": [
+    "Firm",
+    "Fontara"
+  ],
+  "body": [
+    {
+      "title": "ENGAGEMENT LETTER"
+    },
+    {
+      "p": "{{firm}}\n{{firm_address}}, {{firm_city}}, {{firm_region}} {{firm_postal}}"
+    },
+    {
+      "p": "{{effective}}",
+      "align": "right"
+    },
+    {
+      "p": "Dear {{client_contact}},"
+    },
+    {
+      "p": "This letter confirms the terms on which **{{firm}}** (the \"Firm\") will provide the tax and advisory services in Schedule A to Fontara, Inc., a Delaware corporation of 1500 Harbor Boulevard, Suite 1200, San Francisco, CA 94111 (the \"Client\"), for the fees in Schedule B."
+    },
+    {
+      "h": "1. Non-Attest Service Scope"
+    },
+    {
+      "p": "The Firm will provide the services listed in Schedule A for the entities, tax periods and jurisdictions named there. The Firm will not audit or verify information the Client provides, will not perform any management function, and will not update advice for changes in law after the advice is delivered unless engaged to do so. Requests outside Schedule A will be confirmed in writing, with any additional fee, before work begins; informal questions that take less than one hour each are not billed."
+    },
+    {
+      "h": "2. Management Decision Responsibility"
+    },
+    {
+      "p": "The Client will make all management decisions and perform all management functions relating to the services. The Client designates its Corporate Controller, who has suitable skill, knowledge and experience, to oversee the services, evaluate their adequacy and results, and accept responsibility for them, and will name a qualified replacement within 10 business days if that person leaves. The Firm will not authorize transactions, maintain the Client's books of record, take custody of the Client's assets, or decide which recommendations to implement."
+    },
+    {
+      "p": "Client designee overseeing the services: [[text:Fontara:Designee name and title]]"
+    },
+    {
+      "h": "3. Tax Return Position Standards"
+    },
+    {
+      "p": "The Firm will sign a return only if each position meets the standard that applies to preparers under the Internal Revenue Code, Circular 230 and applicable state law, and will recommend disclosure of any position that has a reasonable basis but lacks substantial authority. The Client decides whether to take and disclose a position after the Firm explains the penalty consequences in writing. If the Firm learns of an error in a prior return, it will tell the Client promptly and explain the consequences, and the Client decides whether to amend."
+    },
+    {
+      "h": "4. Advice Reliance and Third-Party Use"
+    },
+    {
+      "p": "The Client may rely only on the Firm's final written advice, which speaks as of its date and on the facts the Client provided. The Firm will confirm in writing any oral advice the Client tells the Firm it intends to act on. The Client may share advice with its auditors, legal advisers, lenders and regulators, and with a prospective buyer that signs the Firm's non-reliance letter; no other third party may rely on it without a reliance letter agreed with the Firm."
+    },
+    {
+      "h": "5. Section 7216 Taxpayer Consent"
+    },
+    {
+      "p": "The Firm will use and disclose the Client's tax return information only to prepare the Client's returns and provide the services, and otherwise only as section 7216 and its regulations permit. The Firm will not use or disclose it for any other purpose, including marketing, or disclose it to a service provider outside the United States, unless the Client first gives a consent in the form the regulations require. Each consent states its purpose, recipients and duration, and the Client may revoke it at any time."
+    },
+    {
+      "p": "[[check?:Fontara:Section 7216 consent]] The Client consents to the disclosure described in a separate consent form attached to this letter."
+    },
+    {
+      "h": "6. Circular 230 Contingent Fee Limits"
+    },
+    {
+      "p": "Fees are based on time at the rates in Schedule B unless the parties agree a fixed fee. A fee contingent on the result is permitted only for services for which Circular 230, the AICPA Code, any applicable state board rule and, for an attest client, the independence rules all allow it, and the Firm will confirm in writing before work starts that the fee qualifies. Any contingent fee is calculated on amounts finally allowed, and the Firm refunds the corresponding share of any amount later disallowed."
+    },
+    {
+      "h": "7. Examinations"
+    },
+    {
+      "p": "If a taxing authority examines a return or position covered by the services, the Firm will assist on request under a separate engagement at its standard rates. Representation before the Internal Revenue Service is ++not part of the services++ unless *Schedule A* lists it."
+    },
+    {
+      "p": "[Important:]{color:#cc0000; background-color:#ffff00} the Firm's written tax advice follows Treasury Department Circular No. 230."
+    },
+    {
+      "h": "8. Limitation of Liability"
+    },
+    {
+      "p": "Except for liability arising from its fraud or willful misconduct, the Firm's total liability for any claim arising out of this engagement is limited to the fees paid for the services giving rise to the claim, and neither party is liable for consequential, special or punitive damages."
+    },
+    {
+      "h": "9. Records"
+    },
+    {
+      "p": "The Firm keeps its workpapers for seven years after the services are completed under its record-retention policy, and may then destroy them. The workpapers are the Firm's property; the Client's original records are returned with the deliverables."
+    },
+    {
+      "h": "10. Term and Termination"
+    },
+    {
+      "p": "This engagement continues until the services are complete. Either party may end it by written notice, and the Firm may withdraw where professional standards require. The Client pays for services performed and expenses incurred to the date it ends."
+    },
+    {
+      "h": "11. Governing Law and Disputes"
+    },
+    {
+      "p": "This letter is governed by the laws of {{governing_law}}, without regard to its conflict-of-laws rules."
+    },
+    {
+      "h": "12. Entire Agreement and Amendment"
+    },
+    {
+      "p": "This letter, including its schedules, is the entire agreement of the parties on its subject and supersedes all prior proposals, negotiations, representations and understandings about it. Each party confirms that in entering into it, it has not relied on any statement not set out in it. This letter may be amended only in a writing signed by authorized representatives of both parties."
+    },
+    {
+      "h": "13. General"
+    },
+    {
+      "p": "If any provision of this letter is held invalid or unenforceable, it is enforced to the maximum extent permitted and the rest of this letter continues in full force. No failure or delay in exercising a right is a waiver of it, and a waiver is effective only if it is in writing and signed. No person other than the parties and their permitted successors and assigns has any right to enforce any term of this letter. This letter may be signed in counterparts and by electronic signature, each of which is an original and all of which together are one instrument."
+    },
+    {
+      "p": "Please sign below to confirm the Client’s agreement to these terms."
+    },
+    {
+      "sign": "Firm",
+      "title": true,
+      "company": true
+    },
+    {
+      "p": "AGREED AND ACCEPTED on behalf of the Client:"
+    },
+    {
+      "sign": "Fontara",
+      "title": true,
+      "company": true
+    },
+    {
+      "h": "Schedule A — Services"
+    },
+    {
+      "lineItems": {
+        "name": "Services",
+        "label": "Services",
+        "columns": [
+          {
+            "key": "entity",
+            "label": "Entity"
+          },
+          {
+            "key": "tax_period",
+            "label": "Tax Period"
+          },
+          {
+            "key": "jurisdiction",
+            "label": "Jurisdiction"
+          },
+          {
+            "key": "service",
+            "label": "Service"
+          }
+        ]
+      }
+    },
+    {
+      "h": "Schedule B — Fees"
+    },
+    {
+      "if": {
+        "field": "fee_type",
+        "is": "Fixed fee"
+      },
+      "then": [
+        {
+          "p": "A fixed fee of US${{fee}}, invoiced half on signature and half on delivery of the final deliverables, plus reasonable out-of-pocket expenses at cost."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "fee_type",
+        "is": "Hourly"
+      },
+      "then": [
+        {
+          "p": "Fees are based on time spent, at the Firm's standard hourly rates in effect when the work is performed, invoiced monthly, plus reasonable out-of-pocket expenses at cost. The Firm estimates the fees at US${{fee}} and will tell the Client before that estimate is exceeded."
+        }
+      ]
+    }
+  ],
+  "examples": [
+    {
+      "values": {
+        "effective": "03/15/2027",
+        "firm": "Quillmark Tax Advisory LLP",
+        "firm_address": "400 Montgomery Street, Suite 1100",
+        "client_contact": "Marcus Chen",
+        "fee_type": "Fixed fee",
+        "fee": "65000",
+        "governing_law": "the State of California",
+        "firm_city": "San Francisco",
+        "firm_region": "CA",
+        "firm_postal": "94104"
+      },
+      "tables": {
+        "Services": [
+          [
+            "Fontara, Inc.",
+            "FY2026",
+            "US federal",
+            "Form 1120"
+          ],
+          [
+            "Fontara, Inc.",
+            "FY2026",
+            "California",
+            "Form 100"
+          ],
+          [
+            "Fontara group",
+            "FY2026",
+            "US, UK, IE",
+            "Transfer pricing memo"
+          ]
+        ]
+      },
+      "expect": [
+        "US$65,000.00",
+        "Dear Marcus Chen",
+        "Schedule A",
+        "Form 1120",
+        "AGREED AND ACCEPTED",
+        "not part of the services unless Schedule A",
+        "Important: the Firm",
+        "Treasury Department Circular No. 230"
+      ],
+      "absent": [
+        "standard hourly rates in effect"
+      ]
+    },
+    {
+      "values": {
+        "effective": "09/01/2027",
+        "firm": "Quillmark Tax Advisory LLP",
+        "firm_address": "400 Montgomery Street, Suite 1100",
+        "client_contact": "Thomas Anderson",
+        "fee_type": "Hourly",
+        "fee": "40000",
+        "governing_law": "the State of California",
+        "firm_city": "San Francisco",
+        "firm_region": "CA",
+        "firm_postal": "94104"
+      },
+      "tables": {
+        "Services": [
+          [
+            "Fontara, Inc.",
+            "FY2027",
+            "US federal",
+            "R&D credit study"
+          ]
+        ]
+      },
+      "expect": [
+        "standard hourly rates in effect",
+        "US$40,000.00"
+      ],
+      "absent": [
+        "invoiced half on signature"
+      ]
+    }
+  ],
+  "source": "vault: Contracts/Clauses/Advisory Engagement"
+}

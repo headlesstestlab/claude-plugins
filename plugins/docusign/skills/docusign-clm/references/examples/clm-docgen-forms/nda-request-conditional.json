@@ -1,0 +1,81 @@
+{
+  "id": "nda-request-conditional",
+  "name": "NDA Request",
+  "description": "An NDA request form whose conditional fields merge into the document only when they apply, with its Word template generated from the spec.",
+  "fields": [
+    {
+      "kind": "text",
+      "label": "Counterparty Legal Name",
+      "required": true
+    },
+    {
+      "kind": "radio",
+      "label": "NDA Type",
+      "options": [
+        "Mutual",
+        "One-way"
+      ]
+    },
+    {
+      "kind": "dropdown",
+      "label": "Disclosing Party",
+      "options": [
+        "Fontara",
+        "Counterparty"
+      ],
+      "mergeIf": [
+        {
+          "field": "NDA Type",
+          "op": "equals",
+          "value": "One-way"
+        }
+      ]
+    },
+    {
+      "kind": "checkbox",
+      "label": "Personal Data Shared"
+    },
+    {
+      "kind": "textBox",
+      "label": "Personal Data Description",
+      "mergeIf": [
+        {
+          "field": "Personal Data Shared",
+          "op": "equals",
+          "value": "true"
+        }
+      ]
+    },
+    {
+      "kind": "text",
+      "label": "Purpose"
+    },
+    {
+      "kind": "text",
+      "label": "Purpose Detail",
+      "mergeIf": [
+        {
+          "field": "NDA Type",
+          "op": "equals",
+          "value": "Mutual"
+        }
+      ]
+    },
+    {
+      "kind": "date",
+      "label": "Effective Date"
+    }
+  ],
+  "template": [
+    "This Non-Disclosure Agreement is made between Fontara, Inc. and {{Counterparty Legal Name}}, effective {{Effective Date}}.",
+    "Type: {{NDA Type}}."
+  ],
+  "sample": {
+    "Counterparty Legal Name": "Discrete Quantum Mechanics",
+    "NDA Type": "Mutual",
+    "Personal Data Shared": "true",
+    "Purpose": "Evaluate a joint research partnership",
+    "Purpose Detail": "Quantum sensor pilot",
+    "Effective Date": "11/01/2026"
+  }
+}

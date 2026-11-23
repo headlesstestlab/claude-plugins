@@ -1,0 +1,114 @@
+{
+  "id": "nda-request",
+  "name": "NDA Request",
+  "description": "Ask for a standard Fontara NDA. Legal sends the approved template when your answers match the standard path. About 2 minutes.",
+  "submitFolder": "eForms/NDA Request/Submitted",
+  "sections": [
+    {
+      "title": "The NDA",
+      "fields": [
+        {
+          "kind": "select",
+          "id": "ndaType",
+          "label": "NDA type",
+          "options": [
+            "Mutual",
+            "One-way (Fontara discloses)",
+            "One-way (they disclose)"
+          ],
+          "help": "Mutual is the default when both sides share information."
+        },
+        {
+          "kind": "textarea",
+          "id": "ndaPurpose",
+          "label": "What will be shared, and why",
+          "help": "Legal checks this against the NDA scope. Do not paste the confidential information itself."
+        },
+        {
+          "kind": "date",
+          "id": "ndaSignBy",
+          "label": "Signature needed by"
+        },
+        {
+          "kind": "checkbox",
+          "id": "ndaTheirPaper",
+          "label": "The counterparty sent their own NDA",
+          "value": "Yes",
+          "help": "If ticked, Legal reviews their paper instead of sending ours."
+        }
+      ]
+    },
+    {
+      "title": "Our side",
+      "fields": [
+        {
+          "kind": "attribute",
+          "attribute": "NDA.Business Unit",
+          "label": "Business unit"
+        },
+        {
+          "kind": "attribute",
+          "attribute": "Internal Entity.Entity Name",
+          "label": "Contracting entity",
+          "required": true
+        }
+      ]
+    },
+    {
+      "title": "Counterparty",
+      "fields": [
+        {
+          "kind": "attribute",
+          "attribute": "External Party.Business Name",
+          "label": "Counterparty legal name",
+          "required": true
+        },
+        {
+          "kind": "attribute",
+          "attribute": "External Party.Party Region",
+          "label": "Counterparty region"
+        },
+        {
+          "kind": "attribute",
+          "attribute": "External Party.Contact Name",
+          "label": "Counterparty signer",
+          "help": "The person who signs for the counterparty, not only your day-to-day contact."
+        },
+        {
+          "kind": "attribute",
+          "attribute": "External Party.Contact Email",
+          "label": "Signer email",
+          "required": true
+        }
+      ]
+    },
+    {
+      "title": "Terms",
+      "fields": [
+        {
+          "kind": "attribute",
+          "attribute": "Terms.Governing Law",
+          "label": "Governing law",
+          "default": "Delaware",
+          "help": "Delaware is the Fontara standard and is preselected. Another choice sends the request to Legal review."
+        },
+        {
+          "kind": "attribute",
+          "attribute": "NDA.Material Return",
+          "label": "Return or destroy materials at the end?",
+          "help": "Yes adds the clause that makes both sides return or destroy confidential material when the NDA ends."
+        }
+      ]
+    }
+  ],
+  "attributeIds": {
+    "NDA.Business Unit": "28435376-6fb3-f111-93b3-e8e4a5d525fb",
+    "Internal Entity.Entity Name": "d3425376-6fb3-f111-93b3-e8e4a5d525fb",
+    "External Party.Business Name": "c0425376-6fb3-f111-93b3-e8e4a5d525fb",
+    "External Party.Party Region": "c1425376-6fb3-f111-93b3-e8e4a5d525fb",
+    "External Party.Contact Name": "c7425376-6fb3-f111-93b3-e8e4a5d525fb",
+    "External Party.Contact Email": "c8425376-6fb3-f111-93b3-e8e4a5d525fb",
+    "Terms.Governing Law": "87435376-6fb3-f111-93b3-e8e4a5d525fb",
+    "NDA.Material Return": "31435376-6fb3-f111-93b3-e8e4a5d525fb"
+  }
+}

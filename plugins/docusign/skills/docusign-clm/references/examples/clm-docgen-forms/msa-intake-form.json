@@ -1,0 +1,86 @@
+{
+  "id": "msa-intake-form",
+  "name": "MSA Intake",
+  "description": "The facts a Fontara MSA needs, one of every field kind the compiler knows, with the effective date's merge tag set to its Salesforce field name, help text on the legal name, and an expiration date that must come after the effective date.",
+  "fields": [
+    {
+      "kind": "heading",
+      "label": "Counterparty"
+    },
+    {
+      "kind": "text",
+      "label": "Counterparty Legal Name",
+      "required": true,
+      "help": "The counterparty's full legal name, as registered"
+    },
+    {
+      "kind": "date",
+      "label": "Effective Date",
+      "tag": "Contract_Effective_Date__c",
+      "required": true
+    },
+    {
+      "kind": "date",
+      "label": "Expiration Date",
+      "after": "Effective Date"
+    },
+    {
+      "kind": "dropdown",
+      "label": "Deal Tier",
+      "options": [
+        "Strategic",
+        "Enterprise",
+        "Mid-market"
+      ]
+    },
+    {
+      "kind": "radio",
+      "label": "Paper",
+      "options": [
+        "Fontara paper",
+        "Counterparty paper"
+      ]
+    },
+    {
+      "kind": "section",
+      "label": "Commercials",
+      "fields": [
+        {
+          "kind": "currency",
+          "label": "Total Contract Value"
+        },
+        {
+          "kind": "number",
+          "label": "Term Months"
+        },
+        {
+          "kind": "checkbox",
+          "label": "Auto Renewal"
+        }
+      ]
+    },
+    {
+      "kind": "table",
+      "label": "Line Items",
+      "tag": "Order_Lines",
+      "columns": [
+        {
+          "kind": "text",
+          "label": "Product"
+        },
+        {
+          "kind": "number",
+          "label": "Quantity"
+        },
+        {
+          "kind": "currency",
+          "label": "Unit Price"
+        }
+      ]
+    },
+    {
+      "kind": "attachment",
+      "label": "Supporting Documents"
+    }
+  ]
+}

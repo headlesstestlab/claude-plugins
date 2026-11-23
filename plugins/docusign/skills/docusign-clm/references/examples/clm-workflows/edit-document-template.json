@@ -1,0 +1,74 @@
+{
+  "id": "edit-document-template",
+  "name": "Edit Document Template",
+  "description": "The Edit document template's pattern (help qnf1684506533887: Update Variable Value, Edit Document, Set Workflow Output, Email Document, Rule): the requester edits the incoming document, the workflow output says how it went, the edited document is emailed back, and a Rule reports whether the editor left a comment.",
+  "variables": [
+    "Stage",
+    "Comments"
+  ],
+  "steps": [
+    {
+      "id": "stage",
+      "name": "Set the stage",
+      "kind": "setVariable",
+      "set": {
+        "Stage": "Editing"
+      },
+      "next": "edit"
+    },
+    {
+      "id": "edit",
+      "name": "Edit the document",
+      "kind": "editDocument",
+      "assignee": "submitter",
+      "instructions": "Edit the document, then complete the task.",
+      "commentsTo": "Comments",
+      "on": {
+        "completed": "outEdited",
+        "rejected": "outRejected",
+        "failure": "outRejected"
+      }
+    },
+    {
+      "id": "outEdited",
+      "name": "Output Edited",
+      "kind": "setOutput",
+      "value": "Edited",
+      "next": "mail"
+    },
+    {
+      "id": "outRejected",
+      "name": "Output Rejected",
+      "kind": "setOutput",
+      "value": "Rejected",
+      "next": "finish"
+    },
+    {
+      "id": "mail",
+      "name": "Email the edited document",
+      "kind": "emailDocument",
+      "to": "submitter",
+      "subject": "Your edited document",
+      "note": "The edited document is attached.",
+      "next": "commented"
+    },
+    {
+      "id": "commented",
+      "name": "Editor commented",
+      "kind": "rule",
+      "condition": {
+        "left": "<%#Variable.Comments%>",
+        "op": "notEquals",
+        "right": ""
+      },
+      "on": {
+        "true": "finish",
+        "false": "finish"
+      }
+    },
+    {
+      "id": "finish",
+      "kind": "finish"
+    }
+  ]
+}

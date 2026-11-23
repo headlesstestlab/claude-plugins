@@ -1,0 +1,280 @@
+{
+ "id": "msa-opportunity",
+ "name": "MSA (Opportunity)",
+ "summary": "Master Subscription Agreement from an Opportunity: the Fontara contracting entity and its governing law and courts follow the Account's entity, the liability cap follows the Account tier, and a Data Processing Addendum is generated only when the deal involves personal data.",
+ "description": "Fontara MSA and DPA from an Opportunity. Built from assets/salesforce-gen-templates/specs/msa-opportunity.json.",
+ "sourceObject": "Opportunity",
+ "partyName": "Account.Name",
+ "documents": [
+  {
+   "file": "Fontara_MSA.docx",
+   "output": {
+    "name": "Fontara MSA",
+    "suffix": "name",
+    "format": "Word"
+   },
+   "rule": {
+    "match": "all",
+    "name": "Not for lost deals",
+    "conditions": [
+     {
+      "field": "StageName",
+      "notEquals": "Closed Lost"
+     }
+    ]
+   },
+   "header": "Master Subscription Agreement · {{Account.Name}}",
+   "footer": "Page {page} of {pages}",
+   "body": [
+    {
+     "title": "Master Subscription Agreement"
+    },
+    {
+     "p": "This Master Subscription Agreement (\"Agreement\") is made between:"
+    },
+    {
+     "if": {
+      "field": "Account.Fontara_Entity__c",
+      "equals": "Fontara, Inc."
+     },
+     "then": [
+      {
+       "p": "**Fontara, Inc., a Delaware corporation** (\"Fontara\"); and"
+      }
+     ]
+    },
+    {
+     "if": {
+      "field": "Account.Fontara_Entity__c",
+      "equals": "Fontara UK Ltd"
+     },
+     "then": [
+      {
+       "p": "**Fontara UK Ltd, a company registered in England and Wales** (\"Fontara\"); and"
+      }
+     ]
+    },
+    {
+     "if": {
+      "field": "Account.Fontara_Entity__c",
+      "equals": "Fontara Europe Ltd"
+     },
+     "then": [
+      {
+       "p": "**Fontara Europe Ltd, a company registered in Ireland** (\"Fontara\"); and"
+      }
+     ]
+    },
+    {
+     "p": "**{{Account.Name}}**, a {{Account.Legal_Entity_Type__c?}} whose registered address is {{Account.BillingStreet?}}, {{Account.BillingCity?}}, {{Account.BillingCountry?}} (\"Customer\")."
+    },
+    {
+     "h": "1. Subscription"
+    },
+    {
+     "p": "Fontara grants Customer a non-exclusive, non-transferable right to use the Fontara platform during the subscription term set out in each Order Form. Each Order Form, starting with the order for {{Name}}, forms part of this Agreement."
+    },
+    {
+     "h": "2. Fees and payment"
+    },
+    {
+     "p": "Customer pays the fees in each Order Form. Invoices are due thirty days after the invoice date. Late amounts bear interest at one percent per month or the highest rate the law allows, if lower."
+    },
+    {
+     "h": "3. Data protection"
+    },
+    {
+     "if": {
+      "field": "Personal_Data__c",
+      "equals": "Yes"
+     },
+     "then": [
+      {
+       "if": {
+        "field": "Existing_DPA__c",
+        "equals": "Yes"
+       },
+       "then": [
+        {
+         "p": "Fontara processes personal data for Customer under the Data Processing Agreement already in force between the parties, which continues to apply."
+        }
+       ],
+       "else": [
+        {
+         "p": "Fontara processes personal data for Customer under the Data Processing Addendum signed with this Agreement."
+        }
+       ]
+      },
+      {
+       "if": {
+        "field": "Account.Region__c",
+        "equals": "UK & Europe"
+       },
+       "then": [
+        {
+         "p": "Transfers of personal data out of the United Kingdom or the European Economic Area are made under the Standard Contractual Clauses (and the UK Addendum where it applies)."
+        }
+       ]
+      }
+     ],
+     "else": [
+      {
+       "p": "The parties do not expect Fontara to process personal data for Customer. If that changes, the parties will sign a data processing agreement first."
+      }
+     ]
+    },
+    {
+     "h": "4. Limitation of liability"
+    },
+    {
+     "if": {
+      "field": "Account.Tier__c",
+      "equals": "Strategic"
+     },
+     "then": [
+      {
+       "p": "Each party's total liability under this Agreement is limited to two times the fees paid or payable in the twelve months before the claim."
+      }
+     ],
+     "else": [
+      {
+       "p": "Each party's total liability under this Agreement is limited to the fees paid or payable in the twelve months before the claim."
+      }
+     ]
+    },
+    {
+     "h": "5. Term and termination"
+    },
+    {
+     "p": "This Agreement starts on the date of the last signature below and continues while any Order Form is in force. Either party may terminate for a material breach not cured within thirty days of notice."
+    },
+    {
+     "h": "6. Governing law"
+    },
+    {
+     "if": {
+      "field": "Account.Fontara_Entity__c",
+      "equals": "Fontara, Inc."
+     },
+     "then": [
+      {
+       "p": "This Agreement is governed by the laws of the State of Delaware. Each party submits to the exclusive jurisdiction of the state and federal courts in Wilmington, Delaware."
+      }
+     ]
+    },
+    {
+     "if": {
+      "field": "Account.Fontara_Entity__c",
+      "equals": "Fontara UK Ltd"
+     },
+     "then": [
+      {
+       "p": "This Agreement is governed by the laws of England and Wales. Each party submits to the exclusive jurisdiction of the courts of England and Wales, sitting in London."
+      }
+     ]
+    },
+    {
+     "if": {
+      "field": "Account.Fontara_Entity__c",
+      "equals": "Fontara Europe Ltd"
+     },
+     "then": [
+      {
+       "p": "This Agreement is governed by the laws of Ireland. Each party submits to the exclusive jurisdiction of the courts of Ireland, sitting in Dublin."
+      }
+     ]
+    },
+    {
+     "signature": {
+      "signer": 1,
+      "label": "Signed for {{Account.Name}}",
+      "fields": [
+       "s",
+       "n",
+       "t",
+       "d"
+      ]
+     }
+    },
+    {
+     "signature": {
+      "signer": 2,
+      "label": "Signed for {{Account.Fontara_Entity__c}}",
+      "fields": [
+       "s",
+       "n",
+       "t",
+       "d"
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "file": "Fontara_DPA.docx",
+   "output": {
+    "name": "Fontara DPA",
+    "suffix": "name",
+    "format": "Word"
+   },
+   "rule": {
+    "match": "all",
+    "name": "Only when personal data is processed",
+    "conditions": [
+     {
+      "field": "Personal_Data__c",
+      "equals": "Yes"
+     }
+    ]
+   },
+   "body": [
+    {
+     "title": "Data Processing Addendum"
+    },
+    {
+     "p": "This Data Processing Addendum forms part of the Master Subscription Agreement between {{Account.Fontara_Entity__c}} (\"Processor\") and {{Account.Name}} (\"Controller\")."
+    },
+    {
+     "bullets": [
+      "Processor processes personal data only on Controller's documented instructions.",
+      "Processor keeps personal data confidential and secure, and notifies Controller of a personal data breach without undue delay.",
+      "Processor deletes or returns personal data at the end of the services."
+     ]
+    },
+    {
+     "if": {
+      "field": "Account.Region__c",
+      "equals": "UK & Europe"
+     },
+     "then": [
+      {
+       "p": "The Standard Contractual Clauses (module two), with the UK Addendum where it applies, are incorporated by reference."
+      }
+     ]
+    },
+    {
+     "signature": {
+      "signer": 1,
+      "label": "Signed for {{Account.Name}}",
+      "fields": [
+       "s",
+       "n",
+       "d"
+      ]
+     }
+    },
+    {
+     "signature": {
+      "signer": 2,
+      "label": "Signed for {{Account.Fontara_Entity__c}}",
+      "fields": [
+       "s",
+       "n",
+       "d"
+      ]
+     }
+    }
+   ]
+  }
+ ]
+}

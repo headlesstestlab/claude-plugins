@@ -1,0 +1,41 @@
+{
+  "id": "erp-order-intake",
+  "name": "ERP Order Intake",
+  "description": "An ERP starts this workflow by the CLM REST API with a custom XML (an order number and a customer, no documents). Update Variable Value keeps the order number, Update Information shows it in the Info column, and a Logger line records the customer.",
+  "variables": [
+    "OrderNumber"
+  ],
+  "paramsSchema": "<Params><OrderNumber/><Customer/></Params>",
+  "steps": [
+    {
+      "id": "order",
+      "name": "Order number",
+      "kind": "setVariable",
+      "set": {
+        "OrderNumber": "<%#XmlVariables.Params.OrderNumber%>"
+      },
+      "next": "info"
+    },
+    {
+      "id": "info",
+      "name": "Show the order",
+      "kind": "updateInformation",
+      "information": "Order <%#Variable.OrderNumber%> for <%#XmlVariables.Params.Customer%>",
+      "on": {
+        "success": "logged",
+        "failure": "finish"
+      }
+    },
+    {
+      "id": "logged",
+      "name": "Log the order",
+      "kind": "logger",
+      "message": "Order <%#Variable.OrderNumber%> received",
+      "next": "finish"
+    },
+    {
+      "id": "finish",
+      "kind": "finish"
+    }
+  ]
+}

@@ -1,0 +1,185 @@
+{
+  "id": "supplier-code-acknowledgment",
+  "name": "Supplier Code of Conduct Acknowledgment",
+  "description": "A supplier accepts Fontara’s Supplier Code of Conduct across all its supply contracts: forced labor, conflict minerals, restricted substances, sub-tier diligence and zero-tolerance remediation.",
+  "agreementType": "Purchase",
+  "fields": {
+    "fontara_entity": {
+      "label": "Fontara contracting entity",
+      "type": "select",
+      "options": [
+        "Fontara, Inc.",
+        "Fontara UK Ltd",
+        "Fontara Europe Ltd"
+      ],
+      "optionValues": {
+        "Fontara, Inc.": "Fontara, Inc., a Delaware corporation with its principal place of business at 1500 Harbor Boulevard, Suite 1200, San Francisco, CA 94111",
+        "Fontara UK Ltd": "Fontara UK Ltd, a company registered in England and Wales with its registered office at 48 Ashcombe Street, London EC2A 4NE, United Kingdom",
+        "Fontara Europe Ltd": "Fontara Europe Ltd, a company registered in Ireland with its registered office at 3 Riverside Quay, Dublin 2, D02 X285, Ireland"
+      },
+      "required": true,
+      "description": "Prints the entity’s full legal description and address"
+    },
+    "effective": {
+      "bind": {
+        "provision": "EffectiveDate"
+      },
+      "required": true
+    },
+    "supplier": {
+      "bind": {
+        "provision": "AgreementParty"
+      },
+      "required": true,
+      "description": "Supplier legal name"
+    },
+    "supplier_entity": {
+      "label": "Supplier entity type",
+      "required": true,
+      "description": "For example: a Delaware corporation"
+    },
+    "supplier_address": {
+      "label": "Supplier street address",
+      "required": true
+    },
+    "supplier_city": {
+      "label": "Supplier city",
+      "required": true
+    },
+    "supplier_region": {
+      "label": "Supplier state",
+      "required": true
+    },
+    "supplier_postal": {
+      "label": "Supplier ZIP code",
+      "required": true
+    }
+  },
+  "signers": [
+    "Supplier",
+    "Fontara"
+  ],
+  "body": [
+    {
+      "title": "SUPPLIER CODE OF CONDUCT ACKNOWLEDGMENT"
+    },
+    {
+      "p": "This Supplier Code of Conduct Acknowledgment (this \"Agreement\"), effective {{effective}}, is between {{fontara_entity}} (\"Buyer\"), and **{{supplier}}**, {{supplier_entity}} with its principal place of business at {{supplier_address}}, {{supplier_city}}, {{supplier_region}} {{supplier_postal}} (\"Supplier\"). It applies to every agreement and purchase order under which Supplier supplies goods or services to Buyer (the \"Supply Contracts\"), and to Buyer's Supplier Code of Conduct as updated from time to time (the \"Code\")."
+    },
+    {
+      "p": "[[check:Supplier:Received and read the Code]] Supplier has received and read the Code."
+    },
+    {
+      "h": "1. Forced Labor Import Compliance"
+    },
+    {
+      "p": "Supplier warrants that no forced, prison, indentured or child labor is used to make the goods or their materials, and that no goods or inputs originate in a region or from an entity subject to a US import ban or presumption. Supplier maintains supply-chain maps to raw-material origin and, within 10 business days of Buyer's request or a customs detention, provides the tracing documents customs requires. If goods are detained because of Supplier's breach, Supplier bears the resulting costs and Buyer may cancel affected orders without liability."
+    },
+    {
+      "h": "2. Conflict Minerals Reporting"
+    },
+    {
+      "p": "Supplier will respond to Buyer's annual conflict minerals inquiry by March 31 using the industry-standard reporting template, at product level where Buyer requests it, identifying the smelters and refiners in its supply chain for any 3TG necessary to the products. Supplier will source 3TG from smelters that have passed an independent responsible-sourcing audit, or explain its plan to do so, and will update Buyer within 30 days if it learns that a declaration is inaccurate."
+    },
+    {
+      "h": "3. Restricted Substances Compliance"
+    },
+    {
+      "p": "Supplier warrants that the products comply with Buyer's restricted substances list as updated from time to time, REACH, RoHS and equivalent laws in the markets Buyer identifies. Supplier provides a material declaration for each part before first shipment and notifies Buyer within 30 days if a substance newly added to the REACH Candidate List is present above 0.1% by weight. Supplier has 12 months, or any shorter legal deadline, to comply with additions to Buyer's list, and the cost of required changes is shared as the parties agree."
+    },
+    {
+      "h": "4. Sub-Tier Supplier Due Diligence"
+    },
+    {
+      "p": "Supplier will flow down the Code, or equivalent requirements, to its direct suppliers of materials and services for Buyer's products, assess them for labor, environmental and sourcing risk at least every 2 years, and audit high-risk sites through a recognized independent audit scheme. Supplier will disclose to Buyer, in confidence, the names and locations of sub-tier suppliers of critical components and raw materials, and will replace a sub-tier supplier that fails to remediate a serious violation within the agreed time."
+    },
+    {
+      "h": "5. Zero-Tolerance Violations and Remediation"
+    },
+    {
+      "p": "If an audit or report confirms forced, prison or child labor, bribery, falsified records, or a condition posing imminent risk to life, Buyer may suspend orders immediately and terminate this Agreement and the affected Supply Contracts on 30 days' notice unless Supplier remediates to Buyer's reasonable satisfaction within that time. For other violations Supplier submits a corrective action plan within 30 days and completes it within the agreed time, verified by a follow-up audit at Supplier's cost. On termination Buyer pays for conforming finished goods already delivered."
+    },
+    {
+      "h": "6. Relationship to the Supply Contracts"
+    },
+    {
+      "p": "This Agreement forms part of each Supply Contract. If it conflicts with a Supply Contract, the stricter requirement applies. Supplier shall tell Buyer promptly if it cannot comply with any part of the Code."
+    },
+    {
+      "h": "7. Governing Law and Disputes"
+    },
+    {
+      "if": {
+        "field": "fontara_entity",
+        "is": "Fontara, Inc."
+      },
+      "then": [
+        {
+          "p": "This Agreement is governed by the laws of the State of Delaware, without regard to its conflict-of-laws rules. The parties shall first try to resolve any dispute arising out of or relating to this Agreement by good-faith negotiation between senior executives for 30 days. A dispute not resolved in that time shall be finally settled by binding arbitration administered by the American Arbitration Association under its Commercial Arbitration Rules, before a single arbitrator, seated in San Francisco, California, and judgment on the award may be entered in any court of competent jurisdiction. Either party may seek injunctive relief from a court to protect its confidential information or intellectual property."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "fontara_entity",
+        "is": "Fontara UK Ltd"
+      },
+      "then": [
+        {
+          "p": "This Agreement, and any non-contractual obligation arising out of or in connection with it, is governed by the law of England and Wales. The parties shall first try to resolve any dispute arising out of or in connection with this Agreement by good-faith negotiation between senior executives for 30 days. A dispute not resolved in that time shall be referred to and finally resolved by arbitration under the LCIA Rules, which are incorporated by reference into this section, before a sole arbitrator, with the seat of arbitration in London and English as the language of the arbitration. Either party may seek urgent injunctive relief from a court."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "fontara_entity",
+        "is": "Fontara Europe Ltd"
+      },
+      "then": [
+        {
+          "p": "This Agreement, and any non-contractual obligation arising out of or in connection with it, is governed by the laws of Ireland. The parties shall first try to resolve any dispute arising out of or in connection with this Agreement by good-faith negotiation between senior executives for 30 days, after which the courts of Ireland have exclusive jurisdiction to settle it."
+        }
+      ]
+    },
+    {
+      "h": "8. General"
+    },
+    {
+      "p": "If any provision of this Agreement is held invalid or unenforceable, it is enforced to the maximum extent permitted and the rest of this Agreement continues in full force. No failure or delay in exercising a right is a waiver of it, and a waiver is effective only if it is in writing and signed. No person other than the parties and their permitted successors and assigns has any right to enforce any term of this Agreement. This Agreement may be signed in counterparts and by electronic signature, each of which is an original and all of which together are one instrument."
+    },
+    {
+      "p": "Supplier compliance contact: [[text:Supplier:Compliance contact]]  Email: [[email:Supplier:Compliance email]]"
+    },
+    {
+      "sign": "Supplier",
+      "title": true,
+      "company": true
+    },
+    {
+      "sign": "Fontara",
+      "title": true,
+      "company": true
+    }
+  ],
+  "examples": [
+    {
+      "values": {
+        "effective": "03/01/2027",
+        "supplier": "Hidden Continent Environmental",
+        "supplier_entity": "an Oregon corporation",
+        "supplier_address": "1100 Eco Boulevard",
+        "fontara_entity": "Fontara, Inc.",
+        "supplier_city": "Portland",
+        "supplier_region": "OR",
+        "supplier_postal": "97201"
+      },
+      "expect": [
+        "forced, prison, indentured or child labor",
+        "conflict minerals",
+        "Supply Contracts",
+        "American Arbitration Association"
+      ]
+    }
+  ],
+  "source": "vault: Contracts/Clauses/Supplier Conduct"
+}

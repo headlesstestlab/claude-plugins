@@ -1,0 +1,106 @@
+{
+  "id": "legal-hold-release",
+  "name": "Legal Hold Release",
+  "agreementType": "Other",
+  "description": "Fontara Legal's written release of a legal hold for one custodian: normal retention resumes, with the custodian's signed acknowledgment.",
+  "fields": {
+    "fontara_entity": {
+      "label": "Fontara contracting entity",
+      "type": "select",
+      "options": [
+        "Fontara, Inc.",
+        "Fontara UK Ltd",
+        "Fontara Europe Ltd"
+      ],
+      "optionValues": {
+        "Fontara, Inc.": "Fontara, Inc., a Delaware corporation with its principal place of business at 1500 Harbor Boulevard, Suite 1200, San Francisco, CA 94111",
+        "Fontara UK Ltd": "Fontara UK Ltd, a company registered in England and Wales with its registered office at 48 Ashcombe Street, London EC2A 4NE, United Kingdom",
+        "Fontara Europe Ltd": "Fontara Europe Ltd, a company registered in Ireland with its registered office at 3 Riverside Quay, Dublin 2, D02 X285, Ireland"
+      },
+      "required": true,
+      "description": "Prints the entity’s full legal description and address"
+    },
+    "matter": {
+      "label": "Matter",
+      "required": true,
+      "description": "The dispute, investigation or proceeding"
+    },
+    "matter_id": {
+      "label": "Matter ID",
+      "required": true
+    },
+    "custodian": {
+      "label": "Custodian name",
+      "required": true
+    },
+    "legal_contact": {
+      "label": "Legal contact (name and email)",
+      "required": true
+    },
+    "released": {
+      "label": "Date released",
+      "type": "date",
+      "required": true
+    }
+  },
+  "signers": [
+    "Custodian"
+  ],
+  "body": [
+    {
+      "title": "LEGAL HOLD RELEASE"
+    },
+    {
+      "p": "**Privileged and confidential — attorney-client communication**"
+    },
+    {
+      "p": "Date: {{released}}"
+    },
+    {
+      "p": "To: {{custodian}}"
+    },
+    {
+      "p": "From: Legal Department, {{fontara_entity}} (\"Fontara\")"
+    },
+    {
+      "p": "Re: {{matter}} (Matter {{matter_id}})"
+    },
+    {
+      "p": "The legal hold issued to you for {{matter}} is released with effect on {{released}}. You no longer need to preserve material solely because of that hold, and Fontara's normal retention and deletion schedules apply to it again."
+    },
+    {
+      "p": "This release covers only Matter {{matter_id}}. If you have received a legal hold notice for any other matter, it remains in effect until it is released in writing. Material that Fontara's retention policy requires you to keep must still be kept."
+    },
+    {
+      "p": "Contact {{legal_contact}} with any question about this release."
+    },
+    {
+      "h": "Acknowledgment"
+    },
+    {
+      "p": "I acknowledge that the legal hold for this matter is released."
+    },
+    {
+      "sign": "Custodian"
+    }
+  ],
+  "examples": [
+    {
+      "values": {
+        "matter": "Momentum Driver dispute over premium support fees",
+        "matter_id": "LIT-2027-014",
+        "custodian": "Jonathan Wright, Revenue Controller",
+        "released": "11/30/2027",
+        "legal_contact": "Elena Rodriguez, General Counsel (fontara.elena.rodriguez@example.com)",
+        "fontara_entity": "Fontara, Inc."
+      },
+      "expect": [
+        "LEGAL HOLD RELEASE",
+        "LIT-2027-014",
+        "remains in effect until it is released"
+      ],
+      "absent": []
+    }
+  ],
+  "source": "written for the library — no vault clause set for this type"
+}

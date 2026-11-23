@@ -1,0 +1,108 @@
+{
+  "id": "residency-affidavit",
+  "from": {
+    "name": "Affidavit of Residence",
+    "description": "A resident swears where they live, in person at the office, before a witness; the records office receives it to view.",
+    "fields": {
+      "office": {
+        "label": "Office",
+        "required": true
+      }
+    },
+    "signers": [
+      "Affiant",
+      "Witness",
+      "Witness 2"
+    ],
+    "body": [
+      {
+        "title": "AFFIDAVIT OF RESIDENCE"
+      },
+      {
+        "p": "Sworn at the {{office}} office."
+      },
+      {
+        "p": "Full name: [[text:Affiant:Full legal name]]  Date of birth: [[date:Affiant:Date of birth]]"
+      },
+      {
+        "p": "Social Security number: [[ssn:Affiant:SSN]]"
+      },
+      {
+        "p": "Street address: [[text:Affiant:Street address]]  ZIP code: [[zip:Affiant:ZIP code]]"
+      },
+      {
+        "p": "Residence type: [[list:Affiant:Residence type:Owner|Tenant|Living with family]]  Household members: [[number:Affiant:Household members]]"
+      },
+      {
+        "p": "[[check?:Affiant:Less than one year at this address]] I have lived at this address for less than one year."
+      },
+      {
+        "p": "Previous address: [[text?:Affiant:Previous address]]"
+      },
+      {
+        "h": "Declaration"
+      },
+      {
+        "p": "I declare that the address above is my primary residence and that the information in this affidavit is true and complete."
+      },
+      {
+        "sign": "Affiant",
+        "title": false
+      },
+      {
+        "h": "Witness"
+      },
+      {
+        "p": "I saw the affiant sign this affidavit. Witness phone: [[text:Witness:Witness phone]]  Organization stamp: [[stamp?:Witness:Organization stamp]]"
+      },
+      {
+        "sign": "Witness",
+        "title": false
+      },
+      {
+        "sign": "Witness 2",
+        "title": false
+      }
+    ],
+    "examples": [
+      {
+        "values": {
+          "office": "Downtown Records"
+        }
+      }
+    ]
+  },
+  "name": "Affidavit of Residence",
+  "summary": "A NEW document inline: the affiant signs IN PERSON (hosted by the sender), two Witness roles witness the affiant's signature and may add an organization stamp, the Records Office receives it to view. The affiant's tabs use number, dropdown, SSN and ZIP fields; the previous address shows only when 'less than one year' is checked. The witness gets a private note in Spanish.",
+  "owners": {
+    "default": "Affiant"
+  },
+  "inPerson": [
+    "Affiant"
+  ],
+  "witnesses": {
+    "Witness": "Affiant",
+    "Witness 2": "Affiant"
+  },
+  "viewers": [
+    {
+      "role": "Records Office"
+    }
+  ],
+  "messages": {
+    "Witness": {
+      "note": "Please witness the affiant's signature at the counter.",
+      "subject": "Testigo: declaración jurada de residencia",
+      "body": "Por favor, firme como testigo.",
+      "language": "es"
+    }
+  },
+  "conditional": {
+    "Previous address": {
+      "parent": "Less than one year at this address",
+      "value": "on"
+    }
+  },
+  "emailSubject": "Affidavit of residence",
+  "emailBlurb": "Please review and sign the affidavit."
+}

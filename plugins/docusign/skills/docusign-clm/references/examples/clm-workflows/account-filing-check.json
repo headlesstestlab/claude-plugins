@@ -1,0 +1,112 @@
+{
+  "id": "account-filing-check",
+  "name": "Account Filing Check",
+  "description": "Sales operations files a signed order in its customer's account folder and checks the filing. Find or Create EOS Parent Folder finds (or makes) the folder of the Salesforce Account from Params, the order moves there, Find EOS Parent Folder confirms the document's EOS folder for the Account object, the order is marked Archived, and Find Documents by Metadata lists the account folder's archived documents. A Logger line closes each path.",
+  "variables": [
+    {
+      "name": "AccountFolder",
+      "type": "folder"
+    },
+    {
+      "name": "EosFolder",
+      "type": "folder"
+    },
+    {
+      "name": "Archived",
+      "type": "document"
+    }
+  ],
+  "paramsSchema": "<Params><Documents><Document><Id/><Name/></Document></Documents><AccountId/><AccountName/></Params>",
+  "steps": [
+    {
+      "id": "account",
+      "name": "Find or create the account folder",
+      "kind": "findOrCreateEosFolder",
+      "objectType": "Account",
+      "objectId": "<%#XmlVariables.Params.AccountId%>",
+      "folderName": "<%#XmlVariables.Params.AccountName%>",
+      "output": "AccountFolder",
+      "on": {
+        "success": "file",
+        "failure": "logFailed"
+      }
+    },
+    {
+      "id": "file",
+      "name": "File the order",
+      "kind": "copyOrMoveDocument",
+      "action": "move",
+      "folder": {
+        "var": "AccountFolder"
+      },
+      "on": {
+        "success": "parent",
+        "failure": "logFailed"
+      }
+    },
+    {
+      "id": "parent",
+      "name": "Confirm the account folder",
+      "kind": "findEosParentFolder",
+      "objectType": "Account",
+      "output": "EosFolder",
+      "on": {
+        "found": "archive",
+        "notFound": "logFailed"
+      }
+    },
+    {
+      "id": "archive",
+      "name": "Mark archived",
+      "kind": "updateMetadata",
+      "set": [
+        {
+          "attribute": "Agreement.Status",
+          "value": "Archived"
+        }
+      ],
+      "on": {
+        "success": "list",
+        "failure": "logFailed"
+      }
+    },
+    {
+      "id": "list",
+      "name": "List archived documents",
+      "kind": "findDocumentsByMetadata",
+      "folder": {
+        "var": "AccountFolder"
+      },
+      "where": [
+        {
+          "attribute": "Agreement.Status",
+          "value": "Archived"
+        }
+      ],
+      "output": "Archived",
+      "on": {
+        "match": "logDone",
+        "noMatch": "logFailed",
+        "failure": "logFailed"
+      }
+    },
+    {
+      "id": "logDone",
+      "name": "Log filed",
+      "kind": "logger",
+      "message": "Filed in the account folder of <%#XmlVariables.Params.AccountName%>",
+      "next": "finish"
+    },
+    {
+      "id": "logFailed",
+      "name": "Log failed",
+      "kind": "logger",
+      "message": "Failed: the order for <%#XmlVariables.Params.AccountName%> is not filed",
+      "next": "finish"
+    },
+    {
+      "id": "finish",
+      "kind": "finish"
+    }
+  ]
+}

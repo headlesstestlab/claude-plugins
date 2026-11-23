@@ -1,0 +1,256 @@
+{
+ "id": "order-form-discount-term",
+ "name": "Order Form with discount approval and term (Opportunity)",
+ "summary": "Order Form from an Opportunity and its primary CPQ quote: a product table with each line's discount, an approval clause when any line is more than 15% below list, a multi-year or annual term clause from the quote's subscription term, and a Finance approval line for payment terms beyond Net 45.",
+ "description": "Fontara Order Form from an Opportunity, its products and its primary quote. Built from assets/salesforce-gen-templates/specs/order-form-discount-term.json.",
+ "sourceObject": "Opportunity",
+ "fields": {
+  "CloseDate": {
+   "format": "MMMM D, YYYY"
+  },
+  "SBQQ__PrimaryQuote__r.SBQQ__StartDate__c": {
+   "format": "MMMM D, YYYY"
+  },
+  "SBQQ__PrimaryQuote__r.SBQQ__EndDate__c": {
+   "format": "MMMM D, YYYY"
+  },
+  "Account.MSA_Date__c": {
+   "format": "MMMM D, YYYY"
+  }
+ },
+ "lists": {
+  "OpportunityLineItems": {
+   "orderBy": "TotalPrice DESC",
+   "max": 50,
+   "filter": "Quantity > 0"
+  }
+ },
+ "partyName": "Account.Name",
+ "documents": [
+  {
+   "file": "Fontara_Order_Form_Terms.docx",
+   "output": {
+    "name": "Fontara Order Form",
+    "suffix": "name_date",
+    "format": "PDF"
+   },
+   "header": "Fontara Order Form · {{Account.Name}}",
+   "footer": "Confidential · Page {page} of {pages}",
+   "body": [
+    {
+     "title": "Order Form"
+    },
+    {
+     "if": {
+      "field": "OrderNumber__c",
+      "empty": false
+     },
+     "then": [
+      {
+       "p": "Order number **{{OrderNumber__c}}**",
+       "align": "center"
+      }
+     ]
+    },
+    {
+     "fields": [
+      [
+       "Customer",
+       "{{Account.Name}}, {{Account.Legal_Entity_Type__c?}}"
+      ],
+      [
+       "Billing address",
+       "{{Account.BillingStreet?}}, {{Account.BillingCity?}}, {{Account.BillingState?}} {{Account.BillingPostalCode?}}"
+      ],
+      [
+       "Fontara contracting entity",
+       "{{Account.Fontara_Entity__c}}"
+      ],
+      [
+       "Subscription term",
+       "{{SBQQ__PrimaryQuote__r.SBQQ__SubscriptionTerm__c}} months, {{SBQQ__PrimaryQuote__r.SBQQ__StartDate__c}} to {{SBQQ__PrimaryQuote__r.SBQQ__EndDate__c}}"
+      ],
+      [
+       "Payment terms",
+       "{{SBQQ__PrimaryQuote__r.SBQQ__PaymentTerms__c}}"
+      ],
+      [
+       "Customer contact",
+       "{{SBQQ__PrimaryQuote__r.SBQQ__PrimaryContact__r.Name}}, {{SBQQ__PrimaryQuote__r.SBQQ__PrimaryContact__r.Title?}}"
+      ]
+     ]
+    },
+    {
+     "p": "This Order Form is entered into between **{{Account.Fontara_Entity__c}}** (\"Fontara\") and **{{Account.Name}}** (\"Customer\") under the Master Subscription Agreement between them dated {{Account.MSA_Date__c}}. The products and fees below apply from the subscription start date."
+    },
+    {
+     "h": "Products and fees"
+    },
+    {
+     "table": {
+      "rows": "OpportunityLineItems",
+      "columns": [
+       {
+        "header": "Product",
+        "value": "{{Product2.Name}}",
+        "width": 27
+       },
+       {
+        "header": "Code",
+        "value": "{{ProductCode}}",
+        "width": 16
+       },
+       {
+        "header": "Qty",
+        "value": "{{Quantity}}",
+        "width": 10,
+        "align": "right"
+       },
+       {
+        "header": "List price",
+        "value": "{{ListPrice}}",
+        "width": 12,
+        "align": "right"
+       },
+       {
+        "header": "Your price",
+        "value": "{{UnitPrice}}",
+        "width": 12,
+        "align": "right"
+       },
+       {
+        "header": "Discount",
+        "value": "{{= round(100 - 100 * number(translate(./UnitPrice,'$,','')) div number(translate(./ListPrice,'$,','')))}}%",
+        "width": 10,
+        "align": "right",
+        "showIf": {
+         "test": "number(translate(./UnitPrice,'$,','')) < number(translate(./ListPrice,'$,',''))"
+        }
+       },
+       {
+        "header": "Line total",
+        "value": "{{TotalPrice}}",
+        "width": 13,
+        "align": "right"
+       }
+      ],
+      "footer": [
+       "",
+       "",
+       "",
+       "",
+       "",
+       "Order total",
+       "{{Amount}}"
+      ]
+     }
+    },
+    {
+     "if": {
+      "test": "count(/Opportunity//OpportunityLineItems[number(translate(./UnitPrice,'$,','')) < 0.85 * number(translate(./ListPrice,'$,',''))]) > 0"
+     },
+     "then": [
+      {
+       "h": "Discount approval"
+      },
+      {
+       "p": "At least one line above is priced more than 15% below list. Under Fontara's discount policy this Order Form binds Fontara only once Fontara's VP of Sales and Chief Financial Officer have approved it. Approval status when this document was generated: **{{Approval_Status__c}}**."
+      },
+      {
+       "p": "The discounted prices are fixed for the subscription term and do not carry over to renewals unless a later order says so."
+      }
+     ],
+     "else": [
+      {
+       "if": {
+        "test": "count(/Opportunity//OpportunityLineItems[number(translate(./UnitPrice,'$,','')) < number(translate(./ListPrice,'$,',''))]) > 0"
+       },
+       "then": [
+        {
+         "p": "**Discounts.** The discounted prices above are within the account executive's pricing authority and are valid if Customer signs on or before {{CloseDate}}."
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "if": {
+      "field": "SBQQ__PrimaryQuote__r.SBQQ__SubscriptionTerm__c",
+      "gt": 12
+     },
+     "then": [
+      {
+       "h": "Multi-year commitment"
+      },
+      {
+       "p": "Customer commits to the products above for {{SBQQ__PrimaryQuote__r.SBQQ__SubscriptionTerm__c}} months, from {{SBQQ__PrimaryQuote__r.SBQQ__StartDate__c}} to {{SBQQ__PrimaryQuote__r.SBQQ__EndDate__c}}. Fontara invoices each subscription year annually in advance. Unit prices are fixed for the whole term, and Customer may add users at the same unit price but may not reduce quantities before the term ends."
+      }
+     ],
+     "else": [
+      {
+       "h": "Term and renewal"
+      },
+      {
+       "p": "This order runs from {{SBQQ__PrimaryQuote__r.SBQQ__StartDate__c}} to {{SBQQ__PrimaryQuote__r.SBQQ__EndDate__c}} and renews for successive twelve-month periods at the unit prices above plus no more than 5%, unless either party gives notice of non-renewal at least 60 days before the end of the current period."
+      }
+     ]
+    },
+    {
+     "h": "Payment"
+    },
+    {
+     "p": "Invoices are due {{SBQQ__PrimaryQuote__r.SBQQ__PaymentTerms__c}} from the invoice date."
+    },
+    {
+     "if": {
+      "field": "SBQQ__PrimaryQuote__r.SBQQ__PaymentTerms__c",
+      "in": [
+       "Net 60",
+       "Net 90"
+      ]
+     },
+     "then": [
+      {
+       "p": "**Extended payment terms.** Payment terms beyond Net 45 apply to this order only and are subject to approval by Fontara's Finance Director."
+      }
+     ]
+    },
+    {
+     "if": {
+      "field": "Personal_Data__c",
+      "equals": "Yes"
+     },
+     "then": [
+      {
+       "p": "**Personal data.** Fontara processes personal data under this order only as Customer's processor and under the Data Processing Agreement between the parties."
+      }
+     ]
+    },
+    {
+     "signature": {
+      "signer": 1,
+      "label": "Signed for {{Account.Name}}",
+      "fields": [
+       "s",
+       "n",
+       "t",
+       "d"
+      ]
+     }
+    },
+    {
+     "signature": {
+      "signer": 2,
+      "label": "Signed for {{Account.Fontara_Entity__c}}",
+      "fields": [
+       "s",
+       "n",
+       "t",
+       "d"
+      ]
+     }
+    }
+   ]
+  }
+ ]
+}

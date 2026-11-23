@@ -1,0 +1,185 @@
+{
+  "id": "fontara-change-order",
+  "name": "Change Order",
+  "description": "A change order to a Fontara statement of work (sell side): the change, its fee and schedule effect; the fee paragraph prints only for the chosen effect (increase, decrease, no change).",
+  "templateOnly": true,
+  "fields": [
+    {
+      "kind": "heading",
+      "label": "Customer"
+    },
+    {
+      "kind": "text",
+      "label": "Customer Legal Name",
+      "required": true
+    },
+    {
+      "kind": "text",
+      "label": "Customer Address",
+      "required": true
+    },
+    {
+      "kind": "dropdown",
+      "label": "Legal Entity",
+      "options": [
+        "Fontara, Inc.",
+        "Fontara UK Ltd",
+        "Fontara Europe Ltd",
+        "Fontara GmbH"
+      ],
+      "required": true
+    },
+    {
+      "kind": "heading",
+      "label": "Change"
+    },
+    {
+      "kind": "text",
+      "label": "Statement of Work",
+      "required": true
+    },
+    {
+      "kind": "text",
+      "label": "Change Order Number",
+      "required": true
+    },
+    {
+      "kind": "date",
+      "label": "Change Order Date",
+      "format": "MMMM d, yyyy",
+      "required": true
+    },
+    {
+      "kind": "text",
+      "label": "Description of the Change",
+      "required": true
+    },
+    {
+      "kind": "radio",
+      "label": "Fee Effect",
+      "options": [
+        "Increase",
+        "Decrease",
+        "No change"
+      ],
+      "required": true
+    },
+    {
+      "kind": "dropdown",
+      "label": "Currency",
+      "options": [
+        "USD",
+        "GBP",
+        "EUR"
+      ],
+      "mergeIf": [
+        {
+          "field": "Fee Effect",
+          "op": "notEquals",
+          "value": "No change"
+        }
+      ]
+    },
+    {
+      "kind": "currency",
+      "label": "Fee Change",
+      "decimals": 2,
+      "mergeIf": [
+        {
+          "field": "Fee Effect",
+          "op": "notEquals",
+          "value": "No change"
+        }
+      ]
+    },
+    {
+      "kind": "number",
+      "label": "Schedule Change in Weeks",
+      "required": true,
+      "default": "0"
+    },
+    {
+      "kind": "heading",
+      "label": "Signers"
+    },
+    {
+      "kind": "text",
+      "label": "Customer Signer Name",
+      "required": true
+    },
+    {
+      "kind": "text",
+      "label": "Customer Signer Email",
+      "required": true
+    },
+    {
+      "kind": "text",
+      "label": "Company Signer Name",
+      "required": true
+    },
+    {
+      "kind": "text",
+      "label": "Company Signer Email",
+      "required": true
+    },
+    {
+      "kind": "text",
+      "label": "Agreement Type",
+      "hidden": true,
+      "default": "Change Order"
+    },
+    {
+      "kind": "text",
+      "label": "Line of Business",
+      "hidden": true,
+      "default": "Sales"
+    }
+  ],
+  "template": [
+    "CHANGE ORDER {{Change Order Number}} TO {{Statement of Work}}",
+    "This Change Order is made on {{Change Order Date}} between {{Legal Entity}} (\"Vendor\") and {{Customer Legal Name}}, {{Customer Address}} (\"Customer\"), under {{Statement of Work}} (the \"SOW\").",
+    "1. Change. {{Description of the Change}}",
+    {
+      "text": "2. Fees. The SOW's fees increase by {{Currency}} {{Fee Change}}, invoiced with the SOW's next invoice.",
+      "when": {
+        "field": "Fee Effect",
+        "is": "Increase"
+      }
+    },
+    {
+      "text": "2. Fees. The SOW's fees decrease by {{Currency}} {{Fee Change}}, credited on the SOW's next invoice.",
+      "when": {
+        "field": "Fee Effect",
+        "is": "Decrease"
+      }
+    },
+    {
+      "text": "2. Fees. The SOW's fees do not change.",
+      "when": {
+        "field": "Fee Effect",
+        "is": "No change"
+      }
+    },
+    "3. Schedule. The SOW's schedule moves by {{Schedule Change in Weeks}} weeks.",
+    "4. Everything else in the SOW stays in force.",
+    "Signed for {{Customer Legal Name}}: {{Customer Signer Name}}",
+    "Signed for {{Legal Entity}}: {{Company Signer Name}}"
+  ],
+  "sample": {
+    "Customer Legal Name": "ClimbTech Financial",
+    "Customer Address": "800 Finance Street, Boston, MA 02110",
+    "Legal Entity": "Fontara, Inc.",
+    "Statement of Work": "FON-SOW-0401",
+    "Change Order Number": "CO-01",
+    "Change Order Date": "02/15/2027",
+    "Description of the Change": "Add 10 branches in Rhode Island to the rollout.",
+    "Fee Effect": "Increase",
+    "Currency": "USD",
+    "Fee Change": "18,000.00",
+    "Schedule Change in Weeks": "2",
+    "Customer Signer Name": "Mina Collier",
+    "Customer Signer Email": "climbtech-financial.mina.collier@example.com",
+    "Company Signer Name": "Leonie Brandt",
+    "Company Signer Email": "fontara.leonie.brandt@example.com"
+  }
+}

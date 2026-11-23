@@ -1,0 +1,116 @@
+{
+  "id": "contract-request-intake",
+  "name": "Contract Request",
+  "description": "Ask Legal for a new agreement, a renewal or an amendment. Counterparty, entity and business unit are saved as CLM attributes; the other answers are saved with the request.",
+  "submitFolder": "Legal/Contract Requests/Submitted",
+  "workflow": "contract-request-to-legal",
+  "sections": [
+    {
+      "title": "1. Your request",
+      "fields": [
+        {
+          "kind": "select",
+          "id": "crRequestType",
+          "label": "Request type",
+          "options": [
+            "New agreement",
+            "Renewal",
+            "Amendment"
+          ],
+          "required": true
+        },
+        {
+          "kind": "select",
+          "id": "crAgreementType",
+          "label": "Agreement type",
+          "options": [
+            "Master Services Agreement",
+            "Statement of Work",
+            "Order Form",
+            "NDA",
+            "Data Processing Agreement",
+            "Other"
+          ],
+          "required": true
+        },
+        {
+          "kind": "attribute",
+          "attribute": "Internal Entity.Entity Name",
+          "label": "Our contracting entity",
+          "required": true
+        },
+        {
+          "kind": "attribute",
+          "attribute": "Internal Entity.Entity Business Unit",
+          "label": "Your business unit",
+          "required": true
+        }
+      ]
+    },
+    {
+      "title": "2. Counterparty",
+      "fields": [
+        {
+          "kind": "attribute",
+          "attribute": "External Party.Business Name",
+          "label": "Counterparty legal name",
+          "required": true,
+          "placeholder": "As on their registration"
+        },
+        {
+          "kind": "attribute",
+          "attribute": "External Party.Contact Email",
+          "label": "Counterparty contact email"
+        },
+        {
+          "kind": "text",
+          "id": "crTheirReference",
+          "label": "Their reference, if any",
+          "help": "A quote or tender number from the counterparty."
+        }
+      ]
+    },
+    {
+      "title": "3. Value and date",
+      "fields": [
+        {
+          "kind": "number",
+          "id": "crValue",
+          "label": "Estimated value (USD)",
+          "help": "Whole term."
+        },
+        {
+          "kind": "date",
+          "id": "crTargetDate",
+          "label": "Target signature date"
+        },
+        {
+          "kind": "textarea",
+          "id": "crPurpose",
+          "label": "Business purpose",
+          "help": "One or two sentences for Legal."
+        }
+      ]
+    },
+    {
+      "title": "4. Third-party paper",
+      "fields": [
+        {
+          "kind": "attribute",
+          "attribute": "Agreement.Third Party",
+          "label": "On the counterparty's paper?",
+          "help": "Yes opens the upload."
+        },
+        {
+          "kind": "attachment",
+          "label": "Their draft",
+          "required": true,
+          "showIf": {
+            "field": "Agreement.Third Party",
+            "equals": "Yes"
+          }
+        }
+      ]
+    }
+  ]
+}

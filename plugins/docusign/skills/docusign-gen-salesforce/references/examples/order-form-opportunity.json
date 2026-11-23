@@ -1,0 +1,230 @@
+{
+ "id": "order-form-opportunity",
+ "name": "Order Form (Opportunity)",
+ "summary": "Order Form generated from an Opportunity: customer and entity from the Account, a line-item table from Opportunity Products with discounted lines marked, and clauses that switch on deal type, deal size, special terms and personal data.",
+ "description": "Fontara Order Form from an Opportunity and its products. Built from assets/salesforce-gen-templates/specs/order-form-opportunity.json.",
+ "sourceObject": "Opportunity",
+ "fields": {
+  "CloseDate": {
+   "format": "MMMM D, YYYY"
+  }
+ },
+ "lists": {
+  "OpportunityLineItems": {
+   "orderBy": "TotalPrice DESC",
+   "max": 50,
+   "filter": "Quantity > 0"
+  }
+ },
+ "partyName": "Account.Name",
+ "documents": [
+  {
+   "file": "Fontara_Order_Form.docx",
+   "output": {
+    "name": "Fontara Order Form",
+    "suffix": "name_date",
+    "format": "PDF"
+   },
+   "header": "Fontara Order Form · {{Name}}",
+   "footer": "Confidential · Page {page} of {pages}",
+   "body": [
+    {
+     "title": "Order Form"
+    },
+    {
+     "fields": [
+      [
+       "Customer",
+       "{{Account.Name}}"
+      ],
+      [
+       "Billing address",
+       "{{Account.BillingStreet?}}, {{Account.BillingCity?}} {{Account.BillingPostalCode?}}, {{Account.BillingCountry?}}"
+      ],
+      [
+       "Fontara contracting entity",
+       "{{Account.Fontara_Entity__c}}"
+      ],
+      [
+       "Order reference",
+       "{{Name}}"
+      ],
+      [
+       "Order date",
+       "{{CloseDate}}"
+      ],
+      [
+       "Order total",
+       "{{Amount}}"
+      ],
+      [
+       "Fontara account executive",
+       "{{Owner.Name}}"
+      ]
+     ]
+    },
+    {
+     "p": "This Order Form is entered into between **{{Account.Fontara_Entity__c}}** (\"Fontara\") and **{{Account.Name}}** (\"Customer\") under the Master Subscription Agreement between them. The products and fees below apply from the order date."
+    },
+    {
+     "if": {
+      "field": "Type",
+      "equals": "New Customer"
+     },
+     "then": [
+      {
+       "h": "Onboarding"
+      },
+      {
+       "p": "Fontara will schedule the implementation kickoff within ten business days of the order date and assign a named onboarding manager."
+      }
+     ],
+     "else": [
+      {
+       "h": "Continuity of service"
+      },
+      {
+       "p": "This order continues Customer's existing subscription without interruption. Fees below replace the fees of the prior order from the order date."
+      }
+     ]
+    },
+    {
+     "h": "Products and fees"
+    },
+    {
+     "table": {
+      "rows": "OpportunityLineItems",
+      "columns": [
+       {
+        "header": "Product",
+        "value": "{{Product2.Name}}",
+        "width": 34
+       },
+       {
+        "header": "Code",
+        "value": "{{ProductCode}}",
+        "width": 14
+       },
+       {
+        "header": "Qty",
+        "value": "{{Quantity}}",
+        "width": 8,
+        "align": "right"
+       },
+       {
+        "header": "List price",
+        "value": "{{ListPrice}}",
+        "width": 14,
+        "align": "right"
+       },
+       {
+        "header": "Your price",
+        "value": "{{UnitPrice}}",
+        "showIf": {
+         "test": "number(translate(./UnitPrice,'$,','')) < number(translate(./ListPrice,'$,',''))"
+        },
+        "width": 14,
+        "align": "right"
+       },
+       {
+        "header": "Line total",
+        "value": "{{TotalPrice}}",
+        "width": 16,
+        "align": "right"
+       }
+      ],
+      "footer": [
+       "",
+       "",
+       "",
+       "",
+       "Order total",
+       "{{Amount}}"
+      ]
+     }
+    },
+    {
+     "p": "\"Your price\" is shown only on discounted lines; other lines are at list price."
+    },
+    {
+     "if": {
+      "test": "count(/Opportunity//OpportunityLineItems[number(translate(./UnitPrice,'$,','')) < number(translate(./ListPrice,'$,',''))]) > 0"
+     },
+     "then": [
+      {
+       "h": "Discounts"
+      },
+      {
+       "p": "The discounted prices above are valid only if Customer signs this Order Form on or before {{CloseDate}}. Discounts do not carry over to renewals unless a later order says so."
+      }
+     ]
+    },
+    {
+     "if": {
+      "field": "Amount",
+      "gte": 250000
+     },
+     "then": [
+      {
+       "p": "**Volume commitment.** Because the order total is at least $250,000, Customer's fees are fixed for the first twelve months and Fontara grants one additional sandbox environment at no charge."
+      }
+     ]
+    },
+    {
+     "if": {
+      "field": "Non_Standard_Terms__c",
+      "equals": "Yes"
+     },
+     "then": [
+      {
+       "h": "Special terms"
+      },
+      {
+       "p": "The parties agreed the following terms, which prevail over the Master Subscription Agreement for this order only: {{Description?}}"
+      }
+     ]
+    },
+    {
+     "if": {
+      "field": "Personal_Data__c",
+      "equals": "Yes"
+     },
+     "then": [
+      {
+       "p": "**Personal data.** Fontara processes personal data under this order only as Customer's processor and under the Data Processing Agreement between the parties."
+      }
+     ]
+    },
+    {
+     "h": "Payment"
+    },
+    {
+     "p": "Fontara invoices annually in advance. Invoices are due thirty days after the invoice date."
+    },
+    {
+     "signature": {
+      "signer": 1,
+      "label": "Signed for {{Account.Name}}",
+      "fields": [
+       "s",
+       "n",
+       "t",
+       "d"
+      ]
+     }
+    },
+    {
+     "signature": {
+      "signer": 2,
+      "label": "Signed for {{Account.Fontara_Entity__c}}",
+      "fields": [
+       "s",
+       "n",
+       "d"
+      ]
+     }
+    }
+   ]
+  }
+ ]
+}

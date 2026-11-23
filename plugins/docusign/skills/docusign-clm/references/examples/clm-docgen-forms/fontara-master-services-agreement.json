@@ -1,0 +1,210 @@
+{
+  "id": "fontara-master-services-agreement",
+  "name": "Master Services Agreement",
+  "description": "Fontara's master services agreement on its own paper (sell side), written from the playbook's Standard positions, the same wording as the Clause Library's Standard options. The routing answers (total value, payment terms, DPA) feed the approvals.",
+  "templateOnly": true,
+  "fields": [
+    {
+      "kind": "heading",
+      "label": "Customer"
+    },
+    {
+      "kind": "text",
+      "label": "Customer Legal Name",
+      "required": true
+    },
+    {
+      "kind": "text",
+      "label": "Customer Address",
+      "required": true
+    },
+    {
+      "kind": "dropdown",
+      "label": "Legal Entity",
+      "options": [
+        "Fontara, Inc.",
+        "Fontara UK Ltd",
+        "Fontara Europe Ltd",
+        "Fontara GmbH"
+      ],
+      "required": true
+    },
+    {
+      "kind": "heading",
+      "label": "Agreement"
+    },
+    {
+      "kind": "text",
+      "label": "Agreement Number",
+      "required": true
+    },
+    {
+      "kind": "date",
+      "label": "Effective Date",
+      "format": "MMMM d, yyyy",
+      "required": true
+    },
+    {
+      "kind": "number",
+      "label": "Initial Term in Months",
+      "required": true
+    },
+    {
+      "kind": "currency",
+      "label": "Annual Fee",
+      "decimals": 2,
+      "required": true
+    },
+    {
+      "kind": "number",
+      "label": "Total Contract Value",
+      "required": true,
+      "help": "Over 1,000,000 goes to the VP of Sales and the CFO."
+    },
+    {
+      "kind": "dropdown",
+      "label": "Currency",
+      "options": [
+        "USD",
+        "GBP",
+        "EUR"
+      ],
+      "required": true
+    },
+    {
+      "kind": "dropdown",
+      "label": "Payment Terms Days",
+      "options": [
+        "30",
+        "45",
+        "60",
+        "90"
+      ],
+      "required": true,
+      "help": "Net 45 and Net 60 are standard; beyond Net 60 goes to the Finance Director."
+    },
+    {
+      "kind": "radio",
+      "label": "Covered by an Existing DPA",
+      "options": [
+        "Yes",
+        "No"
+      ],
+      "required": true
+    },
+    {
+      "kind": "text",
+      "label": "Triage Verdict",
+      "hidden": true,
+      "default": "Green"
+    },
+    {
+      "kind": "text",
+      "label": "Side",
+      "hidden": true,
+      "default": "Sell"
+    },
+    {
+      "kind": "heading",
+      "label": "Signers"
+    },
+    {
+      "kind": "text",
+      "label": "Customer Signer Name",
+      "required": true
+    },
+    {
+      "kind": "text",
+      "label": "Customer Signer Email",
+      "required": true
+    },
+    {
+      "kind": "text",
+      "label": "Company Signer Name",
+      "required": true,
+      "help": "Signing authority: the VP of Sales up to 1,000,000; the CFO above; Marcus Chen for Fontara UK Ltd, Fontara Europe Ltd and Fontara GmbH."
+    },
+    {
+      "kind": "text",
+      "label": "Company Signer Email",
+      "required": true
+    }
+  ],
+  "template": [
+    "MASTER SERVICES AGREEMENT {{Agreement Number}}",
+    "This Master Services Agreement is made on {{Effective Date}} between {{Legal Entity}} (\"Vendor\") and {{Customer Legal Name}}, {{Customer Address}} (\"Customer\").",
+    "1. Services. Vendor provides the Fontara platform and the services described in each Order Form or Statement of Work under this Agreement.",
+    "2. Term. This Agreement begins on the Effective Date and continues for an Initial Term of {{Initial Term in Months}} months. It renews automatically for successive 1-year periods unless either party gives written notice of non-renewal at least 90 days before the end of the then-current term.",
+    "3. Fees and payment. Customer pays {{Currency}} {{Annual Fee}} a year, {{Currency}} {{Total Contract Value}} over the Initial Term, invoiced annually in advance. Each invoice is payable {{Payment Terms Days}} days from the invoice date.",
+    "4. Limitation of liability. Vendor's aggregate liability is capped at fees paid in the prior 3 months. Vendor is not liable for any indirect, incidental, special or consequential damages, including lost profits, lost data and lost revenue, even if Vendor was advised of the possibility of such loss. Vendor's IP indemnity obligations are subject to the separate cap the Indemnification clause states, and no other claim is excluded from the cap.",
+    "5. Indemnification. Vendor shall defend Customer against third-party claims that the platform, used as documented, infringes a third party's intellectual property rights, and shall pay the damages finally awarded on such a claim. Vendor's total liability under this indemnity is capped at the fees paid in the prior 12 months, and the indemnity does not cover claims arising from Customer's modifications, combinations with third-party products, or use outside the documented purpose. Customer shall defend and indemnify Vendor against any claim arising from Customer data, Customer's industry-specific regulatory obligations, or Customer's breach of this Agreement.",
+    "6. Intellectual property. Vendor owns all deliverables, including custom-built features, and Customer assigns to Vendor any rights it acquires in them; Customer receives only a limited license to use them. Vendor may reuse, productize and commercialize any improvement, idea or feedback Customer provides, without compensation or attribution.",
+    "7. Confidentiality. Customer shall keep Vendor's Confidential Information confidential during the term and for three (3) years after termination. Vendor's personnel may use information they retain in unaided memory, including technical know-how, without breaching this clause. Vendor may disclose Confidential Information to its affiliates and subcontractors who are bound by written confidentiality obligations.",
+    "8. Data privacy and security. Vendor shall process Customer data in accordance with its published privacy policy, which Vendor may update on 30 days' notice. The parties shall enter into a DPA only if Customer requests one in writing. Vendor may use aggregated, anonymized data derived from Customer data to improve its products and services.",
+    {
+      "text": "9. Data processing addendum. The parties will sign Vendor's Data Processing Addendum before any Customer Personal Data is processed under this Agreement.",
+      "when": {
+        "field": "Covered by an Existing DPA",
+        "is": "No"
+      }
+    },
+    {
+      "text": "9. Data processing addendum. Customer Personal Data is processed under the Data Processing Addendum the parties have already signed.",
+      "when": {
+        "field": "Covered by an Existing DPA",
+        "is": "Yes"
+      }
+    },
+    "10. Assignment. Vendor may assign this Agreement to its affiliates, successors or financing parties without Customer's consent. Customer may not assign it without Vendor's prior written consent, which Vendor may withhold in its discretion. A change of control at Customer, including an acquisition or a majority-stake investment, requires Vendor's consent, and if Vendor does not consent it may terminate this Agreement by written notice within 60 days after the change.",
+    "11. Insurance. Vendor shall maintain commercial general liability insurance and professional liability (errors and omissions) insurance of at least $1,000,000 each. Customer is not named as an additional insured, and Vendor provides certificates of insurance at signing only.",
+    "12. Dispute resolution. All disputes are resolved exclusively by binding arbitration; class actions and jury trials are expressly waived. This Agreement is governed by the laws of the state where Vendor has its principal place of business, and the courts located in Vendor's home county have exclusive jurisdiction over any action to enforce an award or for injunctive relief. Arbitration proceedings are confidential. Arbitration costs are split equally between the parties. Injunctive relief is available only for IP or confidentiality breaches.",
+    {
+      "text": "13. Governing law. This Agreement is governed by the laws of the State of Delaware.",
+      "when": {
+        "field": "Legal Entity",
+        "is": "Fontara, Inc."
+      }
+    },
+    {
+      "text": "13. Governing law. This Agreement is governed by the laws of England and Wales.",
+      "when": {
+        "field": "Legal Entity",
+        "is": "Fontara UK Ltd"
+      }
+    },
+    {
+      "text": "13. Governing law. This Agreement is governed by the laws of Ireland.",
+      "when": {
+        "field": "Legal Entity",
+        "is": "Fontara Europe Ltd"
+      }
+    },
+    {
+      "text": "13. Governing law. This Agreement is governed by the laws of the Federal Republic of Germany, and the courts of Munich have exclusive jurisdiction.",
+      "when": {
+        "field": "Legal Entity",
+        "is": "Fontara GmbH"
+      }
+    },
+    "14. Entire agreement. Vendor's standard online terms of service and acceptable use policy are incorporated by reference and may be updated by Vendor with 30 days' notice. Vendor's click-through terms in the platform interface govern day-to-day usage. In a conflict, Vendor's most current published terms take precedence over this Agreement for operational matters.",
+    "Signed for {{Customer Legal Name}}: {{Customer Signer Name}}",
+    "Signed for {{Legal Entity}}: {{Company Signer Name}}"
+  ],
+  "sample": {
+    "Customer Legal Name": "ClimbTech Financial",
+    "Customer Address": "800 Finance Street, Boston, MA 02110",
+    "Legal Entity": "Fontara, Inc.",
+    "Agreement Number": "FON-MSA-0201",
+    "Effective Date": "12/18/2026",
+    "Initial Term in Months": "36",
+    "Annual Fee": "960,000.00",
+    "Total Contract Value": "2880000",
+    "Currency": "USD",
+    "Payment Terms Days": "45",
+    "Covered by an Existing DPA": "Yes",
+    "Customer Signer Name": "Mina Collier",
+    "Customer Signer Email": "climbtech-financial.mina.collier@example.com",
+    "Company Signer Name": "Marcus Chen",
+    "Company Signer Email": "fontara.marcus.chen@example.com"
+  }
+}

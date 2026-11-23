@@ -1,0 +1,138 @@
+{
+  "id": "fontara-generated-agreement-review",
+  "name": "Generated Agreement Review",
+  "description": "Launched by the Fontara Statement of Work, Amendment, Change Order, Data Processing Addendum and Vendor Agreement document generation configurations (the owner 11-21, CLM realism item 8). It files the generated draft's attributes from the form (Agreement Profile: the agreement type and line of business the form carries as hidden fields, the Fontara entity, the counterparty (the customer, or the supplier on a vendor agreement) and the currency; Contract Process: Draft), then Legal Operations reviews it: due 2 business days, escalated to Approval Escalations after that. Approved: In Negotiation; rejected: back to Draft.",
+  "paramsSchema": "<Params><Documents><Document><Id/><Name/></Document></Documents><TemplateFieldData><Customer_Legal_Name/><Supplier_Legal_Name/><Legal_Entity/><Currency/><Agreement_Type/><Line_of_Business/></TemplateFieldData></Params>",
+  "variables": [
+    "Counterparty"
+  ],
+  "steps": [
+    {
+      "id": "who",
+      "name": "Who is the counterparty?",
+      "kind": "setVariable",
+      "set": {
+        "Counterparty": {
+          "code": "var c = Convert.ToString(GetVariableValue(\"Params.Params.TemplateFieldData.Customer_Legal_Name\")).Trim();\nif (c != \"\") return c;\nreturn Convert.ToString(GetVariableValue(\"Params.Params.TemplateFieldData.Supplier_Legal_Name\")).Trim();"
+        }
+      },
+      "next": "profile"
+    },
+    {
+      "id": "profile",
+      "name": "File the attributes",
+      "kind": "updateMetadata",
+      "set": [
+        {
+          "attribute": "Agreement Profile.Agreement Type",
+          "value": "<%#XmlVariables.Params.TemplateFieldData.Agreement_Type%>"
+        },
+        {
+          "attribute": "Agreement Profile.Line of Business",
+          "value": "<%#XmlVariables.Params.TemplateFieldData.Line_of_Business%>"
+        },
+        {
+          "attribute": "Agreement Profile.Legal Entity",
+          "value": "<%#XmlVariables.Params.TemplateFieldData.Legal_Entity%>"
+        },
+        {
+          "attribute": "Agreement Profile.Counterparty",
+          "value": "<%#Variable.Counterparty%>"
+        },
+        {
+          "attribute": "Agreement Profile.Currency",
+          "value": "<%#XmlVariables.Params.TemplateFieldData.Currency%>"
+        },
+        {
+          "attribute": "Contract Process.Status",
+          "value": "Draft"
+        }
+      ],
+      "on": {
+        "success": "review",
+        "failure": "failProfile"
+      }
+    },
+    {
+      "id": "review",
+      "name": "Legal operations review",
+      "kind": "approve",
+      "assignee": {
+        "taskGroup": "Legal Operations"
+      },
+      "displayName": "Review: <%#XmlVariables.Params.Documents.Document.Name%>",
+      "stage": "Review",
+      "subject": "Generated draft to review",
+      "instructions": "A draft generated from a Fontara template. Check the clause positions picked (Standard, Acceptable or Fallback) and approve, or reject with a comment.",
+      "comments": "Yes",
+      "due": {
+        "days": 2
+      },
+      "businessDays": true,
+      "on": {
+        "approved": "approved",
+        "rejected": "rejected",
+        "timeout": "reviewEscalated"
+      }
+    },
+    {
+      "id": "reviewEscalated",
+      "name": "Escalated: legal operations review",
+      "kind": "approve",
+      "assignee": {
+        "taskGroup": "Approval Escalations"
+      },
+      "displayName": "Escalated review: <%#XmlVariables.Params.Documents.Document.Name%>",
+      "stage": "Review",
+      "subject": "Escalated after 2 business days: generated draft to review",
+      "instructions": "Legal Operations did not answer within 2 business days, so this review comes to you. Check the clause positions and approve, or reject with a comment.",
+      "comments": "Yes",
+      "on": {
+        "approved": "approved",
+        "rejected": "rejected"
+      }
+    },
+    {
+      "id": "approved",
+      "name": "Approved: mark In Negotiation",
+      "kind": "updateMetadata",
+      "set": [
+        {
+          "attribute": "Contract Process.Status",
+          "value": "In Negotiation"
+        }
+      ],
+      "on": {
+        "success": "finish",
+        "failure": "finish"
+      }
+    },
+    {
+      "id": "rejected",
+      "name": "Rejected: back to Draft",
+      "kind": "updateMetadata",
+      "set": [
+        {
+          "attribute": "Contract Process.Status",
+          "value": "Draft"
+        }
+      ],
+      "on": {
+        "success": "finish",
+        "failure": "finish"
+      }
+    },
+    {
+      "id": "failProfile",
+      "name": "Failed: File the attributes",
+      "kind": "logger",
+      "message": "Failed: Update Document Metadata Value",
+      "next": "review"
+    },
+    {
+      "id": "finish",
+      "name": "Finish",
+      "kind": "finish"
+    }
+  ]
+}

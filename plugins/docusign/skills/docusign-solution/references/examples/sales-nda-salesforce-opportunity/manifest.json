@@ -1,0 +1,13 @@
+{
+  "id": "sales-nda-salesforce-opportunity",
+  "name": "Mutual NDA from a Salesforce Opportunity",
+  "description": "Started from the Opportunity (Start with Docusign): the NDA is filled from the Opportunity's Account, the customer's signer signs, then the rep; when it completes, the Opportunity's NDA Status field is set to Signed. The signed NDA is filed on the Opportunity as one PDF with the Certificate of Completion.",
+  "workflows": [
+    "opportunity-mutual-nda"
+  ],
+  "prerequisites": [
+    "The Opportunity has a custom text or picklist field NDA_Status__c that accepts \"Signed\".",
+    "The Opportunity has its signer as its contact role: the workflow reads the first contact role Salesforce returns (one contact role per Opportunity keeps it exact)."
+  ],
+  "gaps": []
+}

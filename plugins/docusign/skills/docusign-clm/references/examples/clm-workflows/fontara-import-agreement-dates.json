@@ -1,0 +1,397 @@
+{
+  "id": "fontara-import-agreement-dates",
+  "name": "Import agreement dates",
+  "description": "Migration of the agreement register's dates into CLM's agreement attributes (standalone CLM sites, where CLM is the system of record). Started once per executed document by the agreements webapp's CLM load through the public API (POST /v2/{account}/workflows) with Params read from the register: the run is named 'Import dates - <file>', Find Party links the counterparty when the site has it as a party, the document is checked out while Edit CLM Agreement Attributes sets the agreement type, effective and expiration dates, value and the renewal term (months) and the renewal notice (days) as both Renewal Notice Period and Termination Notice: CLM keeps the Renewal Term only with a Termination Notice, and computes the Termination Notice Date the 'Agreements Approaching Renewal' report lists, then the check-out is cancelled (no new version). CLM Agreement Details is a system attribute group: the REST API cannot write it, this step can. A document that cannot be checked out (one out for signature is checked out by the system) still gets the attributes, without the check-out (FON-OF-0302 on Fontara, 2026-11-21). Since 2026-11-21 (clm-missing-attributes) it also sets Payment Duration (days) and CLM's Yes/No clause fields (Payment Terms, Payment Late Fees, Limitation of Liability, Indemnity, Assignable, Termination Cause, Termination Convenience) from the document's own text: one decision per clause field after the dates (a value left empty keeps what the document has; an Edit CLM Agreement Attributes step that sets some fields keeps the others, Test 4 lab run c7a2cc05).",
+  "paramsSchema": "<Params><Documents><Document><Id/><Name/></Document></Documents><FileName/><PartyName/><DocumentType/><EffectiveDate/><ExpirationDate/><Value/><RenewalTermCount/><RenewalNoticeCount/><PaymentDurationCount/><PaymentTerms/><PaymentLateFees/><LimitationOfLiability/><Indemnity/><Assignable/><TerminationCause/><TerminationConvenience/></Params>",
+  "variables": [
+    {
+      "name": "Party",
+      "type": "xml",
+      "schema": "<Parties><CLMPartyData><CLMPartyId/><ExternalId/><Name/><BusinessContactName/><BusinessType/><Source/></CLMPartyData></Parties>"
+    }
+  ],
+  "steps": [
+    {
+      "id": "name",
+      "name": "Name the run",
+      "kind": "setWorkflowProcessName",
+      "processName": "Import dates - <%#XmlVariables.Params.FileName%>",
+      "on": {
+        "success": "party",
+        "failure": "failName"
+      }
+    },
+    {
+      "id": "party",
+      "name": "Find the party",
+      "kind": "findParty",
+      "partyName": "<%#XmlVariables.Params.PartyName%>",
+      "output": "Party",
+      "on": {
+        "match": "lock",
+        "noMatch": "lock",
+        "failure": "lock"
+      }
+    },
+    {
+      "id": "lock",
+      "name": "Check out",
+      "kind": "checkOutDocument",
+      "user": "submitter",
+      "on": {
+        "success": "attributes",
+        "failure": "attributesLocked"
+      }
+    },
+    {
+      "id": "attributes",
+      "name": "Set the agreement dates",
+      "kind": "editClmAgreementAttributes",
+      "set": {
+        "partyId": "<%#XmlVariables.Party.Parties.CLMPartyData.CLMPartyId%>",
+        "documentType": "<%#XmlVariables.Params.DocumentType%>",
+        "effectiveDate": "<%#XmlVariables.Params.EffectiveDate%>",
+        "expirationDate": "<%#XmlVariables.Params.ExpirationDate%>",
+        "totalContractValue": "<%#XmlVariables.Params.Value%>",
+        "renewalTermCount": "<%#XmlVariables.Params.RenewalTermCount%>",
+        "renewalTermUnit": "Months",
+        "renewalNoticePeriodCount": "<%#XmlVariables.Params.RenewalNoticeCount%>",
+        "renewalNoticePeriodUnit": "Days",
+        "noticePeriodCount": "<%#XmlVariables.Params.RenewalNoticeCount%>",
+        "noticePeriodUnit": "Days",
+        "paymentDurationCount": "<%#XmlVariables.Params.PaymentDurationCount%>",
+        "paymentDurationUnit": "Days"
+      },
+      "on": {
+        "success": "unlock",
+        "failure": "failAttributes"
+      }
+    },
+    {
+      "id": "attributesLocked",
+      "name": "Set the agreement dates (already checked out)",
+      "kind": "editClmAgreementAttributes",
+      "set": {
+        "partyId": "<%#XmlVariables.Party.Parties.CLMPartyData.CLMPartyId%>",
+        "documentType": "<%#XmlVariables.Params.DocumentType%>",
+        "effectiveDate": "<%#XmlVariables.Params.EffectiveDate%>",
+        "expirationDate": "<%#XmlVariables.Params.ExpirationDate%>",
+        "totalContractValue": "<%#XmlVariables.Params.Value%>",
+        "renewalTermCount": "<%#XmlVariables.Params.RenewalTermCount%>",
+        "renewalTermUnit": "Months",
+        "renewalNoticePeriodCount": "<%#XmlVariables.Params.RenewalNoticeCount%>",
+        "renewalNoticePeriodUnit": "Days",
+        "noticePeriodCount": "<%#XmlVariables.Params.RenewalNoticeCount%>",
+        "noticePeriodUnit": "Days",
+        "paymentDurationCount": "<%#XmlVariables.Params.PaymentDurationCount%>",
+        "paymentDurationUnit": "Days"
+      },
+      "on": {
+        "success": "clause1",
+        "failure": "failLocked"
+      }
+    },
+    {
+      "id": "unlock",
+      "name": "Cancel the check out",
+      "kind": "checkOutDocumentCancellation",
+      "user": "submitter",
+      "on": {
+        "success": "clause1",
+        "failure": "failUnlock"
+      }
+    },
+    {
+      "id": "clause1",
+      "name": "Payment Terms stated?",
+      "kind": "decision",
+      "branches": [
+        {
+          "label": "Yes",
+          "when": {
+            "var": "Params.PaymentTerms",
+            "op": "equals",
+            "value": "Yes"
+          },
+          "to": "paymentTermsYes"
+        }
+      ],
+      "else": {
+        "label": "Not stated",
+        "to": "clause2"
+      }
+    },
+    {
+      "id": "paymentTermsYes",
+      "name": "Payment Terms: Yes",
+      "kind": "editClmAgreementAttributes",
+      "set": {
+        "paymentTerms": "Yes"
+      },
+      "on": {
+        "success": "clause2",
+        "failure": "failClauses"
+      }
+    },
+    {
+      "id": "clause2",
+      "name": "Payment Late Fees stated?",
+      "kind": "decision",
+      "branches": [
+        {
+          "label": "Yes",
+          "when": {
+            "var": "Params.PaymentLateFees",
+            "op": "equals",
+            "value": "Yes"
+          },
+          "to": "paymentLateFeesYes"
+        }
+      ],
+      "else": {
+        "label": "Not stated",
+        "to": "clause3"
+      }
+    },
+    {
+      "id": "paymentLateFeesYes",
+      "name": "Payment Late Fees: Yes",
+      "kind": "editClmAgreementAttributes",
+      "set": {
+        "paymentLateFees": "Yes"
+      },
+      "on": {
+        "success": "clause3",
+        "failure": "failClauses"
+      }
+    },
+    {
+      "id": "clause3",
+      "name": "Limitation of Liability stated?",
+      "kind": "decision",
+      "branches": [
+        {
+          "label": "Yes",
+          "when": {
+            "var": "Params.LimitationOfLiability",
+            "op": "equals",
+            "value": "Yes"
+          },
+          "to": "limitationOfLiabilityYes"
+        }
+      ],
+      "else": {
+        "label": "Not stated",
+        "to": "clause4"
+      }
+    },
+    {
+      "id": "limitationOfLiabilityYes",
+      "name": "Limitation of Liability: Yes",
+      "kind": "editClmAgreementAttributes",
+      "set": {
+        "limitationOfLiability": "Yes"
+      },
+      "on": {
+        "success": "clause4",
+        "failure": "failClauses"
+      }
+    },
+    {
+      "id": "clause4",
+      "name": "Indemnity stated?",
+      "kind": "decision",
+      "branches": [
+        {
+          "label": "Yes",
+          "when": {
+            "var": "Params.Indemnity",
+            "op": "equals",
+            "value": "Yes"
+          },
+          "to": "indemnityYes"
+        }
+      ],
+      "else": {
+        "label": "Not stated",
+        "to": "clause5"
+      }
+    },
+    {
+      "id": "indemnityYes",
+      "name": "Indemnity: Yes",
+      "kind": "editClmAgreementAttributes",
+      "set": {
+        "indemnity": "Yes"
+      },
+      "on": {
+        "success": "clause5",
+        "failure": "failClauses"
+      }
+    },
+    {
+      "id": "clause5",
+      "name": "Assignable stated?",
+      "kind": "decision",
+      "branches": [
+        {
+          "label": "Yes",
+          "when": {
+            "var": "Params.Assignable",
+            "op": "equals",
+            "value": "Yes"
+          },
+          "to": "assignableYes"
+        },
+        {
+          "label": "No",
+          "when": {
+            "var": "Params.Assignable",
+            "op": "equals",
+            "value": "No"
+          },
+          "to": "assignableNo"
+        }
+      ],
+      "else": {
+        "label": "Not stated",
+        "to": "clause6"
+      }
+    },
+    {
+      "id": "assignableYes",
+      "name": "Assignable: Yes",
+      "kind": "editClmAgreementAttributes",
+      "set": {
+        "assignable": "Yes"
+      },
+      "on": {
+        "success": "clause6",
+        "failure": "failClauses"
+      }
+    },
+    {
+      "id": "assignableNo",
+      "name": "Assignable: No",
+      "kind": "editClmAgreementAttributes",
+      "set": {
+        "assignable": "No"
+      },
+      "on": {
+        "success": "clause6",
+        "failure": "failClauses"
+      }
+    },
+    {
+      "id": "clause6",
+      "name": "Termination Cause stated?",
+      "kind": "decision",
+      "branches": [
+        {
+          "label": "Yes",
+          "when": {
+            "var": "Params.TerminationCause",
+            "op": "equals",
+            "value": "Yes"
+          },
+          "to": "terminationCauseYes"
+        }
+      ],
+      "else": {
+        "label": "Not stated",
+        "to": "clause7"
+      }
+    },
+    {
+      "id": "terminationCauseYes",
+      "name": "Termination Cause: Yes",
+      "kind": "editClmAgreementAttributes",
+      "set": {
+        "terminationCause": "Yes"
+      },
+      "on": {
+        "success": "clause7",
+        "failure": "failClauses"
+      }
+    },
+    {
+      "id": "clause7",
+      "name": "Termination Convenience stated?",
+      "kind": "decision",
+      "branches": [
+        {
+          "label": "Yes",
+          "when": {
+            "var": "Params.TerminationConvenience",
+            "op": "equals",
+            "value": "Yes"
+          },
+          "to": "terminationConvenienceYes"
+        }
+      ],
+      "else": {
+        "label": "Not stated",
+        "to": "log"
+      }
+    },
+    {
+      "id": "terminationConvenienceYes",
+      "name": "Termination Convenience: Yes",
+      "kind": "editClmAgreementAttributes",
+      "set": {
+        "terminationConvenience": "Yes"
+      },
+      "on": {
+        "success": "log",
+        "failure": "failClauses"
+      }
+    },
+    {
+      "id": "failClauses",
+      "name": "Failed: Edit CLM Agreement Attributes (clause fields)",
+      "kind": "logger",
+      "message": "Failed: Edit CLM Agreement Attributes (clause fields)",
+      "next": "finish"
+    },
+    {
+      "id": "log",
+      "name": "Log the import",
+      "kind": "logger",
+      "message": "Imported the agreement dates of <%#XmlVariables.Params.FileName%>",
+      "next": "finish"
+    },
+    {
+      "id": "failName",
+      "name": "Failed: Set Workflow Process Name",
+      "kind": "logger",
+      "message": "Failed: Set Workflow Process Name",
+      "next": "finish"
+    },
+    {
+      "id": "failAttributes",
+      "name": "Failed: Edit CLM Agreement Attributes",
+      "kind": "logger",
+      "message": "Failed: Edit CLM Agreement Attributes",
+      "next": "unlock"
+    },
+    {
+      "id": "failLocked",
+      "name": "Failed: Edit CLM Agreement Attributes (checked out)",
+      "kind": "logger",
+      "message": "Failed: Edit CLM Agreement Attributes on a document that is already checked out",
+      "next": "finish"
+    },
+    {
+      "id": "failUnlock",
+      "name": "Failed: Check Out Document Cancellation",
+      "kind": "logger",
+      "message": "Failed: Check Out Document Cancellation",
+      "next": "finish"
+    },
+    {
+      "id": "finish",
+      "name": "Finish",
+      "kind": "finish"
+    }
+  ]
+}

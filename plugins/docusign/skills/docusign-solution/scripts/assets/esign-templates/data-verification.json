@@ -1,0 +1,1400 @@
+{
+ "$comment": "Data Verification field groups as the eSignature editor saves them (b10-live's harvest B10-6, 2026-11-04, the lab account: Add Fields ▸ Standard Fields ▸ Address (DV), Smarty). Per tab: the REST tab without its placement, ids and extensionGroupId (a fresh id per placed group). The applicationId is the account's installed Smarty app. A phone group needs a phone verification app, which the lab account does not have.",
+ "postalAddress": {
+  "street1": {
+   "tabs": "textTabs",
+   "label": "Address Line 1",
+   "tab": {
+    "validationPattern": "",
+    "validationMessage": "",
+    "requireInitialOnSharedChange": "false",
+    "requireAll": "false",
+    "name": "Address Line 1",
+    "value": "",
+    "required": "true",
+    "locked": "false",
+    "concealValueOnDocument": "false",
+    "disableAutoSize": "false",
+    "maxLength": "4000",
+    "tabLabel": "com.docusign.extensibilityplatform.action.verify.postaladdress@1.0.0.VerifyPostalAddressInput[0].street1",
+    "font": "arial",
+    "fontColor": "black",
+    "fontSize": "size9",
+    "localePolicy": {},
+    "mergeFieldXml": "<root><admv2><json>{\"admBindings\":[{\"fqn\":\"com.docusign.extensibilityplatform.action.verify.postaladdress@1.0.0.VerifyPostalAddressInput\",\"path\":\"$.street1\",\"position\":\"0\"}]}</json></admv2><prepareAdmSettings><json>{\"folder\":\"VerifyPostalAddressInput\",\"folderProperty\":\"Address Line 1\",\"initialValue\":\"street1\",\"name\":\"Address Line 1\",\"legacyPath\":\"$.VerifyPostalAddressInput[0].street1\",\"required\":true,\"type\":\"martiniDataTabs\",\"collectionItems\":{\"0\":\"VerifyPostalAddressInput 1\"},\"modelType\":\"data-verification\",\"namespace\":\"com.docusign.extensibilityplatform.action.verify.postaladdress@1.0.0\"}</json></prepareAdmSettings><suggestedFieldId><json>{}</json></suggestedFieldId><location><json>{}</json></location></root>",
+    "tabType": "text",
+    "tooltip": "Address Line 1",
+    "extensionData": {
+     "publisherName": "Docusign",
+     "applicationId": "04bfc1ae-1ba0-42d0-8c02-264417a7b234",
+     "applicationName": "Smarty",
+     "actionName": "postal-address-verify",
+     "actionContract": "Contracts.Actions.Verify.Version1.PostalAddress",
+     "extensionName": "verify-postal-address",
+     "extensionContract": "Contracts.Extensions.Verify.Version2.PostalAddress",
+     "requiredForExtension": true,
+     "actionInputKey": "street1",
+     "extensionPolicy": "None",
+     "connectionInstances": []
+    },
+    "agreementAttributeLocked": "false"
+   }
+  },
+  "locality": {
+   "tabs": "textTabs",
+   "label": "City",
+   "tab": {
+    "validationPattern": "",
+    "validationMessage": "",
+    "shared": "false",
+    "requireInitialOnSharedChange": "false",
+    "requireAll": "false",
+    "name": "City",
+    "value": "",
+    "required": "true",
+    "locked": "false",
+    "concealValueOnDocument": "false",
+    "disableAutoSize": "false",
+    "maxLength": "4000",
+    "tabLabel": "com.docusign.extensibilityplatform.action.verify.postaladdress@1.0.0.VerifyPostalAddressInput[0].locality",
+    "font": "arial",
+    "fontColor": "black",
+    "fontSize": "size9",
+    "localePolicy": {},
+    "mergeFieldXml": "<root><admv2><json>{\"admBindings\":[{\"fqn\":\"com.docusign.extensibilityplatform.action.verify.postaladdress@1.0.0.VerifyPostalAddressInput\",\"path\":\"$.locality\",\"position\":\"0\"}]}</json></admv2><prepareAdmSettings><json>{\"folder\":\"VerifyPostalAddressInput\",\"folderProperty\":\"City\",\"initialValue\":\"locality\",\"name\":\"City\",\"legacyPath\":\"$.VerifyPostalAddressInput[0].locality\",\"required\":true,\"type\":\"martiniDataTabs\",\"collectionItems\":{\"0\":\"VerifyPostalAddressInput 1\"},\"modelType\":\"data-verification\",\"namespace\":\"com.docusign.extensibilityplatform.action.verify.postaladdress@1.0.0\"}</json></prepareAdmSettings><suggestedFieldId><json>{}</json></suggestedFieldId><location><json>{}</json></location></root>",
+    "tabType": "text",
+    "tooltip": "City",
+    "extensionData": {
+     "publisherName": "Docusign",
+     "applicationId": "04bfc1ae-1ba0-42d0-8c02-264417a7b234",
+     "applicationName": "Smarty",
+     "actionName": "postal-address-verify",
+     "actionContract": "Contracts.Actions.Verify.Version1.PostalAddress",
+     "extensionName": "verify-postal-address",
+     "extensionContract": "Contracts.Extensions.Verify.Version2.PostalAddress",
+     "requiredForExtension": true,
+     "actionInputKey": "locality",
+     "extensionPolicy": "None",
+     "connectionInstances": []
+    },
+    "agreementAttributeLocked": "false"
+   }
+  },
+  "subdivision": {
+   "tabs": "textTabs",
+   "label": "State",
+   "tab": {
+    "validationPattern": "",
+    "validationMessage": "",
+    "shared": "false",
+    "requireInitialOnSharedChange": "false",
+    "requireAll": "false",
+    "name": "State",
+    "value": "",
+    "required": "true",
+    "locked": "false",
+    "concealValueOnDocument": "false",
+    "disableAutoSize": "false",
+    "maxLength": "4000",
+    "tabLabel": "com.docusign.extensibilityplatform.action.verify.postaladdress@1.0.0.VerifyPostalAddressInput[0].subdivision",
+    "font": "arial",
+    "fontColor": "black",
+    "fontSize": "size9",
+    "localePolicy": {},
+    "mergeFieldXml": "<root><admv2><json>{\"admBindings\":[{\"fqn\":\"com.docusign.extensibilityplatform.action.verify.postaladdress@1.0.0.VerifyPostalAddressInput\",\"path\":\"$.subdivision\",\"position\":\"0\"}]}</json></admv2><prepareAdmSettings><json>{\"folder\":\"VerifyPostalAddressInput\",\"folderProperty\":\"State\",\"initialValue\":\"subdivision\",\"name\":\"State\",\"legacyPath\":\"$.VerifyPostalAddressInput[0].subdivision\",\"required\":true,\"type\":\"martiniDataTabs\",\"collectionItems\":{\"0\":\"VerifyPostalAddressInput 1\"},\"modelType\":\"data-verification\",\"namespace\":\"com.docusign.extensibilityplatform.action.verify.postaladdress@1.0.0\"}</json></prepareAdmSettings><suggestedFieldId><json>{}</json></suggestedFieldId><location><json>{}</json></location></root>",
+    "tabType": "text",
+    "tooltip": "State",
+    "extensionData": {
+     "publisherName": "Docusign",
+     "applicationId": "04bfc1ae-1ba0-42d0-8c02-264417a7b234",
+     "applicationName": "Smarty",
+     "actionName": "postal-address-verify",
+     "actionContract": "Contracts.Actions.Verify.Version1.PostalAddress",
+     "extensionName": "verify-postal-address",
+     "extensionContract": "Contracts.Extensions.Verify.Version2.PostalAddress",
+     "requiredForExtension": true,
+     "actionInputKey": "subdivision",
+     "extensionPolicy": "None",
+     "connectionInstances": []
+    },
+    "agreementAttributeLocked": "false"
+   }
+  },
+  "postalCode": {
+   "tabs": "textTabs",
+   "label": "Zip Code",
+   "tab": {
+    "validationPattern": "",
+    "validationMessage": "",
+    "shared": "false",
+    "requireInitialOnSharedChange": "false",
+    "requireAll": "false",
+    "name": "Zip Code",
+    "value": "",
+    "required": "true",
+    "locked": "false",
+    "concealValueOnDocument": "false",
+    "disableAutoSize": "false",
+    "maxLength": "4000",
+    "tabLabel": "com.docusign.extensibilityplatform.action.verify.postaladdress@1.0.0.VerifyPostalAddressInput[0].postalCode",
+    "font": "arial",
+    "fontColor": "black",
+    "fontSize": "size9",
+    "localePolicy": {},
+    "mergeFieldXml": "<root><admv2><json>{\"admBindings\":[{\"fqn\":\"com.docusign.extensibilityplatform.action.verify.postaladdress@1.0.0.VerifyPostalAddressInput\",\"path\":\"$.postalCode\",\"position\":\"0\"}]}</json></admv2><prepareAdmSettings><json>{\"folder\":\"VerifyPostalAddressInput\",\"folderProperty\":\"Zip Code\",\"initialValue\":\"postalCode\",\"name\":\"Zip Code\",\"legacyPath\":\"$.VerifyPostalAddressInput[0].postalCode\",\"required\":true,\"type\":\"martiniDataTabs\",\"collectionItems\":{\"0\":\"VerifyPostalAddressInput 1\"},\"modelType\":\"data-verification\",\"namespace\":\"com.docusign.extensibilityplatform.action.verify.postaladdress@1.0.0\"}</json></prepareAdmSettings><suggestedFieldId><json>{}</json></suggestedFieldId><location><json>{}</json></location></root>",
+    "tabType": "text",
+    "tooltip": "Zip Code",
+    "extensionData": {
+     "publisherName": "Docusign",
+     "applicationId": "04bfc1ae-1ba0-42d0-8c02-264417a7b234",
+     "applicationName": "Smarty",
+     "actionName": "postal-address-verify",
+     "actionContract": "Contracts.Actions.Verify.Version1.PostalAddress",
+     "extensionName": "verify-postal-address",
+     "extensionContract": "Contracts.Extensions.Verify.Version2.PostalAddress",
+     "requiredForExtension": true,
+     "actionInputKey": "postalCode",
+     "extensionPolicy": "None",
+     "connectionInstances": []
+    },
+    "agreementAttributeLocked": "false"
+   }
+  },
+  "countryOrRegion": {
+   "tabs": "listTabs",
+   "label": "Country or Region",
+   "tab": {
+    "listItems": [
+     {
+      "text": "United States",
+      "value": "USA",
+      "selected": "false"
+     },
+     {
+      "text": "Afghanistan",
+      "value": "AFG",
+      "selected": "false"
+     },
+     {
+      "text": "Åland Islands",
+      "value": "ALA",
+      "selected": "false"
+     },
+     {
+      "text": "Albania",
+      "value": "ALB",
+      "selected": "false"
+     },
+     {
+      "text": "Algeria",
+      "value": "DZA",
+      "selected": "false"
+     },
+     {
+      "text": "Andorra",
+      "value": "AND",
+      "selected": "false"
+     },
+     {
+      "text": "Angola",
+      "value": "AGO",
+      "selected": "false"
+     },
+     {
+      "text": "Anguilla",
+      "value": "AIA",
+      "selected": "false"
+     },
+     {
+      "text": "Antarctica",
+      "value": "ATA",
+      "selected": "false"
+     },
+     {
+      "text": "Antigua and Barbuda",
+      "value": "ATG",
+      "selected": "false"
+     },
+     {
+      "text": "Argentina",
+      "value": "ARG",
+      "selected": "false"
+     },
+     {
+      "text": "Armenia",
+      "value": "ARM",
+      "selected": "false"
+     },
+     {
+      "text": "Aruba",
+      "value": "ABW",
+      "selected": "false"
+     },
+     {
+      "text": "Australia",
+      "value": "AUS",
+      "selected": "false"
+     },
+     {
+      "text": "Austria",
+      "value": "AUT",
+      "selected": "false"
+     },
+     {
+      "text": "Azerbaijan",
+      "value": "AZE",
+      "selected": "false"
+     },
+     {
+      "text": "Bahamas",
+      "value": "BHS",
+      "selected": "false"
+     },
+     {
+      "text": "Bahrain",
+      "value": "BHR",
+      "selected": "false"
+     },
+     {
+      "text": "Bangladesh",
+      "value": "BGD",
+      "selected": "false"
+     },
+     {
+      "text": "Barbados",
+      "value": "BRB",
+      "selected": "false"
+     },
+     {
+      "text": "Belarus",
+      "value": "BLR",
+      "selected": "false"
+     },
+     {
+      "text": "Belgium",
+      "value": "BEL",
+      "selected": "false"
+     },
+     {
+      "text": "Belize",
+      "value": "BLZ",
+      "selected": "false"
+     },
+     {
+      "text": "Benin",
+      "value": "BEN",
+      "selected": "false"
+     },
+     {
+      "text": "Bermuda",
+      "value": "BMU",
+      "selected": "false"
+     },
+     {
+      "text": "Bhutan",
+      "value": "BTN",
+      "selected": "false"
+     },
+     {
+      "text": "Bolivia",
+      "value": "BOL",
+      "selected": "false"
+     },
+     {
+      "text": "Bonaire",
+      "value": "BES",
+      "selected": "false"
+     },
+     {
+      "text": "Bosnia and Herzegovi...",
+      "value": "BIH",
+      "selected": "false"
+     },
+     {
+      "text": "Botswana",
+      "value": "BWA",
+      "selected": "false"
+     },
+     {
+      "text": "Bouvet Island",
+      "value": "BVT",
+      "selected": "false"
+     },
+     {
+      "text": "Brazil",
+      "value": "BRA",
+      "selected": "false"
+     },
+     {
+      "text": "British Indian Ocean...",
+      "value": "IOT",
+      "selected": "false"
+     },
+     {
+      "text": "Brunei Darussalam",
+      "value": "BRN",
+      "selected": "false"
+     },
+     {
+      "text": "Bulgaria",
+      "value": "BGR",
+      "selected": "false"
+     },
+     {
+      "text": "Burkina Faso",
+      "value": "BFA",
+      "selected": "false"
+     },
+     {
+      "text": "Burundi",
+      "value": "BDI",
+      "selected": "false"
+     },
+     {
+      "text": "Cambodia",
+      "value": "KHM",
+      "selected": "false"
+     },
+     {
+      "text": "Cameroon",
+      "value": "CMR",
+      "selected": "false"
+     },
+     {
+      "text": "Canada",
+      "value": "CAN",
+      "selected": "false"
+     },
+     {
+      "text": "Cape Verde",
+      "value": "CPV",
+      "selected": "false"
+     },
+     {
+      "text": "Cayman Islands",
+      "value": "CYM",
+      "selected": "false"
+     },
+     {
+      "text": "Central African Repu...",
+      "value": "CAF",
+      "selected": "false"
+     },
+     {
+      "text": "Chad",
+      "value": "TCD",
+      "selected": "false"
+     },
+     {
+      "text": "Chile",
+      "value": "CHL",
+      "selected": "false"
+     },
+     {
+      "text": "China",
+      "value": "CHN",
+      "selected": "false"
+     },
+     {
+      "text": "Christmas Island",
+      "value": "CXR",
+      "selected": "false"
+     },
+     {
+      "text": "Cocos (Keeling) Isla...",
+      "value": "CCK",
+      "selected": "false"
+     },
+     {
+      "text": "Colombia",
+      "value": "COL",
+      "selected": "false"
+     },
+     {
+      "text": "Comoros",
+      "value": "COM",
+      "selected": "false"
+     },
+     {
+      "text": "Congo",
+      "value": "COG",
+      "selected": "false"
+     },
+     {
+      "text": "Congo, The Democrati...",
+      "value": "COD",
+      "selected": "false"
+     },
+     {
+      "text": "Cook Islands",
+      "value": "COK",
+      "selected": "false"
+     },
+     {
+      "text": "Costa Rica",
+      "value": "CRI",
+      "selected": "false"
+     },
+     {
+      "text": "Croatia",
+      "value": "HRV",
+      "selected": "false"
+     },
+     {
+      "text": "Cuba",
+      "value": "CUB",
+      "selected": "false"
+     },
+     {
+      "text": "Curaçao",
+      "value": "CUW",
+      "selected": "false"
+     },
+     {
+      "text": "Cyprus",
+      "value": "CYP",
+      "selected": "false"
+     },
+     {
+      "text": "Czech Republic",
+      "value": "CZE",
+      "selected": "false"
+     },
+     {
+      "text": "Côte d’Ivoire",
+      "value": "CIV",
+      "selected": "false"
+     },
+     {
+      "text": "Denmark",
+      "value": "DNK",
+      "selected": "false"
+     },
+     {
+      "text": "Djibouti",
+      "value": "DJI",
+      "selected": "false"
+     },
+     {
+      "text": "Dominica",
+      "value": "DMA",
+      "selected": "false"
+     },
+     {
+      "text": "Dominican Republic",
+      "value": "DOM",
+      "selected": "false"
+     },
+     {
+      "text": "Ecuador",
+      "value": "ECU",
+      "selected": "false"
+     },
+     {
+      "text": "Egypt",
+      "value": "EGY",
+      "selected": "false"
+     },
+     {
+      "text": "El Salvador",
+      "value": "SLV",
+      "selected": "false"
+     },
+     {
+      "text": "Equatorial Guinea",
+      "value": "GNQ",
+      "selected": "false"
+     },
+     {
+      "text": "Eritrea",
+      "value": "ERI",
+      "selected": "false"
+     },
+     {
+      "text": "Estonia",
+      "value": "EST",
+      "selected": "false"
+     },
+     {
+      "text": "Eswatini",
+      "value": "SWZ",
+      "selected": "false"
+     },
+     {
+      "text": "Ethiopia",
+      "value": "ETH",
+      "selected": "false"
+     },
+     {
+      "text": "Falkland Islands (Ma...",
+      "value": "FLK",
+      "selected": "false"
+     },
+     {
+      "text": "Faroe Islands",
+      "value": "FRO",
+      "selected": "false"
+     },
+     {
+      "text": "Fiji",
+      "value": "FJI",
+      "selected": "false"
+     },
+     {
+      "text": "Finland",
+      "value": "FIN",
+      "selected": "false"
+     },
+     {
+      "text": "France",
+      "value": "FRA",
+      "selected": "false"
+     },
+     {
+      "text": "French Guiana",
+      "value": "GUF",
+      "selected": "false"
+     },
+     {
+      "text": "French Polynesia",
+      "value": "PYF",
+      "selected": "false"
+     },
+     {
+      "text": "French Southern Terr...",
+      "value": "ATF",
+      "selected": "false"
+     },
+     {
+      "text": "Gabon",
+      "value": "GAB",
+      "selected": "false"
+     },
+     {
+      "text": "Gambia",
+      "value": "GMB",
+      "selected": "false"
+     },
+     {
+      "text": "Georgia",
+      "value": "GEO",
+      "selected": "false"
+     },
+     {
+      "text": "Germany",
+      "value": "DEU",
+      "selected": "false"
+     },
+     {
+      "text": "Ghana",
+      "value": "GHA",
+      "selected": "false"
+     },
+     {
+      "text": "Gibraltar",
+      "value": "GIB",
+      "selected": "false"
+     },
+     {
+      "text": "Greece",
+      "value": "GRC",
+      "selected": "false"
+     },
+     {
+      "text": "Greenland",
+      "value": "GRL",
+      "selected": "false"
+     },
+     {
+      "text": "Grenada",
+      "value": "GRD",
+      "selected": "false"
+     },
+     {
+      "text": "Guadeloupe",
+      "value": "GLP",
+      "selected": "false"
+     },
+     {
+      "text": "Guatemala",
+      "value": "GTM",
+      "selected": "false"
+     },
+     {
+      "text": "Guernsey",
+      "value": "GGY",
+      "selected": "false"
+     },
+     {
+      "text": "Guinea",
+      "value": "GIN",
+      "selected": "false"
+     },
+     {
+      "text": "Guinea-Bissau",
+      "value": "GNB",
+      "selected": "false"
+     },
+     {
+      "text": "Guyana",
+      "value": "GUY",
+      "selected": "false"
+     },
+     {
+      "text": "Haiti",
+      "value": "HTI",
+      "selected": "false"
+     },
+     {
+      "text": "Heard Island and McD...",
+      "value": "HMD",
+      "selected": "false"
+     },
+     {
+      "text": "Holy See (Vatican Ci...",
+      "value": "VAT",
+      "selected": "false"
+     },
+     {
+      "text": "Honduras",
+      "value": "HND",
+      "selected": "false"
+     },
+     {
+      "text": "Hong Kong",
+      "value": "HKG",
+      "selected": "false"
+     },
+     {
+      "text": "Hungary",
+      "value": "HUN",
+      "selected": "false"
+     },
+     {
+      "text": "Iceland",
+      "value": "ISL",
+      "selected": "false"
+     },
+     {
+      "text": "India",
+      "value": "IND",
+      "selected": "false"
+     },
+     {
+      "text": "Indonesia",
+      "value": "IDN",
+      "selected": "false"
+     },
+     {
+      "text": "Iran, Islamic Republ...",
+      "value": "IRN",
+      "selected": "false"
+     },
+     {
+      "text": "Iraq",
+      "value": "IRQ",
+      "selected": "false"
+     },
+     {
+      "text": "Ireland",
+      "value": "IRL",
+      "selected": "false"
+     },
+     {
+      "text": "Isle of Man",
+      "value": "IMN",
+      "selected": "false"
+     },
+     {
+      "text": "Israel",
+      "value": "ISR",
+      "selected": "false"
+     },
+     {
+      "text": "Italy",
+      "value": "ITA",
+      "selected": "false"
+     },
+     {
+      "text": "Jamaica",
+      "value": "JAM",
+      "selected": "false"
+     },
+     {
+      "text": "Japan",
+      "value": "JPN",
+      "selected": "false"
+     },
+     {
+      "text": "Jersey",
+      "value": "JEY",
+      "selected": "false"
+     },
+     {
+      "text": "Jordan",
+      "value": "JOR",
+      "selected": "false"
+     },
+     {
+      "text": "Kazakhstan",
+      "value": "KAZ",
+      "selected": "false"
+     },
+     {
+      "text": "Kenya",
+      "value": "KEN",
+      "selected": "false"
+     },
+     {
+      "text": "Kiribati",
+      "value": "KIR",
+      "selected": "false"
+     },
+     {
+      "text": "Korea, Democratic Pe...",
+      "value": "PRK",
+      "selected": "false"
+     },
+     {
+      "text": "Korea, Republic of",
+      "value": "KOR",
+      "selected": "false"
+     },
+     {
+      "text": "Kuwait",
+      "value": "KWT",
+      "selected": "false"
+     },
+     {
+      "text": "Kyrgyzstan",
+      "value": "KGZ",
+      "selected": "false"
+     },
+     {
+      "text": "Lao People’s Democra...",
+      "value": "LAO",
+      "selected": "false"
+     },
+     {
+      "text": "Latvia",
+      "value": "LVA",
+      "selected": "false"
+     },
+     {
+      "text": "Lebanon",
+      "value": "LBN",
+      "selected": "false"
+     },
+     {
+      "text": "Lesotho",
+      "value": "LSO",
+      "selected": "false"
+     },
+     {
+      "text": "Liberia",
+      "value": "LBR",
+      "selected": "false"
+     },
+     {
+      "text": "Libya",
+      "value": "LBY",
+      "selected": "false"
+     },
+     {
+      "text": "Liechtenstein",
+      "value": "LIE",
+      "selected": "false"
+     },
+     {
+      "text": "Lithuania",
+      "value": "LTU",
+      "selected": "false"
+     },
+     {
+      "text": "Luxembourg",
+      "value": "LUX",
+      "selected": "false"
+     },
+     {
+      "text": "Macao",
+      "value": "MAC",
+      "selected": "false"
+     },
+     {
+      "text": "North Macedonia",
+      "value": "MKD",
+      "selected": "false"
+     },
+     {
+      "text": "Madagascar",
+      "value": "MDG",
+      "selected": "false"
+     },
+     {
+      "text": "Malawi",
+      "value": "MWI",
+      "selected": "false"
+     },
+     {
+      "text": "Malaysia",
+      "value": "MYS",
+      "selected": "false"
+     },
+     {
+      "text": "Maldives",
+      "value": "MDV",
+      "selected": "false"
+     },
+     {
+      "text": "Mali",
+      "value": "MLI",
+      "selected": "false"
+     },
+     {
+      "text": "Malta",
+      "value": "MLT",
+      "selected": "false"
+     },
+     {
+      "text": "Martinique",
+      "value": "MTQ",
+      "selected": "false"
+     },
+     {
+      "text": "Mauritania",
+      "value": "MRT",
+      "selected": "false"
+     },
+     {
+      "text": "Mauritius",
+      "value": "MUS",
+      "selected": "false"
+     },
+     {
+      "text": "Mayotte",
+      "value": "MYT",
+      "selected": "false"
+     },
+     {
+      "text": "Mexico",
+      "value": "MEX",
+      "selected": "false"
+     },
+     {
+      "text": "Moldova, Republic of",
+      "value": "MDA",
+      "selected": "false"
+     },
+     {
+      "text": "Monaco",
+      "value": "MCO",
+      "selected": "false"
+     },
+     {
+      "text": "Mongolia",
+      "value": "MNG",
+      "selected": "false"
+     },
+     {
+      "text": "Montenegro",
+      "value": "MNE",
+      "selected": "false"
+     },
+     {
+      "text": "Montserrat",
+      "value": "MSR",
+      "selected": "false"
+     },
+     {
+      "text": "Morocco",
+      "value": "MAR",
+      "selected": "false"
+     },
+     {
+      "text": "Mozambique",
+      "value": "MOZ",
+      "selected": "false"
+     },
+     {
+      "text": "Myanmar",
+      "value": "MMR",
+      "selected": "false"
+     },
+     {
+      "text": "Namibia",
+      "value": "NAM",
+      "selected": "false"
+     },
+     {
+      "text": "Nauru",
+      "value": "NRU",
+      "selected": "false"
+     },
+     {
+      "text": "Nepal",
+      "value": "NPL",
+      "selected": "false"
+     },
+     {
+      "text": "Netherlands",
+      "value": "NLD",
+      "selected": "false"
+     },
+     {
+      "text": "New Caledonia",
+      "value": "NCL",
+      "selected": "false"
+     },
+     {
+      "text": "New Zealand",
+      "value": "NZL",
+      "selected": "false"
+     },
+     {
+      "text": "Nicaragua",
+      "value": "NIC",
+      "selected": "false"
+     },
+     {
+      "text": "Niger",
+      "value": "NER",
+      "selected": "false"
+     },
+     {
+      "text": "Nigeria",
+      "value": "NGA",
+      "selected": "false"
+     },
+     {
+      "text": "Niue",
+      "value": "NIU",
+      "selected": "false"
+     },
+     {
+      "text": "Norfolk Island",
+      "value": "NFK",
+      "selected": "false"
+     },
+     {
+      "text": "Norway",
+      "value": "NOR",
+      "selected": "false"
+     },
+     {
+      "text": "Oman",
+      "value": "OMN",
+      "selected": "false"
+     },
+     {
+      "text": "Pakistan",
+      "value": "PAK",
+      "selected": "false"
+     },
+     {
+      "text": "Palestine, State of",
+      "value": "PSE",
+      "selected": "false"
+     },
+     {
+      "text": "Panama",
+      "value": "PAN",
+      "selected": "false"
+     },
+     {
+      "text": "Papua New Guinea",
+      "value": "PNG",
+      "selected": "false"
+     },
+     {
+      "text": "Paraguay",
+      "value": "PRY",
+      "selected": "false"
+     },
+     {
+      "text": "Peru",
+      "value": "PER",
+      "selected": "false"
+     },
+     {
+      "text": "Philippines",
+      "value": "PHL",
+      "selected": "false"
+     },
+     {
+      "text": "Pitcairn",
+      "value": "PCN",
+      "selected": "false"
+     },
+     {
+      "text": "Poland",
+      "value": "POL",
+      "selected": "false"
+     },
+     {
+      "text": "Portugal",
+      "value": "PRT",
+      "selected": "false"
+     },
+     {
+      "text": "Qatar",
+      "value": "QAT",
+      "selected": "false"
+     },
+     {
+      "text": "Republic of South Su...",
+      "value": "SSD",
+      "selected": "false"
+     },
+     {
+      "text": "Romania",
+      "value": "ROU",
+      "selected": "false"
+     },
+     {
+      "text": "Russian Federation",
+      "value": "RUS",
+      "selected": "false"
+     },
+     {
+      "text": "Rwanda",
+      "value": "RWA",
+      "selected": "false"
+     },
+     {
+      "text": "Réunion",
+      "value": "REU",
+      "selected": "false"
+     },
+     {
+      "text": "Saint Barthélemy",
+      "value": "BLM",
+      "selected": "false"
+     },
+     {
+      "text": "Saint Helena, Ascens...",
+      "value": "SHN",
+      "selected": "false"
+     },
+     {
+      "text": "Saint Kitts and Nevi...",
+      "value": "KNA",
+      "selected": "false"
+     },
+     {
+      "text": "Saint Lucia",
+      "value": "LCA",
+      "selected": "false"
+     },
+     {
+      "text": "Saint Martin (French...",
+      "value": "MAF",
+      "selected": "false"
+     },
+     {
+      "text": "Saint Pierre and Miq...",
+      "value": "SPM",
+      "selected": "false"
+     },
+     {
+      "text": "Saint Vincent and th...",
+      "value": "VCT",
+      "selected": "false"
+     },
+     {
+      "text": "Samoa",
+      "value": "WSM",
+      "selected": "false"
+     },
+     {
+      "text": "San Marino",
+      "value": "SMR",
+      "selected": "false"
+     },
+     {
+      "text": "Sao Tome and Princip...",
+      "value": "STP",
+      "selected": "false"
+     },
+     {
+      "text": "Saudi Arabia",
+      "value": "SAU",
+      "selected": "false"
+     },
+     {
+      "text": "Senegal",
+      "value": "SEN",
+      "selected": "false"
+     },
+     {
+      "text": "Serbia",
+      "value": "SRB",
+      "selected": "false"
+     },
+     {
+      "text": "Seychelles",
+      "value": "SYC",
+      "selected": "false"
+     },
+     {
+      "text": "Sierra Leone",
+      "value": "SLE",
+      "selected": "false"
+     },
+     {
+      "text": "Singapore",
+      "value": "SGP",
+      "selected": "false"
+     },
+     {
+      "text": "Sint Maarten",
+      "value": "SXM",
+      "selected": "false"
+     },
+     {
+      "text": "Slovakia",
+      "value": "SVK",
+      "selected": "false"
+     },
+     {
+      "text": "Slovenia",
+      "value": "SVN",
+      "selected": "false"
+     },
+     {
+      "text": "Solomon Islands",
+      "value": "SLB",
+      "selected": "false"
+     },
+     {
+      "text": "Somalia",
+      "value": "SOM",
+      "selected": "false"
+     },
+     {
+      "text": "South Africa",
+      "value": "ZAF",
+      "selected": "false"
+     },
+     {
+      "text": "South Georgia and th...",
+      "value": "SGS",
+      "selected": "false"
+     },
+     {
+      "text": "Spain",
+      "value": "ESP",
+      "selected": "false"
+     },
+     {
+      "text": "Sri Lanka",
+      "value": "LKA",
+      "selected": "false"
+     },
+     {
+      "text": "Sudan",
+      "value": "SDN",
+      "selected": "false"
+     },
+     {
+      "text": "Suriname",
+      "value": "SUR",
+      "selected": "false"
+     },
+     {
+      "text": "Svalbard and Jan May...",
+      "value": "SJM",
+      "selected": "false"
+     },
+     {
+      "text": "Sweden",
+      "value": "SWE",
+      "selected": "false"
+     },
+     {
+      "text": "Switzerland",
+      "value": "CHE",
+      "selected": "false"
+     },
+     {
+      "text": "Syrian Arab Republic",
+      "value": "SYR",
+      "selected": "false"
+     },
+     {
+      "text": "Taiwan, Province of ...",
+      "value": "TWN",
+      "selected": "false"
+     },
+     {
+      "text": "Tajikistan",
+      "value": "TJK",
+      "selected": "false"
+     },
+     {
+      "text": "Tanzania, United Rep...",
+      "value": "TZA",
+      "selected": "false"
+     },
+     {
+      "text": "Thailand",
+      "value": "THA",
+      "selected": "false"
+     },
+     {
+      "text": "Timor-Leste",
+      "value": "TLS",
+      "selected": "false"
+     },
+     {
+      "text": "Togo",
+      "value": "TGO",
+      "selected": "false"
+     },
+     {
+      "text": "Tokelau",
+      "value": "TKL",
+      "selected": "false"
+     },
+     {
+      "text": "Tonga",
+      "value": "TON",
+      "selected": "false"
+     },
+     {
+      "text": "Trinidad and Tobago",
+      "value": "TTO",
+      "selected": "false"
+     },
+     {
+      "text": "Tunisia",
+      "value": "TUN",
+      "selected": "false"
+     },
+     {
+      "text": "Turkey",
+      "value": "TUR",
+      "selected": "false"
+     },
+     {
+      "text": "Turkmenistan",
+      "value": "TKM",
+      "selected": "false"
+     },
+     {
+      "text": "Turks and Caicos Isl...",
+      "value": "TCA",
+      "selected": "false"
+     },
+     {
+      "text": "Tuvalu",
+      "value": "TUV",
+      "selected": "false"
+     },
+     {
+      "text": "Uganda",
+      "value": "UGA",
+      "selected": "false"
+     },
+     {
+      "text": "Ukraine",
+      "value": "UKR",
+      "selected": "false"
+     },
+     {
+      "text": "United Arab Emirates",
+      "value": "ARE",
+      "selected": "false"
+     },
+     {
+      "text": "United Kingdom",
+      "value": "GBR",
+      "selected": "false"
+     },
+     {
+      "text": "Uruguay",
+      "value": "URY",
+      "selected": "false"
+     },
+     {
+      "text": "Uzbekistan",
+      "value": "UZB",
+      "selected": "false"
+     },
+     {
+      "text": "Vanuatu",
+      "value": "VUT",
+      "selected": "false"
+     },
+     {
+      "text": "Venezuela, Bolivaria...",
+      "value": "VEN",
+      "selected": "false"
+     },
+     {
+      "text": "Viet Nam",
+      "value": "VNM",
+      "selected": "false"
+     },
+     {
+      "text": "Virgin Islands, Brit...",
+      "value": "VGB",
+      "selected": "false"
+     },
+     {
+      "text": "Wallis and Futuna",
+      "value": "WLF",
+      "selected": "false"
+     },
+     {
+      "text": "Western Sahara",
+      "value": "ESH",
+      "selected": "false"
+     },
+     {
+      "text": "Yemen",
+      "value": "YEM",
+      "selected": "false"
+     },
+     {
+      "text": "Zambia",
+      "value": "ZMB",
+      "selected": "false"
+     },
+     {
+      "text": "Zimbabwe",
+      "value": "ZWE",
+      "selected": "false"
+     }
+    ],
+    "value": "",
+    "originalValue": "",
+    "shared": "false",
+    "required": "true",
+    "locked": "false",
+    "requireAll": "false",
+    "tabLabel": "com.docusign.extensibilityplatform.action.verify.postaladdress@1.0.0.VerifyPostalAddressInput[0].countryOrRegion",
+    "font": "arial",
+    "fontColor": "black",
+    "fontSize": "size9",
+    "localePolicy": {},
+    "mergeFieldXml": "<root><admv2><json>{\"admBindings\":[{\"fqn\":\"com.docusign.extensibilityplatform.action.verify.postaladdress@1.0.0.VerifyPostalAddressInput\",\"path\":\"$.countryOrRegion\",\"position\":\"0\"}]}</json></admv2><prepareAdmSettings><json>{\"folder\":\"VerifyPostalAddressInput\",\"folderProperty\":\"Country or Region\",\"initialValue\":\"countryOrRegion\",\"name\":\"Country or Region\",\"legacyPath\":\"$.VerifyPostalAddressInput[0].countryOrRegion\",\"required\":true,\"type\":\"listTabs\",\"collectionItems\":{\"0\":\"VerifyPostalAddressInput 1\"},\"modelType\":\"data-verification\",\"namespace\":\"com.docusign.extensibilityplatform.action.verify.postaladdress@1.0.0\",\"dropdownOptions\":[{\"text\":\"United States\",\"value\":\"USA\"},{\"text\":\"Afghanistan\",\"value\":\"AFG\"},{\"text\":\"Åland Islands\",\"value\":\"ALA\"},{\"text\":\"Albania\",\"value\":\"ALB\"},{\"text\":\"Algeria\",\"value\":\"DZA\"},{\"text\":\"Andorra\",\"value\":\"AND\"},{\"text\":\"Angola\",\"value\":\"AGO\"},{\"text\":\"Anguilla\",\"value\":\"AIA\"},{\"text\":\"Antarctica\",\"value\":\"ATA\"},{\"text\":\"Antigua and Barbuda\",\"value\":\"ATG\"},{\"text\":\"Argentina\",\"value\":\"ARG\"},{\"text\":\"Armenia\",\"value\":\"ARM\"},{\"text\":\"Aruba\",\"value\":\"ABW\"},{\"text\":\"Australia\",\"value\":\"AUS\"},{\"text\":\"Austria\",\"value\":\"AUT\"},{\"text\":\"Azerbaijan\",\"value\":\"AZE\"},{\"text\":\"Bahamas\",\"value\":\"BHS\"},{\"text\":\"Bahrain\",\"value\":\"BHR\"},{\"text\":\"Bangladesh\",\"value\":\"BGD\"},{\"text\":\"Barbados\",\"value\":\"BRB\"},{\"text\":\"Belarus\",\"value\":\"BLR\"},{\"text\":\"Belgium\",\"value\":\"BEL\"},{\"text\":\"Belize\",\"value\":\"BLZ\"},{\"text\":\"Benin\",\"value\":\"BEN\"},{\"text\":\"Bermuda\",\"value\":\"BMU\"},{\"text\":\"Bhutan\",\"value\":\"BTN\"},{\"text\":\"Bolivia\",\"value\":\"BOL\"},{\"text\":\"Bonaire\",\"value\":\"BES\"},{\"text\":\"Bosnia and Herzegovi...\",\"value\":\"BIH\"},{\"text\":\"Botswana\",\"value\":\"BWA\"},{\"text\":\"Bouvet Island\",\"value\":\"BVT\"},{\"text\":\"Brazil\",\"value\":\"BRA\"},{\"text\":\"British Indian Ocean...\",\"value\":\"IOT\"},{\"text\":\"Brunei Darussalam\",\"value\":\"BRN\"},{\"text\":\"Bulgaria\",\"value\":\"BGR\"},{\"text\":\"Burkina Faso\",\"value\":\"BFA\"},{\"text\":\"Burundi\",\"value\":\"BDI\"},{\"text\":\"Cambodia\",\"value\":\"KHM\"},{\"text\":\"Cameroon\",\"value\":\"CMR\"},{\"text\":\"Canada\",\"value\":\"CAN\"},{\"text\":\"Cape Verde\",\"value\":\"CPV\"},{\"text\":\"Cayman Islands\",\"value\":\"CYM\"},{\"text\":\"Central African Repu...\",\"value\":\"CAF\"},{\"text\":\"Chad\",\"value\":\"TCD\"},{\"text\":\"Chile\",\"value\":\"CHL\"},{\"text\":\"China\",\"value\":\"CHN\"},{\"text\":\"Christmas Island\",\"value\":\"CXR\"},{\"text\":\"Cocos (Keeling) Isla...\",\"value\":\"CCK\"},{\"text\":\"Colombia\",\"value\":\"COL\"},{\"text\":\"Comoros\",\"value\":\"COM\"},{\"text\":\"Congo\",\"value\":\"COG\"},{\"text\":\"Congo, The Democrati...\",\"value\":\"COD\"},{\"text\":\"Cook Islands\",\"value\":\"COK\"},{\"text\":\"Costa Rica\",\"value\":\"CRI\"},{\"text\":\"Croatia\",\"value\":\"HRV\"},{\"text\":\"Cuba\",\"value\":\"CUB\"},{\"text\":\"Curaçao\",\"value\":\"CUW\"},{\"text\":\"Cyprus\",\"value\":\"CYP\"},{\"text\":\"Czech Republic\",\"value\":\"CZE\"},{\"text\":\"Côte d’Ivoire\",\"value\":\"CIV\"},{\"text\":\"Denmark\",\"value\":\"DNK\"},{\"text\":\"Djibouti\",\"value\":\"DJI\"},{\"text\":\"Dominica\",\"value\":\"DMA\"},{\"text\":\"Dominican Republic\",\"value\":\"DOM\"},{\"text\":\"Ecuador\",\"value\":\"ECU\"},{\"text\":\"Egypt\",\"value\":\"EGY\"},{\"text\":\"El Salvador\",\"value\":\"SLV\"},{\"text\":\"Equatorial Guinea\",\"value\":\"GNQ\"},{\"text\":\"Eritrea\",\"value\":\"ERI\"},{\"text\":\"Estonia\",\"value\":\"EST\"},{\"text\":\"Eswatini\",\"value\":\"SWZ\"},{\"text\":\"Ethiopia\",\"value\":\"ETH\"},{\"text\":\"Falkland Islands (Ma...\",\"value\":\"FLK\"},{\"text\":\"Faroe Islands\",\"value\":\"FRO\"},{\"text\":\"Fiji\",\"value\":\"FJI\"},{\"text\":\"Finland\",\"value\":\"FIN\"},{\"text\":\"France\",\"value\":\"FRA\"},{\"text\":\"French Guiana\",\"value\":\"GUF\"},{\"text\":\"French Polynesia\",\"value\":\"PYF\"},{\"text\":\"French Southern Terr...\",\"value\":\"ATF\"},{\"text\":\"Gabon\",\"value\":\"GAB\"},{\"text\":\"Gambia\",\"value\":\"GMB\"},{\"text\":\"Georgia\",\"value\":\"GEO\"},{\"text\":\"Germany\",\"value\":\"DEU\"},{\"text\":\"Ghana\",\"value\":\"GHA\"},{\"text\":\"Gibraltar\",\"value\":\"GIB\"},{\"text\":\"Greece\",\"value\":\"GRC\"},{\"text\":\"Greenland\",\"value\":\"GRL\"},{\"text\":\"Grenada\",\"value\":\"GRD\"},{\"text\":\"Guadeloupe\",\"value\":\"GLP\"},{\"text\":\"Guatemala\",\"value\":\"GTM\"},{\"text\":\"Guernsey\",\"value\":\"GGY\"},{\"text\":\"Guinea\",\"value\":\"GIN\"},{\"text\":\"Guinea-Bissau\",\"value\":\"GNB\"},{\"text\":\"Guyana\",\"value\":\"GUY\"},{\"text\":\"Haiti\",\"value\":\"HTI\"},{\"text\":\"Heard Island and McD...\",\"value\":\"HMD\"},{\"text\":\"Holy See (Vatican Ci...\",\"value\":\"VAT\"},{\"text\":\"Honduras\",\"value\":\"HND\"},{\"text\":\"Hong Kong\",\"value\":\"HKG\"},{\"text\":\"Hungary\",\"value\":\"HUN\"},{\"text\":\"Iceland\",\"value\":\"ISL\"},{\"text\":\"India\",\"value\":\"IND\"},{\"text\":\"Indonesia\",\"value\":\"IDN\"},{\"text\":\"Iran, Islamic Republ...\",\"value\":\"IRN\"},{\"text\":\"Iraq\",\"value\":\"IRQ\"},{\"text\":\"Ireland\",\"value\":\"IRL\"},{\"text\":\"Isle of Man\",\"value\":\"IMN\"},{\"text\":\"Israel\",\"value\":\"ISR\"},{\"text\":\"Italy\",\"value\":\"ITA\"},{\"text\":\"Jamaica\",\"value\":\"JAM\"},{\"text\":\"Japan\",\"value\":\"JPN\"},{\"text\":\"Jersey\",\"value\":\"JEY\"},{\"text\":\"Jordan\",\"value\":\"JOR\"},{\"text\":\"Kazakhstan\",\"value\":\"KAZ\"},{\"text\":\"Kenya\",\"value\":\"KEN\"},{\"text\":\"Kiribati\",\"value\":\"KIR\"},{\"text\":\"Korea, Democratic Pe...\",\"value\":\"PRK\"},{\"text\":\"Korea, Republic of\",\"value\":\"KOR\"},{\"text\":\"Kuwait\",\"value\":\"KWT\"},{\"text\":\"Kyrgyzstan\",\"value\":\"KGZ\"},{\"text\":\"Lao People’s Democra...\",\"value\":\"LAO\"},{\"text\":\"Latvia\",\"value\":\"LVA\"},{\"text\":\"Lebanon\",\"value\":\"LBN\"},{\"text\":\"Lesotho\",\"value\":\"LSO\"},{\"text\":\"Liberia\",\"value\":\"LBR\"},{\"text\":\"Libya\",\"value\":\"LBY\"},{\"text\":\"Liechtenstein\",\"value\":\"LIE\"},{\"text\":\"Lithuania\",\"value\":\"LTU\"},{\"text\":\"Luxembourg\",\"value\":\"LUX\"},{\"text\":\"Macao\",\"value\":\"MAC\"},{\"text\":\"North Macedonia\",\"value\":\"MKD\"},{\"text\":\"Madagascar\",\"value\":\"MDG\"},{\"text\":\"Malawi\",\"value\":\"MWI\"},{\"text\":\"Malaysia\",\"value\":\"MYS\"},{\"text\":\"Maldives\",\"value\":\"MDV\"},{\"text\":\"Mali\",\"value\":\"MLI\"},{\"text\":\"Malta\",\"value\":\"MLT\"},{\"text\":\"Martinique\",\"value\":\"MTQ\"},{\"text\":\"Mauritania\",\"value\":\"MRT\"},{\"text\":\"Mauritius\",\"value\":\"MUS\"},{\"text\":\"Mayotte\",\"value\":\"MYT\"},{\"text\":\"Mexico\",\"value\":\"MEX\"},{\"text\":\"Moldova, Republic of\",\"value\":\"MDA\"},{\"text\":\"Monaco\",\"value\":\"MCO\"},{\"text\":\"Mongolia\",\"value\":\"MNG\"},{\"text\":\"Montenegro\",\"value\":\"MNE\"},{\"text\":\"Montserrat\",\"value\":\"MSR\"},{\"text\":\"Morocco\",\"value\":\"MAR\"},{\"text\":\"Mozambique\",\"value\":\"MOZ\"},{\"text\":\"Myanmar\",\"value\":\"MMR\"},{\"text\":\"Namibia\",\"value\":\"NAM\"},{\"text\":\"Nauru\",\"value\":\"NRU\"},{\"text\":\"Nepal\",\"value\":\"NPL\"},{\"text\":\"Netherlands\",\"value\":\"NLD\"},{\"text\":\"New Caledonia\",\"value\":\"NCL\"},{\"text\":\"New Zealand\",\"value\":\"NZL\"},{\"text\":\"Nicaragua\",\"value\":\"NIC\"},{\"text\":\"Niger\",\"value\":\"NER\"},{\"text\":\"Nigeria\",\"value\":\"NGA\"},{\"text\":\"Niue\",\"value\":\"NIU\"},{\"text\":\"Norfolk Island\",\"value\":\"NFK\"},{\"text\":\"Norway\",\"value\":\"NOR\"},{\"text\":\"Oman\",\"value\":\"OMN\"},{\"text\":\"Pakistan\",\"value\":\"PAK\"},{\"text\":\"Palestine, State of\",\"value\":\"PSE\"},{\"text\":\"Panama\",\"value\":\"PAN\"},{\"text\":\"Papua New Guinea\",\"value\":\"PNG\"},{\"text\":\"Paraguay\",\"value\":\"PRY\"},{\"text\":\"Peru\",\"value\":\"PER\"},{\"text\":\"Philippines\",\"value\":\"PHL\"},{\"text\":\"Pitcairn\",\"value\":\"PCN\"},{\"text\":\"Poland\",\"value\":\"POL\"},{\"text\":\"Portugal\",\"value\":\"PRT\"},{\"text\":\"Qatar\",\"value\":\"QAT\"},{\"text\":\"Republic of South Su...\",\"value\":\"SSD\"},{\"text\":\"Romania\",\"value\":\"ROU\"},{\"text\":\"Russian Federation\",\"value\":\"RUS\"},{\"text\":\"Rwanda\",\"value\":\"RWA\"},{\"text\":\"Réunion\",\"value\":\"REU\"},{\"text\":\"Saint Barthélemy\",\"value\":\"BLM\"},{\"text\":\"Saint Helena, Ascens...\",\"value\":\"SHN\"},{\"text\":\"Saint Kitts and Nevi...\",\"value\":\"KNA\"},{\"text\":\"Saint Lucia\",\"value\":\"LCA\"},{\"text\":\"Saint Martin (French...\",\"value\":\"MAF\"},{\"text\":\"Saint Pierre and Miq...\",\"value\":\"SPM\"},{\"text\":\"Saint Vincent and th...\",\"value\":\"VCT\"},{\"text\":\"Samoa\",\"value\":\"WSM\"},{\"text\":\"San Marino\",\"value\":\"SMR\"},{\"text\":\"Sao Tome and Princip...\",\"value\":\"STP\"},{\"text\":\"Saudi Arabia\",\"value\":\"SAU\"},{\"text\":\"Senegal\",\"value\":\"SEN\"},{\"text\":\"Serbia\",\"value\":\"SRB\"},{\"text\":\"Seychelles\",\"value\":\"SYC\"},{\"text\":\"Sierra Leone\",\"value\":\"SLE\"},{\"text\":\"Singapore\",\"value\":\"SGP\"},{\"text\":\"Sint Maarten\",\"value\":\"SXM\"},{\"text\":\"Slovakia\",\"value\":\"SVK\"},{\"text\":\"Slovenia\",\"value\":\"SVN\"},{\"text\":\"Solomon Islands\",\"value\":\"SLB\"},{\"text\":\"Somalia\",\"value\":\"SOM\"},{\"text\":\"South Africa\",\"value\":\"ZAF\"},{\"text\":\"South Georgia and th...\",\"value\":\"SGS\"},{\"text\":\"Spain\",\"value\":\"ESP\"},{\"text\":\"Sri Lanka\",\"value\":\"LKA\"},{\"text\":\"Sudan\",\"value\":\"SDN\"},{\"text\":\"Suriname\",\"value\":\"SUR\"},{\"text\":\"Svalbard and Jan May...\",\"value\":\"SJM\"},{\"text\":\"Sweden\",\"value\":\"SWE\"},{\"text\":\"Switzerland\",\"value\":\"CHE\"},{\"text\":\"Syrian Arab Republic\",\"value\":\"SYR\"},{\"text\":\"Taiwan, Province of ...\",\"value\":\"TWN\"},{\"text\":\"Tajikistan\",\"value\":\"TJK\"},{\"text\":\"Tanzania, United Rep...\",\"value\":\"TZA\"},{\"text\":\"Thailand\",\"value\":\"THA\"},{\"text\":\"Timor-Leste\",\"value\":\"TLS\"},{\"text\":\"Togo\",\"value\":\"TGO\"},{\"text\":\"Tokelau\",\"value\":\"TKL\"},{\"text\":\"Tonga\",\"value\":\"TON\"},{\"text\":\"Trinidad and Tobago\",\"value\":\"TTO\"},{\"text\":\"Tunisia\",\"value\":\"TUN\"},{\"text\":\"Turkey\",\"value\":\"TUR\"},{\"text\":\"Turkmenistan\",\"value\":\"TKM\"},{\"text\":\"Turks and Caicos Isl...\",\"value\":\"TCA\"},{\"text\":\"Tuvalu\",\"value\":\"TUV\"},{\"text\":\"Uganda\",\"value\":\"UGA\"},{\"text\":\"Ukraine\",\"value\":\"UKR\"},{\"text\":\"United Arab Emirates\",\"value\":\"ARE\"},{\"text\":\"United Kingdom\",\"value\":\"GBR\"},{\"text\":\"Uruguay\",\"value\":\"URY\"},{\"text\":\"Uzbekistan\",\"value\":\"UZB\"},{\"text\":\"Vanuatu\",\"value\":\"VUT\"},{\"text\":\"Venezuela, Bolivaria...\",\"value\":\"VEN\"},{\"text\":\"Viet Nam\",\"value\":\"VNM\"},{\"text\":\"Virgin Islands, Brit...\",\"value\":\"VGB\"},{\"text\":\"Wallis and Futuna\",\"value\":\"WLF\"},{\"text\":\"Western Sahara\",\"value\":\"ESH\"},{\"text\":\"Yemen\",\"value\":\"YEM\"},{\"text\":\"Zambia\",\"value\":\"ZMB\"},{\"text\":\"Zimbabwe\",\"value\":\"ZWE\"}]}</json></prepareAdmSettings><suggestedFieldId><json>{}</json></suggestedFieldId><location><json>{}</json></location></root>",
+    "tabType": "list",
+    "tooltip": "Country or Region",
+    "extensionData": {
+     "publisherName": "Docusign",
+     "applicationId": "04bfc1ae-1ba0-42d0-8c02-264417a7b234",
+     "applicationName": "Smarty",
+     "actionName": "postal-address-verify",
+     "actionContract": "Contracts.Actions.Verify.Version1.PostalAddress",
+     "extensionName": "verify-postal-address",
+     "extensionContract": "Contracts.Extensions.Verify.Version2.PostalAddress",
+     "requiredForExtension": true,
+     "actionInputKey": "countryOrRegion",
+     "extensionPolicy": "None",
+     "connectionInstances": []
+    },
+    "agreementAttributeLocked": "false"
+   }
+  }
+ }
+}

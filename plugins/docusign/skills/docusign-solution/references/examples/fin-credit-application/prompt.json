@@ -1,0 +1,189 @@
+{
+  "id": "fin-credit-application",
+  "prompt": "New B2B customers apply for credit terms on our website: company info, tax ID, bank and trade references, requested limit. A guarantor signs if the requested limit is over $50,000. Credit team approves.",
+  "industry": "distribution",
+  "department": "finance",
+  "variation_tags": {
+    "start": [
+      "web-form"
+    ],
+    "routing": [
+      "serial",
+      "optional-signer"
+    ],
+    "approvals": [
+      "single"
+    ],
+    "data_source": [
+      "form"
+    ],
+    "locale": [
+      "en-US"
+    ],
+    "currency": [
+      "USD"
+    ],
+    "platform": "iam",
+    "ai": [
+      "none"
+    ],
+    "documents": [
+      "generated"
+    ],
+    "logic": [
+      "branch"
+    ],
+    "notifications": [
+      "email"
+    ],
+    "identity": [
+      "none"
+    ],
+    "payment": false,
+    "agreement_desk": true
+  },
+  "expected_assets": [
+    {
+      "kind": "webform",
+      "purpose": "credit application",
+      "features": [
+        "company, EIN, 3 trade references, bank reference, requested limit (number)",
+        "guarantor name/email shown if limit > 50,000"
+      ]
+    },
+    {
+      "kind": "doc-template",
+      "purpose": "credit application and personal guarantee",
+      "features": [
+        "guarantee section conditional"
+      ]
+    },
+    {
+      "kind": "workflow",
+      "purpose": "apply → approve → sign",
+      "features": [
+        "branch limit > 50,000",
+        "send applicant (+ guarantor)",
+        "credit approval"
+      ]
+    }
+  ],
+  "acceptance": [
+    "a $60,000 request adds the guarantor signer; $40,000 does not",
+    "the EIN field validates 9 digits",
+    "the credit team approval is recorded with its outcome"
+  ],
+  "hard_parts": [
+    "web form numeric validation has no ranges per the builder, so the 50,000 threshold is a branch, not a form rule"
+  ],
+  "clarifying_questions": [
+    {
+      "question": "Does credit approve before or after signing?",
+      "default": "after signing"
+    }
+  ],
+  "capabilities": [
+    "webform.setting.upload",
+    "webform.setting.versions",
+    "webform.page.pages",
+    "webform.page.title",
+    "webform.page.thank-you",
+    "webform.field.text",
+    "webform.field-setting.label",
+    "webform.field-setting.required",
+    "webform.field-setting.api-name",
+    "webform.field-setting.help-text",
+    "webform.limit.duplicate-keys",
+    "webform.field.currency",
+    "webform.field-setting.currency-type",
+    "webform.field.email",
+    "webform.field.number",
+    "webform.rule.show",
+    "webform.rule.hide",
+    "webform.rule.match-all",
+    "webform.rule.select-any-of",
+    "webform.rule.number-threshold",
+    "webform.field-setting.regex",
+    "webform.field-setting.placeholder",
+    "webform.setting.activate-public",
+    "webform.prefill.public-link",
+    "webform.template.workflow-esign",
+    "doc-template.setting.name",
+    "doc-template.setting.agreement-type",
+    "doc-template.setting.format-builder",
+    "doc-template.setting.upload-zip",
+    "doc-template.setting.publish",
+    "doc-template.content.title",
+    "doc-template.content.heading",
+    "doc-template.content.paragraph",
+    "doc-template.field.text",
+    "doc-template.field-setting.label",
+    "doc-template.field-setting.required",
+    "doc-template.field-setting.key-syntax",
+    "doc-template.field-setting.unused-field",
+    "doc-template.recipient.needs-to-sign",
+    "doc-template.tab.signature-block",
+    "doc-template.field.currency",
+    "doc-template.field-setting.money",
+    "doc-template.field.number",
+    "doc-template.field-setting.number-format-en",
+    "doc-template.field.date",
+    "doc-template.field-setting.date-format-mdy",
+    "doc-template.provision.effective-date",
+    "doc-template.conditional.show-section",
+    "doc-template.conditional.op-equals",
+    "doc-template.conditional.op-not-equals",
+    "doc-template.conditional.match-all-any",
+    "doc-template.conditional.otherwise",
+    "doc-template.tab.company",
+    "doc-template.provision.agreement-party",
+    "workflow.setting.participants",
+    "workflow.setting.description",
+    "workflow.setting.publish",
+    "workflow.setting.import-package",
+    "workflow.setting.workflow-name-rules",
+    "workflow.limit.size",
+    "workflow.variable.text",
+    "workflow.step.path-end",
+    "workflow.step-setting.done-screens",
+    "account.plan.iam-plan",
+    "account.limit.published-workflows",
+    "workflow.start.link",
+    "workflow.step.web-form",
+    "workflow.step-setting.web-form-participant",
+    "workflow.variable.form-outputs",
+    "webform.prefill.workflow-mapping",
+    "workflow.step.send-envelope",
+    "workflow.step-setting.send-envelope-recipients",
+    "workflow.step-setting.send-envelope-subject-message",
+    "workflow.step.confirmation-screen",
+    "workflow.step-setting.confirm-participant",
+    "workflow.step-setting.send-envelope-sender-starter",
+    "workflow.step-setting.send-envelope-status-output",
+    "workflow.variable.op-envelope-status",
+    "workflow.step.prepare-doc-template",
+    "workflow.step-setting.doc-template-fill",
+    "workflow.step.ad-approval",
+    "request-type.approval.approval-step",
+    "request-type.approval.approval-branch",
+    "workflow.variable.op-approval-outcome",
+    "workflow.step-setting.ad-approver-user-group",
+    "workflow.step.ad-assign-owner",
+    "request-type.assignment.owner-submitter",
+    "workflow.step-setting.ad-approver-submitter-owner",
+    "workflow.variable.op-number-compare",
+    "workflow.variable.op-request-custom-number",
+    "workflow.step.create-request",
+    "request-type.automation.create-request",
+    "workflow.step-setting.create-request-automatic",
+    "workflow.step-setting.create-request-map",
+    "workflow.step-setting.create-request-title",
+    "workflow.step.branching-rule",
+    "workflow.step-setting.branch-name",
+    "workflow.variable.op-is",
+    "workflow.limit.merge-scope",
+    "workflow.step-setting.branch-and-or",
+    "webform.field.phone",
+    "doc-template.recipient.routing-order"
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "id": "renewal-notice-child",
+  "name": "Renewal Notice Child",
+  "description": "The child of renewal-notice-batch: it sends the renewal notice (here, a Logger line) and writes back to the parent with Update Parent Variable.",
+  "steps": [
+    {
+      "id": "log",
+      "name": "Send the notice",
+      "kind": "logger",
+      "message": "Renewal notice sent",
+      "next": "parent"
+    },
+    {
+      "id": "parent",
+      "name": "Tell the parent",
+      "kind": "updateParentVariable",
+      "set": {
+        "ParentNote": "Notice sent by the child"
+      },
+      "on": {
+        "updated": "finish",
+        "notUpdated": "finish",
+        "failure": "finish"
+      }
+    },
+    {
+      "id": "finish",
+      "kind": "finish"
+    }
+  ],
+  "variables": [
+    "ParentNote"
+  ]
+}

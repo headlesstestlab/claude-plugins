@@ -1,0 +1,81 @@
+{
+  "id": "settlement-payment-authorization",
+  "from": {
+    "name": "Settlement Payment Authorization",
+    "description": "A claimant authorizes the settlement payment to their counsel's client trust account; counsel confirms the account.",
+    "fields": {
+      "matter": {
+        "label": "Matter",
+        "required": true
+      },
+      "amount": {
+        "label": "Settlement amount (USD)",
+        "required": true
+      },
+      "settlement_date": {
+        "label": "Settlement agreement date",
+        "type": "date",
+        "required": true
+      }
+    },
+    "signers": [
+      "Claimant",
+      "Claimant's Counsel"
+    ],
+    "body": [
+      {
+        "title": "SETTLEMENT PAYMENT AUTHORIZATION"
+      },
+      {
+        "p": "Matter: {{matter}}. Under the settlement agreement dated {{settlement_date}}, Fontara, Inc. will pay ${{amount}} (the \"Settlement Payment\")."
+      },
+      {
+        "h": "1. Authorization"
+      },
+      {
+        "p": "I, the claimant, authorize Fontara, Inc. to pay the Settlement Payment into my counsel's client trust account below, and I agree that payment there discharges Fontara's payment obligation."
+      },
+      {
+        "h": "2. Trust Account"
+      },
+      {
+        "p": "Bank: [[text:Claimant's Counsel:Bank]]  Account name: [[text:Claimant's Counsel:Account name]]"
+      },
+      {
+        "p": "[[check:Claimant's Counsel:Trust account confirmed]] Counsel confirms the account is its client trust account."
+      },
+      {
+        "sign": "Claimant",
+        "title": false
+      },
+      {
+        "sign": "Claimant's Counsel",
+        "title": true,
+        "company": true
+      }
+    ],
+    "examples": [
+      {
+        "values": {
+          "matter": "Baybridge Logistics LLC v. Fontara, Inc.",
+          "amount": "85,000.00",
+          "settlement_date": "10/12/2026"
+        }
+      }
+    ]
+  },
+  "summary": "A NEW document inline with recipient authentication: the claimant proves identity with Docusign ID Verification, and counsel opens the envelope with an access code; counsel signs after the claimant.",
+  "owners": {
+    "default": "Claimant"
+  },
+  "auth": {
+    "Claimant": {
+      "idv": "IDV (Standard)"
+    },
+    "Claimant's Counsel": {
+      "accessCode": "Trust2026"
+    }
+  },
+  "emailSubject": "Settlement payment authorization",
+  "emailBlurb": "Please verify your identity and sign the payment authorization."
+}

@@ -1,0 +1,242 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.com/docusign-skills/docs/schemas/document-template.schema.json",
+  "title": "Document template (Download ▸ Zip <name>.json; documenttemplate/<id>.json in a workflow package)",
+  "type": "object",
+  "required": [
+    "name",
+    "agreementTypeId",
+    "agreementType",
+    "document",
+    "recipients",
+    "isAceGenTemplate",
+    "isDocGenTemplate"
+  ],
+  "properties": {
+    "name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "documentTemplateId": {
+      "type": "string",
+      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+    },
+    "agreementTypeId": {
+      "type": "string",
+      "pattern": "DocumentData$"
+    },
+    "agreementType": {
+      "type": "string"
+    },
+    "agreementTypeSource": {
+      "enum": [
+        "User",
+        "Docusign",
+        "System"
+      ]
+    },
+    "agreementTypeFQN": {
+      "type": "string",
+      "pattern": "^(com\\.docusign\\.platform\\.agreements|account\\._[0-9a-f_]{36}\\.custom\\.agreements)@[0-9.]+\\.[A-Za-z]+DocumentData$"
+    },
+    "document": {
+      "type": "object",
+      "required": [
+        "fileExtension",
+        "documentBase64",
+        "docGenFormFields"
+      ],
+      "properties": {
+        "fileExtension": {
+          "const": "adf"
+        },
+        "documentBase64": {
+          "type": "string",
+          "pattern": "^1URT"
+        },
+        "originalDocumentBase64": {
+          "type": "string"
+        },
+        "documentId": {
+          "type": "string",
+          "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+        },
+        "docGenFormFields": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/formField"
+          }
+        },
+        "tabs": {
+          "type": "object"
+        }
+      }
+    },
+    "recipients": {
+      "type": "object",
+      "required": [
+        "signers"
+      ],
+      "properties": {
+        "signers": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "recipientId",
+              "roleName",
+              "tabs"
+            ],
+            "properties": {
+              "recipientId": {
+                "type": "string",
+                "pattern": "^\\d+$"
+              },
+              "recipientIdGuid": {
+                "type": "string",
+                "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+              },
+              "roleName": {
+                "type": "string",
+                "minLength": 1
+              },
+              "tabs": {
+                "type": "object",
+                "propertyNames": {
+                  "pattern": "^[a-zA-Z]+Tabs$|^tabGroups$"
+                },
+                "additionalProperties": {
+                  "type": "array"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "templates": {
+      "type": "array"
+    },
+    "exportData": {
+      "type": "object",
+      "required": [
+        "version"
+      ],
+      "properties": {
+        "version": {
+          "const": 1
+        }
+      }
+    },
+    "isAceGenTemplate": {
+      "const": true
+    },
+    "isDocGenTemplate": {
+      "const": false
+    },
+    "connectionDetails": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "connection_info",
+          "connector_info"
+        ]
+      }
+    }
+  },
+  "$defs": {
+    "formField": {
+      "type": "object",
+      "required": [
+        "name",
+        "label",
+        "type",
+        "required"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "label": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "type": {
+          "enum": [
+            "Text",
+            "TextBox",
+            "Date",
+            "Number",
+            "Select",
+            "TableRow",
+            "text",
+            "date",
+            "number"
+          ]
+        },
+        "required": {
+          "enum": [
+            "True",
+            "False"
+          ]
+        },
+        "fullyQualifiedPath": {
+          "type": "string"
+        },
+        "options": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "label",
+              "value"
+            ],
+            "properties": {
+              "selected": {
+                "enum": [
+                  "True",
+                  "False"
+                ]
+              }
+            }
+          }
+        },
+        "format": {
+          "type": "object",
+          "required": [
+            "expression"
+          ],
+          "properties": {
+            "expression": {
+              "type": "string"
+            },
+            "locale": {
+              "type": "string"
+            }
+          }
+        },
+        "rowValues": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "docGenFormFieldList"
+            ],
+            "properties": {
+              "docGenFormFieldList": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/formField"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

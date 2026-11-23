@@ -1,0 +1,137 @@
+{
+  "id": "credit-application-only",
+  "name": "Credit Application",
+  "agreementType": "Other",
+  "description": "The applicant's credit application, signed by the applicant (limits up to $50,000).",
+  "fields": {
+    "effective": {
+      "label": "Application date",
+      "type": "date",
+      "dateFormat": "MM/dd/yyyy",
+      "required": true,
+      "bind": {
+        "provision": "EffectiveDate"
+      }
+    },
+    "company": {
+      "label": "Company legal name",
+      "required": true,
+      "bind": {
+        "provision": "AgreementParty"
+      }
+    },
+    "address": {
+      "label": "Registered address",
+      "required": true
+    },
+    "ein": {
+      "label": "EIN",
+      "required": true
+    },
+    "limit": {
+      "label": "Credit limit requested (USD)",
+      "type": "number",
+      "money": true,
+      "required": true
+    },
+    "bank": {
+      "label": "Bank reference",
+      "required": true
+    },
+    "ref1": {
+      "label": "Trade reference 1",
+      "required": true
+    },
+    "ref2": {
+      "label": "Trade reference 2",
+      "required": true
+    },
+    "ref3": {
+      "label": "Trade reference 3",
+      "required": true
+    }
+  },
+  "signers": [
+    "Applicant"
+  ],
+  "body": [
+    {
+      "title": "Business Credit Application"
+    },
+    {
+      "p": "Date: {{effective}}"
+    },
+    {
+      "h": "1. Applicant"
+    },
+    {
+      "table": {
+        "header": [
+          "Item",
+          "Answer"
+        ],
+        "rows": [
+          [
+            "Company",
+            "{{company}}"
+          ],
+          [
+            "Address",
+            "{{address}}"
+          ],
+          [
+            "EIN",
+            "{{ein}}"
+          ],
+          [
+            "Credit limit requested",
+            "USD {{limit}}"
+          ]
+        ]
+      }
+    },
+    {
+      "h": "2. References"
+    },
+    {
+      "list": [
+        "Bank: {{bank}}",
+        "{{ref1}}",
+        "{{ref2}}",
+        "{{ref3}}"
+      ]
+    },
+    {
+      "h": "3. Applicant's certification"
+    },
+    {
+      "p": "The applicant certifies that the information above is true and complete, authorizes us to contact the references named and to obtain business credit reports, and agrees to pay invoices on the terms we approve. Credit terms apply only once our credit team approves this application."
+    },
+    {
+      "sign": "Applicant",
+      "title": true,
+      "company": true
+    }
+  ],
+  "examples": [
+    {
+      "values": {
+        "effective": "11/02/2026",
+        "company": "Northgate Supply Co.",
+        "address": "4100 Commerce Parkway, Columbus, OH 43219",
+        "ein": "123456789",
+        "limit": "40000",
+        "bank": "First Example Bank, account manager Alex Sample, (555) 010-2000",
+        "ref1": "Acme Industrial Parts, Jordan Example, jordan.example@example.com",
+        "ref2": "Lakeside Packaging, Casey Sample, casey.sample@example.com",
+        "ref3": "Summit Freight, Riley Example, riley.example@example.com"
+      },
+      "expect": [
+        "Business Credit Application",
+        "Northgate Supply Co.",
+        "Lakeside Packaging"
+      ],
+      "absent": []
+    }
+  ]
+}

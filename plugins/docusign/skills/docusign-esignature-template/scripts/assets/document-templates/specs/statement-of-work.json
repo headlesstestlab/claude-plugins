@@ -1,0 +1,540 @@
+{
+  "id": "statement-of-work",
+  "name": "Statement of Work",
+  "description": "One project under a master agreement: scope, assumptions, deliverables, key personnel, milestones, fees and acceptance.",
+  "agreementType": "Sow",
+  "fields": {
+    "fontara_entity": {
+      "label": "Fontara contracting entity",
+      "type": "select",
+      "options": [
+        "Fontara, Inc.",
+        "Fontara UK Ltd",
+        "Fontara Europe Ltd"
+      ],
+      "optionValues": {
+        "Fontara, Inc.": "Fontara, Inc., a Delaware corporation with its principal place of business at 1500 Harbor Boulevard, Suite 1200, San Francisco, CA 94111",
+        "Fontara UK Ltd": "Fontara UK Ltd, a company registered in England and Wales with its registered office at 48 Ashcombe Street, London EC2A 4NE, United Kingdom",
+        "Fontara Europe Ltd": "Fontara Europe Ltd, a company registered in Ireland with its registered office at 3 Riverside Quay, Dublin 2, D02 X285, Ireland"
+      },
+      "required": true,
+      "description": "Prints the entity’s full legal description and address"
+    },
+    "currency": {
+      "label": "Currency",
+      "type": "select",
+      "options": [
+        "US$",
+        "£",
+        "€"
+      ],
+      "required": true,
+      "description": "The signing entity’s: US$ for Fontara, Inc., £ for Fontara UK Ltd, € for Fontara Europe Ltd"
+    },
+    "customer": {
+      "bind": {
+        "provision": "AgreementParty"
+      },
+      "required": true,
+      "description": "Customer legal name"
+    },
+    "customer_address": {
+      "label": "Customer street address",
+      "required": true
+    },
+    "customer_city": {
+      "label": "Customer city",
+      "required": true
+    },
+    "customer_region": {
+      "label": "Customer state",
+      "required": true
+    },
+    "customer_postal": {
+      "label": "Customer ZIP code",
+      "required": true
+    },
+    "customer_entity": {
+      "label": "Customer entity type",
+      "required": true,
+      "description": "For example: an Illinois corporation"
+    },
+    "sow_number": {
+      "label": "SOW number",
+      "required": true
+    },
+    "msa_date": {
+      "label": "Master agreement date",
+      "type": "date",
+      "required": true
+    },
+    "project": {
+      "label": "Project name",
+      "required": true
+    },
+    "scope": {
+      "label": "Scope summary",
+      "required": true
+    },
+    "end": {
+      "bind": {
+        "provision": "ExpirationDate"
+      },
+      "required": true
+    },
+    "pricing": {
+      "label": "Pricing model",
+      "type": "select",
+      "options": [
+        "Fixed fee",
+        "Time and materials"
+      ],
+      "required": true
+    },
+    "assumptions": {
+      "label": "Assumptions",
+      "required": true
+    },
+    "out_of_scope": {
+      "label": "Out of scope",
+      "required": true
+    },
+    "key_personnel": {
+      "label": "Key personnel",
+      "required": true
+    },
+    "contract_value": {
+      "label": "Total contract value",
+      "type": "number",
+      "money": true,
+      "required": true,
+      "formula": "$sum(Milestones.$number($replace(fee, ',', '')))"
+    },
+    "position": {
+      "label": "Negotiated position",
+      "type": "select",
+      "options": [
+        "Balanced",
+        "Favours Fontara",
+        "Favours the counterparty"
+      ],
+      "required": true,
+      "description": "For the clauses most often negotiated"
+    },
+    "payment_terms": {
+      "label": "Payment terms",
+      "type": "select",
+      "options": [
+        "net 30 days",
+        "net 45 days",
+        "net 60 days",
+        "net 90 days"
+      ],
+      "required": true
+    },
+    "effective": {
+      "bind": {
+        "provision": "EffectiveDate"
+      },
+      "required": true
+    }
+  },
+  "signers": [
+    "Customer",
+    "Fontara"
+  ],
+  "body": [
+    {
+      "title": "STATEMENT OF WORK"
+    },
+    {
+      "p": "This Statement of Work No. {{sow_number}} (\"SOW\" or \"Statement of Work\") is entered into as of {{effective}} under the Master Services Agreement dated {{msa_date}} (the \"Agreement\") between {{fontara_entity}} (\"Vendor\") and **{{customer}}**, {{customer_entity}} with its principal place of business at {{customer_address}}, {{customer_city}}, {{customer_region}} {{customer_postal}} (\"Customer\"). Project: **{{project}}**. Work is scheduled to complete by {{end}}."
+    },
+    {
+      "p": "Scope summary: {{scope}}"
+    },
+    {
+      "p": "Milestones and fees. Each fee is invoiced when its milestone is accepted under the acceptance process below, unless the pricing model is time and materials."
+    },
+    {
+      "p": "Invoices under this SOW are [[if:pricing=Fixed fee]]issued on milestone acceptance[[/if]][[if:pricing=Time and materials]]issued monthly for time worked[[/if]], payable {{payment_terms}}."
+    },
+    {
+      "lineItems": {
+        "name": "Milestones",
+        "label": "Milestones",
+        "columns": [
+          {
+            "key": "milestone",
+            "label": "Milestone"
+          },
+          {
+            "key": "deliverable",
+            "label": "Deliverable"
+          },
+          {
+            "key": "target_date",
+            "label": "Target Date"
+          },
+          {
+            "key": "fee",
+            "label": "Fee"
+          }
+        ]
+      }
+    },
+    {
+      "p": "Rate card for time-and-materials work, and for work outside the milestones approved in writing by Change Order:"
+    },
+    {
+      "lineItems": {
+        "name": "RateCard",
+        "label": "Rate card",
+        "columns": [
+          {
+            "key": "role",
+            "label": "Role"
+          },
+          {
+            "key": "hourly_rate",
+            "label": "Hourly Rate",
+            "type": "money"
+          }
+        ]
+      }
+    },
+    {
+      "h": "1. Background & Purpose"
+    },
+    {
+      "p": "This Statement of Work is issued under the Agreement and describes the project Customer has engaged Vendor to perform and its business context. This background explains the project and creates no obligations of its own. Where this Statement of Work departs from the Agreement, it says so expressly in the section concerned, and only that departure applies."
+    },
+    {
+      "h": "2. Scope of Work"
+    },
+    {
+      "p": "Vendor shall perform the activities and provide the deliverables listed in this Statement of Work. Anything not listed is out of scope. If the scope proves to rest on a mistaken assumption, either party may request a change under the change control process."
+    },
+    {
+      "h": "3. Assumptions"
+    },
+    {
+      "p": "This Statement of Work, its fees and its timeline assume the following, and a change in any of them is a change under the change management process: {{assumptions}}"
+    },
+    {
+      "h": "4. Out of Scope"
+    },
+    {
+      "p": "The following are out of scope: {{out_of_scope}}"
+    },
+    {
+      "h": "5. Deliverables"
+    },
+    {
+      "p": "Vendor shall provide each deliverable described in this Statement of Work, meeting the functional requirements stated for it. Each deliverable includes 3 rounds of revisions in response to Customer's written comments, and further revisions are a change under the change control process."
+    },
+    {
+      "h": "6. Project Timeline & Milestones"
+    },
+    {
+      "p": "Vendor shall meet the milestone dates in this Statement of Work. Where Customer's failure to provide access, approvals or materials delays a milestone, its date moves by the length of the delay. Vendor shall notify Customer in writing of any risk to a milestone date within 5 business days of becoming aware of it."
+    },
+    {
+      "h": "7. Fees & Payment Schedule"
+    },
+    {
+      "if": {
+        "field": "position",
+        "is": "Balanced"
+      },
+      "then": [
+        {
+          "p": "The fees for this Statement of Work total {{currency}}{{contract_value}}. Vendor shall invoice the fees for each milestone on Customer's acceptance of it, and each invoice is payable {{payment_terms}} from its date. Customer shall reimburse Vendor's reasonable expenses at cost, against receipts."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "position",
+        "is": "Favours Fontara"
+      },
+      "then": [
+        {
+          "p": "The fees for this Statement of Work total {{currency}}{{contract_value}}. Vendor may invoice each milestone fee when it delivers the milestone's deliverable, or a proportionate part of it when it delivers part of that deliverable, whether or not Customer has yet accepted it. Each invoice is payable {{payment_terms}} from its date, and Customer's delay in accepting a deliverable does not delay Vendor's right to invoice. Customer shall reimburse Vendor's expenses at cost plus a 15% administrative charge. A dispute about part of an invoice does not excuse payment of the rest."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "position",
+        "is": "Favours the counterparty"
+      },
+      "then": [
+        {
+          "p": "The fees are fixed at {{currency}}{{contract_value}}. Vendor may invoice the fee for each milestone only on Customer's written acceptance of it, each invoice is payable {{payment_terms}} from its date, and Customer shall hold back 10% of the total fees until it accepts the final deliverable. Customer reimburses only expenses it has approved in writing in advance, at cost and up to 10% of the total fees."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "pricing",
+        "is": "Fixed fee"
+      },
+      "then": [
+        {
+          "p": "Fixed fee. The milestone fees are fixed and cover all of Vendor's labor for the work in this Statement of Work; only expenses are billed in addition."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "pricing",
+        "is": "Time and materials"
+      },
+      "then": [
+        {
+          "p": "Time and materials. The milestone fees are estimates. Instead of invoicing on acceptance, Vendor invoices monthly in arrears for the hours actually worked at the rate card rates, and shall not exceed the total above without a Change Order."
+        }
+      ]
+    },
+    {
+      "h": "8. Key Personnel"
+    },
+    {
+      "p": "Vendor's key personnel for this project are: {{key_personnel}}. Vendor shall not remove or replace a key person without Customer's prior written consent, not to be unreasonably withheld, except for illness, resignation or end of employment, and shall replace any key person with someone of equivalent skill and experience."
+    },
+    {
+      "h": "9. Roles & Responsibilities"
+    },
+    {
+      "p": "Each party shall name a project lead and a contact for each workstream in this Statement of Work. Customer shall provide the access, data and approvals Vendor reasonably requests within 5 business days of the request. Vendor shall tell Customer promptly of any gap in resources or other blocker, and shall not absorb its effect on the schedule without notice."
+    },
+    {
+      "h": "10. Acceptance Criteria & Process"
+    },
+    {
+      "if": {
+        "field": "position",
+        "is": "Balanced"
+      },
+      "then": [
+        {
+          "p": "Each deliverable is accepted against the acceptance criteria stated for it in this Statement of Work or, where none are stated, against its description here. Customer has 10 business days after delivery to accept a deliverable or give written notice of the defects that prevent acceptance, in enough detail for Vendor to correct them. Vendor shall correct the defects and resubmit the deliverable within 10 business days, and if it fails a second time Customer may reject it and withhold the fees for it."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "position",
+        "is": "Favours Fontara"
+      },
+      "then": [
+        {
+          "p": "A deliverable is accepted if it meets the general purpose described in this Statement of Work, and is deemed accepted if Customer gives no written notice of defects within 5 business days after delivery. Acceptance rights do not apply to any part of a deliverable that Customer has modified or integrated with other systems, and Vendor need not revise a deliverable more than twice."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "position",
+        "is": "Favours the counterparty"
+      },
+      "then": [
+        {
+          "p": "Each deliverable is accepted only against the objective, measurable acceptance criteria agreed for it when this Statement of Work is signed, and only by Customer's written sign-off; there is no deemed acceptance. Vendor shall correct defects until the deliverable meets its criteria, and a failure to achieve acceptance after 3 attempts is a material breach."
+        }
+      ]
+    },
+    {
+      "p": "Customer project sponsor: [[text:Customer:Project sponsor]]  Acceptance contact email: [[email:Customer:Acceptance email]]"
+    },
+    {
+      "h": "11. Change Management"
+    },
+    {
+      "p": "Any change to the scope, schedule or fees requires a Change Order signed by both parties before the changed work begins. Within 5 business days of a change request, Vendor shall give Customer a written estimate of the change's effect on the fees, the schedule and the scope."
+    },
+    {
+      "sign": "Customer",
+      "title": true,
+      "company": true
+    },
+    {
+      "sign": "Fontara",
+      "title": true,
+      "company": true
+    },
+    {
+      "pagebreak": true
+    },
+    {
+      "h1": "Schedules"
+    },
+    {
+      "h2": "Schedule 1 — Acceptance Steps"
+    },
+    {
+      "ol": [
+        "Vendor delivers the milestone and a completion notice.",
+        "Customer tests it against the agreed criteria within 10 business days.",
+        "Customer accepts it in writing, or lists the defects to fix."
+      ]
+    },
+    {
+      "h3": "Silence is acceptance"
+    },
+    {
+      "p": "A milestone is *deemed accepted* if Customer sends ++no written rejection++ within 10 business days. [Note:]{color:#cc0000; background-color:#ffff00} Vendor's security commitments are on the [Fontara trust page](https://www.docusign.com/trust)."
+    }
+  ],
+  "examples": [
+    {
+      "values": {
+        "effective": "03/01/2027",
+        "customer": "Momentum Driver",
+        "customer_entity": "a Delaware corporation",
+        "customer_address": "5500 Enterprise Drive",
+        "sow_number": "SOW-003",
+        "msa_date": "03/05/2025",
+        "project": "Carrier-portal rollout, wave 2",
+        "scope": "Configure and deploy the carrier portal for the Midwest and Southeast regions.",
+        "end": "08/31/2027",
+        "payment_terms": "net 30 days",
+        "pricing": "Fixed fee",
+        "assumptions": "Customer provides carrier data feeds and a test environment by 03/15/2027.",
+        "out_of_scope": "Data migration from the legacy portal, and end-user training.",
+        "key_personnel": "a solution architect and an engagement manager, named at kickoff",
+        "fontara_entity": "Fontara, Inc.",
+        "currency": "US$",
+        "position": "Balanced",
+        "customer_city": "Chicago",
+        "customer_region": "IL",
+        "customer_postal": "60661"
+      },
+      "tables": {
+        "Milestones": [
+          [
+            "M1",
+            "Discovery and design sign-off",
+            "04/15/2027",
+            "175,000.00"
+          ],
+          [
+            "M2",
+            "Midwest region go-live",
+            "06/15/2027",
+            "350,000.00"
+          ],
+          [
+            "M3",
+            "Southeast region go-live",
+            "08/15/2027",
+            "350,000.00"
+          ]
+        ],
+        "RateCard": [
+          [
+            "Solution architect",
+            "260"
+          ],
+          [
+            "Implementation consultant",
+            "195"
+          ],
+          [
+            "Project manager",
+            "180"
+          ]
+        ]
+      },
+      "expect": [
+        "SOW-003",
+        "Carrier-portal rollout",
+        "175,000.00",
+        "350,000.00",
+        "08/15/2027",
+        "Solution architect",
+        "195.00",
+        "260.00",
+        "875,000.00",
+        "Fees & Payment Schedule",
+        "The milestone fees are fixed",
+        "Data migration from the legacy portal",
+        "Invoices under this SOW are issued on milestone acceptance, payable net 30 days",
+        "Schedule 1 — Acceptance Steps",
+        "Customer tests it against the agreed criteria",
+        "deemed accepted if Customer sends no written rejection",
+        "Note: Vendor"
+      ],
+      "absent": [
+        "The milestone fees are estimates",
+        "issued monthly for time worked"
+      ]
+    },
+    {
+      "values": {
+        "effective": "05/01/2027",
+        "customer": "LearnSphere Global",
+        "customer_entity": "a Delaware corporation",
+        "customer_address": "1777 Academic Drive",
+        "sow_number": "SOW-011",
+        "msa_date": "05/01/2024",
+        "project": "Learner-records integration",
+        "scope": "Integrate the Fontara platform with Customer's learner-records system.",
+        "end": "09/30/2027",
+        "payment_terms": "net 30 days",
+        "pricing": "Time and materials",
+        "assumptions": "Customer's records system exposes a documented API.",
+        "out_of_scope": "Changes to Customer's records system.",
+        "key_personnel": "an integration architect, named at kickoff",
+        "fontara_entity": "Fontara Europe Ltd",
+        "currency": "€",
+        "position": "Balanced",
+        "customer_city": "Boulder",
+        "customer_region": "CO",
+        "customer_postal": "80309"
+      },
+      "tables": {
+        "Milestones": [
+          [
+            "M1",
+            "Integration design",
+            "06/15/2027",
+            "40,000.00"
+          ],
+          [
+            "M2",
+            "Integration live",
+            "09/15/2027",
+            "85,000.00"
+          ]
+        ],
+        "RateCard": [
+          [
+            "Integration architect",
+            "210"
+          ],
+          [
+            "Developer",
+            "160"
+          ]
+        ]
+      },
+      "expect": [
+        "SOW-011",
+        "Fontara Europe Ltd",
+        "210.00",
+        "125,000.00",
+        "The milestone fees are estimates",
+        "Invoices under this SOW are issued monthly for time worked, payable net 30 days"
+      ],
+      "absent": [
+        "The milestone fees are fixed",
+        "US$",
+        "issued on milestone acceptance"
+      ]
+    }
+  ],
+  "format": "word",
+  "source": "vault: Contracts/Clauses/SOW"
+}

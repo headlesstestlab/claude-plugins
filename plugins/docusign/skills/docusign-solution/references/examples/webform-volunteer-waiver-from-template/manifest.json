@@ -1,0 +1,21 @@
+{
+  "id": "webform-volunteer-waiver-from-template",
+  "name": "Volunteer waiver signed from the sign-up page",
+  "description": "A template-linked web form, linked from the volunteer sign-up page: the volunteer enters the event code, their phone and an emergency contact, then signs the waiver on the form's Signature page in the same session (no email round trip). Every form field is connected to a text tab of the waiver template.",
+  "webformTemplates": [
+    "volunteer-waiver-signup"
+  ],
+  "prerequisites": [
+    "Replace the waiver text in assets/esign-templates/specs/volunteer-waiver.json with your existing template's wording (keep the {{field}} keys), then render its PDF: npx tsx captures/esign-template-docs.ts volunteer-waiver."
+  ],
+  "gaps": [
+    {
+      "need": "use our EXISTING Docusign waiver template, by its id",
+      "instead": "the waiver is an eSignature template in this bundle (an inline document), made from your wording; the form is built from that template"
+    },
+    {
+      "need": "the event code arrives hidden from the link",
+      "instead": "a template-linked form gets one field per text tab, so the event code is the first field, with the sign-up page's code in its help text; URL prefill (#event_code=…) is not proven on a live form"
+    }
+  ]
+}

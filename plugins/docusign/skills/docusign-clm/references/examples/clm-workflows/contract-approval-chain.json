@@ -1,0 +1,173 @@
+{
+  "id": "contract-approval-chain",
+  "name": "Contract Approval Chain",
+  "description": "An approval chain with the task settings a legal team sets most: outside the EU (a Rule with not equals) Legal and then Finance approve in order, with the contract checked out to the approver, a due date one week out, and a display and stage name; then the requester makes final edits (due in one month) and goes straight on to the next task (Link to next step), where they send the contract to the counterparty, edit again (a loop back) or finish. The counterparty review has its own Decline text and required comments, Wait for External Review keeps the returned and the updated documents, and Email Document sends the result from Finance with a note. A round number and the request date are kept in Number and Date variables.",
+  "variables": [
+    {
+      "name": "Round",
+      "type": "number"
+    },
+    {
+      "name": "RequestedOn",
+      "type": "date"
+    },
+    "Comments",
+    {
+      "name": "Returned",
+      "type": "document"
+    },
+    {
+      "name": "Updated",
+      "type": "document"
+    }
+  ],
+  "paramsSchema": "<Params><Documents><Document><Id/><Name/></Document></Documents><ContractName/><Region/><RequestedOn/></Params>",
+  "steps": [
+    {
+      "id": "round",
+      "name": "Round and request date",
+      "kind": "setVariable",
+      "set": {
+        "Round": "1",
+        "RequestedOn": "<%#XmlVariables.Params.RequestedOn%>"
+      },
+      "next": "region"
+    },
+    {
+      "id": "region",
+      "name": "Region outside EU",
+      "kind": "rule",
+      "condition": {
+        "left": "<%#XmlVariables.Params.Region%>",
+        "op": "notEquals",
+        "right": "EU"
+      },
+      "on": {
+        "true": "approve",
+        "false": "notify"
+      }
+    },
+    {
+      "id": "approve",
+      "name": "Legal then Finance approve",
+      "kind": "approve",
+      "assignees": [
+        "submitter",
+        {
+          "user": "fontara.maya.patel@example.com"
+        }
+      ],
+      "inOrder": true,
+      "checkout": true,
+      "displayName": "Approve <%#XmlVariables.Params.ContractName%>",
+      "stage": "Approval",
+      "due": {
+        "weeks": 1
+      },
+      "subject": "Approve <%#XmlVariables.Params.ContractName%>",
+      "instructions": "Approve the contract, or reject it with a comment.",
+      "on": {
+        "approved": "edit",
+        "rejected": "notify",
+        "failure": "notify"
+      }
+    },
+    {
+      "id": "edit",
+      "name": "Final edits",
+      "kind": "editDocument",
+      "assignee": "submitter",
+      "displayName": "Final edits to <%#XmlVariables.Params.ContractName%>",
+      "stage": "Drafting",
+      "due": {
+        "months": 1
+      },
+      "linkToNext": true,
+      "instructions": "Make the final edits, then complete the task.",
+      "on": {
+        "completed": "next",
+        "failure": "notify"
+      }
+    },
+    {
+      "id": "next",
+      "name": "What next",
+      "kind": "choice",
+      "assignee": "submitter",
+      "stage": "Drafting",
+      "options": [
+        {
+          "label": "Send to the counterparty",
+          "to": "review"
+        },
+        {
+          "label": "Edit again",
+          "to": "edit"
+        },
+        {
+          "label": "Done",
+          "to": "finish"
+        }
+      ],
+      "on": {
+        "failure": "notify"
+      }
+    },
+    {
+      "id": "review",
+      "name": "Counterparty review",
+      "kind": "externalReview",
+      "assignee": "submitter",
+      "subject": "Please review <%#XmlVariables.Params.ContractName%>",
+      "rejectText": "Decline",
+      "comments": "Required",
+      "on": {
+        "sent": "wait",
+        "rejected": "notify",
+        "canceled": "notify",
+        "failure": "notify"
+      }
+    },
+    {
+      "id": "wait",
+      "name": "Wait for the counterparty",
+      "kind": "waitExternalReview",
+      "outputDocuments": "Returned",
+      "updatedDocuments": "Updated",
+      "on": {
+        "completedWithDocument": "mail",
+        "completedWithoutDocument": "mail",
+        "expired": "notify",
+        "failure": "notify"
+      }
+    },
+    {
+      "id": "mail",
+      "name": "Send the result",
+      "kind": "emailDocument",
+      "to": "submitter",
+      "from": {
+        "user": "fontara.maya.patel@example.com"
+      },
+      "subject": "<%#XmlVariables.Params.ContractName%> is back from the counterparty",
+      "note": "Returned by the counterparty after round <%#Variable.Round%>.",
+      "next": "finish"
+    },
+    {
+      "id": "notify",
+      "name": "Tell the requester",
+      "kind": "email",
+      "to": "submitter",
+      "from": {
+        "user": "fontara.maya.patel@example.com"
+      },
+      "subject": "<%#XmlVariables.Params.ContractName%> stopped",
+      "body": "The approval chain stopped. Open the workflow for the reason.",
+      "next": "finish"
+    },
+    {
+      "id": "finish",
+      "kind": "finish"
+    }
+  ]
+}

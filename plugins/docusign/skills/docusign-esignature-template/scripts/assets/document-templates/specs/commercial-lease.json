@@ -1,0 +1,638 @@
+{
+  "id": "commercial-lease",
+  "name": "Commercial Office Lease",
+  "description": "Office space: basic lease information, rent and escalations, operating expenses, improvements, deposit, repairs, insurance, casualty, default, holdover, assignment, SNDA.",
+  "agreementType": "Lease",
+  "fields": {
+    "effective": {
+      "bind": {
+        "provision": "EffectiveDate"
+      },
+      "required": true
+    },
+    "landlord": {
+      "bind": {
+        "provision": "AgreementParty"
+      },
+      "required": true,
+      "description": "Landlord legal name"
+    },
+    "landlord_address": {
+      "label": "Landlord notice street address",
+      "required": true
+    },
+    "landlord_city": {
+      "label": "Landlord notice city",
+      "required": true
+    },
+    "landlord_region": {
+      "label": "Landlord notice state",
+      "required": true
+    },
+    "landlord_postal": {
+      "label": "Landlord notice ZIP code",
+      "required": true
+    },
+    "premises": {
+      "label": "Premises",
+      "required": true
+    },
+    "rsf": {
+      "label": "Rentable square feet",
+      "required": true
+    },
+    "commencement": {
+      "label": "Commencement Date",
+      "type": "date",
+      "required": true
+    },
+    "end": {
+      "bind": {
+        "provision": "ExpirationDate"
+      },
+      "required": true
+    },
+    "rent": {
+      "label": "First-year annual Base Rent (USD)",
+      "type": "number",
+      "money": true,
+      "required": true
+    },
+    "share": {
+      "label": "Proportionate Share (%)",
+      "type": "number",
+      "required": true
+    },
+    "deposit": {
+      "label": "Security Deposit (USD)",
+      "type": "number",
+      "money": true,
+      "required": true
+    },
+    "allowance": {
+      "label": "Tenant Improvement Allowance (USD)",
+      "type": "number",
+      "money": true,
+      "required": true
+    },
+    "use": {
+      "label": "Permitted Use",
+      "required": true
+    },
+    "parking": {
+      "label": "Parking",
+      "required": true
+    },
+    "renewal": {
+      "label": "Renewal option",
+      "type": "select",
+      "options": [
+        "One 5-year renewal option",
+        "No renewal option"
+      ],
+      "required": true
+    },
+    "renewal_rent": {
+      "label": "Renewal rent basis",
+      "type": "select",
+      "options": [
+        "Fair market rent",
+        "95% of fair market rent"
+      ],
+      "required": true,
+      "description": "Used only with a renewal option"
+    },
+    "governing_law": {
+      "bind": {
+        "provision": "GoverningLaw"
+      },
+      "required": true,
+      "description": "Written after \"the laws of\": for example, the State of Delaware, or England and Wales"
+    },
+    "position": {
+      "label": "Negotiated position",
+      "type": "select",
+      "options": [
+        "Balanced",
+        "Favours Fontara",
+        "Favours the counterparty"
+      ],
+      "required": true,
+      "description": "For the clauses most often negotiated"
+    }
+  },
+  "signers": [
+    "Tenant",
+    "Landlord"
+  ],
+  "body": [
+    {
+      "title": "OFFICE LEASE"
+    },
+    {
+      "p": "This Lease is made as of {{effective}} between **{{landlord}}** (\"Landlord\") and **Fontara, Inc.**, a Delaware corporation with its principal place of business at 1500 Harbor Boulevard, Suite 1200, San Francisco, CA 94111 (\"Tenant\"), for the Premises in the building in which they are located (the \"Building\")."
+    },
+    {
+      "table": {
+        "header": [
+          "Basic Lease Information",
+          ""
+        ],
+        "rows": [
+          [
+            "Premises",
+            "{{premises}}"
+          ],
+          [
+            "Rentable Area",
+            "{{rsf}} rentable square feet"
+          ],
+          [
+            "Commencement Date",
+            "{{commencement}}"
+          ],
+          [
+            "Expiration Date",
+            "{{end}}"
+          ],
+          [
+            "First-year Base Rent",
+            "US${{rent}} a year, payable monthly"
+          ],
+          [
+            "Proportionate Share",
+            "{{share}}%"
+          ],
+          [
+            "Security Deposit",
+            "US${{deposit}}"
+          ],
+          [
+            "Tenant Improvement Allowance",
+            "US${{allowance}}"
+          ],
+          [
+            "Permitted Use",
+            "{{use}}"
+          ],
+          [
+            "Parking",
+            "{{parking}}"
+          ]
+        ]
+      }
+    },
+    {
+      "if": {
+        "field": "parking",
+        "is": "None"
+      },
+      "hide": true,
+      "then": [
+        {
+          "p": "Parking. Tenant may use the parking stated in the Basic Lease Information in the Building garage at the prevailing monthly rate."
+        }
+      ]
+    },
+    {
+      "p": "Base Rent schedule (annual rent increases by 3% at the start of each lease year):"
+    },
+    {
+      "lineItems": {
+        "name": "RentSchedule",
+        "label": "Base Rent schedule",
+        "columns": [
+          {
+            "key": "lease_year",
+            "label": "Lease Year"
+          },
+          {
+            "key": "annual_base_rent",
+            "label": "Annual Base Rent"
+          },
+          {
+            "key": "monthly_installment",
+            "label": "Monthly Installment"
+          }
+        ]
+      }
+    },
+    {
+      "h": "1. Definitions"
+    },
+    {
+      "p": "Capitalized terms in the Basic Lease Information have the meanings given there. \"Operating Expenses\" means the reasonable costs of operating, maintaining, repairing, insuring and managing the Building and its land, including real estate taxes, subject to the exclusions in the Operating Expenses section; \"Controllable Expenses\" means Operating Expenses other than taxes, insurance and utilities. \"Proportionate Share\" means the percentage stated in the Basic Lease Information, being the rentable area of the Premises divided by that of the Building."
+    },
+    {
+      "h": "2. Term and Use"
+    },
+    {
+      "p": "The Term begins on the Commencement Date and ends on the Expiration Date. Tenant shall use the Premises only for the Permitted Use and in compliance with law. Landlord shall deliver the Premises, and keep the Building's structure, roof, common areas and base building systems, in compliance with law, including the Americans with Disabilities Act."
+    },
+    {
+      "if": {
+        "field": "renewal",
+        "is": "One 5-year renewal option"
+      },
+      "then": [
+        {
+          "p": "Renewal option. Tenant may extend the Term once, for five years, by written notice to Landlord at least nine months before the Expiration Date, at the Base Rent for a renewal term set out in the Base Rent and Escalations section."
+        },
+        {
+          "if": {
+            "field": "renewal_rent",
+            "is": "95% of fair market rent"
+          },
+          "then": [
+            {
+              "p": "The Base Rent for the renewal term is 95% of the prevailing fair market rent for comparable space in the Building's submarket."
+            }
+          ]
+        },
+        {
+          "if": {
+            "field": "renewal_rent",
+            "is": "Fair market rent"
+          },
+          "then": [
+            {
+              "p": "The Base Rent for the renewal term is 100% of the prevailing fair market rent for comparable space in the Building's submarket."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "renewal",
+        "is": "No renewal option"
+      },
+      "then": [
+        {
+          "p": "Tenant has no option to renew or extend the Term."
+        }
+      ]
+    },
+    {
+      "h": "3. Base Rent and Escalations"
+    },
+    {
+      "if": {
+        "field": "position",
+        "is": "Balanced"
+      },
+      "then": [
+        {
+          "p": "Base Rent for the first lease year is the annual amount stated in the Basic Lease Information, payable monthly in advance, and increases by 3% on each anniversary of the Commencement Date. Base Rent for any renewal term is 95% of the fair market rent for comparable space, agreed by the parties or, if they cannot agree within 30 days, set by baseball arbitration between their brokers."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "position",
+        "is": "Favours Fontara"
+      },
+      "then": [
+        {
+          "p": "Base Rent increases by 3% on each anniversary, and is abated in full for the first six months of the Term without condition. Renewal rent is 90% of fair market rent, taking into account the concessions then given in comparable transactions, and may not exceed the rent in the last year of the expiring term by more than 5%."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "position",
+        "is": "Favours the counterparty"
+      },
+      "then": [
+        {
+          "p": "Base Rent increases on each anniversary by the greater of 3% and the increase in the Consumer Price Index over the prior year, with no cap. Any abated rent is conditioned on Tenant not defaulting during the Term and becomes due at once on a Tenant default, and renewal rent is 100% of fair market rent as determined by Landlord, but never less than the rent in the last year of the expiring term."
+        }
+      ]
+    },
+    {
+      "p": "Tenant initials acknowledging Section 3 (Base Rent and Escalations): [[initials:Tenant]]"
+    },
+    {
+      "h": "4. Operating Expenses"
+    },
+    {
+      "if": {
+        "field": "position",
+        "is": "Balanced"
+      },
+      "then": [
+        {
+          "p": "Tenant pays its Proportionate Share of Operating Expenses in monthly estimates, and within 120 days after each calendar year Landlord delivers a reconciliation statement and refunds or bills the difference within 30 days. Operating Expenses exclude capital expenditures other than those required by law or that reduce operating costs, which are amortized over their useful life; variable expenses are grossed up to 95% occupancy; and Controllable Expenses may not increase by more than 5% a year on a cumulative basis. Tenant may audit Landlord's records within 12 months after receiving a statement, and Landlord pays the audit cost if Operating Expenses were overstated by more than 4%."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "position",
+        "is": "Favours Fontara"
+      },
+      "then": [
+        {
+          "p": "Operating Expenses exclude capital expenditures, leasing costs, debt service, ground rent, costs recoverable from insurance or other tenants, and Landlord's corporate overhead, and all Operating Expenses other than taxes and insurance may not increase by more than 3% over the prior year's actual amount, on a non-cumulative basis. Tenant may audit the prior three years at any time on 30 days' notice, and if Operating Expenses were overstated by more than 3% Landlord refunds the excess with interest and pays the audit cost."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "position",
+        "is": "Favours the counterparty"
+      },
+      "then": [
+        {
+          "p": "Tenant pays its Proportionate Share of all costs of owning, operating, maintaining, repairing and replacing the Building, including capital expenditures, a management fee of up to 5% of gross revenues and an administrative fee of 15% on common area costs. Landlord's reconciliation statement is final unless Tenant objects in writing within 60 days, and any audit must be done at Landlord's office by an independent accountant not paid on a contingency basis."
+        }
+      ]
+    },
+    {
+      "h": "5. Tenant Improvement Allowance"
+    },
+    {
+      "if": {
+        "field": "position",
+        "is": "Balanced"
+      },
+      "then": [
+        {
+          "p": "Landlord provides the Tenant Improvement Allowance stated in the Basic Lease Information toward the cost of Tenant's initial improvements, of which up to 15% may be used for design, permits, cabling and moving costs. Landlord pays the allowance monthly as work progresses, within 30 days after receiving invoices and conditional lien waivers, holding back 10% until completion, a certificate of occupancy and final lien waivers. Any allowance not requested within 12 months after the Commencement Date is forfeited."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "position",
+        "is": "Favours Fontara"
+      },
+      "then": [
+        {
+          "p": "Tenant may apply the allowance to hard and soft costs and to furniture, fixtures and equipment, and any unused balance is credited against Base Rent. Landlord funds within 30 days after each draw request and charges no supervision fee, and if Landlord fails to fund a draw when due, Tenant may pay the amount itself and offset it, with interest, against rent."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "position",
+        "is": "Favours the counterparty"
+      },
+      "then": [
+        {
+          "p": "The allowance may be used only for permanent improvements approved by Landlord, which become Landlord's property, and Tenant pays all costs above the allowance before Landlord funds any part of it. Landlord charges a supervision fee of 5% of the total cost of the work, pays the allowance in one sum after completion and final lien waivers, and need not fund while Tenant is in default."
+        }
+      ]
+    },
+    {
+      "h": "6. Security Deposit"
+    },
+    {
+      "p": "On signing, Tenant shall deliver the Security Deposit in cash or as an irrevocable standby letter of credit from a bank reasonably acceptable to Landlord. Landlord may apply it to cure a Tenant default after notice and the applicable cure period, and shall return any balance within 30 days after this Lease ends."
+    },
+    {
+      "h": "7. Repairs and Maintenance"
+    },
+    {
+      "p": "Landlord shall maintain and repair the structure, roof, foundation, common areas and base building mechanical, electrical, plumbing and life-safety systems, the cost being included in Operating Expenses to the extent permitted. Tenant shall keep the interior of the Premises in good condition, reasonable wear and tear and casualty excepted."
+    },
+    {
+      "h": "8. Lease Assignment and Subletting"
+    },
+    {
+      "p": "Tenant may not assign this Lease or sublet any part of the Premises without Landlord's consent, which Landlord will not unreasonably withhold, condition or delay and will give or refuse within 15 business days after a complete request. Tenant may assign or sublet without consent to an affiliate, or to a successor by merger or by purchase of substantially all its assets whose net worth is at least Tenant's at signing. Tenant pays Landlord 50% of any transfer rent above the rent under this Lease, after deducting Tenant's reasonable transfer costs, and remains liable after any assignment."
+    },
+    {
+      "h": "9. SNDA and Estoppel Certificates"
+    },
+    {
+      "p": "This Lease is subordinate to any existing or future mortgage on the Building only if the holder delivers a subordination, non-disturbance and attornment agreement in commercially reasonable form, under which Tenant's possession and rights are not disturbed while Tenant is not in default. Within 10 days after Landlord's request, Tenant will deliver an estoppel certificate stating the rent, the term, any defaults known to Tenant and other facts reasonably requested."
+    },
+    {
+      "h": "10. Insurance and Indemnity"
+    },
+    {
+      "p": "Tenant shall maintain commercial general liability insurance of at least US$2,000,000 per occurrence and property insurance on its personal property and improvements. Landlord shall maintain property insurance on the Building for its full replacement cost and commercial general liability insurance. Each party waives claims against the other for loss covered by its property insurance and shall obtain a waiver of subrogation from its insurer. Each party shall indemnify the other against third-party claims for bodily injury or property damage arising from its negligence or willful misconduct, or that of its agents, employees or contractors."
+    },
+    {
+      "h": "11. Casualty and Condemnation"
+    },
+    {
+      "p": "If fire or other casualty damages the Premises or access to them, Base Rent and Operating Expenses abate in proportion to the area made unusable until the damage is repaired. If Landlord's architect estimates the restoration will take more than 270 days, or it is not substantially complete within 300 days after the casualty, either party may terminate this Lease by notice. If all or a material part of the Premises is taken by condemnation, either party may terminate this Lease as of the date of the taking, and Tenant may claim its moving costs and the value of its improvements."
+    },
+    {
+      "h": "12. Default and Remedies"
+    },
+    {
+      "p": "Tenant is in default if it fails to pay rent within 5 business days after written notice that it is due, or fails to perform another obligation within 30 days after written notice, or longer if the failure cannot reasonably be cured in that time and Tenant is diligently curing it. On a default Landlord may exercise the remedies the law allows, including termination and recovery of damages, and shall use reasonable efforts to mitigate its damages. If Landlord fails to perform an obligation within 30 days after Tenant's notice, Tenant may cure the failure and offset the reasonable cost against rent."
+    },
+    {
+      "h": "13. Holdover and Surrender"
+    },
+    {
+      "p": "If Tenant remains in the Premises after this Lease ends without Landlord's consent, it is a tenant at sufferance and pays 150% of the last monthly Base Rent for each month of holdover, prorated daily; it is liable for consequential damages only if the holdover continues more than 60 days after Landlord's notice that a new tenant needs the Premises. When this Lease ends Tenant shall surrender the Premises broom-clean and in good condition, reasonable wear and tear and casualty excepted, and remove its personal property and cabling, but need not remove improvements unless Landlord required it when approving them."
+    },
+    {
+      "h": "14. Hazardous Materials"
+    },
+    {
+      "p": "Tenant shall not bring hazardous materials onto the Premises other than ordinary office and cleaning supplies used in compliance with law. Landlord represents that, to its knowledge, the Building contains no hazardous materials in violation of law, and is responsible for any present before the Commencement Date or introduced by Landlord or its agents."
+    },
+    {
+      "h": "15. Quiet Enjoyment and Brokers"
+    },
+    {
+      "p": "While Tenant is not in default beyond any cure period, Tenant may peaceably occupy the Premises for the Term without disturbance by Landlord or anyone claiming through it. Each party represents that it has dealt with no broker in connection with this Lease other than the brokers it has identified in writing, whose commissions Landlord pays under separate agreements, and shall indemnify the other against any claim by another broker claiming through it."
+    },
+    {
+      "h": "16. Notices"
+    },
+    {
+      "p": "Notices under this Lease must be in writing and delivered by hand, by recognized overnight courier or by email to the addresses stated in this Lease or later notified in writing. A notice is effective on confirmed delivery or, for email, when the recipient acknowledges it. Notices of breach, termination or a legal claim must be sent by courier, with a copy by email."
+    },
+    {
+      "p": "Landlord's address for notices: {{landlord_address}}, {{landlord_city}}, {{landlord_region}} {{landlord_postal}}."
+    },
+    {
+      "p": "Tenant's address for notices: Fontara, Inc., 1500 Harbor Boulevard, Suite 1200, San Francisco, CA 94111, Attention: General Counsel."
+    },
+    {
+      "h": "17. Force Majeure"
+    },
+    {
+      "p": "Neither party is liable for a delay or failure to perform, other than an obligation to pay money, caused by events beyond its reasonable control, including natural disasters, epidemics, war, terrorism, civil unrest, government action and widespread failures of the internet or public utilities. The affected party shall notify the other within 5 business days and use reasonable efforts to resume performance. If the event continues for more than 60 days, either party may terminate the affected performance under this Lease on written notice without liability."
+    },
+    {
+      "h": "18. Governing Law and Disputes"
+    },
+    {
+      "p": "This Lease is governed by the laws of {{governing_law}}, without regard to its conflict-of-laws rules."
+    },
+    {
+      "h": "19. Entire Agreement and Amendment"
+    },
+    {
+      "p": "This Lease is the entire agreement of the parties on its subject and supersedes all prior proposals, negotiations, representations and understandings about it. Each party confirms that in entering into it, it has not relied on any statement not set out in it. This Lease may be amended only in a writing signed by authorized representatives of both parties."
+    },
+    {
+      "h": "20. Survival"
+    },
+    {
+      "p": "Any provision of this Lease that by its nature is intended to survive its termination or expiration survives it, including the indemnities, and Tenant's obligations accrued before the end of the Term, together with any payment obligation accrued before termination."
+    },
+    {
+      "h": "21. General"
+    },
+    {
+      "p": "If any provision of this Lease is held invalid or unenforceable, it is enforced to the maximum extent permitted and the rest of this Lease continues in full force. No failure or delay in exercising a right is a waiver of it, and a waiver is effective only if it is in writing and signed. No person other than the parties and their permitted successors and assigns has any right to enforce any term of this Lease. This Lease may be signed in counterparts and by electronic signature, each of which is an original and all of which together are one instrument."
+    },
+    {
+      "p": "IN WITNESS WHEREOF, the parties have signed this Lease as of the date first written above."
+    },
+    {
+      "sign": "Tenant",
+      "title": true,
+      "company": true
+    },
+    {
+      "sign": "Landlord",
+      "title": true,
+      "company": true
+    }
+  ],
+  "examples": [
+    {
+      "values": {
+        "effective": "05/01/2027",
+        "landlord": "Harbor Boulevard Office Partners LLC",
+        "landlord_address": "c/o Harbor Property Management, 1500 Harbor Boulevard, Suite 100",
+        "premises": "Suite 1400, 1500 Harbor Boulevard",
+        "rsf": "24,800",
+        "commencement": "07/01/2027",
+        "end": "06/30/2034",
+        "rent": "868000",
+        "share": "6.2",
+        "deposit": "217000",
+        "allowance": "620000",
+        "use": "General office use",
+        "parking": "2 per 1,000 RSF",
+        "renewal": "One 5-year renewal option",
+        "renewal_rent": "95% of fair market rent",
+        "governing_law": "the State of California",
+        "position": "Balanced",
+        "landlord_city": "San Francisco",
+        "landlord_region": "CA",
+        "landlord_postal": "94111"
+      },
+      "tables": {
+        "RentSchedule": [
+          [
+            "1",
+            "868,000.00",
+            "72,333.33"
+          ],
+          [
+            "2",
+            "894,040.00",
+            "74,503.33"
+          ],
+          [
+            "3",
+            "920,861.20",
+            "76,738.43"
+          ],
+          [
+            "4",
+            "948,487.04",
+            "79,040.59"
+          ],
+          [
+            "5",
+            "976,941.65",
+            "81,411.80"
+          ],
+          [
+            "6",
+            "1,006,250.90",
+            "83,854.24"
+          ],
+          [
+            "7",
+            "1,036,438.43",
+            "86,369.87"
+          ]
+        ]
+      },
+      "expect": [
+        "increases by 3%",
+        "Suite 1400",
+        "72,333.33",
+        "1,036,438.43",
+        "extend the Term once",
+        "95% of the prevailing fair market rent",
+        "in the Building garage",
+        "tenant at sufferance"
+      ],
+      "absent": [
+        "Shopping Center",
+        "no option to renew",
+        "100% of the prevailing fair market rent"
+      ]
+    },
+    {
+      "values": {
+        "effective": "09/01/2027",
+        "landlord": "Harbor Boulevard Office Partners LLC",
+        "landlord_address": "c/o Harbor Property Management, 1500 Harbor Boulevard, Suite 100",
+        "premises": "Suite 300, 1500 Harbor Boulevard",
+        "rsf": "6,100",
+        "commencement": "10/01/2027",
+        "end": "09/30/2030",
+        "rent": "231800",
+        "share": "1.5",
+        "deposit": "57950",
+        "allowance": "0",
+        "use": "General office use",
+        "parking": "None",
+        "renewal": "No renewal option",
+        "renewal_rent": "Fair market rent",
+        "governing_law": "the State of California",
+        "position": "Balanced",
+        "landlord_city": "San Francisco",
+        "landlord_region": "CA",
+        "landlord_postal": "94111"
+      },
+      "tables": {
+        "RentSchedule": [
+          [
+            "1",
+            "231,800.00",
+            "19,316.67"
+          ],
+          [
+            "2",
+            "238,754.00",
+            "19,896.17"
+          ],
+          [
+            "3",
+            "245,916.62",
+            "20,493.05"
+          ]
+        ]
+      },
+      "expect": [
+        "Suite 300",
+        "19,316.67",
+        "no option to renew",
+        "tenant at sufferance"
+      ],
+      "absent": [
+        "extend the Term once",
+        "prevailing fair market rent for comparable space in the Building",
+        "in the Building garage"
+      ]
+    }
+  ],
+  "source": "vault: Contracts/Clauses/Commercial Lease"
+}

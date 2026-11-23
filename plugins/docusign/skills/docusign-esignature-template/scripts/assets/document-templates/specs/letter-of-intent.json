@@ -1,0 +1,297 @@
+{
+  "id": "letter-of-intent",
+  "name": "Letter of Intent",
+  "description": "The main terms of a proposed services engagement — fees, term, exclusivity — non-binding except confidentiality, exclusivity and governing law.",
+  "agreementType": "LetterOfIntent",
+  "fields": {
+    "fontara_entity": {
+      "label": "Fontara contracting entity",
+      "type": "select",
+      "options": [
+        "Fontara, Inc.",
+        "Fontara UK Ltd",
+        "Fontara Europe Ltd"
+      ],
+      "optionValues": {
+        "Fontara, Inc.": "Fontara, Inc., a Delaware corporation with its principal place of business at 1500 Harbor Boulevard, Suite 1200, San Francisco, CA 94111",
+        "Fontara UK Ltd": "Fontara UK Ltd, a company registered in England and Wales with its registered office at 48 Ashcombe Street, London EC2A 4NE, United Kingdom",
+        "Fontara Europe Ltd": "Fontara Europe Ltd, a company registered in Ireland with its registered office at 3 Riverside Quay, Dublin 2, D02 X285, Ireland"
+      },
+      "required": true,
+      "description": "Prints the entity’s full legal description and address"
+    },
+    "currency": {
+      "label": "Currency",
+      "type": "select",
+      "options": [
+        "US$",
+        "£",
+        "€"
+      ],
+      "required": true,
+      "description": "The signing entity’s: US$ for Fontara, Inc., £ for Fontara UK Ltd, € for Fontara Europe Ltd"
+    },
+    "customer": {
+      "bind": {
+        "provision": "AgreementParty"
+      },
+      "required": true,
+      "description": "Customer legal name"
+    },
+    "customer_address": {
+      "label": "Customer street address",
+      "required": true
+    },
+    "customer_city": {
+      "label": "Customer city",
+      "required": true
+    },
+    "customer_region": {
+      "label": "Customer state",
+      "required": true
+    },
+    "customer_postal": {
+      "label": "Customer ZIP code",
+      "required": true
+    },
+    "customer_entity": {
+      "label": "Customer entity type",
+      "required": true,
+      "description": "For example: an Illinois corporation"
+    },
+    "engagement": {
+      "label": "Proposed engagement",
+      "required": true
+    },
+    "fees": {
+      "label": "Proposed annual fees",
+      "type": "number",
+      "money": true,
+      "required": true
+    },
+    "exclusivity": {
+      "label": "Exclusivity",
+      "type": "select",
+      "options": [
+        "Customer exclusivity (no-shop)",
+        "None"
+      ],
+      "required": true
+    },
+    "effective": {
+      "bind": {
+        "provision": "EffectiveDate"
+      },
+      "required": true
+    },
+    "expiration": {
+      "bind": {
+        "provision": "ExpirationDate"
+      },
+      "required": true
+    },
+    "payment_terms": {
+      "label": "Payment terms",
+      "type": "select",
+      "options": [
+        "net 30 days",
+        "net 45 days",
+        "net 60 days",
+        "net 90 days"
+      ],
+      "required": true
+    },
+    "initial_term": {
+      "label": "Initial term",
+      "type": "select",
+      "options": [
+        "1 year",
+        "2 years",
+        "3 years"
+      ],
+      "required": true
+    }
+  },
+  "signers": [
+    "Customer",
+    "Fontara"
+  ],
+  "body": [
+    {
+      "title": "LETTER OF INTENT"
+    },
+    {
+      "p": "This letter of intent (\"LOI\") sets out the principal terms on which {{fontara_entity}} (\"Vendor\"), proposes to provide services to **{{customer}}**, {{customer_entity}} with its principal place of business at {{customer_address}}, {{customer_city}}, {{customer_region}} {{customer_postal}} (\"Customer\"): {{engagement}}. The parties intend to record the engagement in a master services agreement and statement of work (together, the \"Definitive Agreement\")."
+    },
+    {
+      "h": "1. Transaction Overview"
+    },
+    {
+      "p": "This LOI describes the engagement the parties propose, under which Vendor would provide the services described in it to Customer, and the principal commercial terms on which they expect to agree. The description is illustrative and subject to the Definitive Agreement, and the parties shall negotiate in good faith with a view to signing the Definitive Agreement before this LOI expires."
+    },
+    {
+      "h": "2. Commercial Terms (Non-Binding)"
+    },
+    {
+      "p": "The proposed fees are {{currency}}{{fees}} a year, invoiced annually in advance and payable {{payment_terms}}, for an initial term of {{initial_term}}. These fees, the payment structure and the key assumptions in this LOI are subject to confirmation in due diligence. Neither party may depart materially from them in the Definitive Agreement without the other's written consent."
+    },
+    {
+      "h": "3. Exclusivity"
+    },
+    {
+      "if": {
+        "field": "exclusivity",
+        "is": "Customer exclusivity (no-shop)"
+      },
+      "then": [
+        {
+          "p": "For 60 days from the date of this LOI, Customer shall not solicit or negotiate proposals from other providers for the services described in it, although it may respond to approaches it did not solicit. Exclusivity ends early if the parties have not agreed the principal terms of the Definitive Agreement within 45 days."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "exclusivity",
+        "is": "None"
+      },
+      "then": [
+        {
+          "p": "Neither party is bound by any exclusivity obligation, and each may discuss similar arrangements with others."
+        }
+      ]
+    },
+    {
+      "h": "4. Confidentiality"
+    },
+    {
+      "p": "Each party shall keep confidential the terms of this LOI and the information the other discloses in connection with the proposed engagement, and use that information only to evaluate it. This obligation continues for 2 years after this LOI ends, whether or not the parties sign the Definitive Agreement."
+    },
+    {
+      "h": "5. Non-Binding Statement"
+    },
+    {
+      "p": "This LOI records the parties' present intentions and is not binding, except for its provisions on confidentiality, exclusivity and governing law, which bind the parties. Neither party is obliged to enter into the Definitive Agreement, and no contract is to be implied from this LOI or the parties' conduct."
+    },
+    {
+      "h": "6. Expiration"
+    },
+    {
+      "p": "This LOI takes effect on {{effective}} and expires on {{expiration}} unless the parties extend it in writing or sign the Definitive Agreement first. Its binding provisions survive its expiry for the periods they state, and otherwise neither party has any further obligation under it."
+    },
+    {
+      "h": "7. Costs"
+    },
+    {
+      "p": "Each party bears its own costs in connection with this LOI and the negotiation of the Definitive Agreement."
+    },
+    {
+      "h": "8. Governing Law and Disputes"
+    },
+    {
+      "if": {
+        "field": "fontara_entity",
+        "is": "Fontara, Inc."
+      },
+      "then": [
+        {
+          "p": "This LOI is governed by the laws of the State of Delaware, without regard to its conflict-of-laws rules. The parties shall first try to resolve any dispute arising out of or relating to this LOI by good-faith negotiation between senior executives for 30 days. A dispute not resolved in that time shall be finally settled by binding arbitration administered by the American Arbitration Association under its Commercial Arbitration Rules, before a single arbitrator, seated in San Francisco, California, and judgment on the award may be entered in any court of competent jurisdiction. Either party may seek injunctive relief from a court to protect its confidential information or intellectual property."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "fontara_entity",
+        "is": "Fontara UK Ltd"
+      },
+      "then": [
+        {
+          "p": "This LOI, and any non-contractual obligation arising out of or in connection with it, is governed by the law of England and Wales. The parties shall first try to resolve any dispute arising out of or in connection with this LOI by good-faith negotiation between senior executives for 30 days. A dispute not resolved in that time shall be referred to and finally resolved by arbitration under the LCIA Rules, which are incorporated by reference into this section, before a sole arbitrator, with the seat of arbitration in London and English as the language of the arbitration. Either party may seek urgent injunctive relief from a court."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "fontara_entity",
+        "is": "Fontara Europe Ltd"
+      },
+      "then": [
+        {
+          "p": "This LOI, and any non-contractual obligation arising out of or in connection with it, is governed by the laws of Ireland. The parties shall first try to resolve any dispute arising out of or in connection with this LOI by good-faith negotiation between senior executives for 30 days, after which the courts of Ireland have exclusive jurisdiction to settle it."
+        }
+      ]
+    },
+    {
+      "h": "9. General"
+    },
+    {
+      "p": "If any provision of this LOI is held invalid or unenforceable, it is enforced to the maximum extent permitted and the rest of this LOI continues in full force. No failure or delay in exercising a right is a waiver of it, and a waiver is effective only if it is in writing and signed. No person other than the parties and their permitted successors and assigns has any right to enforce any term of this LOI. This LOI may be signed in counterparts and by electronic signature, each of which is an original and all of which together are one instrument."
+    },
+    {
+      "sign": "Customer",
+      "title": true,
+      "company": true
+    },
+    {
+      "sign": "Fontara",
+      "title": true,
+      "company": true
+    }
+  ],
+  "examples": [
+    {
+      "values": {
+        "customer": "Innovate Global Manufacturing",
+        "customer_entity": "a Pennsylvania corporation",
+        "customer_address": "2200 Factory Lane",
+        "engagement": "a three-year managed-services engagement for the contract-operations team of Innovate Global Manufacturing",
+        "fees": "450000",
+        "payment_terms": "net 30 days",
+        "initial_term": "3 years",
+        "exclusivity": "Customer exclusivity (no-shop)",
+        "effective": "02/10/2027",
+        "expiration": "05/11/2027",
+        "fontara_entity": "Fontara, Inc.",
+        "currency": "US$",
+        "customer_city": "Pittsburgh",
+        "customer_region": "PA",
+        "customer_postal": "15222"
+      },
+      "expect": [
+        "Innovate Global Manufacturing",
+        "US$450,000.00",
+        "Definitive Agreement",
+        "For 60 days",
+        "American Arbitration Association"
+      ],
+      "absent": [
+        "Neither party is bound by any exclusivity"
+      ]
+    },
+    {
+      "values": {
+        "customer": "Pine Care",
+        "customer_entity": "a Massachusetts nonprofit corporation",
+        "customer_address": "455 Medical Center Drive",
+        "engagement": "a one-year pilot of Fontara contract operations for Pine Care's home-care agreements",
+        "fees": "120000",
+        "payment_terms": "net 45 days",
+        "initial_term": "1 year",
+        "exclusivity": "None",
+        "effective": "03/01/2027",
+        "expiration": "05/30/2027",
+        "fontara_entity": "Fontara, Inc.",
+        "currency": "US$",
+        "customer_city": "Boston",
+        "customer_region": "MA",
+        "customer_postal": "02115"
+      },
+      "expect": [
+        "Neither party is bound by any exclusivity"
+      ],
+      "absent": [
+        "For 60 days"
+      ]
+    }
+  ],
+  "source": "vault: Contracts/Clauses/LOI"
+}

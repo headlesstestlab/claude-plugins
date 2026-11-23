@@ -1,0 +1,46 @@
+{
+  "id": "nda-request-launched",
+  "name": "NDA Request Launched",
+  "description": "Launched by the NDA Request document generation configuration: reads the counterparty from the form's XML in Params and records it as the workflow output.",
+  "paramsSchema": "<Params><Documents><Document><Id/><Name/></Document></Documents><TemplateFieldData><Counterparty_Legal_Name/><NDA_Type key=\"\"/><Effective_Date/></TemplateFieldData></Params>",
+  "variables": [
+    {
+      "name": "Counterparty",
+      "type": "xml"
+    }
+  ],
+  "steps": [
+    {
+      "id": "read",
+      "kind": "evaluateXPath",
+      "name": "Read the counterparty",
+      "source": "Params",
+      "xpath": "//TemplateFieldData/Counterparty_Legal_Name",
+      "output": "Counterparty",
+      "on": {
+        "match": "outOk",
+        "noMatch": "outMissing",
+        "failure": "outMissing"
+      }
+    },
+    {
+      "id": "outOk",
+      "kind": "setOutput",
+      "name": "Counterparty read",
+      "value": "<%#XmlVariables.Params.TemplateFieldData.Counterparty_Legal_Name%>",
+      "next": "finish"
+    },
+    {
+      "id": "outMissing",
+      "kind": "setOutput",
+      "name": "No counterparty",
+      "value": "No counterparty in Params",
+      "next": "finish"
+    },
+    {
+      "id": "finish",
+      "kind": "finish",
+      "name": "Finish"
+    }
+  ]
+}

@@ -1,0 +1,215 @@
+{
+  "id": "penetration-test-authorization",
+  "name": "Penetration Test Authorization and Rules of Engagement",
+  "agreementType": "Other",
+  "description": "Fontara's written permission for a security test, before testing begins: the systems in and out of scope, the window, the test team's source IP addresses, permitted and prohibited techniques, test data handling, stop-test and reporting rules, and the hosting provider's approval. Signed by the testing firm, Fontara's CISO and the hosting provider.",
+  "fields": {
+    "issued": {
+      "label": "Date issued",
+      "type": "date",
+      "required": true
+    },
+    "firm": {
+      "bind": {
+        "provision": "AgreementParty"
+      },
+      "required": true,
+      "description": "Testing firm"
+    },
+    "agreement": {
+      "label": "Agreement the test is performed under",
+      "required": true,
+      "description": "For example: Master Services Agreement dated 11/07/2023 and the 2026 Statement of Work"
+    },
+    "scope": {
+      "label": "Systems in scope",
+      "required": true
+    },
+    "out_of_scope": {
+      "label": "Out of scope",
+      "required": true
+    },
+    "start": {
+      "label": "Testing starts",
+      "type": "date",
+      "required": true
+    },
+    "end": {
+      "label": "Testing ends",
+      "type": "date",
+      "required": true
+    },
+    "hours": {
+      "label": "Testing hours",
+      "required": true
+    },
+    "source_ips": {
+      "label": "Source IP addresses",
+      "required": true
+    },
+    "host": {
+      "label": "Hosting provider",
+      "required": true
+    },
+    "business_owner": {
+      "label": "Fontara business owner",
+      "required": true
+    },
+    "fontara_emergency": {
+      "label": "Fontara emergency contact",
+      "required": true
+    },
+    "firm_emergency": {
+      "label": "Testing firm emergency contact",
+      "required": true
+    }
+  },
+  "signers": [
+    "Testing firm",
+    "Fontara",
+    "Hosting provider"
+  ],
+  "body": [
+    {
+      "title": "PENETRATION TEST AUTHORIZATION AND RULES OF ENGAGEMENT"
+    },
+    {
+      "p": "Date: {{issued}}"
+    },
+    {
+      "p": "This Penetration Test Authorization and Rules of Engagement (this \"Authorization\") is given by **Fontara, Inc.**, a Delaware corporation with its principal place of business at 1500 Harbor Boulevard, Suite 1200, San Francisco, CA 94111 (\"Fontara\"), to **{{firm}}** (the \"Testing Firm\"), and is approved by **{{host}}** (the \"Hosting Provider\"), which hosts the systems in scope. The Testing Firm performs the test under {{agreement}} (the \"Agreement\")."
+    },
+    {
+      "p": "**Purpose.** The test looks for security weaknesses in the systems in scope, the way an outside attacker would, so that Fontara can fix them. This Authorization sets the limits of the test and the rules the test team must follow. It does not change the Agreement, but where they differ on how the test is performed, this Authorization applies."
+    },
+    {
+      "h": "1. Scope"
+    },
+    {
+      "p": "**In scope.** {{scope}}"
+    },
+    {
+      "p": "**Out of scope.** {{out_of_scope}}"
+    },
+    {
+      "p": "Any system, address, account or application not listed as in scope is out of scope. If a target turns out to belong to a third party or to a system out of scope, the test team stops testing it and tells Fontara's emergency contact."
+    },
+    {
+      "h": "2. Schedule"
+    },
+    {
+      "p": "Testing may take place only from {{start}} to {{end}}, during these hours: {{hours}}. Testing outside this window needs Fontara's prior written approval. A retest of fixed findings outside the window needs a new authorization or Fontara's written extension of this one."
+    },
+    {
+      "h": "3. Test team and source IP addresses"
+    },
+    {
+      "p": "Only these employees of the Testing Firm may perform the test: [[text:Testing firm:Test team members:width=360]]. All test traffic comes only from these source IP addresses: {{source_ips}}. The Testing Firm tells Fontara before any change to the team or the addresses; traffic from any other address is not authorized and will be treated as an attack."
+    },
+    {
+      "h": "4. Permitted techniques"
+    },
+    {
+      "list": [
+        "Discovery and scanning of the systems in scope (port, service and vulnerability scans) at rates that do not degrade the service",
+        "Manual testing of the web applications and APIs in scope, including authentication, session management, access control, input validation and business-logic tests, using the test accounts Fontara provides",
+        "Exploiting a vulnerability only as far as needed to prove it (for example, reading one record or showing that a command runs), including privilege escalation and lateral movement between systems in scope",
+        "Tests of whether one customer's account or one role can reach another's data, using Fontara's test accounts only"
+      ]
+    },
+    {
+      "h": "5. Prohibited techniques"
+    },
+    {
+      "list": [
+        "Denial of service, stress or load testing, or any test meant to exhaust resources or reduce availability",
+        "Testing the Hosting Provider's shared infrastructure (hypervisors, shared networks, management consoles) or any environment of its other customers",
+        "Social engineering of anyone, including phishing and phone pretexting, at Fontara or the Hosting Provider",
+        "Physical entry to any Fontara or Hosting Provider site",
+        "Copying, downloading or keeping real personal data or customer data beyond the minimum needed to prove a finding",
+        "Changing or deleting production data, installing persistent access, or leaving tools, accounts or files behind after the test",
+        "Any other technique not listed in section 4, unless Fontara approves it in writing in advance"
+      ]
+    },
+    {
+      "h": "6. Test data handling"
+    },
+    {
+      "p": "The Testing Firm collects only the minimum data needed to prove a finding and keeps no copy of personal data beyond that proof (for example, a redacted screenshot). Test data, notes and evidence are stored encrypted, on the Testing Firm's systems only, and only the test team can reach them. Within 30 days after it delivers the final report, the Testing Firm securely destroys all Fontara data and evidence it holds from the test and confirms the destruction to Fontara in writing."
+    },
+    {
+      "h": "7. Incidents and stopping the test"
+    },
+    {
+      "p": "The test team stops testing at once and calls Fontara's emergency contact if (a) a test causes, or seems to cause, an outage, a slowdown or a change to data; (b) it finds signs that a real intruder is or has been in a Fontara system; or (c) it finds a critical vulnerability that exposes personal or customer data. Fontara or the Hosting Provider may stop the test at any time by telling the Testing Firm's emergency contact. Testing resumes only with Fontara's written approval."
+    },
+    {
+      "p": "Fontara emergency contact: {{fontara_emergency}}"
+    },
+    {
+      "p": "Testing Firm emergency contact: {{firm_emergency}}"
+    },
+    {
+      "h": "8. Communication and reporting"
+    },
+    {
+      "p": "On each testing day the Testing Firm sends Fontara's business owner, {{business_owner}}, a short status by email: what was tested, any critical finding, and what is planned next. A critical finding is also reported by phone the same day. The Testing Firm delivers its written findings report within 15 business days after testing ends. The report and every finding are Fontara's confidential information under the Agreement."
+    },
+    {
+      "h": "9. Hosting provider approval"
+    },
+    {
+      "p": "By signing below, the Hosting Provider approves the testing of Fontara's own environment on its services as described in this Authorization, under the customer security testing section of its Cloud Services Agreement with Fontara. The approval covers only Fontara's environment, the window in section 2 and the source IP addresses in section 3. Fontara remains responsible for the acts of its testers, and will share with the Hosting Provider any finding that affects the Hosting Provider's services."
+    },
+    {
+      "h": "10. Authorization"
+    },
+    {
+      "p": "Fontara authorizes the test team named in section 3 to perform the activities in section 4 against the systems in section 1, during the window in section 2, and nothing else. This Authorization does not authorize any activity outside its terms. Each member of the test team carries a copy of this signed Authorization during the test and shows it on request. It ends at the end of the window, or earlier when Fontara withdraws it in writing."
+    },
+    {
+      "sign": "Testing firm",
+      "title": true,
+      "company": true
+    },
+    {
+      "sign": "Fontara",
+      "title": true,
+      "company": true
+    },
+    {
+      "sign": "Hosting provider",
+      "title": true,
+      "company": true
+    }
+  ],
+  "examples": [
+    {
+      "values": {
+        "issued": "11/30/2026",
+        "firm": "Ottoway Security Labs, LLC",
+        "agreement": "the Master Services Agreement dated 11/07/2023 (section 26, annual penetration test) and the Statement of Work — Annual Penetration Test effective 12/09/2026",
+        "scope": "The Fontara platform's production environment on Strataline Cloud: the customer portal, the public APIs (api-us1.fontara.com) and the internal application network reached through the VPN test account Fontara provides.",
+        "out_of_scope": "Strataline Cloud's shared infrastructure and management console; other Strataline Cloud customers' environments; Fontara's corporate email and office networks; the payment page hosted by Fontara's payment processor.",
+        "start": "12/14/2026",
+        "end": "12/18/2026",
+        "hours": "Monday to Friday, 8:00 p.m. to 6:00 a.m. Eastern Time",
+        "source_ips": "203.0.113.24 and 203.0.113.25",
+        "host": "Strataline Cloud, Inc.",
+        "business_owner": "Tomasz Wierzbicki, Chief Information Security Officer",
+        "fontara_emergency": "Augustin Mwangi, Security Engineer, +1 415 555 0142",
+        "firm_emergency": "Caleb Rourke, Managing Director, +1 703 555 0186"
+      },
+      "expect": [
+        "PENETRATION TEST AUTHORIZATION AND RULES OF ENGAGEMENT",
+        "Ottoway Security Labs, LLC",
+        "Strataline Cloud, Inc.",
+        "203.0.113.24",
+        "within 15 business days after testing ends",
+        "Denial of service"
+      ],
+      "absent": []
+    }
+  ],
+  "source": "written for the library — no vault clause set for this type"
+}

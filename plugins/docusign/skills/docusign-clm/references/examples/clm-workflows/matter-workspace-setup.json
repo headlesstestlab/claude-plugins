@@ -1,0 +1,139 @@
+{
+  "id": "matter-workspace-setup",
+  "name": "Matter Workspace Setup",
+  "description": "Legal opens a matter workspace for an incoming document. Copy or Move Folder copies the Matter Template folder (its documents and subfolders) under /Parties/ with the matter's name from Params, into a new Folder variable; Update Folder Description describes it; Create Link adds a bookmark to the matter's intranet page; Get Path stores the folder's path and the incoming document's path in Text variables; Update Information shows the matter and its path in the Info column; Search finds the matter folder by its title under /Parties/. A Logger line closes each path.",
+  "variables": [
+    {
+      "name": "Matter",
+      "type": "folder"
+    },
+    {
+      "name": "MatterLink",
+      "type": "document"
+    },
+    "MatterPath",
+    "DocumentPath",
+    {
+      "name": "Found",
+      "type": "folder"
+    }
+  ],
+  "paramsSchema": "<Params><Documents><Document><Id/><Name/></Document></Documents><MatterName/><MatterUrl/></Params>",
+  "steps": [
+    {
+      "id": "copy",
+      "name": "Copy the matter template",
+      "kind": "copyOrMoveFolder",
+      "action": "copy",
+      "folder": {
+        "name": "Matter Template"
+      },
+      "to": {
+        "path": "/Parties/"
+      },
+      "newName": "<%#XmlVariables.Params.MatterName%>",
+      "output": "Matter",
+      "on": {
+        "success": "describe",
+        "failure": "logFailed"
+      }
+    },
+    {
+      "id": "describe",
+      "name": "Describe the matter folder",
+      "kind": "updateFolderDescription",
+      "folder": {
+        "var": "Matter"
+      },
+      "folderDescription": "Matter <%#XmlVariables.Params.MatterName%>: workspace set up by intake",
+      "on": {
+        "success": "link",
+        "failure": "logFailed"
+      }
+    },
+    {
+      "id": "link",
+      "name": "Link the intranet page",
+      "kind": "createLink",
+      "folder": {
+        "var": "Matter"
+      },
+      "linkName": "Matter intranet page",
+      "url": "<%#XmlVariables.Params.MatterUrl%>",
+      "linkDescription": "The matter's page on the intranet",
+      "output": "MatterLink",
+      "on": {
+        "success": "folderPath",
+        "failure": "logFailed"
+      }
+    },
+    {
+      "id": "folderPath",
+      "name": "Matter folder path",
+      "kind": "getPath",
+      "folder": {
+        "var": "Matter"
+      },
+      "output": "MatterPath",
+      "on": {
+        "success": "documentPath",
+        "failure": "logFailed"
+      }
+    },
+    {
+      "id": "documentPath",
+      "name": "Document path",
+      "kind": "getPath",
+      "documents": "params",
+      "output": "DocumentPath",
+      "on": {
+        "success": "info",
+        "failure": "logFailed"
+      }
+    },
+    {
+      "id": "info",
+      "name": "Show the matter",
+      "kind": "updateInformation",
+      "information": "Matter <%#XmlVariables.Params.MatterName%> at <%#Variable.MatterPath%>",
+      "on": {
+        "success": "find",
+        "failure": "logFailed"
+      }
+    },
+    {
+      "id": "find",
+      "name": "Find the matter folder",
+      "kind": "search",
+      "type": "folders",
+      "title": "<%#XmlVariables.Params.MatterName%>",
+      "folder": {
+        "path": "/Parties/"
+      },
+      "includeSubfolders": true,
+      "outputFolders": "Found",
+      "on": {
+        "success": "logReady",
+        "failure": "logFailed"
+      }
+    },
+    {
+      "id": "logReady",
+      "name": "Log workspace ready",
+      "kind": "logger",
+      "message": "Workspace ready: <%#Variable.MatterPath%>",
+      "next": "finish"
+    },
+    {
+      "id": "logFailed",
+      "name": "Log failed",
+      "kind": "logger",
+      "message": "Failed: the workspace for <%#XmlVariables.Params.MatterName%> is not complete",
+      "next": "finish"
+    },
+    {
+      "id": "finish",
+      "kind": "finish"
+    }
+  ]
+}

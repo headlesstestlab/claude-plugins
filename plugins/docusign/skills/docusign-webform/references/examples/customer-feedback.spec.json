@@ -1,0 +1,225 @@
+{
+  "name": "Fontara Customer Feedback",
+  "description": "Fontara's relationship survey: a 0–10 Net Promoter Score question and a five-point satisfaction rating, products used and the most recent interaction; detractors (0–6) are asked what to improve and whether their account manager may call (with contact fields when yes), promoters (9–10) whether they would be a reference. A short privacy notice; account and survey IDs are hidden prefill.",
+  "welcome": {
+    "title": "How are we doing?",
+    "text": "Two minutes, five questions. Your account team reads every answer.",
+    "button": "Start"
+  },
+  "hidden": [
+    {
+      "key": "account_id",
+      "type": "text",
+      "label": "Account ID"
+    },
+    {
+      "key": "survey_id",
+      "type": "text",
+      "label": "Survey ID"
+    }
+  ],
+  "pages": [
+    {
+      "key": "pg_score",
+      "title": "Your experience",
+      "fields": [
+        {
+          "key": "nps",
+          "type": "radio",
+          "label": "How likely are you to recommend Fontara to a colleague?",
+          "options": [
+            "0",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10"
+          ],
+          "required": true,
+          "description": "0 = not at all likely, 10 = extremely likely"
+        },
+        {
+          "key": "rating",
+          "type": "radio",
+          "label": "Overall, how satisfied are you with Fontara?",
+          "options": [
+            "Very satisfied",
+            "Satisfied",
+            "Neutral",
+            "Dissatisfied",
+            "Very dissatisfied"
+          ],
+          "required": true
+        },
+        {
+          "key": "products",
+          "type": "checkbox",
+          "label": "Which Fontara products do you use?",
+          "options": [
+            "The Fontara platform",
+            "Point-of-sale terminals",
+            "Managed services",
+            "Consulting and implementation"
+          ],
+          "required": true,
+          "select": {
+            "atLeast": 1
+          }
+        },
+        {
+          "key": "interaction",
+          "type": "dropdown",
+          "label": "What was your most recent contact with Fontara about?",
+          "options": [
+            "An implementation project",
+            "A support case",
+            "Renewal or billing",
+            "Training",
+            "An account review",
+            "None recently"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "pg_more",
+      "title": "Tell us more",
+      "fields": [
+        {
+          "key": "went_well",
+          "type": "longtext",
+          "label": "What is working well?",
+          "maxLength": 2000
+        },
+        {
+          "key": "improve",
+          "type": "longtext",
+          "label": "What should we do better?",
+          "required": true,
+          "maxLength": 2000
+        },
+        {
+          "key": "contact_me",
+          "type": "radio",
+          "label": "May your account manager contact you about your answers?",
+          "options": [
+            "Yes",
+            "No"
+          ],
+          "required": true
+        },
+        {
+          "key": "contact",
+          "type": "section",
+          "label": "How to reach you",
+          "fields": [
+            {
+              "key": "contact_name",
+              "type": "text",
+              "label": "Your name",
+              "required": true
+            },
+            {
+              "key": "contact_email",
+              "type": "email",
+              "label": "Email",
+              "required": true
+            },
+            {
+              "key": "contact_phone",
+              "type": "phone",
+              "label": "Phone"
+            }
+          ]
+        },
+        {
+          "key": "reference",
+          "type": "radio",
+          "label": "Would you be willing to be a Fontara customer reference?",
+          "options": [
+            "Yes",
+            "Maybe later",
+            "No"
+          ]
+        },
+        {
+          "key": "priv",
+          "type": "description",
+          "text": "**Privacy.** Your answers are linked to your company's Fontara account and seen by your account team and Customer Success. Fontara, Inc. uses them to improve its products and service (its legitimate interest) and keeps them for 3 years. Fontara does not sell or share them. To access or delete them, or for the California notice at collection, see the Fontara privacy policy or contact the Data Protection Officer."
+        }
+      ]
+    }
+  ],
+  "summary": false,
+  "thankYou": {
+    "title": "Thank you",
+    "text": "Your account team sees your answers today. If you asked to be contacted, your account manager will call or email within 2 business days. Fontara reviews survey results every quarter and reports what it changed in the customer newsletter."
+  },
+  "rules": [
+    {
+      "when": [
+        {
+          "field": "nps",
+          "isAnyOf": [
+            "0",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6"
+          ]
+        }
+      ],
+      "then": {
+        "improve": "show",
+        "contact_me": "show"
+      }
+    },
+    {
+      "when": [
+        {
+          "field": "nps",
+          "isAnyOf": [
+            "0",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6"
+          ]
+        },
+        {
+          "field": "contact_me",
+          "is": "Yes"
+        }
+      ],
+      "then": {
+        "contact": "show",
+        "contact_name": "show",
+        "contact_email": "show",
+        "contact_phone": "show"
+      }
+    },
+    {
+      "when": [
+        {
+          "field": "nps",
+          "isAnyOf": [
+            "9",
+            "10"
+          ]
+        }
+      ],
+      "then": {
+        "reference": "show"
+      }
+    }
+  ]
+}

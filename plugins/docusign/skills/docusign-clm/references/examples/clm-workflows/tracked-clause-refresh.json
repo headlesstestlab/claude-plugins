@@ -1,0 +1,44 @@
+{
+  "id": "tracked-clause-refresh",
+  "name": "Tracked Clause Refresh",
+  "description": "Refreshes a generated contract's tracked clause: Get Tracked Content reads the document's tracked content (the fields its doc gen template marks with TrackedContent) into an XML variable, Merge Tracked Content writes the new Governing Law text into the tracked content named GoverningLaw as a new version of the document, and Compare Tracked Content compares that version with the previous one into a second XML variable for the record. Pattern: the three tracked-content steps on the incoming document (one output link each). Needs a document generated from a template with a TrackedContent tag named GoverningLaw.",
+  "variables": [
+    {
+      "name": "TrackedBefore",
+      "type": "xml"
+    },
+    {
+      "name": "TrackedChanges",
+      "type": "xml"
+    }
+  ],
+  "steps": [
+    {
+      "id": "read",
+      "name": "Read the tracked content",
+      "kind": "getTrackedContent",
+      "output": "TrackedBefore",
+      "next": "merge"
+    },
+    {
+      "id": "merge",
+      "name": "Update the governing law",
+      "kind": "mergeTrackedContent",
+      "values": {
+        "GoverningLaw": "This Agreement is governed by the laws of the State of Delaware."
+      },
+      "next": "compare"
+    },
+    {
+      "id": "compare",
+      "name": "Compare with the previous version",
+      "kind": "compareTrackedContent",
+      "output": "TrackedChanges",
+      "next": "finish"
+    },
+    {
+      "id": "finish",
+      "kind": "finish"
+    }
+  ]
+}

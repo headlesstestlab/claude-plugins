@@ -1,0 +1,422 @@
+{
+  "id": "partnership-agreement",
+  "name": "Partner Program Agreement",
+  "agreementType": "Partnership",
+  "description": "A referral or resale partnership: the program and tiers, brand use, term and commission tail, confidentiality, anti-bribery, data, liability — and where payouts go.",
+  "fields": {
+    "fontara_entity": {
+      "label": "Fontara contracting entity",
+      "type": "select",
+      "options": [
+        "Fontara, Inc.",
+        "Fontara UK Ltd",
+        "Fontara Europe Ltd"
+      ],
+      "optionValues": {
+        "Fontara, Inc.": "Fontara, Inc., a Delaware corporation with its principal place of business at 1500 Harbor Boulevard, Suite 1200, San Francisco, CA 94111",
+        "Fontara UK Ltd": "Fontara UK Ltd, a company registered in England and Wales with its registered office at 48 Ashcombe Street, London EC2A 4NE, United Kingdom",
+        "Fontara Europe Ltd": "Fontara Europe Ltd, a company registered in Ireland with its registered office at 3 Riverside Quay, Dublin 2, D02 X285, Ireland"
+      },
+      "required": true,
+      "description": "Prints the entity’s full legal description and address"
+    },
+    "effective": {
+      "bind": {
+        "provision": "EffectiveDate"
+      },
+      "required": true
+    },
+    "partner": {
+      "bind": {
+        "provision": "AgreementParty"
+      },
+      "required": true,
+      "description": "Partner legal name"
+    },
+    "partner_entity": {
+      "label": "Partner entity type",
+      "required": true,
+      "description": "For example: a Delaware corporation"
+    },
+    "partner_address": {
+      "label": "Partner street address",
+      "required": true
+    },
+    "partner_city": {
+      "label": "Partner city",
+      "required": true
+    },
+    "partner_region": {
+      "label": "Partner state",
+      "required": true
+    },
+    "partner_postal": {
+      "label": "Partner ZIP code",
+      "required": true
+    },
+    "model": {
+      "label": "Partnership model",
+      "type": "select",
+      "options": [
+        "Referral",
+        "Reseller"
+      ],
+      "required": true
+    },
+    "rate": {
+      "label": "Commission or discount (%)",
+      "type": "number",
+      "required": true
+    },
+    "tail": {
+      "label": "Post-termination tail",
+      "type": "select",
+      "options": [
+        "None",
+        "6 months",
+        "12 months"
+      ],
+      "required": true
+    }
+  },
+  "signers": [
+    "Partner",
+    "Fontara"
+  ],
+  "body": [
+    {
+      "title": "PARTNER PROGRAM AGREEMENT"
+    },
+    {
+      "p": "This Partner Program Agreement (this \"Agreement\") is entered into as of {{effective}} between {{fontara_entity}} (\"Fontara\"), and **{{partner}}**, {{partner_entity}} with its principal place of business at {{partner_address}}, {{partner_city}}, {{partner_region}} {{partner_postal}} (\"Partner\")."
+    },
+    {
+      "h": "1. Program"
+    },
+    {
+      "if": {
+        "field": "model",
+        "is": "Referral"
+      },
+      "then": [
+        {
+          "p": "Partner will refer prospective customers to Fontara. For each referral that becomes a paying customer within twelve months, Fontara will pay Partner a commission of {{rate}}% of the customer’s first-year fees, within 45 days after Fontara receives payment."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "model",
+        "is": "Reseller"
+      },
+      "then": [
+        {
+          "p": "Partner may resell Fontara subscriptions to its customers at a discount of {{rate}}% from Fontara’s list price. Partner sets its own resale prices, bills its customers and pays Fontara within 30 days of Fontara’s invoice."
+        }
+      ]
+    },
+    {
+      "p": "Tiers. The rate above is the entry tier; it rises with Partner’s annual bookings as follows, reviewed each year:"
+    },
+    {
+      "lineItems": {
+        "name": "Tiers",
+        "label": "Partner tiers",
+        "columns": [
+          {
+            "key": "tier",
+            "label": "Tier"
+          },
+          {
+            "key": "annual_bookings",
+            "label": "Annual Bookings"
+          },
+          {
+            "key": "rate",
+            "label": "Rate"
+          }
+        ]
+      }
+    },
+    {
+      "h": "2. Brand"
+    },
+    {
+      "p": "Each party may use the other’s name and logo only as approved in writing and in line with the other’s brand guidelines. Partner shall make no representation or warranty about Fontara's products beyond Fontara's published documentation."
+    },
+    {
+      "h": "3. Term and Termination"
+    },
+    {
+      "p": "This Agreement runs for one year and renews automatically for one-year periods unless either party gives 30 days’ notice of non-renewal. Either party may terminate it for the other's material breach not cured within 30 days after written notice, or immediately for a breach of the Anti-Bribery and Compliance section."
+    },
+    {
+      "if": {
+        "field": "tail",
+        "is": "None"
+      },
+      "then": [
+        {
+          "p": "No commission is payable, and no resale may be completed, after this Agreement ends, except for orders Fontara accepted before the end date."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "tail",
+        "is": "6 months"
+      },
+      "then": [
+        {
+          "p": "For {{tail}} after this Agreement ends, Fontara shall pay commission on referrals Partner registered before the end date that become paying customers in that period, and Partner may complete resales of opportunities it registered before the end date."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "tail",
+        "is": "12 months"
+      },
+      "then": [
+        {
+          "p": "For {{tail}} after this Agreement ends, Fontara shall pay commission on referrals Partner registered before the end date that become paying customers in that period, and Partner may complete resales of opportunities it registered before the end date."
+        }
+      ]
+    },
+    {
+      "h": "4. Confidentiality"
+    },
+    {
+      "p": "Each party shall keep confidential the non-public information the other discloses under this Agreement that is marked or identified as confidential, or that a reasonable person would understand to be confidential, use it only to perform this Agreement, and protect it with reasonable care, during this Agreement and for 3 years after it ends. This does not apply to information that is public, independently developed, or rightfully received from a third party without restriction, or to a disclosure the law requires."
+    },
+    {
+      "h": "5. Anti-Bribery and Compliance"
+    },
+    {
+      "p": "Partner shall comply with the US Foreign Corrupt Practices Act, the UK Bribery Act 2010 and all other applicable anti-bribery and anti-corruption laws, and with applicable export control and sanctions laws. Partner shall not offer, promise, give or accept anything of value, directly or through others, to improperly influence any person, including any government official, to obtain or retain business. Partner shall keep accurate books and records of its activities under this Agreement, certify its compliance annually on request, and permit Fontara to audit those records on reasonable notice."
+    },
+    {
+      "h": "6. Data Protection"
+    },
+    {
+      "p": "Each party shall comply with the data protection laws that apply to personal data it shares with the other, use contact information about prospects only for the program, and sign any data processing terms the law requires."
+    },
+    {
+      "h": "7. Limitation of Liability"
+    },
+    {
+      "p": "Neither party is liable for indirect, incidental or consequential damages or lost profits, and each party's total liability under this Agreement is limited to the commissions or fees paid or payable under it in the 12 months before the claim, except for breach of the Confidentiality or Anti-Bribery and Compliance sections, or fraud or willful misconduct."
+    },
+    {
+      "h": "8. Relationship of the Parties"
+    },
+    {
+      "p": "The parties are independent contractors. Nothing in this Agreement creates a partnership, joint venture, agency, fiduciary or employment relationship between them, and neither party may make any commitment binding the other."
+    },
+    {
+      "h": "9. Notices"
+    },
+    {
+      "p": "Notices under this Agreement must be in writing and delivered by hand, by recognized overnight courier or by email to the addresses stated in this Agreement or later notified in writing. A notice is effective on confirmed delivery or, for email, when the recipient acknowledges it. Notices of breach, termination or a legal claim must be sent by courier, with a copy by email."
+    },
+    {
+      "h": "10. Assignment"
+    },
+    {
+      "p": "Neither party may assign or transfer this Agreement without the other party's prior written consent, which may not be unreasonably withheld, except that either party may assign it on written notice to an affiliate, or to a successor to all or substantially all of the business or assets to which it relates that assumes it in writing. Any other attempted assignment is void. This Agreement binds and benefits the parties and their permitted successors and assigns."
+    },
+    {
+      "h": "11. Governing Law and Disputes"
+    },
+    {
+      "if": {
+        "field": "fontara_entity",
+        "is": "Fontara, Inc."
+      },
+      "then": [
+        {
+          "p": "This Agreement is governed by the laws of the State of Delaware, without regard to its conflict-of-laws rules. The parties shall first try to resolve any dispute arising out of or relating to this Agreement by good-faith negotiation between senior executives for 30 days. A dispute not resolved in that time shall be finally settled by binding arbitration administered by the American Arbitration Association under its Commercial Arbitration Rules, before a single arbitrator, seated in San Francisco, California, and judgment on the award may be entered in any court of competent jurisdiction. Either party may seek injunctive relief from a court to protect its confidential information or intellectual property."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "fontara_entity",
+        "is": "Fontara UK Ltd"
+      },
+      "then": [
+        {
+          "p": "This Agreement, and any non-contractual obligation arising out of or in connection with it, is governed by the law of England and Wales. The parties shall first try to resolve any dispute arising out of or in connection with this Agreement by good-faith negotiation between senior executives for 30 days. A dispute not resolved in that time shall be referred to and finally resolved by arbitration under the LCIA Rules, which are incorporated by reference into this section, before a sole arbitrator, with the seat of arbitration in London and English as the language of the arbitration. Either party may seek urgent injunctive relief from a court."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "fontara_entity",
+        "is": "Fontara Europe Ltd"
+      },
+      "then": [
+        {
+          "p": "This Agreement, and any non-contractual obligation arising out of or in connection with it, is governed by the laws of Ireland. The parties shall first try to resolve any dispute arising out of or in connection with this Agreement by good-faith negotiation between senior executives for 30 days, after which the courts of Ireland have exclusive jurisdiction to settle it."
+        }
+      ]
+    },
+    {
+      "h": "12. Entire Agreement and Amendment"
+    },
+    {
+      "p": "This Agreement is the entire agreement of the parties on its subject and supersedes all prior proposals, negotiations, representations and understandings about it. Each party confirms that in entering into it, it has not relied on any statement not set out in it. This Agreement may be amended only in a writing signed by authorized representatives of both parties."
+    },
+    {
+      "h": "13. Survival"
+    },
+    {
+      "p": "Any provision of this Agreement that by its nature is intended to survive its termination or expiration survives it, including the Confidentiality and Limitation of Liability sections and any commission tail, together with any payment obligation accrued before termination."
+    },
+    {
+      "h": "14. General"
+    },
+    {
+      "p": "If any provision of this Agreement is held invalid or unenforceable, it is enforced to the maximum extent permitted and the rest of this Agreement continues in full force. No failure or delay in exercising a right is a waiver of it, and a waiver is effective only if it is in writing and signed. No person other than the parties and their permitted successors and assigns has any right to enforce any term of this Agreement. This Agreement may be signed in counterparts and by electronic signature, each of which is an original and all of which together are one instrument."
+    },
+    {
+      "h": "Payment Details"
+    },
+    {
+      "p": "Payout or remittance email: [[email:Partner:Payout email]]"
+    },
+    {
+      "if": {
+        "field": "fontara_entity",
+        "is": "Fontara, Inc."
+      },
+      "then": [
+        {
+          "p": "Tax form (Form W-9, or Form W-8BEN-E for a non-US partner): [[attach:Partner:Tax form]]"
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "fontara_entity",
+        "is": "Fontara UK Ltd"
+      },
+      "then": [
+        {
+          "p": "Partner VAT registration number (if registered): [[text?:Partner:UK VAT number]]"
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "fontara_entity",
+        "is": "Fontara Europe Ltd"
+      },
+      "then": [
+        {
+          "p": "Partner VAT registration number (if registered): [[text?:Partner:EU VAT number]]"
+        }
+      ]
+    },
+    {
+      "sign": "Partner",
+      "title": true,
+      "company": true
+    },
+    {
+      "sign": "Fontara",
+      "title": true,
+      "company": true
+    }
+  ],
+  "examples": [
+    {
+      "values": {
+        "effective": "02/01/2027",
+        "partner": "Marc Kline Ultra Learning",
+        "partner_entity": "a Massachusetts limited liability company",
+        "partner_address": "350 Education Way",
+        "model": "Referral",
+        "rate": "10",
+        "tail": "12 months",
+        "fontara_entity": "Fontara, Inc.",
+        "partner_city": "Cambridge",
+        "partner_region": "MA",
+        "partner_postal": "02142"
+      },
+      "tables": {
+        "Tiers": [
+          [
+            "Registered",
+            "up to 250,000",
+            "10%"
+          ],
+          [
+            "Silver",
+            "250,000 to 1,000,000",
+            "12%"
+          ],
+          [
+            "Gold",
+            "over 1,000,000",
+            "15%"
+          ]
+        ]
+      },
+      "expect": [
+        "commission of 10%",
+        "Silver",
+        "Gold",
+        "UK Bribery Act 2010",
+        "For 12 months after this Agreement ends",
+        "Form W-8BEN-E"
+      ],
+      "absent": [
+        "resell Fontara subscriptions",
+        "No commission is payable"
+      ]
+    },
+    {
+      "values": {
+        "effective": "02/01/2027",
+        "partner": "Helix Learning",
+        "partner_entity": "a Delaware corporation",
+        "partner_address": "2850 Life Sciences Parkway, Suite 250",
+        "model": "Reseller",
+        "rate": "25",
+        "tail": "None",
+        "fontara_entity": "Fontara UK Ltd",
+        "partner_city": "Cambridge",
+        "partner_region": "MA",
+        "partner_postal": "02142"
+      },
+      "tables": {
+        "Tiers": [
+          [
+            "Authorized",
+            "up to 500,000",
+            "25%"
+          ],
+          [
+            "Premier",
+            "over 500,000",
+            "30%"
+          ]
+        ]
+      },
+      "expect": [
+        "discount of 25%",
+        "Authorized",
+        "Premier",
+        "No commission is payable",
+        "VAT registration number",
+        "LCIA Rules"
+      ],
+      "absent": [
+        "commission of",
+        "Form W-8BEN-E"
+      ]
+    }
+  ],
+  "source": "written for the library — no vault clause set for this type"
+}

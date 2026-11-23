@@ -1,0 +1,88 @@
+{
+  "id": "contract-review-and-send",
+  "name": "Contract Review and Send",
+  "description": "The requester reviews the incoming contract and sends it for signature from a CLM task (Review and Send for Signature): the counterparty's email and name come from the incoming Params. The task email comes from the requester, a reminder goes after 1 day, and the requester's comment goes into a Text variable. Sent leads to Wait for Signature; a rejected or cancelled send sets the workflow output.",
+  "variables": [
+    "SignerEmail",
+    "SignerName",
+    "SendComments"
+  ],
+  "paramsSchema": "<Params><Documents><Document><Id/><Name/></Document></Documents><SignerEmail/><SignerName/></Params>",
+  "steps": [
+    {
+      "id": "signer",
+      "name": "Read the signer",
+      "kind": "setVariable",
+      "set": {
+        "SignerEmail": {
+          "var": "Params.SignerEmail"
+        },
+        "SignerName": {
+          "var": "Params.SignerName"
+        }
+      },
+      "next": "send"
+    },
+    {
+      "id": "send",
+      "name": "Review and send",
+      "kind": "reviewAndSendForSignature",
+      "assignee": "submitter",
+      "recipients": [
+        {
+          "var": "SignerEmail",
+          "role": "Counterparty",
+          "name": {
+            "var": "SignerName"
+          }
+        }
+      ],
+      "subject": "Please sign: <%#XmlVariables.Params.Documents.Document.Name%>",
+      "message": "Please review and sign the attached contract.",
+      "instructions": "Check the contract and the signer, then send it for signature.",
+      "from": "submitter",
+      "commentsTo": "SendComments",
+      "reminders": [
+        {
+          "afterDays": 1
+        }
+      ],
+      "on": {
+        "sent": "wait",
+        "rejected": "outRejected",
+        "canceled": "outRejected",
+        "failure": "finish"
+      }
+    },
+    {
+      "id": "wait",
+      "name": "Wait for signature",
+      "kind": "waitForSignature",
+      "on": {
+        "signed": "outSigned",
+        "rejected": "outRejected",
+        "cancelled": "outRejected",
+        "failure": "finish"
+      }
+    },
+    {
+      "id": "outSigned",
+      "name": "Output Signed",
+      "kind": "setOutput",
+      "value": "Signed",
+      "next": "finish"
+    },
+    {
+      "id": "outRejected",
+      "name": "Output Not sent",
+      "kind": "setOutput",
+      "value": "Not signed: <%#Variable.SendComments%>",
+      "next": "finish"
+    },
+    {
+      "id": "finish",
+      "name": "Finish",
+      "kind": "finish"
+    }
+  ]
+}

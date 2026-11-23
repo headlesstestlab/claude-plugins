@@ -1,0 +1,123 @@
+{
+  "id": "strategic-deal-quote",
+  "name": "Order Form from the CRM, by Deal Tier",
+  "summary": "A CRM call routes an order form by deal tier: a Standard deal is generated and sent for signature, a Strategic deal is held for Deal Desk, and anything else goes back to the rep.",
+  "description": "A rep closes an opportunity in the CRM, which starts this workflow by API with the customer, the signer, the quote number and the deal tier. A Standard deal gets Fontara's order form generated from the CRM's values and sent to the customer and Fontara's signatory; a Strategic deal is held for Deal Desk, who negotiate those on paper first; anything else is sent back to the rep. Pattern: an API start from a CRM opportunity, branching on a starting value with Add a Multi Branch Rule. Fontara's signatory on a Standard deal is fixed to the VP of Sales (signing authority up to $1,000,000 on Fontara, Inc. paper, per the escalation matrix).",
+  "trigger": {
+    "api": {
+      "variables": [
+        {
+          "name": "customerName",
+          "type": "String"
+        },
+        {
+          "name": "customerAddress",
+          "type": "String"
+        },
+        {
+          "name": "customerCity",
+          "type": "String"
+        },
+        {
+          "name": "customerState",
+          "type": "String"
+        },
+        {
+          "name": "customerZip",
+          "type": "String"
+        },
+        {
+          "name": "signerName",
+          "type": "String"
+        },
+        {
+          "name": "signerEmail",
+          "type": "Email"
+        },
+        {
+          "name": "dealTier",
+          "type": "String"
+        },
+        {
+          "name": "quoteNumber",
+          "type": "String"
+        }
+      ]
+    }
+  },
+  "participants": [
+    {
+      "role": "Customer signer",
+      "name": "start.signerName",
+      "email": "start.signerEmail"
+    },
+    {
+      "role": "Fontara signatory",
+      "name": "Corey Ikso",
+      "email": "fontara.corey.ikso@example.com"
+    }
+  ],
+  "steps": [
+    {
+      "switch": {
+        "field": "start.dealTier",
+        "cases": [
+          {
+            "is": "Standard",
+            "steps": [
+              {
+                "generate": "order-form",
+                "fill": {
+                  "effective": "run.startDate",
+                  "customer": "start.customerName",
+                  "customer_address": "start.customerAddress",
+                  "quote": "start.quoteNumber",
+                  "customer_city": "start.customerCity",
+                  "customer_region": "start.customerState",
+                  "customer_postal": "start.customerZip"
+                }
+              },
+              {
+                "sign": {
+                  "Customer": "Customer signer",
+                  "Fontara": "Fontara signatory"
+                },
+                "subject": "Your Fontara order form",
+                "message": "Please review and sign the attached order form."
+              }
+            ]
+          },
+          {
+            "is": "Strategic",
+            "steps": [
+              {
+                "email": {
+                  "to": [
+                    "fontara.deal-desk@example.com"
+                  ],
+                  "subject": "Strategic deal ready for Deal Desk",
+                  "headline": "A strategic deal closed in the CRM",
+                  "body": "A strategic opportunity was closed and needs Deal Desk terms before an order form goes out.\nOpen the opportunity and start the Deal Desk review."
+                }
+              },
+              {
+                "confirm": {
+                  "title": "Sent to Deal Desk",
+                  "description": "Strategic deals are negotiated by Deal Desk before an order form is generated. They will contact you."
+                }
+              }
+            ]
+          }
+        ],
+        "default": [
+          {
+            "confirm": {
+              "title": "Deal tier not recognised",
+              "description": "Set the opportunity's deal tier to Standard or Strategic in the CRM and start again."
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

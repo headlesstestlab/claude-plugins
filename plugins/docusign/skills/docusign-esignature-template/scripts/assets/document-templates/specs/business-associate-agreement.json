@@ -1,0 +1,219 @@
+{
+  "id": "business-associate-agreement",
+  "name": "Business Associate Agreement",
+  "description": "HIPAA terms for Fontara as a business associate: permitted uses of PHI, safeguards, subcontractors, breach notice, access rights, termination and return of PHI.",
+  "agreementType": "PrivacySecurity",
+  "fields": {
+    "customer": {
+      "bind": {
+        "provision": "AgreementParty"
+      },
+      "required": true,
+      "description": "Customer legal name"
+    },
+    "customer_address": {
+      "label": "Customer street address",
+      "required": true
+    },
+    "customer_city": {
+      "label": "Customer city",
+      "required": true
+    },
+    "customer_region": {
+      "label": "Customer state",
+      "required": true
+    },
+    "customer_postal": {
+      "label": "Customer ZIP code",
+      "required": true
+    },
+    "customer_entity": {
+      "label": "Customer entity type",
+      "required": true,
+      "description": "For example: an Illinois corporation"
+    },
+    "agreement": {
+      "label": "Agreement the BAA supplements",
+      "required": true
+    },
+    "phi": {
+      "label": "PHI Fontara handles",
+      "required": true
+    },
+    "breach_days": {
+      "label": "Breach notice (days after discovery)",
+      "type": "select",
+      "options": [
+        "5",
+        "10",
+        "30"
+      ],
+      "required": true
+    },
+    "position": {
+      "label": "Negotiated position",
+      "type": "select",
+      "options": [
+        "Balanced",
+        "Favours Fontara",
+        "Favours the counterparty"
+      ],
+      "required": true,
+      "description": "For the clauses most often negotiated"
+    },
+    "effective": {
+      "bind": {
+        "provision": "EffectiveDate"
+      },
+      "required": true
+    }
+  },
+  "signers": [
+    "Customer",
+    "Fontara"
+  ],
+  "body": [
+    {
+      "title": "BUSINESS ASSOCIATE AGREEMENT"
+    },
+    {
+      "p": "This Business Associate Agreement (this \"BAA\") is effective {{effective}} between **{{customer}}**, {{customer_entity}} with its principal place of business at {{customer_address}}, {{customer_city}}, {{customer_region}} {{customer_postal}} (\"Covered Entity\"), and **Fontara, Inc.**, a Delaware corporation with its principal place of business at 1500 Harbor Boulevard, Suite 1200, San Francisco, CA 94111 (\"Business Associate\"), and supplements the {{agreement}} between them (the \"Agreement\"). In performing the Agreement, Business Associate creates, receives, maintains or transmits the following protected health information (\"PHI\") for Covered Entity: {{phi}}."
+    },
+    {
+      "h": "1. Permitted Uses of PHI and De-Identification"
+    },
+    {
+      "p": "Business Associate may use and disclose PHI only to perform the services under the Agreement for Covered Entity, as Required by Law, and for its own proper management and administration as 45 CFR 164.504(e)(4) permits, and limits each use, disclosure and request to the minimum necessary. Business Associate provides data aggregation services relating to Covered Entity's health care operations only if Covered Entity asks in writing, and de-identifies PHI only to perform the services. PHI, Breach, Unsecured PHI, Security Incident and the other capitalized terms in this BAA have the meanings given in 45 CFR Parts 160 and 164."
+    },
+    {
+      "h": "2. HIPAA Security Safeguards"
+    },
+    {
+      "p": "Business Associate complies with Subpart C of 45 CFR Part 164 for electronic PHI, implements administrative, physical and technical safeguards that reasonably protect PHI, encrypts electronic PHI in transit and at rest, and maintains a current written risk analysis. Each year, on request, Business Associate gives Covered Entity a current SOC 2 Type II report covering HIPAA criteria or evidence of HITRUST CSF certification, and it remediates each high-risk finding within 60 days."
+    },
+    {
+      "h": "3. Business Associate Subcontractors"
+    },
+    {
+      "p": "Business Associate ensures that any subcontractor that creates, receives, maintains or transmits PHI on its behalf agrees in writing to the same restrictions and conditions that apply to Business Associate under this BAA, as 45 CFR 164.502(e)(1)(ii) requires. Business Associate gives Covered Entity a current list of those subcontractors on request and notice of each new one at least 30 days before it receives PHI, and remains responsible for each subcontractor's performance."
+    },
+    {
+      "h": "4. PHI Breach Notification"
+    },
+    {
+      "if": {
+        "field": "position",
+        "is": "Balanced"
+      },
+      "then": [
+        {
+          "p": "Business Associate notifies Covered Entity of any Breach of Unsecured PHI without unreasonable delay and in no event later than {{breach_days}} days after discovery, and reports any other use or disclosure this BAA does not permit and any Security Incident of which it becomes aware. The notice identifies each individual affected, to the extent known, and includes the information Covered Entity needs to give the notices 45 CFR 164.404 to 164.408 require. Business Associate reimburses Covered Entity's reasonable costs of notifying individuals of a Breach that Business Associate caused."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "position",
+        "is": "Favours Fontara"
+      },
+      "then": [
+        {
+          "p": "Business Associate notifies Covered Entity of a Breach of Unsecured PHI without unreasonable delay and no later than 60 days after Business Associate confirms, through its own risk assessment, that a Breach occurred. Unsuccessful attempts at unauthorized access, such as pings, port scans and blocked log-in attempts, need not be reported. Covered Entity is responsible for notifying individuals, HHS and the media."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "position",
+        "is": "Favours the counterparty"
+      },
+      "then": [
+        {
+          "p": "Business Associate notifies Covered Entity within 24 hours of discovering any suspected or actual Breach, without waiting to confirm it, and gives Covered Entity its complete risk assessment and forensic findings. Business Associate pays all costs of notifying individuals, regulators and the media, and of credit monitoring and call-center support, for any Breach caused by Business Associate or its subcontractors, and assists Covered Entity in preparing every notice."
+        }
+      ]
+    },
+    {
+      "p": "Covered Entity privacy officer for breach notices: [[text:Customer:Privacy officer]]  Email: [[email:Customer:Privacy officer email]]"
+    },
+    {
+      "h": "5. PHI Access Rights and HHS Records"
+    },
+    {
+      "p": "Within 10 days of Covered Entity's request, Business Associate makes PHI in a Designated Record Set available for access and amendment, and provides the information Covered Entity needs to give an accounting of disclosures, so that Covered Entity can meet 45 CFR 164.524, 164.526 and 164.528. Business Associate makes its internal practices, books and records relating to PHI available to the Secretary of HHS for determining Covered Entity's compliance with HIPAA, and notifies Covered Entity promptly of any such request unless the law forbids it."
+    },
+    {
+      "h": "6. BAA Termination and PHI Return"
+    },
+    {
+      "p": "This BAA ends when the Agreement ends. If Covered Entity determines that Business Associate has violated a material term of this BAA and Business Associate does not cure the violation within 30 days of notice, Covered Entity may terminate this BAA and the affected services. Within 30 days after termination, Business Associate returns or destroys all PHI and certifies the destruction in writing; where return or destruction is infeasible, it extends this BAA's protections to the PHI it keeps and limits further uses to the purposes that make return or destruction infeasible."
+    },
+    {
+      "h": "7. Relationship to the Agreement"
+    },
+    {
+      "p": "This BAA forms part of the Agreement. If this BAA conflicts with the Agreement, this BAA governs as to PHI. Nothing in this BAA limits a party's obligations under HIPAA, the HITECH Act or their regulations, which this BAA is to be read to satisfy."
+    },
+    {
+      "h": "8. General"
+    },
+    {
+      "p": "This BAA is governed by the law that governs the Agreement, any dispute under it is resolved in the manner the Agreement provides, and notices under it are given as the Agreement provides. This BAA is the entire agreement of the parties on its subject and may be amended only in a writing signed by both parties. It may be signed in counterparts and by electronic signature, each of which is an original."
+    },
+    {
+      "sign": "Customer",
+      "title": true,
+      "company": true
+    },
+    {
+      "sign": "Fontara",
+      "title": true,
+      "company": true
+    }
+  ],
+  "examples": [
+    {
+      "values": {
+        "effective": "02/01/2027",
+        "customer": "Vitality Horizons Medical",
+        "customer_entity": "a Minnesota corporation",
+        "customer_address": "1200 Wellness Boulevard",
+        "agreement": "Master Services Agreement dated 01/10/2027",
+        "phi": "patient names, appointment records and signed consent forms",
+        "breach_days": "10",
+        "position": "Balanced",
+        "customer_city": "Minneapolis",
+        "customer_region": "MN",
+        "customer_postal": "55401"
+      },
+      "expect": [
+        "10 days after discovery",
+        "patient names, appointment records",
+        "45 CFR 164.504(e)(4)"
+      ]
+    },
+    {
+      "values": {
+        "effective": "04/01/2027",
+        "customer": "Pine Care",
+        "customer_entity": "a Massachusetts nonprofit corporation",
+        "customer_address": "455 Medical Center Drive",
+        "agreement": "SaaS Subscription Agreement dated 03/15/2027",
+        "phi": "care plans and caregiver visit notes",
+        "breach_days": "5",
+        "position": "Favours the counterparty",
+        "customer_city": "Boston",
+        "customer_region": "MA",
+        "customer_postal": "02115"
+      },
+      "expect": [
+        "within 24 hours of discovering any suspected or actual Breach",
+        "care plans"
+      ],
+      "absent": [
+        "days after discovery"
+      ]
+    }
+  ],
+  "source": "vault: Contracts/Clauses/BAA"
+}

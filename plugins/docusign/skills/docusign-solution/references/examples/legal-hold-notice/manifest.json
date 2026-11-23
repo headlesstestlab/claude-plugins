@@ -1,0 +1,30 @@
+{
+  "id": "legal-hold-notice",
+  "name": "Legal hold notices with acknowledgment and reminders",
+  "description": "Legal opens a Legal Hold Request in Agreement Desk: it is owned, given a status and a due date. For each custodian, Legal starts the notice workflow (or, for many custodians at once, bulk sends the hold notice document template with the bundle's list, one row per custodian): the hold notice is generated, the custodian signs to acknowledge it, and legal ops hears whether they did. A monthly schedule reminds legal ops to re-send notices for open holds.",
+  "workflows": [
+    "legal-hold-intake",
+    "legal-hold-notice",
+    "legal-hold-monthly-reminder"
+  ],
+  "documentTemplates": [
+    "legal-hold-notice-bulk"
+  ],
+  "prerequisites": [
+    "Replace legal.ops@example.com and the library's lab inbox address in the notice workflow with legal ops' real address.",
+    "The schedule ends after a year: re-import it (or extend it in the builder) for a longer hold.",
+    "For a bulk send: publish the \"Legal Hold Notice (bulk send)\" document template, then fill the bundle's bulk send list (one row per custodian: name, email and the notice's fields) and import it when sending from the template."
+  ],
+  "gaps": [
+    {
+      "need": "escalate when a custodian has not acknowledged after 5 days",
+      "instead": "the notice workflow reports to legal ops when the custodian declines; the monthly sweep lists the rest (an eSignature template's reminders are proven, but this notice is a generated document sent by the workflow's Send step)",
+      "capability": "account.setting.envelope-expiration"
+    },
+    {
+      "need": "quarterly reminders until the hold is released",
+      "capability": "workflow.start.schedule-beyond-limits",
+      "instead": "a monthly reminder for one year (a schedule repeats at most monthly and ends within a year)"
+    }
+  ]
+}

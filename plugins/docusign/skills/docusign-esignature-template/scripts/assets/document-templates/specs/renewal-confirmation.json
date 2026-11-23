@@ -1,0 +1,289 @@
+{
+  "id": "renewal-confirmation",
+  "name": "Renewal Agreement",
+  "description": "Renew an agreement: the renewal term, the renewal fees and items, the pricing cap and carried-forward discounts, quantity changes.",
+  "agreementType": "ConfirmationOfRenewal",
+  "fields": {
+    "fontara_entity": {
+      "label": "Fontara contracting entity",
+      "type": "select",
+      "options": [
+        "Fontara, Inc.",
+        "Fontara UK Ltd",
+        "Fontara Europe Ltd"
+      ],
+      "optionValues": {
+        "Fontara, Inc.": "Fontara, Inc., a Delaware corporation with its principal place of business at 1500 Harbor Boulevard, Suite 1200, San Francisco, CA 94111",
+        "Fontara UK Ltd": "Fontara UK Ltd, a company registered in England and Wales with its registered office at 48 Ashcombe Street, London EC2A 4NE, United Kingdom",
+        "Fontara Europe Ltd": "Fontara Europe Ltd, a company registered in Ireland with its registered office at 3 Riverside Quay, Dublin 2, D02 X285, Ireland"
+      },
+      "required": true,
+      "description": "Prints the entity’s full legal description and address"
+    },
+    "currency": {
+      "label": "Currency",
+      "type": "select",
+      "options": [
+        "US$",
+        "£",
+        "€"
+      ],
+      "required": true,
+      "description": "The signing entity’s: US$ for Fontara, Inc., £ for Fontara UK Ltd, € for Fontara Europe Ltd"
+    },
+    "customer": {
+      "bind": {
+        "provision": "AgreementParty"
+      },
+      "required": true,
+      "description": "Customer legal name"
+    },
+    "customer_address": {
+      "label": "Customer street address",
+      "required": true
+    },
+    "customer_city": {
+      "label": "Customer city",
+      "required": true
+    },
+    "customer_region": {
+      "label": "Customer state",
+      "required": true
+    },
+    "customer_postal": {
+      "label": "Customer ZIP code",
+      "required": true
+    },
+    "customer_entity": {
+      "label": "Customer entity type",
+      "required": true,
+      "description": "For example: an Illinois corporation"
+    },
+    "agreement": {
+      "label": "Agreement being renewed",
+      "required": true
+    },
+    "end": {
+      "bind": {
+        "provision": "ExpirationDate"
+      },
+      "required": true
+    },
+    "renewal_fee": {
+      "label": "Annual fees for the Renewal Term",
+      "type": "number",
+      "money": true,
+      "required": true
+    },
+    "price_cap": {
+      "label": "Renewal price-increase cap",
+      "type": "select",
+      "options": [
+        "3% a year",
+        "5% a year",
+        "7% a year"
+      ],
+      "required": false,
+      "description": "Used by the Balanced position only"
+    },
+    "position": {
+      "label": "Negotiated position",
+      "type": "select",
+      "options": [
+        "Balanced",
+        "Favours Fontara",
+        "Favours the counterparty"
+      ],
+      "required": true,
+      "description": "For the clauses most often negotiated"
+    },
+    "effective": {
+      "bind": {
+        "provision": "EffectiveDate"
+      },
+      "required": true
+    }
+  },
+  "signers": [
+    "Customer",
+    "Fontara"
+  ],
+  "body": [
+    {
+      "title": "RENEWAL AGREEMENT"
+    },
+    {
+      "p": "This Renewal Agreement (this \"Renewal\"), effective {{effective}}, renews the {{agreement}} (the \"Agreement\") between {{fontara_entity}} (\"Vendor\") and **{{customer}}**, {{customer_entity}} with its principal place of business at {{customer_address}}, {{customer_city}}, {{customer_region}} {{customer_postal}} (\"Customer\"), for a term beginning when the current term ends and ending {{end}} (the \"Renewal Term\")."
+    },
+    {
+      "p": "Renewal fees. For the Renewal Term Customer shall pay annual fees of {{currency}}{{renewal_fee}} for the following Services and quantities:"
+    },
+    {
+      "lineItems": {
+        "name": "RenewalItems",
+        "label": "Renewal items",
+        "columns": [
+          {
+            "key": "product",
+            "label": "Product"
+          },
+          {
+            "key": "quantity",
+            "label": "Quantity"
+          },
+          {
+            "key": "annual_fee",
+            "label": "Annual Fee"
+          }
+        ]
+      }
+    },
+    {
+      "h": "1. Renewal Term and Further Renewal"
+    },
+    {
+      "p": "The Agreement is renewed for the Renewal Term, beginning when the current term ends, and the Services continue without interruption. At the end of the Renewal Term the Agreement renews for successive 12-month periods unless either party gives written notice of non-renewal at least 60 days before the end of the then-current term. The termination rights in the Agreement apply during the Renewal Term."
+    },
+    {
+      "h": "2. Renewal Pricing and Carried-Forward Discounts"
+    },
+    {
+      "if": {
+        "field": "position",
+        "is": "Balanced"
+      },
+      "then": [
+        {
+          "p": "Customer shall pay the fees for the Renewal Term stated in this Renewal, which include an increase of no more than {{price_cap}} over the fees in effect at the end of the prior term. Discounts that applied in the prior term carry forward to the Renewal Term unless this Renewal states otherwise. The fees are fixed for the Renewal Term and invoiced annually in advance under the payment terms of the Agreement."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "position",
+        "is": "Favours Fontara"
+      },
+      "then": [
+        {
+          "p": "Customer shall pay the fees for the Renewal Term stated in this Renewal, calculated at Vendor's list prices in effect at renewal. Any discount, promotional price or free service in the prior term ended with that term unless this Renewal restates it. Vendor may increase the fees at the start of each contract year of the Renewal Term by up to 7%."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "position",
+        "is": "Favours the counterparty"
+      },
+      "then": [
+        {
+          "p": "Customer shall pay the fees for the Renewal Term stated in this Renewal, which do not exceed the fees for the same Services in the prior term increased by the lesser of 3% and the change in the consumer price index. Every discount and price protection that applied in the prior term carries forward, the fees are fixed for the whole Renewal Term, and Customer may pay them annually or quarterly."
+        }
+      ]
+    },
+    {
+      "h": "3. Terms Carried Forward at Renewal"
+    },
+    {
+      "p": "Except as this Renewal expressly changes them, all terms of the Agreement, including its Statements of Work, Order Forms and data processing terms, carry forward unchanged into the Renewal Term. A change applies only from the start of the Renewal Term and does not affect rights or claims that arose before it. If this Renewal conflicts with the Agreement, this Renewal governs for the Renewal Term."
+    },
+    {
+      "h": "4. Renewal Quantity and Scope Changes"
+    },
+    {
+      "p": "The Services and quantities in effect at the end of the prior term continue for the Renewal Term. Customer may reduce the quantity of any Service by up to 10% at renewal. Customer may add quantities or Services during the Renewal Term on the terms of this Renewal, and each addition ends with the Renewal Term."
+    },
+    {
+      "h": "5. General"
+    },
+    {
+      "p": "This Renewal is governed by the law that governs the Agreement, any dispute under it is resolved in the manner the Agreement provides, and notices under it are given as the Agreement provides. This Renewal is the entire agreement of the parties on its subject and may be amended only in a writing signed by both parties. It may be signed in counterparts and by electronic signature, each of which is an original."
+    },
+    {
+      "sign": "Customer",
+      "title": true,
+      "company": true
+    },
+    {
+      "sign": "Fontara",
+      "title": true,
+      "company": true
+    }
+  ],
+  "examples": [
+    {
+      "values": {
+        "effective": "04/01/2028",
+        "customer": "FutureSkills Solutions",
+        "customer_entity": "a Texas corporation",
+        "customer_address": "1650 Hetch Boulevard, Suite 300",
+        "agreement": "Order Form dated 04/01/2027",
+        "end": "03/31/2029",
+        "renewal_fee": "412000",
+        "price_cap": "3% a year",
+        "fontara_entity": "Fontara, Inc.",
+        "currency": "US$",
+        "position": "Balanced",
+        "customer_city": "Houston",
+        "customer_region": "TX",
+        "customer_postal": "77002"
+      },
+      "tables": {
+        "RenewalItems": [
+          [
+            "Platform, Enterprise",
+            "460",
+            "367,000.00"
+          ],
+          [
+            "Premium support",
+            "1",
+            "45,000.00"
+          ]
+        ]
+      },
+      "expect": [
+        "3% a year",
+        "US$412,000.00",
+        "Platform, Enterprise",
+        "367,000.00"
+      ],
+      "absent": [
+        "Vendor's list prices in effect at renewal"
+      ]
+    },
+    {
+      "values": {
+        "effective": "06/01/2028",
+        "customer": "Innovate Global Manufacturing",
+        "customer_entity": "a Pennsylvania corporation",
+        "customer_address": "2200 Factory Lane",
+        "agreement": "Order Form dated 06/01/2027",
+        "end": "05/31/2029",
+        "renewal_fee": "26000",
+        "position": "Favours Fontara",
+        "fontara_entity": "Fontara, Inc.",
+        "currency": "US$",
+        "customer_city": "Pittsburgh",
+        "customer_region": "PA",
+        "customer_postal": "15222"
+      },
+      "tables": {
+        "RenewalItems": [
+          [
+            "Platform, Standard",
+            "42",
+            "26,000.00"
+          ]
+        ]
+      },
+      "expect": [
+        "Vendor's list prices in effect at renewal",
+        "US$26,000.00"
+      ],
+      "absent": [
+        "increase of no more than"
+      ]
+    }
+  ],
+  "source": "vault: Contracts/Clauses/Renewal Agreement"
+}

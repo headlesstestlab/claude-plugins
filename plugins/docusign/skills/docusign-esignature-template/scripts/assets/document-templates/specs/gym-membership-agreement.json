@@ -1,0 +1,109 @@
+{
+  "id": "gym-membership-agreement",
+  "name": "Gym Membership Agreement",
+  "description": "The membership agreement the member signs at the front desk: the plan, the member's details, the cancellation terms initialled.",
+  "agreementType": "Other",
+  "fields": {
+    "member": {
+      "label": "Member's full name",
+      "bind": {
+        "provision": "AgreementParty"
+      },
+      "required": true
+    },
+    "plan": {
+      "label": "Membership plan",
+      "required": true,
+      "description": "Monthly, no commitment; 12-month commitment; Annual, paid in full; or Student"
+    },
+    "email": {
+      "label": "Member's email",
+      "required": true
+    },
+    "location": {
+      "label": "Location code",
+      "required": true
+    },
+    "start": {
+      "label": "Start date",
+      "bind": {
+        "provision": "EffectiveDate"
+      },
+      "required": true
+    },
+    "street": {
+      "label": "Street address",
+      "required": true
+    },
+    "city": {
+      "label": "City",
+      "required": true
+    },
+    "state": {
+      "label": "State",
+      "required": true
+    },
+    "zip": {
+      "label": "ZIP code",
+      "required": true
+    }
+  },
+  "signers": [
+    "Member"
+  ],
+  "body": [
+    {
+      "title": "MEMBERSHIP AGREEMENT"
+    },
+    {
+      "p": "Member: **{{member}}**, {{street}}, {{city}}, {{state}} {{zip}} ({{email}})\nClub location: {{location}}\nPlan: **{{plan}}**, starting {{start}}"
+    },
+    {
+      "h": "1. Membership"
+    },
+    {
+      "p": "The member may use the club's facilities during opening hours under the club rules, as posted at the front desk."
+    },
+    {
+      "h": "2. Payment"
+    },
+    {
+      "p": "Dues are charged on the plan's schedule to the payment method the member gives at the front desk."
+    },
+    {
+      "h": "3. Cancellation"
+    },
+    {
+      "p": "A monthly membership may be cancelled with 30 days' written notice. A 12-month commitment may be cancelled early only on relocation more than 25 miles from any club, or for a medical reason with a doctor's note; otherwise the remaining months are due. Member's initials: [[initials:Member]]"
+    },
+    {
+      "h": "4. Assumption of risk"
+    },
+    {
+      "p": "The member uses the facilities at their own risk and should consult a doctor before starting an exercise programme."
+    },
+    {
+      "sign": "Member"
+    }
+  ],
+  "examples": [
+    {
+      "values": {
+        "member": "Jordan Avery",
+        "plan": "12-month commitment",
+        "email": "person.jordan.avery@example.com",
+        "location": "LOC-01",
+        "start": "11/01/2026",
+        "street": "12 Elm Street",
+        "city": "Springfield",
+        "state": "IL",
+        "zip": "62701"
+      },
+      "expect": [
+        "Jordan Avery",
+        "12-month commitment",
+        "LOC-01"
+      ]
+    }
+  ]
+}

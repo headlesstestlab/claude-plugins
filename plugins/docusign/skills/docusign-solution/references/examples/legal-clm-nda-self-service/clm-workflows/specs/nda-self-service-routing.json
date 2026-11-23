@@ -1,0 +1,140 @@
+{
+  "id": "nda-self-service-routing",
+  "name": "NDA Self Service Routing",
+  "description": "Started by the NDA doc-gen configuration on the NDA the requester generated. Standard template: no legal touch; the NDA goes straight to the counterparty's signer. Non-standard: Legal approves it first. Then the workflow waits for the signature.",
+  "paramsSchema": "<Params><Documents><Document><Id/><Name/></Document></Documents><TemplateFieldData><Counterparty_Name/><Counterparty_Signer_Email/><NDA_Type key=\"\"/><NDA_Template key=\"\"/><Purpose/></TemplateFieldData></Params>",
+  "variables": [
+    "NdaTemplate",
+    "SignerEmail"
+  ],
+  "steps": [
+    {
+      "id": "readTemplate",
+      "kind": "setVariable",
+      "name": "Read the template and the signer",
+      "set": {
+        "NdaTemplate": {
+          "var": "Params.TemplateFieldData.NDA_Template"
+        },
+        "SignerEmail": {
+          "var": "Params.TemplateFieldData.Counterparty_Signer_Email"
+        }
+      },
+      "next": "standard"
+    },
+    {
+      "id": "standard",
+      "kind": "decision",
+      "name": "Standard template?",
+      "branches": [
+        {
+          "label": "Standard",
+          "when": {
+            "var": "NdaTemplate",
+            "op": "equals",
+            "value": "Standard"
+          },
+          "to": "sign"
+        }
+      ],
+      "else": {
+        "label": "Non-standard",
+        "to": "legal"
+      }
+    },
+    {
+      "id": "legal",
+      "kind": "approve",
+      "name": "Legal reviews the non-standard NDA",
+      "assignee": {
+        "user": "legal@example.com"
+      },
+      "subject": "NDA to review: <%#XmlVariables.Params.Documents.Document.Name%>",
+      "instructions": "The requester chose a non-standard NDA. Approve it to send it to the counterparty for signature, or reject it with a comment.",
+      "timeoutDays": 3,
+      "on": {
+        "approved": "sign",
+        "rejected": "outRejected",
+        "canceled": "outRejected",
+        "failure": "outFailed",
+        "timeout": "outRejected"
+      }
+    },
+    {
+      "id": "sign",
+      "kind": "sendForSignature",
+      "name": "Send to the counterparty for signature",
+      "recipients": [
+        {
+          "var": "SignerEmail",
+          "role": "Counterparty"
+        }
+      ],
+      "subject": "Please sign: <%#XmlVariables.Params.Documents.Document.Name%>",
+      "message": "Please review and sign the attached NDA.",
+      "on": {
+        "signed": "wait",
+        "rejected": "outNotSigned",
+        "cancelled": "outNotSigned",
+        "failure": "outFailed"
+      }
+    },
+    {
+      "id": "wait",
+      "kind": "waitForSignature",
+      "name": "Wait for the signature",
+      "on": {
+        "signed": "outSigned",
+        "rejected": "outNotSigned",
+        "cancelled": "outNotSigned",
+        "failure": "outFailed",
+        "timedOut": "outNotSigned"
+      }
+    },
+    {
+      "id": "outSigned",
+      "kind": "setOutput",
+      "name": "Signed",
+      "value": "NDA signed",
+      "next": "tellSigned"
+    },
+    {
+      "id": "tellSigned",
+      "kind": "emailDocument",
+      "name": "Tell the requester",
+      "to": "submitter",
+      "subject": "Your NDA is signed: <%#XmlVariables.Params.Documents.Document.Name%>",
+      "next": "finish"
+    },
+    {
+      "id": "outNotSigned",
+      "kind": "setOutput",
+      "name": "Not signed",
+      "value": "Declined, cancelled or timed out",
+      "next": "finish"
+    },
+    {
+      "id": "outRejected",
+      "kind": "email",
+      "name": "Legal did not approve",
+      "to": "submitter",
+      "subject": "Legal did not approve your NDA",
+      "body": "Legal did not approve <%#XmlVariables.Params.Documents.Document.Name%>. See the task comments, or ask Legal.",
+      "next": "finish"
+    },
+    {
+      "id": "outFailed",
+      "kind": "email",
+      "name": "Tell the requester it failed",
+      "to": "submitter",
+      "subject": "Your NDA could not be routed",
+      "body": "The NDA workflow failed (instance <%#System.Uid%>). Contact Legal.",
+      "next": "finish"
+    },
+    {
+      "id": "finish",
+      "kind": "finish",
+      "name": "Finish"
+    }
+  ]
+}

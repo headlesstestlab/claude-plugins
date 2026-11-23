@@ -1,0 +1,280 @@
+{
+  "id": "service-level-agreement",
+  "name": "Service Level Agreement",
+  "description": "The support exhibit to a subscription: an uptime commitment, maintenance windows, a severity response matrix, support hours, a service-credit table and chronic-failure termination.",
+  "agreementType": "Subscription",
+  "fields": {
+    "fontara_entity": {
+      "label": "Fontara contracting entity",
+      "type": "select",
+      "options": [
+        "Fontara, Inc.",
+        "Fontara UK Ltd",
+        "Fontara Europe Ltd"
+      ],
+      "optionValues": {
+        "Fontara, Inc.": "Fontara, Inc., a Delaware corporation with its principal place of business at 1500 Harbor Boulevard, Suite 1200, San Francisco, CA 94111",
+        "Fontara UK Ltd": "Fontara UK Ltd, a company registered in England and Wales with its registered office at 48 Ashcombe Street, London EC2A 4NE, United Kingdom",
+        "Fontara Europe Ltd": "Fontara Europe Ltd, a company registered in Ireland with its registered office at 3 Riverside Quay, Dublin 2, D02 X285, Ireland"
+      },
+      "required": true,
+      "description": "Prints the entity’s full legal description and address"
+    },
+    "customer": {
+      "bind": {
+        "provision": "AgreementParty"
+      },
+      "required": true,
+      "description": "Customer legal name"
+    },
+    "customer_address": {
+      "label": "Customer street address",
+      "required": true
+    },
+    "customer_city": {
+      "label": "Customer city",
+      "required": true
+    },
+    "customer_region": {
+      "label": "Customer state",
+      "required": true
+    },
+    "customer_postal": {
+      "label": "Customer ZIP code",
+      "required": true
+    },
+    "customer_entity": {
+      "label": "Customer entity type",
+      "required": true,
+      "description": "For example: an Illinois corporation"
+    },
+    "agreement": {
+      "label": "Agreement the SLA forms part of",
+      "required": true
+    },
+    "uptime": {
+      "label": "Availability commitment",
+      "type": "select",
+      "options": [
+        "99.5%",
+        "99.9%",
+        "99.95%"
+      ],
+      "required": true
+    },
+    "effective": {
+      "bind": {
+        "provision": "EffectiveDate"
+      },
+      "required": true
+    }
+  },
+  "signers": [
+    "Customer",
+    "Fontara"
+  ],
+  "body": [
+    {
+      "title": "SERVICE LEVEL AGREEMENT"
+    },
+    {
+      "p": "This Service Level Agreement (this \"SLA\") is effective {{effective}} and forms part of the {{agreement}} (the \"Agreement\") between {{fontara_entity}} (\"Vendor\") and **{{customer}}**, {{customer_entity}} with its principal place of business at {{customer_address}}, {{customer_city}}, {{customer_region}} {{customer_postal}} (\"Customer\"). It applies to the Fontara platform subscription services under the Agreement (the \"Services\")."
+    },
+    {
+      "h": "1. Availability Commitment"
+    },
+    {
+      "p": "Vendor shall make the Services available at least {{uptime}} of the time in each calendar month, excluding scheduled maintenance notified under this SLA. The Services are unavailable when no user can access them."
+    },
+    {
+      "h": "2. Scheduled Maintenance"
+    },
+    {
+      "p": "Vendor shall give at least 5 business days' notice of scheduled maintenance and carry it out only at night or at weekends. Emergency maintenance needs at least 2 hours' notice. Scheduled maintenance carried out on notice under this section is excluded from availability."
+    },
+    {
+      "h": "3. Incident Severity Levels"
+    },
+    {
+      "p": "Vendor shall respond to a Priority 1 incident (the Services are down) within 30 minutes and aim to resolve it within 4 hours, to a Priority 2 incident (a major feature is impaired with no workaround) within 2 hours and aim to resolve it within 8 hours, and to Priority 3 and 4 incidents by the next business day. Customer assigns the priority, and Vendor may reclassify an incident by written explanation within 30 minutes."
+    },
+    {
+      "table": {
+        "header": [
+          "Priority",
+          "Example",
+          "Response",
+          "Resolution target"
+        ],
+        "rows": [
+          [
+            "P1",
+            "Services down",
+            "30 minutes",
+            "4 hours"
+          ],
+          [
+            "P2",
+            "Major feature impaired",
+            "2 hours",
+            "8 hours"
+          ],
+          [
+            "P3",
+            "Minor feature impaired",
+            "Next business day",
+            "Reasonable efforts"
+          ],
+          [
+            "P4",
+            "Question or request",
+            "Next business day",
+            "As agreed"
+          ]
+        ]
+      }
+    },
+    {
+      "h": "4. Support Hours"
+    },
+    {
+      "p": "Vendor shall provide support for Priority 1 and 2 incidents 24 hours a day, every day, by phone and email, with a named path of escalation to its engineers, and for Priority 3 and 4 incidents from 9am to 6pm on business days in Vendor's local time. Each party shall name its support contacts when the Services start."
+    },
+    {
+      "p": "Customer support contact: [[text:Customer:Support contact name]]  Email: [[email:Customer:Support contact email]]"
+    },
+    {
+      "h": "5. Service Credits"
+    },
+    {
+      "p": "If availability in a month is below {{uptime}}, Vendor shall credit Customer the percentage of that month's fees for the affected Services shown in the service credit table below, against the next invoice. Customer must request a credit within 30 days after the end of the month. Credits are Customer's sole remedy for a failure to meet the availability commitment, except as the Chronic Failure section provides."
+    },
+    {
+      "lineItems": {
+        "name": "CreditTable",
+        "label": "Service credits",
+        "columns": [
+          {
+            "key": "monthly_availability",
+            "label": "Monthly Availability"
+          },
+          {
+            "key": "credit",
+            "label": "Credit"
+          }
+        ]
+      }
+    },
+    {
+      "h": "6. Chronic Failure"
+    },
+    {
+      "p": "If availability falls below {{uptime}} in any three months in a rolling twelve-month period, or below 95.0% in any one month, Customer may terminate the affected Services by 30 days' written notice given within 60 days after the qualifying month, and Vendor shall refund any prepaid fees for the period after termination."
+    },
+    {
+      "h": "7. Exclusions"
+    },
+    {
+      "p": "The commitments in this SLA do not apply to unavailability caused by Customer, including its misconfiguration or use beyond its limits, by a force majeure event, by the failure of a third-party service outside Vendor's reasonable control, by scheduled maintenance notified under this SLA, or by Customer's failure to apply a critical security patch Vendor recommended."
+    },
+    {
+      "h": "8. Measurement & Reporting"
+    },
+    {
+      "p": "Within 5 business days after each month, Vendor shall report the month's availability, its incident log, a root cause analysis of every Priority 1 incident and any credits due. Customer may use its own independent monitoring and rely on its results in any dispute about credits."
+    },
+    {
+      "h": "9. General"
+    },
+    {
+      "p": "This SLA is governed by the law that governs the Agreement, any dispute under it is resolved in the manner the Agreement provides, and notices under it are given as the Agreement provides. This SLA is the entire agreement of the parties on its subject and may be amended only in a writing signed by both parties. It may be signed in counterparts and by electronic signature, each of which is an original."
+    },
+    {
+      "sign": "Customer",
+      "title": true,
+      "company": true
+    },
+    {
+      "sign": "Fontara",
+      "title": true,
+      "company": true
+    }
+  ],
+  "examples": [
+    {
+      "values": {
+        "effective": "04/01/2027",
+        "customer": "LearnSphere Global",
+        "customer_entity": "a Delaware corporation",
+        "customer_address": "1777 Academic Drive",
+        "agreement": "Master Services Agreement dated 04/27/2024",
+        "uptime": "99.9%",
+        "fontara_entity": "Fontara Europe Ltd",
+        "customer_city": "Boulder",
+        "customer_region": "CO",
+        "customer_postal": "80309"
+      },
+      "tables": {
+        "CreditTable": [
+          [
+            "Below 99.9%",
+            "10%"
+          ],
+          [
+            "Below 99.0%",
+            "25%"
+          ],
+          [
+            "Below 95.0%",
+            "50%"
+          ]
+        ]
+      },
+      "expect": [
+        "at least 99.9% of the time",
+        "Below 99.0%",
+        "Chronic Failure",
+        "root cause analysis",
+        "Fontara Europe Ltd"
+      ]
+    },
+    {
+      "values": {
+        "effective": "05/01/2027",
+        "customer": "Virtual Asset Collective",
+        "customer_entity": "a Delaware limited liability company",
+        "customer_address": "3300 Wall Street",
+        "agreement": "Master Services Agreement dated 11/27/2025",
+        "uptime": "99.95%",
+        "fontara_entity": "Fontara, Inc.",
+        "customer_city": "New York",
+        "customer_region": "NY",
+        "customer_postal": "10005"
+      },
+      "tables": {
+        "CreditTable": [
+          [
+            "Below 99.95%",
+            "10%"
+          ],
+          [
+            "Below 99.5%",
+            "25%"
+          ],
+          [
+            "Below 99.0%",
+            "50%"
+          ]
+        ]
+      },
+      "expect": [
+        "at least 99.95% of the time",
+        "falls below 99.95%"
+      ],
+      "absent": [
+        "at least 99.9% of the time"
+      ]
+    }
+  ],
+  "source": "vault: Contracts/Clauses/SLA"
+}

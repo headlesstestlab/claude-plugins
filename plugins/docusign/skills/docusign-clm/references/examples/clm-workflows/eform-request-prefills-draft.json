@@ -1,0 +1,54 @@
+{
+  "id": "eform-request-prefills-draft",
+  "name": "eForm Request Prefills the Draft",
+  "description": "Started by a Contract Request eForm (Routing ▸ Set Workflow), whose .sxform is the Params document. Build Draft Prefill turns the answers (custom inputs at CustomFormFields, the counterparty attribute at ExternalParty/BusinessName) into the Contract Draft form's input XML: a TemplateFieldData node per form field, named by its merge tag. Legal's Create or Upload Doc task then opens the Contract Draft form already filled in.",
+  "paramsSchema": "<Params><Documents><Document><Id/><Name/><ExternalParty><BusinessName/></ExternalParty><InternalEntity><EntityName/></InternalEntity><CustomFormFields><crAgreementType/><crPurpose/><crSignerEmail/><crValue/><crEffectiveDate/><crExpirationDate/></CustomFormFields></Document></Documents></Params>",
+  "variables": [
+    {
+      "name": "Prefill",
+      "type": "xml",
+      "schema": "<TemplateFieldData><Agreement_Type/><Business_Purpose/><Counterparty/><Counterparty_Signer_Email/><Contract_Value/><Effective_Date/><Expiration_Date/></TemplateFieldData>"
+    },
+    {
+      "name": "Draft",
+      "type": "document"
+    }
+  ],
+  "steps": [
+    {
+      "id": "prefill",
+      "kind": "prefillXml",
+      "name": "Build Draft Prefill",
+      "output": "Prefill",
+      "fields": {
+        "Agreement_Type": "Params.Documents.Document.CustomFormFields.crAgreementType",
+        "Business_Purpose": "Params.Documents.Document.CustomFormFields.crPurpose",
+        "Counterparty": "Params.Documents.Document.ExternalParty.BusinessName",
+        "Counterparty_Signer_Email": "Params.Documents.Document.CustomFormFields.crSignerEmail",
+        "Contract_Value": "Params.Documents.Document.CustomFormFields.crValue",
+        "Effective_Date": "Params.Documents.Document.CustomFormFields.crEffectiveDate",
+        "Expiration_Date": "Params.Documents.Document.CustomFormFields.crExpirationDate"
+      },
+      "next": "draft"
+    },
+    {
+      "id": "draft",
+      "kind": "createOrUploadDoc",
+      "name": "Legal generates the draft",
+      "assignee": "submitter",
+      "configuration": "Contract Request - CREATE",
+      "inputXml": "Prefill",
+      "outputDocuments": "Draft",
+      "on": {
+        "completed": "finish",
+        "canceled": "finish",
+        "failure": "finish"
+      }
+    },
+    {
+      "id": "finish",
+      "kind": "finish",
+      "name": "Finish"
+    }
+  ]
+}

@@ -1,0 +1,113 @@
+{
+  "id": "fontara-mutual-nda",
+  "name": "Mutual NDA",
+  "description": "Fontara's standard mutual NDA (the green position of the NDA playbook): both parties bound, the customary carve-outs, a two-year term, confidentiality surviving three years, the signing Fontara entity's law. Signed by the general counsel.",
+  "fields": [
+    {
+      "kind": "text",
+      "label": "Counterparty Legal Name",
+      "required": true
+    },
+    {
+      "kind": "text",
+      "label": "Counterparty Address",
+      "required": true
+    },
+    {
+      "kind": "dropdown",
+      "label": "Legal Entity",
+      "options": [
+        "Fontara, Inc.",
+        "Fontara UK Ltd",
+        "Fontara Europe Ltd",
+        "Fontara GmbH"
+      ],
+      "required": true
+    },
+    {
+      "kind": "text",
+      "label": "Purpose",
+      "required": true,
+      "help": "The relationship the information is shared for, e.g. evaluating a platform subscription."
+    },
+    {
+      "kind": "date",
+      "label": "Effective Date",
+      "format": "MMMM d, yyyy",
+      "required": true
+    },
+    {
+      "kind": "text",
+      "label": "Counterparty Signer Name",
+      "required": true
+    },
+    {
+      "kind": "text",
+      "label": "Counterparty Signer Email",
+      "required": true
+    },
+    {
+      "kind": "text",
+      "label": "Triage Verdict",
+      "hidden": true,
+      "default": "Green"
+    },
+    {
+      "kind": "text",
+      "label": "Side",
+      "hidden": true,
+      "default": "None"
+    }
+  ],
+  "template": [
+    "MUTUAL NON-DISCLOSURE AGREEMENT",
+    "This Mutual Non-Disclosure Agreement is made on {{Effective Date}} between {{Legal Entity}} (\"Fontara\") and {{Counterparty Legal Name}}, {{Counterparty Address}} (\"Counterparty\"), for the purpose of {{Purpose}} (the \"Purpose\").",
+    "1. Confidential Information. Information either party discloses that is marked or identified as confidential, or that a reasonable person would understand to be confidential. Oral disclosures are confirmed in writing within 30 days.",
+    "2. Exclusions. Information that is public, already known to the recipient, independently developed, or received from a third party without restriction is not Confidential Information.",
+    "3. Use. Each party uses the other's Confidential Information only for the Purpose and shares it only with people who need to know it and are bound by duties at least as protective.",
+    "4. Compelled disclosure. A party may disclose what the law requires, with prompt notice to the other where the law permits, and no more than the law requires.",
+    "5. Term. This Agreement lasts two years from the Effective Date. Confidentiality obligations survive for three years after it ends; trade secrets stay protected while they remain trade secrets.",
+    "6. Return or destruction. On request, each party returns or destroys the other's Confidential Information and confirms it in writing. Copies kept in backups or by law stay confidential.",
+    "7. Remedies. Either party may seek injunctive relief. No licence is granted, and information is provided as is.",
+    {
+      "text": "8. Governing law. This Agreement is governed by the laws of the State of Delaware.",
+      "when": {
+        "field": "Legal Entity",
+        "is": "Fontara, Inc."
+      }
+    },
+    {
+      "text": "8. Governing law. This Agreement is governed by the laws of England and Wales.",
+      "when": {
+        "field": "Legal Entity",
+        "is": "Fontara UK Ltd"
+      }
+    },
+    {
+      "text": "8. Governing law. This Agreement is governed by the laws of Ireland.",
+      "when": {
+        "field": "Legal Entity",
+        "is": "Fontara Europe Ltd"
+      }
+    },
+    {
+      "text": "8. Governing law. This Agreement is governed by the laws of the Federal Republic of Germany, and the courts of Munich have exclusive jurisdiction.",
+      "when": {
+        "field": "Legal Entity",
+        "is": "Fontara GmbH"
+      }
+    },
+    "Signed for {{Counterparty Legal Name}}: {{Counterparty Signer Name}}",
+    "Signed for {{Legal Entity}}: Elena Rodriguez, General Counsel"
+  ],
+  "sample": {
+    "Counterparty Legal Name": "Insight Baybridge",
+    "Counterparty Address": "921 Academic Circle, Seattle, WA 98101",
+    "Legal Entity": "Fontara, Inc.",
+    "Purpose": "scoping a second research program",
+    "Effective Date": "11/09/2026",
+    "Counterparty Signer Name": "Emma Li",
+    "Counterparty Signer Email": "insight-baybridge.emma.li@example.com"
+  },
+  "templateOnly": true
+}

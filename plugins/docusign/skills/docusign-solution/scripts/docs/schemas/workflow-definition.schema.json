@@ -1,0 +1,2016 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.com/docusign-skills/docs/schemas/workflow-definition.schema.json",
+  "title": "Workflow Builder definition (maestroworkflow/<id>/workflow-definition.json)",
+  "description": "One Workflow Builder workflow, as stored in an Import Workflow package. See docs/ASSET-FORMATS.md#workflow-definition.",
+  "type": "object",
+  "required": [
+    "workflowName",
+    "documentVersion",
+    "schemaVersion",
+    "participants",
+    "trigger",
+    "variables",
+    "steps"
+  ],
+  "properties": {
+    "workflowName": {
+      "type": "string",
+      "minLength": 1
+    },
+    "workflowDescription": {
+      "type": "string"
+    },
+    "accountId": {
+      "type": "string",
+      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+    },
+    "documentVersion": {
+      "const": "1.0.0"
+    },
+    "schemaVersion": {
+      "const": "3.0.0"
+    },
+    "participants": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/$defs/participant"
+      }
+    },
+    "trigger": {
+      "$ref": "#/$defs/trigger"
+    },
+    "variables": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/$defs/reference"
+      }
+    },
+    "steps": {
+      "$ref": "#/$defs/steps"
+    },
+    "instanceName": {
+      "if": {
+        "type": "array"
+      },
+      "then": {
+        "items": {
+          "$ref": "#/$defs/reference"
+        }
+      },
+      "else": {
+        "$ref": "#/$defs/editorDoc"
+      }
+    },
+    "workflowSource": {
+      "type": "object",
+      "properties": {
+        "creatorSourceType": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "$defs": {
+    "reference": {
+      "type": "object",
+      "required": [
+        "source"
+      ],
+      "properties": {
+        "source": {
+          "enum": [
+            "step",
+            "participant"
+          ]
+        },
+        "stepId": {
+          "type": "string"
+        },
+        "propertyName": {
+          "type": "string"
+        },
+        "path": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "participantId": {
+          "type": "string"
+        },
+        "key": {
+          "enum": [
+            "name",
+            "email",
+            "phone",
+            "userId"
+          ]
+        },
+        "type": {
+          "type": "string"
+        },
+        "displayName": {
+          "type": "string"
+        },
+        "moduleName": {
+          "type": "string"
+        },
+        "stepName": {
+          "type": "string"
+        },
+        "fullyQualifiedPath": {
+          "type": "string"
+        },
+        "enumOptions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "defaultValue": {}
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "source": {
+                "const": "participant"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "participantId",
+              "key"
+            ]
+          },
+          "else": {
+            "required": [
+              "stepId"
+            ],
+            "anyOf": [
+              {
+                "required": [
+                  "propertyName"
+                ]
+              },
+              {
+                "required": [
+                  "path"
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "editorDoc": {
+      "type": "object",
+      "required": [
+        "type",
+        "content"
+      ],
+      "properties": {
+        "type": {
+          "const": "doc"
+        },
+        "content": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "type"
+            ],
+            "properties": {
+              "type": {
+                "enum": [
+                  "paragraph"
+                ]
+              },
+              "content": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "type"
+                  ],
+                  "properties": {
+                    "type": {
+                      "enum": [
+                        "text",
+                        "mention",
+                        "hardBreak"
+                      ]
+                    },
+                    "text": {
+                      "type": "string"
+                    },
+                    "marks": {
+                      "type": "array"
+                    },
+                    "attrs": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "participant": {
+      "type": "object",
+      "required": [
+        "participantId",
+        "participantRole",
+        "participantInfo"
+      ],
+      "properties": {
+        "participantId": {
+          "type": "string",
+          "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+        },
+        "participantRole": {
+          "type": "string"
+        },
+        "participantType": {
+          "enum": [
+            "WorkflowBuilder",
+            "WorkflowPreparer",
+            "AgreementDeskRequestSubmitter",
+            "AgreementDeskRequestOwner"
+          ]
+        },
+        "participantObjectType": {
+          "enum": [
+            "WorkflowBuilder",
+            "WorkflowPreparer"
+          ]
+        },
+        "participantInfo": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "email": {
+              "type": "string"
+            },
+            "userId": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "trigger": {
+      "type": "object",
+      "required": [
+        "name",
+        "id",
+        "type",
+        "httpType",
+        "input",
+        "output"
+      ],
+      "properties": {
+        "name": {
+          "const": "Get_URL"
+        },
+        "id": {
+          "type": "string",
+          "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+        },
+        "type": {
+          "enum": [
+            "Url",
+            "API",
+            "Manual",
+            "Event",
+            "From a Schedule",
+            "Agreement-Desk",
+            "CLM-Workflow"
+          ]
+        },
+        "httpType": {
+          "enum": [
+            "Get",
+            "Post"
+          ]
+        },
+        "eventTriggerType": {
+          "type": "string",
+          "pattern": "^(envelope|recipient|workflow|ticket|insights|at-a-fixed-time|Based-on-a-Date-Field)[a-z-]*$"
+        },
+        "eventConditionalRules": {
+          "$ref": "#/$defs/booleanExpression"
+        },
+        "input": {
+          "type": "object",
+          "required": [
+            "payload"
+          ],
+          "properties": {
+            "payload": {
+              "type": "object",
+              "additionalProperties": {
+                "$ref": "#/$defs/reference"
+              }
+            },
+            "participants": {
+              "type": "object"
+            },
+            "metadata": {
+              "type": "object"
+            }
+          }
+        },
+        "output": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/reference"
+          }
+        },
+        "fixedTimeSchedule": {
+          "type": "object",
+          "required": [
+            "type",
+            "startDateTime"
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "enum": [
+                  "Agreement-Desk",
+                  "Event"
+                ]
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "eventTriggerType"
+            ]
+          }
+        }
+      ]
+    },
+    "booleanExpression": {
+      "type": "object",
+      "required": [
+        "type"
+      ],
+      "properties": {
+        "type": {
+          "enum": [
+            "BooleanExpression",
+            "ComparisonExpression",
+            "UnaryComparisonExpression"
+          ]
+        },
+        "logicalOperator": {
+          "enum": [
+            "And",
+            "Or"
+          ]
+        },
+        "expressions": {
+          "type": "array",
+          "maxItems": 5,
+          "items": {
+            "$ref": "#/$defs/booleanExpression"
+          }
+        },
+        "comparisonOperator": {
+          "type": "string"
+        },
+        "caseSensitive": {
+          "type": "boolean"
+        }
+      }
+    },
+    "senderField": {
+      "type": "object",
+      "required": [
+        "name",
+        "label",
+        "type",
+        "required"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "label": {
+          "type": "string"
+        },
+        "type": {
+          "enum": [
+            "Text",
+            "TextBox",
+            "Date",
+            "Number",
+            "Select",
+            "TableRow",
+            "text",
+            "date",
+            "select",
+            "number"
+          ]
+        },
+        "required": {
+          "enum": [
+            "True",
+            "False"
+          ]
+        },
+        "value": {
+          "$ref": "#/$defs/reference"
+        },
+        "fullyQualifiedPath": {
+          "type": "string"
+        }
+      }
+    },
+    "envelopeRecipient": {
+      "type": "object",
+      "required": [
+        "recipientId",
+        "roleName",
+        "name",
+        "email"
+      ],
+      "properties": {
+        "recipientId": {
+          "type": "string",
+          "pattern": "^[0-9a-f-]{36}_\\d+$|^\\d+$"
+        },
+        "roleName": {
+          "type": "string"
+        },
+        "routingOrder": {
+          "type": "string"
+        },
+        "name": {
+          "$ref": "#/$defs/reference"
+        },
+        "email": {
+          "$ref": "#/$defs/reference"
+        }
+      }
+    },
+    "steps": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/step"
+      }
+    },
+    "step": {
+      "type": "object",
+      "required": [
+        "id",
+        "name",
+        "moduleName",
+        "type"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+        },
+        "name": {
+          "type": "string",
+          "maxLength": 100
+        },
+        "moduleName": {
+          "anyOf": [
+            {
+              "enum": [
+                "ACT_Install_Step",
+                "CLM-DownloadClmDocumentsAndAddToEnvelope",
+                "CLM-SendDataToCLM",
+                "CLM-StoreFilesInClm",
+                "DocumentGenerationExperience",
+                "End",
+                "ESign-CallApi",
+                "GenericNotification-SendEmail",
+                "GetAgreementMetadata",
+                "IDV-ExtractID",
+                "IDV-RiskAssessment",
+                "IDV-VerifyID-V2",
+                "IfElse",
+                "Impersonation",
+                "Lookup",
+                "Notification-SendEmail",
+                "Parallel",
+                "PrepareESignTemplate",
+                "SendDocumentsForSignature",
+                "ShowConfirmationScreen",
+                "SwitchCase",
+                "TicketAddApproval",
+                "TicketAddFollowers",
+                "TicketAddPermissions",
+                "TicketChangeRequestTitle",
+                "TicketCreateRequest",
+                "TicketGetRequestDocument",
+                "TicketRunPlaybook",
+                "TicketSendRequestMessage",
+                "TicketSetDueDate",
+                "TicketSetOwner",
+                "TicketSetStatus",
+                "UseCustomAIAgent",
+                "WebForms",
+                "WebRequest"
+              ]
+            },
+            {
+              "pattern": "^3p-module-[0-9a-f-]+(-(DataInput|DataOutput))?$"
+            }
+          ]
+        },
+        "type": {
+          "enum": [
+            "DS-ACTInstallStep",
+            "DS-ACTStep",
+            "DS-ActFileArchive",
+            "DS-CallESignApi",
+            "DS-CallServiceStep",
+            "DS-DocumentGenerationExperience",
+            "DS-DownloadClmDocumentsAndAddToEnvelope",
+            "DS-EmailNotification",
+            "DS-End",
+            "DS-IDV",
+            "DS-IDV-V2",
+            "DS-IfElse",
+            "DS-Impersonation",
+            "DS-Lookup",
+            "DS-Parallel",
+            "DS-SendDataToCLM",
+            "DS-ShowScreenStep",
+            "DS-SignPrepareESignTemplate",
+            "DS-SignSendDocumentsForSignature",
+            "DS-StoreFilesInClm",
+            "DS-SwitchCase",
+            "DS-TicketAddApproval",
+            "DS-TicketAddFollowers",
+            "DS-TicketAddPermissions",
+            "DS-TicketChangeRequestTitle",
+            "DS-TicketCreateRequest",
+            "DS-TicketGetRequestDocument",
+            "DS-TicketRunPlaybook",
+            "DS-TicketSendRequestMessage",
+            "DS-TicketSetDueDate",
+            "DS-TicketSetOwner",
+            "DS-TicketSetStatus",
+            "DS-UseCustomAIAgent",
+            "DS-WebForms",
+            "DS-WebRequest"
+          ]
+        },
+        "configurationProgress": {
+          "enum": [
+            "Completed",
+            "NotStarted",
+            "InProgress"
+          ]
+        },
+        "config": {
+          "type": "object"
+        },
+        "input": {
+          "type": "object"
+        },
+        "output": {
+          "type": "object"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "moduleName": {
+                "const": "WebForms"
+              }
+            },
+            "required": [
+              "moduleName"
+            ]
+          },
+          "then": {
+            "properties": {
+              "type": {
+                "const": "DS-WebForms"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "moduleName": {
+                "const": "DocumentGenerationExperience"
+              }
+            },
+            "required": [
+              "moduleName"
+            ]
+          },
+          "then": {
+            "properties": {
+              "type": {
+                "const": "DS-DocumentGenerationExperience"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "moduleName": {
+                "const": "SendDocumentsForSignature"
+              }
+            },
+            "required": [
+              "moduleName"
+            ]
+          },
+          "then": {
+            "properties": {
+              "type": {
+                "const": "DS-SignSendDocumentsForSignature"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "moduleName": {
+                "const": "PrepareESignTemplate"
+              }
+            },
+            "required": [
+              "moduleName"
+            ]
+          },
+          "then": {
+            "properties": {
+              "type": {
+                "const": "DS-SignPrepareESignTemplate"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "moduleName": {
+                "const": "UseCustomAIAgent"
+              }
+            },
+            "required": [
+              "moduleName"
+            ]
+          },
+          "then": {
+            "properties": {
+              "type": {
+                "const": "DS-UseCustomAIAgent"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "moduleName": {
+                "const": "TicketSetOwner"
+              }
+            },
+            "required": [
+              "moduleName"
+            ]
+          },
+          "then": {
+            "properties": {
+              "type": {
+                "const": "DS-TicketSetOwner"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "moduleName": {
+                "const": "TicketSetStatus"
+              }
+            },
+            "required": [
+              "moduleName"
+            ]
+          },
+          "then": {
+            "properties": {
+              "type": {
+                "const": "DS-TicketSetStatus"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "moduleName": {
+                "const": "TicketSetDueDate"
+              }
+            },
+            "required": [
+              "moduleName"
+            ]
+          },
+          "then": {
+            "properties": {
+              "type": {
+                "const": "DS-TicketSetDueDate"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "moduleName": {
+                "const": "TicketAddApproval"
+              }
+            },
+            "required": [
+              "moduleName"
+            ]
+          },
+          "then": {
+            "properties": {
+              "type": {
+                "const": "DS-TicketAddApproval"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "moduleName": {
+                "const": "TicketAddFollowers"
+              }
+            },
+            "required": [
+              "moduleName"
+            ]
+          },
+          "then": {
+            "properties": {
+              "type": {
+                "const": "DS-TicketAddFollowers"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "moduleName": {
+                "const": "TicketSendRequestMessage"
+              }
+            },
+            "required": [
+              "moduleName"
+            ]
+          },
+          "then": {
+            "properties": {
+              "type": {
+                "const": "DS-TicketSendRequestMessage"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "moduleName": {
+                "const": "SwitchCase"
+              }
+            },
+            "required": [
+              "moduleName"
+            ]
+          },
+          "then": {
+            "properties": {
+              "type": {
+                "const": "DS-SwitchCase"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "moduleName": {
+                "const": "GenericNotification-SendEmail"
+              }
+            },
+            "required": [
+              "moduleName"
+            ]
+          },
+          "then": {
+            "properties": {
+              "type": {
+                "const": "DS-CallServiceStep"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "moduleName": {
+                "const": "Notification-SendEmail"
+              }
+            },
+            "required": [
+              "moduleName"
+            ]
+          },
+          "then": {
+            "properties": {
+              "type": {
+                "const": "DS-EmailNotification"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "moduleName": {
+                "const": "TicketCreateRequest"
+              }
+            },
+            "required": [
+              "moduleName"
+            ]
+          },
+          "then": {
+            "properties": {
+              "type": {
+                "const": "DS-TicketCreateRequest"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "moduleName": {
+                "const": "TicketAddPermissions"
+              }
+            },
+            "required": [
+              "moduleName"
+            ]
+          },
+          "then": {
+            "properties": {
+              "type": {
+                "const": "DS-TicketAddPermissions"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "moduleName": {
+                "const": "IDV-ExtractID"
+              }
+            },
+            "required": [
+              "moduleName"
+            ]
+          },
+          "then": {
+            "properties": {
+              "type": {
+                "const": "DS-IDV"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "moduleName": {
+                "const": "Parallel"
+              }
+            },
+            "required": [
+              "moduleName"
+            ]
+          },
+          "then": {
+            "properties": {
+              "type": {
+                "const": "DS-Parallel"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "moduleName": {
+                "const": "TicketChangeRequestTitle"
+              }
+            },
+            "required": [
+              "moduleName"
+            ]
+          },
+          "then": {
+            "properties": {
+              "type": {
+                "const": "DS-TicketChangeRequestTitle"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "moduleName": {
+                "const": "TicketGetRequestDocument"
+              }
+            },
+            "required": [
+              "moduleName"
+            ]
+          },
+          "then": {
+            "properties": {
+              "type": {
+                "const": "DS-TicketGetRequestDocument"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "moduleName": {
+                "const": "IDV-RiskAssessment"
+              }
+            },
+            "required": [
+              "moduleName"
+            ]
+          },
+          "then": {
+            "properties": {
+              "type": {
+                "const": "DS-IDV-V2"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "moduleName": {
+                "const": "IDV-VerifyID-V2"
+              }
+            },
+            "required": [
+              "moduleName"
+            ]
+          },
+          "then": {
+            "properties": {
+              "type": {
+                "const": "DS-IDV-V2"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "moduleName": {
+                "const": "Impersonation"
+              }
+            },
+            "required": [
+              "moduleName"
+            ]
+          },
+          "then": {
+            "properties": {
+              "type": {
+                "const": "DS-Impersonation"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "moduleName": {
+                "const": "GetAgreementMetadata"
+              }
+            },
+            "required": [
+              "moduleName"
+            ]
+          },
+          "then": {
+            "properties": {
+              "type": {
+                "const": "DS-CallServiceStep"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "moduleName": {
+                "const": "ShowConfirmationScreen"
+              }
+            },
+            "required": [
+              "moduleName"
+            ]
+          },
+          "then": {
+            "properties": {
+              "type": {
+                "const": "DS-ShowScreenStep"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "moduleName": {
+                "const": "IfElse"
+              }
+            },
+            "required": [
+              "moduleName"
+            ]
+          },
+          "then": {
+            "properties": {
+              "type": {
+                "const": "DS-IfElse"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "moduleName": {
+                "const": "End"
+              }
+            },
+            "required": [
+              "moduleName"
+            ]
+          },
+          "then": {
+            "properties": {
+              "type": {
+                "const": "DS-End"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "moduleName": {
+                "const": "ACT_Install_Step"
+              }
+            },
+            "required": [
+              "moduleName"
+            ]
+          },
+          "then": {
+            "properties": {
+              "type": {
+                "const": "DS-ACTInstallStep"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "moduleName": {
+                "const": "CLM-SendDataToCLM"
+              }
+            },
+            "required": [
+              "moduleName"
+            ]
+          },
+          "then": {
+            "properties": {
+              "type": {
+                "const": "DS-SendDataToCLM"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "moduleName": {
+                "const": "TicketRunPlaybook"
+              }
+            },
+            "required": [
+              "moduleName"
+            ]
+          },
+          "then": {
+            "properties": {
+              "type": {
+                "const": "DS-TicketRunPlaybook"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "moduleName": {
+                "const": "WebRequest"
+              }
+            },
+            "required": [
+              "moduleName"
+            ]
+          },
+          "then": {
+            "properties": {
+              "type": {
+                "const": "DS-WebRequest"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "moduleName": {
+                "const": "ESign-CallApi"
+              }
+            },
+            "required": [
+              "moduleName"
+            ]
+          },
+          "then": {
+            "properties": {
+              "type": {
+                "const": "DS-CallESignApi"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "moduleName": {
+                "const": "CLM-StoreFilesInClm"
+              }
+            },
+            "required": [
+              "moduleName"
+            ]
+          },
+          "then": {
+            "properties": {
+              "type": {
+                "const": "DS-StoreFilesInClm"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "moduleName": {
+                "const": "CLM-DownloadClmDocumentsAndAddToEnvelope"
+              }
+            },
+            "required": [
+              "moduleName"
+            ]
+          },
+          "then": {
+            "properties": {
+              "type": {
+                "const": "DS-DownloadClmDocumentsAndAddToEnvelope"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "moduleName": {
+                "pattern": "^3p-module-.*-(DataInput|DataOutput)$"
+              }
+            },
+            "required": [
+              "moduleName"
+            ]
+          },
+          "then": {
+            "properties": {
+              "type": {
+                "const": "DS-CallServiceStep"
+              },
+              "config": {
+                "required": [
+                  "apiUrl"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "moduleName": {
+                "const": "WebForms"
+              }
+            },
+            "required": [
+              "moduleName"
+            ]
+          },
+          "then": {
+            "required": [
+              "config",
+              "output"
+            ],
+            "properties": {
+              "config": {
+                "type": "object",
+                "required": [
+                  "webFormId",
+                  "webFormSlug",
+                  "webFormName",
+                  "participantId"
+                ],
+                "properties": {
+                  "webFormId": {
+                    "type": "string",
+                    "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+                  },
+                  "webFormSlug": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{32}$"
+                  }
+                }
+              },
+              "output": {
+                "type": "object",
+                "additionalProperties": {
+                  "$ref": "#/$defs/reference"
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "moduleName": {
+                "const": "DocumentGenerationExperience"
+              }
+            },
+            "required": [
+              "moduleName"
+            ]
+          },
+          "then": {
+            "required": [
+              "config",
+              "input",
+              "output"
+            ],
+            "properties": {
+              "config": {
+                "type": "object",
+                "required": [
+                  "preview",
+                  "allowRecordIdOverride"
+                ]
+              },
+              "input": {
+                "type": "object",
+                "required": [
+                  "documentTemplates",
+                  "referrerUrl",
+                  "isFormHidden"
+                ],
+                "properties": {
+                  "referrerUrl": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "isFormHidden": {
+                    "type": "boolean"
+                  },
+                  "documentTemplates": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                      "type": "object",
+                      "required": [
+                        "documentTemplateId",
+                        "senderFieldsData"
+                      ],
+                      "properties": {
+                        "documentTemplateId": {
+                          "type": "string",
+                          "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+                        },
+                        "senderFieldsData": {
+                          "type": "object",
+                          "additionalProperties": {
+                            "$ref": "#/$defs/senderField"
+                          }
+                        },
+                        "documentName": {},
+                        "documentExtension": {
+                          "enum": [
+                            "docx",
+                            "pdf"
+                          ]
+                        },
+                        "recipients": {
+                          "type": "object"
+                        },
+                        "recordIdMapping": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "required": [
+                              "recordId"
+                            ],
+                            "properties": {
+                              "recordId": {
+                                "$ref": "#/$defs/reference"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "output": {
+                "type": "object",
+                "additionalProperties": {
+                  "$ref": "#/$defs/reference"
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "moduleName": {
+                "const": "SendDocumentsForSignature"
+              }
+            },
+            "required": [
+              "moduleName"
+            ]
+          },
+          "then": {
+            "required": [
+              "config",
+              "input"
+            ],
+            "properties": {
+              "config": {
+                "type": "object",
+                "properties": {
+                  "senderType": {
+                    "enum": [
+                      "workflowPreparer",
+                      "workflowBuilder",
+                      "agreementDeskRequestSubmitter",
+                      "agreementDeskRequestOwner"
+                    ]
+                  },
+                  "createDraftEnvelope": {
+                    "type": "boolean"
+                  }
+                }
+              },
+              "input": {
+                "type": "object",
+                "required": [
+                  "recipients",
+                  "emailSubject",
+                  "emailBlurb",
+                  "isEmbeddedSign"
+                ],
+                "properties": {
+                  "preparedTemplates": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "required": [
+                        "preparedTemplateMetadata"
+                      ],
+                      "properties": {
+                        "preparedTemplateMetadata": {
+                          "$ref": "#/$defs/reference"
+                        }
+                      }
+                    }
+                  },
+                  "recipients": {
+                    "type": "object",
+                    "properties": {
+                      "signers": {
+                        "type": "array",
+                        "items": {
+                          "$ref": "#/$defs/envelopeRecipient"
+                        }
+                      },
+                      "carbonCopies": {
+                        "type": "array",
+                        "items": {
+                          "$ref": "#/$defs/envelopeRecipient"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "input": {
+                      "properties": {
+                        "emailSubject": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "emailSubject"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "input"
+                  ]
+                },
+                "then": {
+                  "$comment": "The older (2025) form: plain-text subject and message, the sender is the step's participant, no senderType.",
+                  "properties": {
+                    "config": {
+                      "required": [
+                        "participantId"
+                      ]
+                    },
+                    "input": {
+                      "properties": {
+                        "emailBlurb": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "else": {
+                  "properties": {
+                    "config": {
+                      "required": [
+                        "senderType",
+                        "createDraftEnvelope"
+                      ]
+                    },
+                    "input": {
+                      "properties": {
+                        "emailSubject": {
+                          "$ref": "#/$defs/editorDoc"
+                        },
+                        "emailBlurb": {
+                          "$ref": "#/$defs/editorDoc"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "moduleName": {
+                "const": "TicketCreateRequest"
+              }
+            },
+            "required": [
+              "moduleName"
+            ]
+          },
+          "then": {
+            "required": [
+              "config",
+              "input"
+            ],
+            "properties": {
+              "config": {
+                "type": "object",
+                "required": [
+                  "requestTypeId",
+                  "requestCreationMode",
+                  "documentInclusion"
+                ],
+                "properties": {
+                  "requestTypeId": {
+                    "type": "string",
+                    "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+                  },
+                  "requestCreationMode": {
+                    "enum": [
+                      "interactive",
+                      "automatic"
+                    ]
+                  },
+                  "documentInclusion": {
+                    "enum": [
+                      "none",
+                      "includeAll",
+                      "selectDocuments"
+                    ]
+                  }
+                }
+              },
+              "input": {
+                "type": "object",
+                "required": [
+                  "requestTitle",
+                  "fieldMappings",
+                  "externalSource"
+                ],
+                "properties": {
+                  "requestTitle": {
+                    "$ref": "#/$defs/editorDoc"
+                  },
+                  "fieldMappings": {
+                    "type": "object",
+                    "propertyNames": {
+                      "pattern": "^[A-Za-z]+_[A-Za-z0-9_-]{8}$"
+                    },
+                    "additionalProperties": {
+                      "anyOf": [
+                        {
+                          "$ref": "#/$defs/reference"
+                        },
+                        {
+                          "type": "object",
+                          "required": [
+                            "currency",
+                            "amount"
+                          ],
+                          "properties": {
+                            "currency": {
+                              "type": "string"
+                            },
+                            "amount": {
+                              "$ref": "#/$defs/reference"
+                            }
+                          }
+                        },
+                        {
+                          "type": "string"
+                        }
+                      ]
+                    }
+                  },
+                  "externalSource": {
+                    "type": "object",
+                    "required": [
+                      "objectId",
+                      "objectName",
+                      "applicationName",
+                      "thirdPartyAccountId"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "moduleName": {
+                "const": "TicketSetStatus"
+              }
+            },
+            "required": [
+              "moduleName"
+            ]
+          },
+          "then": {
+            "required": [
+              "config",
+              "input"
+            ],
+            "properties": {
+              "config": {
+                "type": "object",
+                "required": [
+                  "ticketStatusId"
+                ],
+                "properties": {
+                  "ticketStatusId": {
+                    "type": "string",
+                    "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+                  }
+                }
+              },
+              "input": {
+                "type": "object",
+                "required": [
+                  "ticketId"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "moduleName": {
+                "const": "TicketAddApproval"
+              }
+            },
+            "required": [
+              "moduleName"
+            ]
+          },
+          "then": {
+            "required": [
+              "config",
+              "input",
+              "output"
+            ],
+            "properties": {
+              "config": {
+                "type": "object",
+                "required": [
+                  "title",
+                  "approvalMode"
+                ],
+                "properties": {
+                  "approvalMode": {
+                    "enum": [
+                      "any",
+                      "all"
+                    ]
+                  }
+                }
+              },
+              "input": {
+                "type": "object",
+                "required": [
+                  "ticketId",
+                  "approvers"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "moduleName": {
+                "const": "UseCustomAIAgent"
+              }
+            },
+            "required": [
+              "moduleName"
+            ]
+          },
+          "then": {
+            "required": [
+              "config",
+              "input",
+              "output"
+            ],
+            "properties": {
+              "config": {
+                "type": "object",
+                "required": [
+                  "resourceKey"
+                ],
+                "properties": {
+                  "resourceKey": {
+                    "type": "string",
+                    "pattern": "^(system_[a-z0-9_]+|[a-z0-9_]+_\\d+)$"
+                  }
+                }
+              },
+              "input": {
+                "type": "object",
+                "required": [
+                  "content"
+                ],
+                "properties": {
+                  "content": {
+                    "$ref": "#/$defs/editorDoc"
+                  }
+                }
+              },
+              "output": {
+                "type": "object",
+                "additionalProperties": {
+                  "$ref": "#/$defs/reference"
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "moduleName": {
+                "const": "ShowConfirmationScreen"
+              }
+            },
+            "required": [
+              "moduleName"
+            ]
+          },
+          "then": {
+            "required": [
+              "config",
+              "input"
+            ],
+            "properties": {
+              "input": {
+                "type": "object",
+                "required": [
+                  "payload"
+                ],
+                "properties": {
+                  "payload": {
+                    "type": "object",
+                    "required": [
+                      "participantId",
+                      "confirmationMessage"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "moduleName": {
+                "const": "IfElse"
+              }
+            },
+            "required": [
+              "moduleName"
+            ]
+          },
+          "then": {
+            "required": [
+              "expression",
+              "ifSteps",
+              "elseSteps",
+              "merge"
+            ],
+            "properties": {
+              "merge": {
+                "type": "boolean"
+              },
+              "ifSteps": {
+                "$ref": "#/$defs/steps"
+              },
+              "elseSteps": {
+                "$ref": "#/$defs/steps"
+              },
+              "expression": {
+                "$ref": "#/$defs/booleanExpression"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "moduleName": {
+                "const": "SwitchCase"
+              }
+            },
+            "required": [
+              "moduleName"
+            ]
+          },
+          "then": {
+            "required": [
+              "switchValue",
+              "cases",
+              "defaultCase"
+            ],
+            "properties": {
+              "switchValue": {
+                "$ref": "#/$defs/reference"
+              },
+              "cases": {
+                "type": "array",
+                "maxItems": 15,
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "steps"
+                  ],
+                  "properties": {
+                    "steps": {
+                      "$ref": "#/$defs/steps"
+                    }
+                  }
+                }
+              },
+              "defaultCase": {
+                "type": "object",
+                "required": [
+                  "steps"
+                ],
+                "properties": {
+                  "steps": {
+                    "$ref": "#/$defs/steps"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "moduleName": {
+                "const": "Parallel"
+              }
+            },
+            "required": [
+              "moduleName"
+            ]
+          },
+          "then": {
+            "required": [
+              "lanes"
+            ],
+            "properties": {
+              "lanes": {
+                "type": "array",
+                "minItems": 2,
+                "maxItems": 15,
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "steps"
+                  ],
+                  "properties": {
+                    "steps": {
+                      "$ref": "#/$defs/steps"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "moduleName": {
+                "const": "ACT_Install_Step"
+              }
+            },
+            "required": [
+              "moduleName"
+            ]
+          },
+          "then": {
+            "required": [
+              "config"
+            ],
+            "properties": {
+              "config": {
+                "type": "object",
+                "required": [
+                  "appDefinitionId",
+                  "appName",
+                  "step"
+                ],
+                "properties": {
+                  "appDefinitionId": {
+                    "type": "string",
+                    "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+                  },
+                  "step": {
+                    "$ref": "#/$defs/step"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "moduleName": {
+                "const": "CLM-SendDataToCLM"
+              }
+            },
+            "required": [
+              "moduleName"
+            ]
+          },
+          "then": {
+            "required": [
+              "input"
+            ],
+            "properties": {
+              "input": {
+                "type": "object",
+                "required": [
+                  "clmWorkflowInstanceId",
+                  "inputParams"
+                ],
+                "properties": {
+                  "clmWorkflowInstanceId": {
+                    "$ref": "#/$defs/reference"
+                  },
+                  "inputParams": {
+                    "type": "object",
+                    "additionalProperties": {
+                      "anyOf": [
+                        {
+                          "$ref": "#/$defs/reference"
+                        },
+                        {
+                          "const": ""
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

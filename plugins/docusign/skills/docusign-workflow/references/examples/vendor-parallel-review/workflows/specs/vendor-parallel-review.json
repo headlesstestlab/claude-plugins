@@ -1,0 +1,17 @@
+{
+  "id": "vendor-parallel-review",
+  "name": "Vendor Risk Review, Security and AP in Parallel",
+  "summary": "A Vendor Risk Assessment runs the security approval and the Accounts Payable vendor setup in parallel, and the requester hears Security's decision.",
+  "description": "A Vendor Risk Assessment request is owned by the vendor risk analyst (Gideon Tamura-Price) and runs two reviews at once instead of one after the other: Security/IT (Tomasz Wierzbicki, the CISO, an account user) reviews the vendor's controls as an approval, never the requester, while Accounts Payable is told to start vendor setup in the ERP so payment is not the thing that holds the purchase up. When Security has decided, the requester hears the outcome. It sets no status. Account-bound: the owner and the approver are looked up in the target account's directory at deploy (a person the account lacks becomes the importing user). Pattern: Add Parallel Branches after an Agreement Desk request start.",
+  "trigger": { "request": "vendor-risk-assessment" },
+  "steps": [
+    { "owner": { "user": "fontara.gideon.tamura-price@example.com" } },
+    { "parallel": [
+      [ { "approval": { "title": "Security review", "description": "Review the vendor's security questionnaire, SOC 2 report and data handling before Fontara shares any data.", "approvers": [{ "user": "fontara.tomasz.wierzbicki@example.com" }], "mode": "any" } } ],
+      [ { "message": { "to": [{ "email": "fontara.ap-vendors@example.com" }], "body": "Start vendor setup for {{TicketTitle}}: create the supplier record, collect the W-9 or W-8 and bank details through the supplier portal." } } ]
+    ] },
+    { "if": { "approved": "Security review" },
+      "then": [ { "message": { "to": ["submitter"], "body": "Security approved {{TicketTitle}}. Procurement can proceed once AP confirms the supplier record." } } ],
+      "else": [ { "message": { "to": ["submitter"], "body": "Security did not approve {{TicketTitle}}. See the approval comments for the controls that need remediation." } } ] }
+  ]
+}

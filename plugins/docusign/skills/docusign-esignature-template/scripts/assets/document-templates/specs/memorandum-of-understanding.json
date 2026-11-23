@@ -1,0 +1,235 @@
+{
+  "id": "memorandum-of-understanding",
+  "name": "Memorandum of Understanding",
+  "agreementType": "MemorandumOfUnderstanding",
+  "description": "Two organizations record a shared objective, each side’s responsibilities and contacts — non-binding except confidentiality, costs and governing law.",
+  "fields": {
+    "fontara_entity": {
+      "label": "Fontara contracting entity",
+      "type": "select",
+      "options": [
+        "Fontara, Inc.",
+        "Fontara UK Ltd",
+        "Fontara Europe Ltd"
+      ],
+      "optionValues": {
+        "Fontara, Inc.": "Fontara, Inc., a Delaware corporation with its principal place of business at 1500 Harbor Boulevard, Suite 1200, San Francisco, CA 94111",
+        "Fontara UK Ltd": "Fontara UK Ltd, a company registered in England and Wales with its registered office at 48 Ashcombe Street, London EC2A 4NE, United Kingdom",
+        "Fontara Europe Ltd": "Fontara Europe Ltd, a company registered in Ireland with its registered office at 3 Riverside Quay, Dublin 2, D02 X285, Ireland"
+      },
+      "required": true,
+      "description": "Prints the entity’s full legal description and address"
+    },
+    "effective": {
+      "bind": {
+        "provision": "EffectiveDate"
+      },
+      "required": true
+    },
+    "partner": {
+      "bind": {
+        "provision": "AgreementParty"
+      },
+      "required": true,
+      "description": "Partner legal name"
+    },
+    "partner_entity": {
+      "label": "Partner entity type",
+      "required": true,
+      "description": "For example: a Delaware corporation"
+    },
+    "partner_address": {
+      "label": "Partner street address",
+      "required": true
+    },
+    "partner_city": {
+      "label": "Partner city",
+      "required": true
+    },
+    "partner_region": {
+      "label": "Partner state",
+      "required": true
+    },
+    "partner_postal": {
+      "label": "Partner ZIP code",
+      "required": true
+    },
+    "objective": {
+      "label": "Shared objective",
+      "required": true
+    },
+    "fontara_role": {
+      "label": "Fontara’s responsibilities",
+      "required": true
+    },
+    "partner_role": {
+      "label": "Partner’s responsibilities",
+      "required": true
+    },
+    "end": {
+      "bind": {
+        "provision": "ExpirationDate"
+      },
+      "required": true
+    },
+    "nda_type": {
+      "bind": {
+        "provision": "NdaType"
+      },
+      "required": true,
+      "description": "Mutual when both parties share confidential information"
+    }
+  },
+  "signers": [
+    "Partner",
+    "Fontara"
+  ],
+  "body": [
+    {
+      "title": "MEMORANDUM OF UNDERSTANDING"
+    },
+    {
+      "p": "This Memorandum of Understanding (this \"memorandum\"), effective {{effective}}, records the shared understanding of {{fontara_entity}} (\"Fontara\"), and **{{partner}}**, {{partner_entity}} with its principal place of business at {{partner_address}}, {{partner_city}}, {{partner_region}} {{partner_postal}} (the \"Partner\")."
+    },
+    {
+      "h": "1. Objective"
+    },
+    {
+      "p": "{{objective}} (the \"Objective\")"
+    },
+    {
+      "h": "2. Responsibilities"
+    },
+    {
+      "table": {
+        "header": [
+          "Party",
+          "Responsibilities"
+        ],
+        "rows": [
+          [
+            "Fontara",
+            "{{fontara_role}}"
+          ],
+          [
+            "Partner",
+            "{{partner_role}}"
+          ]
+        ]
+      }
+    },
+    {
+      "h": "3. Points of Contact"
+    },
+    {
+      "p": "Partner point of contact: [[text:Partner:Point of contact]]  Email: [[email:Partner:Contact email]]"
+    },
+    {
+      "h": "4. Duration"
+    },
+    {
+      "p": "This memorandum remains in effect until {{end}}, unless either party ends it earlier by written notice."
+    },
+    {
+      "h": "5. Confidentiality"
+    },
+    {
+      "p": "Each party shall keep confidential the non-public information the other discloses under this memorandum that is marked or identified as confidential, or that a reasonable person would understand to be confidential, use it only to perform this memorandum, and protect it with reasonable care, during this memorandum and for 2 years after it ends. This does not apply to information that is public, independently developed, or rightfully received from a third party without restriction, or to a disclosure the law requires."
+    },
+    {
+      "h": "6. Direction of Confidentiality"
+    },
+    {
+      "p": "Confidential information under this memorandum flows: {{nda_type}}."
+    },
+    {
+      "h": "7. Costs"
+    },
+    {
+      "p": "Each party bears its own costs of its activities under this memorandum."
+    },
+    {
+      "h": "8. Governing Law and Disputes"
+    },
+    {
+      "if": {
+        "field": "fontara_entity",
+        "is": "Fontara, Inc."
+      },
+      "then": [
+        {
+          "p": "This memorandum is governed by the laws of the State of Delaware, without regard to its conflict-of-laws rules. The parties shall first try to resolve any dispute arising out of or relating to this memorandum by good-faith negotiation between senior executives for 30 days. A dispute not resolved in that time shall be finally settled by binding arbitration administered by the American Arbitration Association under its Commercial Arbitration Rules, before a single arbitrator, seated in San Francisco, California, and judgment on the award may be entered in any court of competent jurisdiction. Either party may seek injunctive relief from a court to protect its confidential information or intellectual property."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "fontara_entity",
+        "is": "Fontara UK Ltd"
+      },
+      "then": [
+        {
+          "p": "This memorandum, and any non-contractual obligation arising out of or in connection with it, is governed by the law of England and Wales. The parties shall first try to resolve any dispute arising out of or in connection with this memorandum by good-faith negotiation between senior executives for 30 days. A dispute not resolved in that time shall be referred to and finally resolved by arbitration under the LCIA Rules, which are incorporated by reference into this section, before a sole arbitrator, with the seat of arbitration in London and English as the language of the arbitration. Either party may seek urgent injunctive relief from a court."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "fontara_entity",
+        "is": "Fontara Europe Ltd"
+      },
+      "then": [
+        {
+          "p": "This memorandum, and any non-contractual obligation arising out of or in connection with it, is governed by the laws of Ireland. The parties shall first try to resolve any dispute arising out of or in connection with this memorandum by good-faith negotiation between senior executives for 30 days, after which the courts of Ireland have exclusive jurisdiction to settle it."
+        }
+      ]
+    },
+    {
+      "h": "9. Nature of this Memorandum"
+    },
+    {
+      "p": "This memorandum records intentions and creates no legally binding obligations, except that the Confidentiality, Costs and Governing Law and Disputes sections bind the parties. Any binding commitment requires a separate written agreement signed by both parties."
+    },
+    {
+      "sign": "Partner",
+      "title": true,
+      "company": true
+    },
+    {
+      "sign": "Fontara",
+      "title": true,
+      "company": true
+    }
+  ],
+  "examples": [
+    {
+      "values": {
+        "effective": "03/01/2027",
+        "partner": "LearnSphere Global",
+        "partner_entity": "a Delaware corporation",
+        "partner_address": "1777 Academic Drive",
+        "objective": "Study how small and mid-sized organizations adopt digital agreements, and publish the findings",
+        "fontara_role": "Platform, usage data, training",
+        "partner_role": "Research design and report",
+        "end": "12/31/2027",
+        "nda_type": "Mutual",
+        "fontara_entity": "Fontara Europe Ltd",
+        "partner_city": "Boulder",
+        "partner_region": "CO",
+        "partner_postal": "80309"
+      },
+      "expect": [
+        "Platform, usage data, training",
+        "Research design and report",
+        "flows: Mutual",
+        "bears its own costs",
+        "Fontara Europe Ltd",
+        "courts of Ireland"
+      ],
+      "absent": [
+        "American Arbitration Association"
+      ]
+    }
+  ],
+  "source": "written for the library — no vault clause set for this type"
+}

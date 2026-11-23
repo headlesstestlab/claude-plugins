@@ -1,0 +1,138 @@
+{
+  "id": "acceptable-use-policy",
+  "name": "Acceptable Use Policy Acknowledgment",
+  "description": "A customer accepts the Fontara Acceptable Use Policy for itself and its users: permitted uses, prohibited content and behavior, enforcement and suspension, responsibility for users.",
+  "agreementType": "Subscription",
+  "fields": {
+    "fontara_entity": {
+      "label": "Fontara contracting entity",
+      "type": "select",
+      "options": [
+        "Fontara, Inc.",
+        "Fontara UK Ltd",
+        "Fontara Europe Ltd"
+      ],
+      "optionValues": {
+        "Fontara, Inc.": "Fontara, Inc., a Delaware corporation with its principal place of business at 1500 Harbor Boulevard, Suite 1200, San Francisco, CA 94111",
+        "Fontara UK Ltd": "Fontara UK Ltd, a company registered in England and Wales with its registered office at 48 Ashcombe Street, London EC2A 4NE, United Kingdom",
+        "Fontara Europe Ltd": "Fontara Europe Ltd, a company registered in Ireland with its registered office at 3 Riverside Quay, Dublin 2, D02 X285, Ireland"
+      },
+      "required": true,
+      "description": "Prints the entity’s full legal description and address"
+    },
+    "customer": {
+      "bind": {
+        "provision": "AgreementParty"
+      },
+      "required": true,
+      "description": "Customer legal name"
+    },
+    "customer_address": {
+      "label": "Customer street address",
+      "required": true
+    },
+    "customer_city": {
+      "label": "Customer city",
+      "required": true
+    },
+    "customer_region": {
+      "label": "Customer state",
+      "required": true
+    },
+    "customer_postal": {
+      "label": "Customer ZIP code",
+      "required": true
+    },
+    "customer_entity": {
+      "label": "Customer entity type",
+      "required": true,
+      "description": "For example: an Illinois corporation"
+    },
+    "agreement": {
+      "label": "Agreement the Policy forms part of",
+      "required": true
+    },
+    "effective": {
+      "bind": {
+        "provision": "EffectiveDate"
+      },
+      "required": true
+    }
+  },
+  "signers": [
+    "Customer"
+  ],
+  "body": [
+    {
+      "title": "ACCEPTABLE USE POLICY"
+    },
+    {
+      "p": "This Acceptable Use Policy (this \"Policy\"), effective {{effective}}, applies to **{{customer}}**, {{customer_entity}} with its principal place of business at {{customer_address}}, {{customer_city}}, {{customer_region}} {{customer_postal}} (\"Customer\"), and its authorized users in using the Fontara services (the \"Services\") that {{fontara_entity}} (\"Fontara\") provides under the {{agreement}} (the \"Agreement\"), and forms part of the Agreement."
+    },
+    {
+      "h": "1. Permitted Uses"
+    },
+    {
+      "p": "Customer and its users may use the Services only for Customer's legitimate internal business operations and in compliance with applicable law, including to create, send, sign, store and manage agreements and related records, and for similar lawful commercial purposes. Customer may ask Fontara to confirm in writing that a use not described here is permitted."
+    },
+    {
+      "h": "2. Prohibited Content"
+    },
+    {
+      "p": "Customer shall not upload, store or transmit through the Services any content that (a) is illegal, including child sexual abuse material, malware or content that violates sanctions laws; (b) infringes a third party's intellectual property; or (c) violates applicable privacy laws. Customer is responsible for the content its users submit. Fontara will notify Customer before removing content, except illegal material that requires immediate removal."
+    },
+    {
+      "h": "3. Prohibited Behaviors"
+    },
+    {
+      "p": "Customer and its users shall not (a) scrape or harvest data from the Services by automated means without Fontara's consent; (b) share credentials beyond the licensed users; (c) circumvent or probe any technical access control or security measure; or (d) use the Services to facilitate illegal activity. This list is exhaustive."
+    },
+    {
+      "h": "4. Enforcement and Suspension"
+    },
+    {
+      "p": "Fontara investigates complaints and gives Customer written notice of an alleged violation. Fontara may suspend access immediately only for illegal content or an active security threat, and may terminate the Services only for a repeated or material violation that Customer does not cure within 30 days after written notice."
+    },
+    {
+      "h": "5. Customer's Responsibility for Users"
+    },
+    {
+      "p": "Customer is responsible for its users' compliance with this Policy, and shall implement reasonable technical controls to prevent misuse. Fontara will notify Customer of a suspected violation before suspending any account, except in the case of active illegal activity."
+    },
+    {
+      "h": "6. General"
+    },
+    {
+      "p": "This Policy forms part of the Agreement and is governed by the law that governs it, and any dispute under it is resolved in the manner the Agreement provides. Fontara may change this Policy only as the Agreement allows its terms to be changed, and a change does not apply to Customer until Customer has had the notice the Agreement requires."
+    },
+    {
+      "p": "[[check:Customer:Accepts the Policy]] Customer has read and accepts this Policy and will make its users aware of it."
+    },
+    {
+      "sign": "Customer",
+      "title": true,
+      "company": true
+    }
+  ],
+  "examples": [
+    {
+      "values": {
+        "effective": "03/01/2027",
+        "customer": "FutureSkills Solutions",
+        "customer_entity": "a Texas corporation",
+        "customer_address": "1650 Hetch Boulevard, Suite 300",
+        "agreement": "SaaS Subscription Agreement dated 03/01/2027",
+        "fontara_entity": "Fontara, Inc.",
+        "customer_city": "Houston",
+        "customer_region": "TX",
+        "customer_postal": "77002"
+      },
+      "expect": [
+        "This list is exhaustive",
+        "within 30 days after written notice",
+        "SaaS Subscription Agreement dated 03/01/2027"
+      ]
+    }
+  ],
+  "source": "written for the library under the vault's clause headings (Contracts/Clauses/AUP); its text is not the clause notes' positions"
+}

@@ -1,0 +1,260 @@
+{
+  "id": "fontara-statement-of-work",
+  "name": "Statement of Work",
+  "description": "Fontara's statement of work for professional services under a master agreement (sell side): fixed fee or time and materials (only the chosen model's paragraph prints), and the intellectual property position picked from the Clause Library's pre-approved options (Standard, Acceptable, Fallback). Governing law follows the contracting entity.",
+  "templateOnly": true,
+  "fields": [
+    {
+      "kind": "heading",
+      "label": "Customer"
+    },
+    {
+      "kind": "text",
+      "label": "Customer Legal Name",
+      "required": true
+    },
+    {
+      "kind": "text",
+      "label": "Customer Address",
+      "required": true
+    },
+    {
+      "kind": "dropdown",
+      "label": "Legal Entity",
+      "options": [
+        "Fontara, Inc.",
+        "Fontara UK Ltd",
+        "Fontara Europe Ltd",
+        "Fontara GmbH"
+      ],
+      "required": true
+    },
+    {
+      "kind": "heading",
+      "label": "Engagement"
+    },
+    {
+      "kind": "text",
+      "label": "Master Agreement",
+      "required": true
+    },
+    {
+      "kind": "text",
+      "label": "SOW Number",
+      "required": true
+    },
+    {
+      "kind": "date",
+      "label": "SOW Effective Date",
+      "format": "MMMM d, yyyy",
+      "required": true
+    },
+    {
+      "kind": "text",
+      "label": "Project Name",
+      "required": true
+    },
+    {
+      "kind": "text",
+      "label": "Scope of Services",
+      "required": true
+    },
+    {
+      "kind": "number",
+      "label": "Duration in Weeks",
+      "required": true
+    },
+    {
+      "kind": "dropdown",
+      "label": "Currency",
+      "options": [
+        "USD",
+        "GBP",
+        "EUR"
+      ],
+      "required": true
+    },
+    {
+      "kind": "radio",
+      "label": "Fee Model",
+      "options": [
+        "Fixed fee",
+        "Time and materials"
+      ],
+      "required": true
+    },
+    {
+      "kind": "currency",
+      "label": "Fixed Fee",
+      "decimals": 2,
+      "mergeIf": [
+        {
+          "field": "Fee Model",
+          "op": "equals",
+          "value": "Fixed fee"
+        }
+      ]
+    },
+    {
+      "kind": "currency",
+      "label": "Day Rate",
+      "decimals": 2,
+      "mergeIf": [
+        {
+          "field": "Fee Model",
+          "op": "equals",
+          "value": "Time and materials"
+        }
+      ]
+    },
+    {
+      "kind": "number",
+      "label": "Estimated Days",
+      "mergeIf": [
+        {
+          "field": "Fee Model",
+          "op": "equals",
+          "value": "Time and materials"
+        }
+      ]
+    },
+    {
+      "kind": "dropdown",
+      "label": "Intellectual Property Position",
+      "options": [
+        "Standard",
+        "Acceptable",
+        "Fallback"
+      ],
+      "required": true,
+      "help": "Standard: sign. Acceptable: legal operations reviews. Fallback: the furthest Fontara goes, general counsel's approval. Wording from the Clause Library (sell side)."
+    },
+    {
+      "kind": "heading",
+      "label": "Signers"
+    },
+    {
+      "kind": "text",
+      "label": "Customer Signer Name",
+      "required": true
+    },
+    {
+      "kind": "text",
+      "label": "Customer Signer Email",
+      "required": true
+    },
+    {
+      "kind": "text",
+      "label": "Company Signer Name",
+      "required": true
+    },
+    {
+      "kind": "text",
+      "label": "Company Signer Email",
+      "required": true
+    },
+    {
+      "kind": "text",
+      "label": "Agreement Type",
+      "hidden": true,
+      "default": "Statement Of Work"
+    },
+    {
+      "kind": "text",
+      "label": "Line of Business",
+      "hidden": true,
+      "default": "Sales"
+    }
+  ],
+  "template": [
+    "STATEMENT OF WORK {{SOW Number}}",
+    "This Statement of Work is made on {{SOW Effective Date}} between {{Legal Entity}} (\"Vendor\") and {{Customer Legal Name}}, {{Customer Address}} (\"Customer\"), under the {{Master Agreement}}. If this SOW and the master agreement conflict, the master agreement governs except where this SOW expressly says otherwise.",
+    "1. Project. {{Project Name}}. Vendor performs the following services over about {{Duration in Weeks}} weeks: {{Scope of Services}}",
+    {
+      "text": "2. Fees. Customer pays a fixed fee of {{Currency}} {{Fixed Fee}}, invoiced 50% on signature and 50% on acceptance of the final deliverable.",
+      "when": {
+        "field": "Fee Model",
+        "is": "Fixed fee"
+      }
+    },
+    {
+      "text": "2. Fees. Customer pays {{Currency}} {{Day Rate}} per consultant day, invoiced monthly in arrears for the days worked. The estimate is {{Estimated Days}} days; Vendor tells Customer in writing before it exceeds the estimate by more than 10%.",
+      "when": {
+        "field": "Fee Model",
+        "isNot": "Fixed fee"
+      }
+    },
+    "3. Acceptance. Customer has 10 business days after delivery to accept a deliverable or to describe in writing how it fails the agreed specification; a deliverable not rejected in that time is accepted.",
+    "4. Changes. Any change to the scope, fees or schedule needs a change order signed by both parties.",
+    {
+      "text": "5. Intellectual property. Vendor owns all deliverables, including custom-built features, and Customer assigns to Vendor any rights it acquires in them; Customer receives only a limited license to use them. Vendor may reuse, productize and commercialize any improvement, idea or feedback Customer provides, without compensation or attribution.",
+      "when": {
+        "field": "Intellectual Property Position",
+        "is": "Standard"
+      }
+    },
+    {
+      "text": "5. Intellectual property. Vendor retains ownership of its pre-existing IP and the platform. Customer owns its data. Deliverables created under SOWs default to Vendor ownership unless the SOW explicitly designates them as \"custom development\" and Customer pays a premium; in that case Customer owns those deliverables.",
+      "when": {
+        "field": "Intellectual Property Position",
+        "is": "Acceptable"
+      }
+    },
+    {
+      "text": "5. Intellectual property. All deliverables created specifically for Customer under a SOW are owned by Customer upon payment. Vendor's background IP is licensed (not assigned) to Customer on a perpetual, irrevocable basis for any purpose reasonably related to Customer's use of the deliverables. No feedback license is granted without a separate signed agreement.",
+      "when": {
+        "field": "Intellectual Property Position",
+        "is": "Fallback"
+      }
+    },
+    {
+      "text": "6. Governing law. This SOW is governed by the laws of the State of Delaware.",
+      "when": {
+        "field": "Legal Entity",
+        "is": "Fontara, Inc."
+      }
+    },
+    {
+      "text": "6. Governing law. This SOW is governed by the laws of England and Wales.",
+      "when": {
+        "field": "Legal Entity",
+        "is": "Fontara UK Ltd"
+      }
+    },
+    {
+      "text": "6. Governing law. This SOW is governed by the laws of Ireland.",
+      "when": {
+        "field": "Legal Entity",
+        "is": "Fontara Europe Ltd"
+      }
+    },
+    {
+      "text": "6. Governing law. This SOW is governed by the laws of the Federal Republic of Germany, and the courts of Munich have exclusive jurisdiction.",
+      "when": {
+        "field": "Legal Entity",
+        "is": "Fontara GmbH"
+      }
+    },
+    "Signed for {{Customer Legal Name}}: {{Customer Signer Name}}",
+    "Signed for {{Legal Entity}}: {{Company Signer Name}}"
+  ],
+  "sample": {
+    "Customer Legal Name": "ClimbTech Financial",
+    "Customer Address": "800 Finance Street, Boston, MA 02110",
+    "Legal Entity": "Fontara, Inc.",
+    "Master Agreement": "ClimbTech Financial Platform MSA",
+    "SOW Number": "FON-SOW-0401",
+    "SOW Effective Date": "01/11/2027",
+    "Project Name": "Branch rollout, phase 2",
+    "Scope of Services": "Configure the Fontara platform for 40 branches, migrate branch data and train 120 staff.",
+    "Duration in Weeks": "12",
+    "Currency": "USD",
+    "Fee Model": "Fixed fee",
+    "Fixed Fee": "84,000.00",
+    "Intellectual Property Position": "Standard",
+    "Customer Signer Name": "Mina Collier",
+    "Customer Signer Email": "climbtech-financial.mina.collier@example.com",
+    "Company Signer Name": "Leonie Brandt",
+    "Company Signer Email": "fontara.leonie.brandt@example.com"
+  }
+}

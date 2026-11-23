@@ -1,0 +1,22 @@
+{
+  "id": "legal-power-of-attorney-notary",
+  "name": "Power of attorney with remote online notarization",
+  "description": "The principal signs a power of attorney in a Docusign Notary session (remote online notarization). Notary recipients and fields are not modelled, and the library holds no power of attorney template, so the bundle lists the eSignature setup.",
+  "prerequisites": [
+    "Docusign Notary on the account, with a commissioned notary (your own or Docusign's notary network).",
+    "The principal's state allows remote online notarization of a power of attorney and Docusign Notary supports it (default: the principal's state)."
+  ],
+  "gaps": [
+    {
+      "need": "the power of attorney is notarized: a notary recipient",
+      "capability": "esign-template.recipient.notary",
+      "instead": "no power of attorney template is in the library (a new eSignature template needs its PDF rendered in the gallery first). Create it in eSignature: the Principal as signer and a Notary recipient, with Requires Notary on"
+    },
+    {
+      "need": "the principal signs in a remote online notarization session, with the notary's seal and journal",
+      "capability": "esign-template.tab.notary",
+      "instead": "the notary places the seal and records the journal in the Docusign Notary session"
+    }
+  ],
+  "notBuildable": "What this prompt needs is not modelled by any compiler yet: the power of attorney is notarized: a notary recipient; the principal signs in a remote online notarization session, with the notary's seal and journal. Each gap below names its capability and what to do instead; nothing would be correct to upload, so the bundle carries no files."
+}

@@ -1,0 +1,256 @@
+{
+  "id": "intercompany-services-agreement",
+  "name": "Intercompany Services Agreement",
+  "agreementType": "Msa",
+  "description": "One Fontara entity provides services to another at cost plus a markup: the services, the service fee, invoicing, transfer-pricing true-up, records, term, liability and law following the provider.",
+  "fields": {
+    "effective": {
+      "bind": {
+        "provision": "EffectiveDate"
+      },
+      "required": true
+    },
+    "provider_entity": {
+      "label": "Service provider",
+      "type": "select",
+      "options": [
+        "Fontara, Inc.",
+        "Fontara UK Ltd",
+        "Fontara Europe Ltd"
+      ],
+      "optionValues": {
+        "Fontara, Inc.": "Fontara, Inc., a Delaware corporation with its principal place of business at 1500 Harbor Boulevard, Suite 1200, San Francisco, CA 94111",
+        "Fontara UK Ltd": "Fontara UK Ltd, a company registered in England and Wales with its registered office at 48 Ashcombe Street, London EC2A 4NE, United Kingdom",
+        "Fontara Europe Ltd": "Fontara Europe Ltd, a company registered in Ireland with its registered office at 3 Riverside Quay, Dublin 2, D02 X285, Ireland"
+      },
+      "required": true,
+      "description": "Prints the entity’s full legal description and address"
+    },
+    "recipient_entity": {
+      "label": "Service recipient",
+      "type": "select",
+      "options": [
+        "Fontara, Inc.",
+        "Fontara UK Ltd",
+        "Fontara Europe Ltd"
+      ],
+      "optionValues": {
+        "Fontara, Inc.": "Fontara, Inc., a Delaware corporation with its principal place of business at 1500 Harbor Boulevard, Suite 1200, San Francisco, CA 94111",
+        "Fontara UK Ltd": "Fontara UK Ltd, a company registered in England and Wales with its registered office at 48 Ashcombe Street, London EC2A 4NE, United Kingdom",
+        "Fontara Europe Ltd": "Fontara Europe Ltd, a company registered in Ireland with its registered office at 3 Riverside Quay, Dublin 2, D02 X285, Ireland"
+      },
+      "required": true,
+      "description": "Prints the entity’s full legal description and address"
+    },
+    "services": {
+      "label": "Services",
+      "required": true
+    },
+    "markup": {
+      "label": "Markup on costs (%)",
+      "type": "number",
+      "required": true,
+      "description": "From the group’s transfer pricing analysis"
+    },
+    "billing": {
+      "label": "Invoicing",
+      "type": "select",
+      "options": [
+        "quarterly",
+        "monthly"
+      ],
+      "required": true
+    },
+    "currency": {
+      "label": "Invoice currency",
+      "type": "select",
+      "options": [
+        "US$",
+        "£",
+        "€"
+      ],
+      "required": true
+    },
+    "first_invoice": {
+      "label": "First invoice date",
+      "type": "date",
+      "dateFormat": "yyyy/MM/dd",
+      "required": true
+    },
+    "budget": {
+      "label": "Budgeted annual Costs (typed 1.234,56)",
+      "type": "number",
+      "numberFormat": "1.234,56",
+      "required": true,
+      "description": "Type the amount with a comma for the decimals, for example 1.250.000,50"
+    }
+  },
+  "signers": [
+    "Recipient",
+    "Provider"
+  ],
+  "body": [
+    {
+      "title": "INTERCOMPANY SERVICES AGREEMENT"
+    },
+    {
+      "p": "This Intercompany Services Agreement (this \"Agreement\") is effective {{effective}} between {{provider_entity}} (the \"Provider\"), and {{recipient_entity}} (the \"Recipient\"), each a member of the group of companies whose ultimate parent is Fontara, Inc."
+    },
+    {
+      "h": "1. Services"
+    },
+    {
+      "p": "The Provider shall provide the Recipient with the following services (the \"Services\"): {{services}}. The Provider shall perform the Services with reasonable skill and care, to the standard it applies to its own operations, and may use other Fontara group companies to perform them."
+    },
+    {
+      "h": "2. Service Fee"
+    },
+    {
+      "p": "The Recipient shall pay a service fee equal to the Provider's Costs of providing the Services plus a markup of {{markup}}% (the \"Service Fee\"). \"Costs\" means the Provider's direct and indirect costs of providing the Services, determined under US GAAP and allocated on the allocation keys in the Fontara group's transfer pricing documentation, excluding interest and income taxes; third-party costs the Provider incurs on the Recipient's behalf are recharged at cost, without markup."
+    },
+    {
+      "h": "3. Invoicing and Payment"
+    },
+    {
+      "p": "The Provider invoices the Service Fee {{billing}} in arrears, in {{currency}}, based on budgeted Costs (budgeted annual Costs: {{currency}} {{budget}}), starting on {{first_invoice}}, and the Recipient pays within 60 days of the invoice date. The Service Fee excludes VAT and similar taxes, which the Recipient pays where they apply, and the Recipient may deduct withholding tax only where the law requires it."
+    },
+    {
+      "h": "4. Transfer Pricing and True-Up"
+    },
+    {
+      "p": "The parties intend the Service Fee to be an arm's length charge under section 482 of the US Internal Revenue Code, the OECD Transfer Pricing Guidelines and the transfer pricing laws of each party's jurisdiction. Within 90 days after each financial year the Provider shall calculate its actual Costs for the year and issue a true-up invoice or credit note for the difference from the amounts invoiced. If a tax authority finally adjusts the Service Fee, the parties shall make any corresponding adjustment the law permits."
+    },
+    {
+      "h": "5. Records"
+    },
+    {
+      "p": "The Provider shall keep records sufficient to show that the Services were rendered, the Costs incurred and how they were allocated, and give them to the Recipient on request so that it can support its deduction of the Service Fee."
+    },
+    {
+      "h": "6. Term and Termination"
+    },
+    {
+      "p": "This Agreement continues until either party terminates it by 90 days' written notice, and ends automatically if either party ceases to be a member of the Fontara group."
+    },
+    {
+      "h": "7. Liability"
+    },
+    {
+      "p": "Neither party is liable to the other for indirect or consequential loss, and the Provider's total liability in a financial year is limited to the Service Fee paid for that year, except for fraud or willful misconduct."
+    },
+    {
+      "h": "8. Confidentiality"
+    },
+    {
+      "p": "Each party shall keep confidential the non-public information the other discloses under this Agreement that is marked or identified as confidential, or that a reasonable person would understand to be confidential, use it only to perform this Agreement, and protect it with reasonable care, during this Agreement and for 3 years after it ends. This does not apply to information that is public, independently developed, or rightfully received from a third party without restriction, or to a disclosure the law requires."
+    },
+    {
+      "h": "9. Governing Law and Jurisdiction"
+    },
+    {
+      "if": {
+        "field": "provider_entity",
+        "is": "Fontara, Inc."
+      },
+      "then": [
+        {
+          "p": "This Agreement is governed by the laws of the State of Delaware, and the state and federal courts located in Delaware have exclusive jurisdiction over any dispute arising out of it."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "provider_entity",
+        "is": "Fontara UK Ltd"
+      },
+      "then": [
+        {
+          "p": "This Agreement and any non-contractual obligation arising out of it are governed by the law of England and Wales, and the courts of England and Wales have exclusive jurisdiction over any dispute arising out of it."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "provider_entity",
+        "is": "Fontara Europe Ltd"
+      },
+      "then": [
+        {
+          "p": "This Agreement and any non-contractual obligation arising out of it are governed by the laws of Ireland, and the courts of Ireland have exclusive jurisdiction over any dispute arising out of it."
+        }
+      ]
+    },
+    {
+      "h": "10. Entire Agreement and Amendment"
+    },
+    {
+      "p": "This Agreement is the entire agreement of the parties on its subject and supersedes all prior proposals, negotiations, representations and understandings about it. Each party confirms that in entering into it, it has not relied on any statement not set out in it. This Agreement may be amended only in a writing signed by authorized representatives of both parties."
+    },
+    {
+      "h": "11. General"
+    },
+    {
+      "p": "If any provision of this Agreement is held invalid or unenforceable, it is enforced to the maximum extent permitted and the rest of this Agreement continues in full force. No failure or delay in exercising a right is a waiver of it, and a waiver is effective only if it is in writing and signed. No person other than the parties and their permitted successors and assigns has any right to enforce any term of this Agreement. This Agreement may be signed in counterparts and by electronic signature, each of which is an original and all of which together are one instrument."
+    },
+    {
+      "sign": "Recipient",
+      "title": true,
+      "company": true
+    },
+    {
+      "sign": "Provider",
+      "title": true,
+      "company": true
+    }
+  ],
+  "examples": [
+    {
+      "values": {
+        "effective": "01/01/2027",
+        "provider_entity": "Fontara, Inc.",
+        "recipient_entity": "Fontara UK Ltd",
+        "services": "group finance, legal, human resources and IT support services",
+        "markup": "5",
+        "billing": "quarterly",
+        "currency": "US$",
+        "first_invoice": "2027/03/31",
+        "budget": "2400000"
+      },
+      "expect": [
+        "plus a markup of 5%",
+        "starting on 2027/03/31",
+        "US$ 2.400.000",
+        "Fontara UK Ltd",
+        "State of Delaware",
+        "true-up invoice"
+      ],
+      "absent": [
+        "courts of Ireland"
+      ]
+    },
+    {
+      "values": {
+        "effective": "01/01/2027",
+        "provider_entity": "Fontara Europe Ltd",
+        "recipient_entity": "Fontara, Inc.",
+        "services": "EU customer support for Fontara, Inc.’s European customers",
+        "markup": "8",
+        "billing": "monthly",
+        "currency": "€",
+        "first_invoice": "2027/01/31",
+        "budget": "1234567,5"
+      },
+      "expect": [
+        "plus a markup of 8%",
+        "starting on 2027/01/31",
+        "€ 1.234.567,5",
+        "laws of Ireland",
+        "monthly in arrears, in €"
+      ],
+      "absent": [
+        "State of Delaware"
+      ]
+    }
+  ],
+  "source": "written for the library — no vault clause set for this type"
+}

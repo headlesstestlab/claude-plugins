@@ -1,0 +1,48 @@
+{
+  "id": "vendor-eform-intake",
+  "name": "Vendor eForm Intake",
+  "description": "Procurement collects a vendor's details on an eForm: Fill Form gives the requester the Vendor Onboarding eForm beside the incoming document and keeps the filled form in a Document variable; Edit Form reopens that filled eForm for corrections.",
+  "variables": [
+    {
+      "name": "Filled",
+      "type": "document"
+    }
+  ],
+  "steps": [
+    {
+      "id": "fill",
+      "name": "Fill the vendor form",
+      "kind": "fillForm",
+      "assignee": "submitter",
+      "form": {
+        "name": "Vendor Onboarding"
+      },
+      "documents": "params",
+      "output": "Filled",
+      "displayName": "Fill the vendor onboarding form",
+      "instructions": "Fill in the vendor's details and save.",
+      "on": {
+        "completed": "edit",
+        "failure": "finish"
+      }
+    },
+    {
+      "id": "edit",
+      "name": "Correct the vendor form",
+      "kind": "editForm",
+      "assignee": "submitter",
+      "documents": {
+        "var": "Filled"
+      },
+      "instructions": "Check the vendor's details and correct them.",
+      "on": {
+        "completed": "finish",
+        "failure": "finish"
+      }
+    },
+    {
+      "id": "finish",
+      "kind": "finish"
+    }
+  ]
+}

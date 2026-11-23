@@ -1,0 +1,165 @@
+{
+  "id": "supplier-onboarding-documents",
+  "name": "Supplier Onboarding Documents",
+  "description": "Procurement onboards a supplier from its filled PDF form. Extract PDF Fields reads the form's fields into an XML variable; the supplier's name goes into a merge XML; Find Documents by Folder takes the welcome-letter merge template from the Merge Templates folder; XML Merge Document writes the welcome letter under /Parties/ (with its PDF preview); Evaluate Document Text checks the merged name is in the letter; Use Docusign AI suggests the letter's attributes into an XML variable, with a Review Data task as the help asks when the AI step fails. A Logger line closes each path.",
+  "variables": [
+    {
+      "name": "FormFields",
+      "type": "xml"
+    },
+    {
+      "name": "MergeData",
+      "type": "xml"
+    },
+    {
+      "name": "Template",
+      "type": "document"
+    },
+    {
+      "name": "Letter",
+      "type": "document"
+    },
+    {
+      "name": "Suggested",
+      "type": "xml"
+    },
+    {
+      "name": "Reviewed",
+      "type": "xml"
+    }
+  ],
+  "paramsSchema": "<Params><Documents><Document><Id/><Name/></Document></Documents><SupplierName/></Params>",
+  "steps": [
+    {
+      "id": "fields",
+      "name": "Read the form fields",
+      "kind": "extractPdfFields",
+      "output": "FormFields",
+      "on": {
+        "success": "data",
+        "failure": "logNoFields",
+        "timedOut": "logNoFields"
+      }
+    },
+    {
+      "id": "logNoFields",
+      "name": "Log no form fields",
+      "kind": "logger",
+      "message": "The supplier form's fields could not be read",
+      "next": "data"
+    },
+    {
+      "id": "data",
+      "name": "Merge data",
+      "kind": "prefillXml",
+      "output": "MergeData",
+      "fields": {
+        "SupplierName": "Params.SupplierName"
+      },
+      "next": "template"
+    },
+    {
+      "id": "template",
+      "name": "Find the letter template",
+      "kind": "findDocumentsByFolder",
+      "folder": {
+        "name": "Merge Templates"
+      },
+      "output": "Template",
+      "on": {
+        "match": "merge",
+        "noMatch": "logFailed",
+        "failure": "logFailed"
+      }
+    },
+    {
+      "id": "merge",
+      "name": "Write the welcome letter",
+      "kind": "xmlMergeDocument",
+      "data": "MergeData",
+      "template": {
+        "var": "Template"
+      },
+      "documentName": "<%#XmlVariables.Params.SupplierName%> welcome letter",
+      "folder": {
+        "path": "/Parties/"
+      },
+      "waitForPdf": true,
+      "output": "Letter",
+      "on": {
+        "success": "check",
+        "failure": "logFailed",
+        "timedOut": "logFailed"
+      }
+    },
+    {
+      "id": "check",
+      "name": "Name in the letter",
+      "kind": "evaluateDocumentText",
+      "documents": {
+        "var": "Letter"
+      },
+      "query": "<%#XmlVariables.Params.SupplierName%>",
+      "on": {
+        "match": "ai",
+        "noMatch": "logNoText",
+        "failure": "logFailed"
+      }
+    },
+    {
+      "id": "logNoText",
+      "name": "Log text not found",
+      "kind": "logger",
+      "message": "The welcome letter does not hold the supplier's name",
+      "next": "ai"
+    },
+    {
+      "id": "ai",
+      "name": "Suggest attributes",
+      "kind": "useDocusignAi",
+      "documents": {
+        "var": "Letter"
+      },
+      "output": "Suggested",
+      "on": {
+        "success": "logDone",
+        "failure": "review",
+        "timedOut": "review"
+      }
+    },
+    {
+      "id": "review",
+      "name": "Review the attributes",
+      "kind": "reviewData",
+      "assignee": "submitter",
+      "review": [
+        {
+          "attribute": "Document Type"
+        }
+      ],
+      "output": "Reviewed",
+      "on": {
+        "success": "logDone",
+        "failure": "logFailed"
+      }
+    },
+    {
+      "id": "logDone",
+      "name": "Log onboarding documents ready",
+      "kind": "logger",
+      "message": "Onboarding documents ready for <%#XmlVariables.Params.SupplierName%>",
+      "next": "finish"
+    },
+    {
+      "id": "logFailed",
+      "name": "Log failed",
+      "kind": "logger",
+      "message": "Failed: the onboarding documents for <%#XmlVariables.Params.SupplierName%> are not complete",
+      "next": "finish"
+    },
+    {
+      "id": "finish",
+      "kind": "finish"
+    }
+  ]
+}

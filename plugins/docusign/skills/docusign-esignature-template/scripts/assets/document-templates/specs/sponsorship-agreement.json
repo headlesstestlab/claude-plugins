@@ -1,0 +1,394 @@
+{
+  "id": "sponsorship-agreement",
+  "name": "Corporate Sponsorship Agreement",
+  "description": "Fontara sponsors a nonprofit’s event: payment, acknowledgments (Schedule A) and hospitality (Schedule B), category exclusivity, marks, cancellation, morals.",
+  "agreementType": "Event",
+  "fields": {
+    "fontara_entity": {
+      "label": "Fontara contracting entity",
+      "type": "select",
+      "options": [
+        "Fontara, Inc.",
+        "Fontara UK Ltd",
+        "Fontara Europe Ltd"
+      ],
+      "optionValues": {
+        "Fontara, Inc.": "Fontara, Inc., a Delaware corporation with its principal place of business at 1500 Harbor Boulevard, Suite 1200, San Francisco, CA 94111",
+        "Fontara UK Ltd": "Fontara UK Ltd, a company registered in England and Wales with its registered office at 48 Ashcombe Street, London EC2A 4NE, United Kingdom",
+        "Fontara Europe Ltd": "Fontara Europe Ltd, a company registered in Ireland with its registered office at 3 Riverside Quay, Dublin 2, D02 X285, Ireland"
+      },
+      "required": true,
+      "description": "Prints the entity’s full legal description and address"
+    },
+    "currency": {
+      "label": "Currency",
+      "type": "select",
+      "options": [
+        "US$",
+        "£",
+        "€"
+      ],
+      "required": true,
+      "description": "The signing entity’s: US$ for Fontara, Inc., £ for Fontara UK Ltd, € for Fontara Europe Ltd"
+    },
+    "effective": {
+      "bind": {
+        "provision": "EffectiveDate"
+      },
+      "required": true
+    },
+    "nonprofit": {
+      "bind": {
+        "provision": "AgreementParty"
+      },
+      "required": true,
+      "description": "Nonprofit legal name"
+    },
+    "nonprofit_entity": {
+      "label": "Nonprofit entity type",
+      "required": true,
+      "description": "For example: a Delaware corporation"
+    },
+    "nonprofit_address": {
+      "label": "Nonprofit street address",
+      "required": true
+    },
+    "nonprofit_city": {
+      "label": "Nonprofit city",
+      "required": true
+    },
+    "nonprofit_region": {
+      "label": "Nonprofit state",
+      "required": true
+    },
+    "nonprofit_postal": {
+      "label": "Nonprofit ZIP code",
+      "required": true
+    },
+    "event": {
+      "label": "Event or program",
+      "required": true
+    },
+    "event_date": {
+      "label": "Event date",
+      "type": "date",
+      "required": true
+    },
+    "amount": {
+      "label": "Sponsorship payment",
+      "type": "number",
+      "money": true,
+      "required": true
+    },
+    "pay_by": {
+      "label": "Pay by",
+      "type": "date",
+      "required": true
+    },
+    "category": {
+      "label": "Exclusive sponsor category",
+      "required": true
+    },
+    "passes": {
+      "label": "Complimentary passes",
+      "type": "number",
+      "required": true
+    }
+  },
+  "signers": [
+    "Nonprofit",
+    "Fontara"
+  ],
+  "body": [
+    {
+      "title": "CORPORATE SPONSORSHIP AGREEMENT"
+    },
+    {
+      "p": "This Corporate Sponsorship Agreement (this \"Agreement\") is made as of {{effective}} between {{fontara_entity}} (\"Sponsor\"), and **{{nonprofit}}**, {{nonprofit_entity}} with its principal place of business at {{nonprofit_address}}, {{nonprofit_city}}, {{nonprofit_region}} {{nonprofit_postal}} (\"Nonprofit\"), for {{event}}, to be held on {{event_date}} (the \"Event\"). Sponsor is the exclusive Event sponsor in the {{category}} category (the \"Category\"). This Agreement runs from its date until 30 days after the Event (the \"Term\")."
+    },
+    {
+      "h": "1. Payment"
+    },
+    {
+      "p": "Sponsor shall pay {{currency}}{{amount}} within 30 days after the later of signature and receipt of Nonprofit's invoice, and in any event by {{pay_by}}."
+    },
+    {
+      "h": "2. Sponsorship Payment"
+    },
+    {
+      "if": {
+        "field": "fontara_entity",
+        "is": "Fontara, Inc."
+      },
+      "then": [
+        {
+          "p": "The parties intend Sponsor's payment to be a qualified sponsorship payment under section 513(i) of the Internal Revenue Code. Sponsor's benefits are limited to the acknowledgments in Schedule A and the hospitality in Schedule B, whose fair market value Nonprofit will state in writing. The payment is not contingent on attendance, broadcast ratings or any other measure of public exposure, but Nonprofit will refund a pro rata share if the Event does not take place."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "fontara_entity",
+        "is": "Fontara UK Ltd"
+      },
+      "then": [
+        {
+          "p": "Sponsor's benefits are limited to the acknowledgments in Schedule A and the hospitality in Schedule B, whose value Nonprofit will state in writing. The payment is not contingent on attendance, broadcast ratings or any other measure of public exposure. Each party is responsible for its own tax treatment of the payment, and any VAT due on it is payable against a valid VAT invoice."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "fontara_entity",
+        "is": "Fontara Europe Ltd"
+      },
+      "then": [
+        {
+          "p": "Sponsor's benefits are limited to the acknowledgments in Schedule A and the hospitality in Schedule B, whose value Nonprofit will state in writing. The payment is not contingent on attendance, broadcast ratings or any other measure of public exposure. Each party is responsible for its own tax treatment of the payment, and any VAT due on it is payable against a valid VAT invoice."
+        }
+      ]
+    },
+    {
+      "h": "3. Sponsor Acknowledgment Versus Advertising"
+    },
+    {
+      "p": "Nonprofit will acknowledge Sponsor as the exclusive {{category}} sponsor by displaying Sponsor's name, logo and web address in the places listed in Schedule A. Acknowledgments may describe Sponsor's product lines in neutral terms but will not include qualitative or comparative claims, price information, endorsements or calls to action. Sponsor will supply artwork for Nonprofit's approval, and any advertising Sponsor wants will be bought under a separate agreement."
+    },
+    {
+      "h": "4. Sponsor Category Exclusivity"
+    },
+    {
+      "p": "During the Term, Nonprofit will not acknowledge any other company in the Category as a sponsor of the Event. This exclusivity covers only acknowledgment of the Event's sponsors. It does not restrict Nonprofit's purchases, its acceptance of unacknowledged gifts, or other companies' involvement in other Nonprofit activities, and it does not make Sponsor the exclusive provider of any product or service."
+    },
+    {
+      "h": "5. Nonprofit Name and Logo License"
+    },
+    {
+      "p": "Nonprofit grants Sponsor a non-exclusive, non-transferable license during the Term to use Nonprofit's name and logo, in the form Nonprofit provides, to state that Sponsor supports Nonprofit or sponsors the Event. Sponsor will submit each use for Nonprofit's approval, which Nonprofit will give or refuse within 5 business days. Sponsor will not use Nonprofit's marks on products or in any way that suggests Nonprofit endorses Sponsor's products or services. The license ends with the Term."
+    },
+    {
+      "h": "6. Sponsorship Morals Clause"
+    },
+    {
+      "p": "Either party may terminate this Agreement on written notice if the other party, or one of its senior officers, engages in conduct or becomes the subject of public allegations that, in the terminating party's reasonable judgment, would materially harm its reputation or, for Nonprofit, conflict with its mission. On termination, each party will stop using the other's name and marks within 30 days, and Nonprofit will refund the part of the fee attributable to acknowledgments not yet delivered."
+    },
+    {
+      "h": "7. Cancellation"
+    },
+    {
+      "p": "If the Event is cancelled, or postponed by more than 90 days, for any reason including a force majeure event, Nonprofit shall refund within 30 days the part of the payment attributable to acknowledgments and hospitality not delivered."
+    },
+    {
+      "h": "8. Insurance"
+    },
+    {
+      "p": "Nonprofit shall maintain commercial general liability insurance for the Event of at least {{currency}}1,000,000 per occurrence, naming Sponsor as an additional insured, and provide a certificate on request."
+    },
+    {
+      "h": "9. Relationship of the Parties"
+    },
+    {
+      "p": "The parties are independent contractors. Nothing in this Agreement creates a partnership, joint venture, agency, fiduciary or employment relationship between them, and neither party may make any commitment binding the other."
+    },
+    {
+      "h": "10. Notices"
+    },
+    {
+      "p": "Notices under this Agreement must be in writing and delivered by hand, by recognized overnight courier or by email to the addresses stated in this Agreement or later notified in writing. A notice is effective on confirmed delivery or, for email, when the recipient acknowledges it. Notices of breach, termination or a legal claim must be sent by courier, with a copy by email."
+    },
+    {
+      "h": "11. Assignment"
+    },
+    {
+      "p": "Neither party may assign or transfer this Agreement without the other party's prior written consent, which may not be unreasonably withheld, except that either party may assign it on written notice to an affiliate, or to a successor to all or substantially all of the business or assets to which it relates that assumes it in writing. Any other attempted assignment is void. This Agreement binds and benefits the parties and their permitted successors and assigns."
+    },
+    {
+      "h": "12. Force Majeure"
+    },
+    {
+      "p": "Neither party is liable for a delay or failure to perform, other than an obligation to pay money, caused by events beyond its reasonable control, including natural disasters, epidemics, war, terrorism, civil unrest, government action and widespread failures of the internet or public utilities. The affected party shall notify the other within 5 business days and use reasonable efforts to resume performance. If the event continues for more than 60 days, either party may terminate the affected performance under this Agreement on written notice without liability."
+    },
+    {
+      "h": "13. Governing Law and Disputes"
+    },
+    {
+      "if": {
+        "field": "fontara_entity",
+        "is": "Fontara, Inc."
+      },
+      "then": [
+        {
+          "p": "This Agreement is governed by the laws of the State of Delaware, without regard to its conflict-of-laws rules. The parties shall first try to resolve any dispute arising out of or relating to this Agreement by good-faith negotiation between senior executives for 30 days. A dispute not resolved in that time shall be finally settled by binding arbitration administered by the American Arbitration Association under its Commercial Arbitration Rules, before a single arbitrator, seated in San Francisco, California, and judgment on the award may be entered in any court of competent jurisdiction. Either party may seek injunctive relief from a court to protect its confidential information or intellectual property."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "fontara_entity",
+        "is": "Fontara UK Ltd"
+      },
+      "then": [
+        {
+          "p": "This Agreement, and any non-contractual obligation arising out of or in connection with it, is governed by the law of England and Wales. The parties shall first try to resolve any dispute arising out of or in connection with this Agreement by good-faith negotiation between senior executives for 30 days. A dispute not resolved in that time shall be referred to and finally resolved by arbitration under the LCIA Rules, which are incorporated by reference into this section, before a sole arbitrator, with the seat of arbitration in London and English as the language of the arbitration. Either party may seek urgent injunctive relief from a court."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "fontara_entity",
+        "is": "Fontara Europe Ltd"
+      },
+      "then": [
+        {
+          "p": "This Agreement, and any non-contractual obligation arising out of or in connection with it, is governed by the laws of Ireland. The parties shall first try to resolve any dispute arising out of or in connection with this Agreement by good-faith negotiation between senior executives for 30 days, after which the courts of Ireland have exclusive jurisdiction to settle it."
+        }
+      ]
+    },
+    {
+      "h": "14. Entire Agreement and Amendment"
+    },
+    {
+      "p": "This Agreement, including its schedules, is the entire agreement of the parties on its subject and supersedes all prior proposals, negotiations, representations and understandings about it. Each party confirms that in entering into it, it has not relied on any statement not set out in it. This Agreement may be amended only in a writing signed by authorized representatives of both parties."
+    },
+    {
+      "h": "15. Survival"
+    },
+    {
+      "p": "Any provision of this Agreement that by its nature is intended to survive its termination or expiration survives it, including the refund obligations and the restrictions on use of marks, together with any payment obligation accrued before termination."
+    },
+    {
+      "h": "16. General"
+    },
+    {
+      "p": "If any provision of this Agreement is held invalid or unenforceable, it is enforced to the maximum extent permitted and the rest of this Agreement continues in full force. No failure or delay in exercising a right is a waiver of it, and a waiver is effective only if it is in writing and signed. No person other than the parties and their permitted successors and assigns has any right to enforce any term of this Agreement. This Agreement may be signed in counterparts and by electronic signature, each of which is an original and all of which together are one instrument."
+    },
+    {
+      "if": {
+        "field": "fontara_entity",
+        "is": "Fontara, Inc."
+      },
+      "then": [
+        {
+          "p": "Nonprofit EIN: [[text:Nonprofit:EIN]]"
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "fontara_entity",
+        "is": "Fontara UK Ltd"
+      },
+      "then": [
+        {
+          "p": "Nonprofit registered charity number: [[text:Nonprofit:UK charity number]]"
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "fontara_entity",
+        "is": "Fontara Europe Ltd"
+      },
+      "then": [
+        {
+          "p": "Nonprofit registered charity number: [[text:Nonprofit:IE charity number]]"
+        }
+      ]
+    },
+    {
+      "p": "Nonprofit marks for use (logo files): [[attach:Nonprofit:Logo files]]"
+    },
+    {
+      "sign": "Nonprofit",
+      "title": true,
+      "company": true
+    },
+    {
+      "sign": "Fontara",
+      "title": true,
+      "company": true
+    },
+    {
+      "h": "Schedule A — Acknowledgments"
+    },
+    {
+      "lineItems": {
+        "name": "Acknowledgments",
+        "label": "Acknowledgments",
+        "columns": [
+          {
+            "key": "acknowledgment",
+            "label": "Acknowledgment"
+          },
+          {
+            "key": "quantity",
+            "label": "Quantity"
+          },
+          {
+            "key": "timing",
+            "label": "Timing"
+          }
+        ]
+      }
+    },
+    {
+      "h": "Schedule B — Hospitality"
+    },
+    {
+      "p": "{{passes}} complimentary passes to the Event for Sponsor's guests, with the meals and receptions included in a standard pass."
+    }
+  ],
+  "examples": [
+    {
+      "values": {
+        "effective": "02/01/2027",
+        "nonprofit": "Insight Baybridge",
+        "nonprofit_entity": "a Washington nonprofit corporation",
+        "nonprofit_address": "921 Academic Circle",
+        "event": "the 2027 Learning Research Summit",
+        "event_date": "10/14/2027",
+        "amount": "50000",
+        "pay_by": "04/30/2027",
+        "category": "business software",
+        "passes": "10",
+        "fontara_entity": "Fontara, Inc.",
+        "currency": "US$",
+        "nonprofit_city": "Seattle",
+        "nonprofit_region": "WA",
+        "nonprofit_postal": "98101"
+      },
+      "tables": {
+        "Acknowledgments": [
+          [
+            "Logo on event website",
+            "1",
+            "From signing"
+          ],
+          [
+            "Name on event signage",
+            "4",
+            "Event days"
+          ],
+          [
+            "Recognition from the stage",
+            "1",
+            "Opening session"
+          ]
+        ]
+      },
+      "expect": [
+        "US$50,000.00",
+        "Learning Research Summit",
+        "exclusive business software sponsor",
+        "section 513(i)",
+        "Recognition from the stage",
+        "Schedule B",
+        "10 complimentary passes"
+      ],
+      "absent": [
+        "presenting sponsor"
+      ]
+    }
+  ],
+  "source": "vault: Contracts/Clauses/Sponsorship"
+}

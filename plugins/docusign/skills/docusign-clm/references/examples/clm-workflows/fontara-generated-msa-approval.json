@@ -1,0 +1,551 @@
+{
+  "id": "fontara-generated-msa-approval",
+  "name": "Generated MSA Approval",
+  "description": "Launched by the Fontara Master Services Agreement document generation configuration: files the attributes (Agreement Profile: Master Service Agreement, Sales, the Fontara entity, the customer, the currency; Contract Process: Draft, the agreement number), renames the document '<customer> Master Services Agreement <number>.docx' and moves it to Contracts/Sales, then runs the Escalation-matrix approvals (the child workflow Escalation matrix approvals), negotiation (with Terms changed: route again) and signature as Contract Request to Execution. The customer signs first, then Fontara's signer. A step that fails ends the run as Failed and CLM emails the person who started it. After filing, the run sets CLM's standard agreement attributes from the form (the owner 11-21): Find Party (Customer Legal Name), check-out, Edit CLM Agreement Attributes (Type Master Service Agreement, Party, Effective, Expiration = effective + initial term − 1 day, Value = Total Contract Value, Payment Duration, Renewal Term 12 months, Termination and Renewal Notice 90 days: the MSA's standard renewal clause), cancel the check-out, and Update Document Keywords writes a one-line summary as the document's Description. A failing step goes on to naming the document.",
+  "variables": [
+    {
+      "name": "DealValue",
+      "type": "number"
+    },
+    {
+      "name": "PayDays",
+      "type": "number"
+    },
+    "Side",
+    "Verdict",
+    "CoveredByDPA",
+    "TouchesData",
+    "SignerEmail",
+    "SignerName",
+    "CompanySignerEmail",
+    "CompanySignerName",
+    "Changed",
+    "ValueOver",
+    "Title",
+    {
+      "name": "MatrixIn",
+      "type": "xml",
+      "schema": "<Params><Documents><Document><Id/><Name/></Document></Documents><Title/><Side/><DealValue/><PayDays/><Verdict/><CoveredByDPA/><TouchesData/><ValueOver/></Params>"
+    },
+    {
+      "name": "MatrixResult",
+      "type": "text",
+      "writableByChild": true
+    },
+    "AgreementStart",
+    "AgreementEnd",
+    "Summary",
+    {
+      "name": "Party",
+      "type": "xml",
+      "schema": "<Parties><CLMPartyData><CLMPartyId/><ExternalId/><Name/><BusinessContactName/><BusinessType/><Source/></CLMPartyData></Parties>"
+    }
+  ],
+  "paramsSchema": "<Params><Documents><Document><Id/><Name/></Document></Documents><TemplateFieldData><Customer_Legal_Name/><Legal_Entity/><Agreement_Number/><Total_Contract_Value/><Payment_Terms_Days/><Covered_by_an_Existing_DPA/><Triage_Verdict/><Side/><Customer_Signer_Name/><Customer_Signer_Email/><Company_Signer_Name/><Company_Signer_Email/></TemplateFieldData></Params>",
+  "steps": [
+    {
+      "id": "intake",
+      "name": "Read the request",
+      "kind": "setVariable",
+      "set": {
+        "Side": "<%#XmlVariables.Params.TemplateFieldData.Side%>",
+        "DealValue": "<%#XmlVariables.Params.TemplateFieldData.Total_Contract_Value%>",
+        "PayDays": "<%#XmlVariables.Params.TemplateFieldData.Payment_Terms_Days%>",
+        "Verdict": "<%#XmlVariables.Params.TemplateFieldData.Triage_Verdict%>",
+        "CoveredByDPA": "<%#XmlVariables.Params.TemplateFieldData.Covered_by_an_Existing_DPA%>",
+        "TouchesData": "No",
+        "SignerEmail": "<%#XmlVariables.Params.TemplateFieldData.Customer_Signer_Email%>",
+        "SignerName": "<%#XmlVariables.Params.TemplateFieldData.Customer_Signer_Name%>",
+        "CompanySignerEmail": "<%#XmlVariables.Params.TemplateFieldData.Company_Signer_Email%>",
+        "CompanySignerName": "<%#XmlVariables.Params.TemplateFieldData.Company_Signer_Name%>",
+        "Title": "<%#XmlVariables.Params.TemplateFieldData.Customer_Legal_Name%> Master Services Agreement <%#XmlVariables.Params.TemplateFieldData.Agreement_Number%>"
+      },
+      "next": "profile"
+    },
+    {
+      "id": "profile",
+      "name": "File the order's attributes",
+      "kind": "updateMetadata",
+      "set": [
+        {
+          "attribute": "Agreement Profile.Agreement Type",
+          "value": "Master Service Agreement"
+        },
+        {
+          "attribute": "Agreement Profile.Line of Business",
+          "value": "Sales"
+        },
+        {
+          "attribute": "Agreement Profile.Department",
+          "value": "Sales"
+        },
+        {
+          "attribute": "Agreement Profile.Legal Entity",
+          "value": "<%#XmlVariables.Params.TemplateFieldData.Legal_Entity%>"
+        },
+        {
+          "attribute": "Agreement Profile.Counterparty",
+          "value": "<%#XmlVariables.Params.TemplateFieldData.Customer_Legal_Name%>"
+        },
+        {
+          "attribute": "Agreement Profile.Currency",
+          "value": "<%#XmlVariables.Params.TemplateFieldData.Currency%>"
+        },
+        {
+          "attribute": "Contract Process.Contract Number",
+          "value": "<%#XmlVariables.Params.TemplateFieldData.Agreement_Number%>"
+        },
+        {
+          "attribute": "Contract Process.Status",
+          "value": "Draft"
+        },
+        {
+          "attribute": "Contract Process.Approval Status",
+          "value": "Not Started"
+        }
+      ],
+      "on": {
+        "success": "stdDates"
+      }
+    },
+    {
+      "id": "stdDates",
+      "name": "Work out the agreement dates",
+      "kind": "setVariable",
+      "set": {
+        "AgreementStart": {
+          "code": "return Convert.ToString(GetVariableValue(\"Params.Params.TemplateFieldData.Effective_Date_unformatted\")).Substring(0, 10);"
+        },
+        "AgreementEnd": {
+          "code": "var start = DateTime.Parse(Convert.ToString(GetVariableValue(\"Params.Params.TemplateFieldData.Effective_Date_unformatted\")).Substring(0, 10)); return start.AddMonths(Convert.ToInt32(Convert.ToString(GetVariableValue(\"Params.Params.TemplateFieldData.Initial_Term_in_Months_unformatted\")))).AddDays(-1).ToString(\"yyyy-MM-dd\");"
+        },
+        "Summary": "Master Services Agreement <%#XmlVariables.Params.TemplateFieldData.Agreement_Number%>: <%#XmlVariables.Params.TemplateFieldData.Legal_Entity%> with <%#XmlVariables.Params.TemplateFieldData.Customer_Legal_Name%>, <%#XmlVariables.Params.TemplateFieldData.Initial_Term_in_Months%>-month initial term from <%#XmlVariables.Params.TemplateFieldData.Effective_Date%>, annual fee <%#XmlVariables.Params.TemplateFieldData.Currency%> <%#XmlVariables.Params.TemplateFieldData.Annual_Fee%>, total <%#XmlVariables.Params.TemplateFieldData.Currency%> <%#XmlVariables.Params.TemplateFieldData.Total_Contract_Value%>, Net <%#XmlVariables.Params.TemplateFieldData.Payment_Terms_Days%>; renews for 12 months unless either party gives 90 days' notice"
+      },
+      "next": "stdParty"
+    },
+    {
+      "id": "stdParty",
+      "name": "Find the party",
+      "kind": "findParty",
+      "partyName": "<%#XmlVariables.Params.TemplateFieldData.Customer_Legal_Name%>",
+      "output": "Party",
+      "on": {
+        "match": "stdLock",
+        "noMatch": "stdLock",
+        "failure": "stdLock"
+      }
+    },
+    {
+      "id": "stdLock",
+      "name": "Check out",
+      "kind": "checkOutDocument",
+      "user": "submitter",
+      "on": {
+        "success": "stdAttributes",
+        "failure": "stdDescribe"
+      }
+    },
+    {
+      "id": "stdAttributes",
+      "name": "Set the CLM agreement attributes",
+      "kind": "editClmAgreementAttributes",
+      "set": {
+        "partyId": "<%#XmlVariables.Party.Parties.CLMPartyData.CLMPartyId%>",
+        "documentType": "Master Service Agreement",
+        "effectiveDate": "<%#Variable.AgreementStart%>",
+        "expirationDate": "<%#Variable.AgreementEnd%>",
+        "totalContractValue": "<%#XmlVariables.Params.TemplateFieldData.Total_Contract_Value_unformatted%>",
+        "paymentDurationCount": "<%#XmlVariables.Params.TemplateFieldData.Payment_Terms_Days%>",
+        "paymentDurationUnit": "Days",
+        "renewalTermCount": "12",
+        "renewalTermUnit": "Months",
+        "noticePeriodCount": "90",
+        "noticePeriodUnit": "Days",
+        "renewalNoticePeriodCount": "90",
+        "renewalNoticePeriodUnit": "Days",
+        "paymentTerms": "Yes",
+        "limitationOfLiability": "Yes",
+        "indemnity": "Yes",
+        "assignable": "Yes"
+      },
+      "on": {
+        "success": "stdUnlock",
+        "failure": "stdUnlock"
+      }
+    },
+    {
+      "id": "stdUnlock",
+      "name": "Cancel the check out",
+      "kind": "checkOutDocumentCancellation",
+      "user": "submitter",
+      "on": {
+        "success": "stdDescribe",
+        "failure": "stdDescribe"
+      }
+    },
+    {
+      "id": "stdDescribe",
+      "name": "Describe the agreement",
+      "kind": "updateDocumentKeywords",
+      "keywords": "<%#Variable.Summary%>",
+      "on": {
+        "success": "rename",
+        "failure": "rename"
+      }
+    },
+    {
+      "id": "rename",
+      "name": "Name the document",
+      "kind": "renameDocument",
+      "newName": "<%#XmlVariables.Params.TemplateFieldData.Customer_Legal_Name%> Master Services Agreement <%#XmlVariables.Params.TemplateFieldData.Agreement_Number%>.docx",
+      "on": {
+        "success": "file"
+      }
+    },
+    {
+      "id": "file",
+      "name": "File it in the department folder",
+      "kind": "copyOrMoveDocument",
+      "action": "move",
+      "folder": {
+        "uid": "28db6609-b7d9-f111-aeaf-fdd8e4e0fb99"
+      },
+      "on": {
+        "success": "inReview"
+      }
+    },
+    {
+      "id": "inReview",
+      "name": "Mark In Review",
+      "kind": "updateMetadata",
+      "set": [
+        {
+          "attribute": "Contract Process.Status",
+          "value": "In Review"
+        },
+        {
+          "attribute": "Contract Process.Approval Status",
+          "value": "Pending"
+        }
+      ],
+      "on": {
+        "success": "handoff"
+      }
+    },
+    {
+      "id": "handoff",
+      "name": "Hand the deal to the matrix",
+      "kind": "prefillXml",
+      "output": "MatrixIn",
+      "root": "Params",
+      "copyDocument": true,
+      "fields": {
+        "Title": "Title",
+        "Side": "Side",
+        "DealValue": "DealValue",
+        "PayDays": "PayDays",
+        "Verdict": "Verdict",
+        "CoveredByDPA": "CoveredByDPA",
+        "TouchesData": "TouchesData",
+        "ValueOver": "ValueOver"
+      },
+      "next": "matrix"
+    },
+    {
+      "id": "matrix",
+      "name": "Escalation matrix approvals",
+      "kind": "childWorkflow",
+      "workflow": "Escalation matrix approvals",
+      "params": "MatrixIn",
+      "wait": true,
+      "description": "Runs Escalation matrix approvals: rules 1 to 6 in order, each matching rule adds an approver; it sets MatrixResult to Approved or Rejected.",
+      "on": {
+        "success": "matrixSaid"
+      }
+    },
+    {
+      "id": "matrixSaid",
+      "name": "Approved by the matrix?",
+      "kind": "decision",
+      "branches": [
+        {
+          "label": "Approved",
+          "when": {
+            "var": "MatrixResult",
+            "op": "equals",
+            "value": "Approved"
+          },
+          "to": "approved"
+        }
+      ],
+      "else": {
+        "label": "Rejected",
+        "to": "rejected"
+      }
+    },
+    {
+      "id": "approved",
+      "name": "Approved: mark In Negotiation",
+      "kind": "updateMetadata",
+      "set": [
+        {
+          "attribute": "Contract Process.Approval Status",
+          "value": "Approved"
+        },
+        {
+          "attribute": "Contract Process.Status",
+          "value": "In Negotiation"
+        }
+      ],
+      "on": {
+        "success": "negotiate"
+      }
+    },
+    {
+      "id": "negotiate",
+      "name": "Deal desk: edit, re-route or send?",
+      "kind": "choice",
+      "assignee": {
+        "taskGroup": "Deal Desk"
+      },
+      "displayName": "Negotiate: <%#XmlVariables.Params.TemplateFieldData.Customer_Legal_Name%> Master Services Agreement <%#XmlVariables.Params.TemplateFieldData.Agreement_Number%>",
+      "stage": "Negotiation",
+      "subject": "Negotiate or send for signature",
+      "instructions": "Apply the counterparty's redline from the clause library's approved alternatives (Edit the contract). If the redline changes a term the Escalation matrix routes on, choose Terms changed: route again. Send it for signature when both sides agree.",
+      "comments": "Yes",
+      "options": [
+        {
+          "label": "Edit the contract",
+          "to": "edit"
+        },
+        {
+          "label": "Terms changed: route again",
+          "to": "changed"
+        },
+        {
+          "label": "Send for signature",
+          "to": "send"
+        }
+      ]
+    },
+    {
+      "id": "edit",
+      "name": "Edit the redline",
+      "kind": "editDocument",
+      "assignee": {
+        "taskGroup": "Deal Desk"
+      },
+      "stage": "Negotiation",
+      "instructions": "Upload the new version (or edit it online), then complete the task.",
+      "comments": "Yes",
+      "on": {
+        "completed": "negotiate"
+      }
+    },
+    {
+      "id": "changed",
+      "name": "Which term changed?",
+      "kind": "routing",
+      "assignee": {
+        "taskGroup": "Deal Desk"
+      },
+      "options": [
+        "Legal terms now non-standard (red)",
+        "Legal terms now at the acceptable position (yellow)",
+        "Value now over $1M",
+        "Payment terms now Net 90",
+        "New personal data no DPA covers",
+        "Vendor will now touch Fontara systems or data"
+      ],
+      "output": "Changed",
+      "displayName": "Route again: <%#XmlVariables.Params.TemplateFieldData.Customer_Legal_Name%> Master Services Agreement <%#XmlVariables.Params.TemplateFieldData.Agreement_Number%>",
+      "stage": "Negotiation",
+      "subject": "Which term did the redline change?",
+      "instructions": "Pick the term the counterparty's redline changed. The contract goes back through the Escalation matrix's approvals with it.",
+      "comments": "Yes",
+      "on": {
+        "success": "applyChange"
+      }
+    },
+    {
+      "id": "applyChange",
+      "name": "Apply the changed term",
+      "kind": "setVariable",
+      "set": {
+        "Verdict": {
+          "map": "Changed",
+          "cases": {
+            "Legal terms now non-standard (red)": "Red",
+            "Legal terms now at the acceptable position (yellow)": "Yellow"
+          }
+        },
+        "ValueOver": {
+          "map": "Changed",
+          "cases": {
+            "Value now over $1M": "Yes"
+          }
+        },
+        "PayDays": {
+          "map": "Changed",
+          "cases": {
+            "Payment terms now Net 90": "90"
+          }
+        },
+        "CoveredByDPA": {
+          "map": "Changed",
+          "cases": {
+            "New personal data no DPA covers": "No"
+          }
+        },
+        "TouchesData": {
+          "map": "Changed",
+          "cases": {
+            "Vendor will now touch Fontara systems or data": "Yes"
+          }
+        }
+      },
+      "next": "reroute"
+    },
+    {
+      "id": "reroute",
+      "name": "Back to In Review",
+      "kind": "updateMetadata",
+      "set": [
+        {
+          "attribute": "Contract Process.Status",
+          "value": "In Review"
+        },
+        {
+          "attribute": "Contract Process.Approval Status",
+          "value": "Pending"
+        }
+      ],
+      "on": {
+        "success": "handoff"
+      }
+    },
+    {
+      "id": "send",
+      "name": "Send for signature",
+      "kind": "reviewAndSendForSignature",
+      "assignee": "submitter",
+      "recipients": [
+        {
+          "var": "SignerEmail",
+          "role": "Signer 1",
+          "name": {
+            "var": "SignerName"
+          }
+        },
+        {
+          "var": "CompanySignerEmail",
+          "role": "Signer 2",
+          "name": {
+            "var": "CompanySignerName"
+          }
+        }
+      ],
+      "subject": "Please sign: <%#XmlVariables.Params.TemplateFieldData.Customer_Legal_Name%> Master Services Agreement <%#XmlVariables.Params.TemplateFieldData.Agreement_Number%>",
+      "message": "Fontara has approved this agreement. Please sign it.",
+      "instructions": "The customer signs first, then Fontara's signer (signing authority from the Escalation matrix). The person who started the request checks both and send.",
+      "stage": "Signature",
+      "on": {
+        "sent": "outForSignature",
+        "canceled": "negotiate"
+      }
+    },
+    {
+      "id": "outForSignature",
+      "name": "Mark Out for Signature",
+      "kind": "updateMetadata",
+      "set": [
+        {
+          "attribute": "Contract Process.Status",
+          "value": "Out for Signature"
+        }
+      ],
+      "on": {
+        "success": "wait"
+      }
+    },
+    {
+      "id": "wait",
+      "name": "Wait for signature",
+      "kind": "waitForSignature",
+      "on": {
+        "signed": "executed",
+        "rejected": "backToNegotiation",
+        "cancelled": "backToNegotiation",
+        "timedOut": "backToNegotiation"
+      }
+    },
+    {
+      "id": "backToNegotiation",
+      "name": "Back to In Negotiation",
+      "kind": "updateMetadata",
+      "set": [
+        {
+          "attribute": "Contract Process.Status",
+          "value": "In Negotiation"
+        }
+      ],
+      "on": {
+        "success": "negotiate"
+      }
+    },
+    {
+      "id": "executed",
+      "name": "Mark Executed",
+      "kind": "updateMetadata",
+      "set": [
+        {
+          "attribute": "Contract Process.Status",
+          "value": "Executed"
+        }
+      ],
+      "on": {
+        "success": "logDone"
+      }
+    },
+    {
+      "id": "logDone",
+      "name": "Log executed",
+      "kind": "logger",
+      "message": "Signed: Status set to Executed",
+      "next": "finish"
+    },
+    {
+      "id": "rejected",
+      "name": "Rejected: back to Draft",
+      "kind": "updateMetadata",
+      "set": [
+        {
+          "attribute": "Contract Process.Approval Status",
+          "value": "Rejected"
+        },
+        {
+          "attribute": "Contract Process.Status",
+          "value": "Draft"
+        }
+      ],
+      "on": {
+        "success": "logRejected"
+      }
+    },
+    {
+      "id": "logRejected",
+      "name": "Log rejected",
+      "kind": "logger",
+      "message": "An approver rejected the contract: Status back to Draft",
+      "next": "finish"
+    },
+    {
+      "id": "finish",
+      "name": "Finish",
+      "kind": "finish"
+    }
+  ],
+  "errorNotify": [
+    "submitter"
+  ]
+}

@@ -1,0 +1,423 @@
+{
+ "$comment": "Harvested from the Workflow Designer's Export JSON of a Negotiation-template workflow (the lab account, 2026-10-29; docs/ASSET-FORMATS.md E11): the variables every CLM workflow declares on its Start cell. src/clm-workflow-spec.ts copies them; a spec's own variables are added after them.",
+ "definedVariables": [
+  {
+   "type": "Xml",
+   "value": {
+    "name": "Params",
+    "displayName": "Params",
+    "description": "",
+    "displayType": "Document",
+    "schema": {
+     "nodes": [
+      {
+       "name": "Approval",
+       "nodes": [
+        {
+         "name": "Documents",
+         "nodes": [
+          {
+           "name": "Document",
+           "dataType": "string",
+           "type": "element",
+           "nodes": [
+            {
+             "name": "Id",
+             "dataType": "string",
+             "type": "element",
+             "guid": "ebef2a79-9cda-4d34-8893-0b7ed6fff627"
+            },
+            {
+             "name": "Description",
+             "dataType": "string",
+             "type": "element",
+             "guid": "11cbd55b-e865-4cb3-aa01-36ac424cb169"
+            },
+            {
+             "name": "Name",
+             "dataType": "string",
+             "type": "element",
+             "guid": "e672fd5c-086f-43fa-b90b-1ae131c71614"
+            },
+            {
+             "name": "ParentFolderId",
+             "dataType": "string",
+             "type": "element",
+             "guid": "5008a34e-1b48-4c1d-ab2f-c56043d1c5d5"
+            },
+            {
+             "name": "CreatedBy",
+             "dataType": "string",
+             "type": "element",
+             "guid": "9a7843b6-305c-4905-bfc9-60ba38924512"
+            },
+            {
+             "name": "CreatedDate",
+             "dataType": "dateTime",
+             "type": "element",
+             "guid": "bc5001c2-9320-42d4-828f-57ac52bb7239"
+            },
+            {
+             "name": "ParentFolderName",
+             "dataType": "string",
+             "type": "element",
+             "guid": "9bb08332-392a-4150-8fe8-cdd6bb9326fc"
+            },
+            {
+             "name": "UpdatedBy",
+             "dataType": "string",
+             "type": "element",
+             "guid": "685cfffa-8925-4e74-a456-17f44ff4b709"
+            },
+            {
+             "name": "UpdatedDate",
+             "dataType": "dateTime",
+             "type": "element",
+             "guid": "b44aebe9-4782-4a81-8572-36824ae1c8c9"
+            },
+            {
+             "name": "IsFormDocument",
+             "dataType": "boolean",
+             "type": "element",
+             "guid": "05c421c9-6266-4d0a-9e0a-fb853cf31d3c"
+            },
+            {
+             "name": "IsTermDocument",
+             "dataType": "boolean",
+             "type": "element",
+             "guid": "f5a4f1a4-62a5-482b-bd4a-8df524162425"
+            },
+            {
+             "name": "EditDocumentURL",
+             "dataType": "string",
+             "type": "element",
+             "guid": "175dc94d-eee6-4e4e-8050-a9fd22e78e74"
+            },
+            {
+             "name": "IsCheckedOut",
+             "dataType": "boolean",
+             "type": "element",
+             "guid": "a0ba1382-c13a-465d-85be-bbf41147e8af"
+            },
+            {
+             "name": "MIMEType",
+             "dataType": "string",
+             "type": "element",
+             "guid": "bc9cbaa8-c77a-4fa4-987c-81dfdeefe458"
+            },
+            {
+             "name": "PageCount",
+             "dataType": "string",
+             "type": "element",
+             "guid": "588a5de5-4676-4345-825c-b3d50f80a838"
+            }
+           ],
+           "guid": "8bfdb359-129e-4ef6-9981-3ce649b3d0e2"
+          },
+          {
+           "name": "Description",
+           "dataType": "string",
+           "type": "element",
+           "guid": "df02bbb7-f010-4e53-aeff-efb4ddfe12a7"
+          },
+          {
+           "name": "Name",
+           "dataType": "string",
+           "type": "element",
+           "guid": "e0e8f353-fcd5-4122-a8d3-93da76e499c1"
+          },
+          {
+           "name": "ParentFolderId",
+           "dataType": "string",
+           "type": "element",
+           "guid": "173b6d6b-9e44-482d-8de2-fb41c8bc2b00"
+          },
+          {
+           "name": "CreatedBy",
+           "dataType": "string",
+           "type": "element",
+           "guid": "9a5e3818-f1ce-4e43-84d6-b1deced393f9"
+          },
+          {
+           "name": "CreatedDate",
+           "dataType": "dateTime",
+           "type": "element",
+           "guid": "1871bf6e-1e9c-4d91-bfbd-446fadce3c1d"
+          },
+          {
+           "name": "ParentFolderName",
+           "dataType": "string",
+           "type": "element",
+           "guid": "2d9c77c4-cac7-4a23-b726-64a035f6513f"
+          },
+          {
+           "name": "UpdatedBy",
+           "dataType": "string",
+           "type": "element",
+           "guid": "33e6e32b-3d38-437c-9843-0a51335bde6a"
+          },
+          {
+           "name": "UpdatedDate",
+           "dataType": "dateTime",
+           "type": "element",
+           "guid": "98c98e66-b0c4-4a62-883e-01493c365c0e"
+          },
+          {
+           "name": "IsFormDocument",
+           "dataType": "boolean",
+           "type": "element",
+           "guid": "8250c0b2-7662-4e96-b48c-eb2315b4a322"
+          },
+          {
+           "name": "IsTermDocument",
+           "dataType": "boolean",
+           "type": "element",
+           "guid": "c6caf6f5-2639-417b-acfb-12140df28faa"
+          },
+          {
+           "name": "EditDocumentURL",
+           "dataType": "string",
+           "type": "element",
+           "guid": "14c62bdf-008a-4254-a3c8-2896e1d13b1b"
+          },
+          {
+           "name": "IsCheckedOut",
+           "dataType": "boolean",
+           "type": "element",
+           "guid": "04463a54-4621-4f9e-a74a-d32f64d5460c"
+          },
+          {
+           "name": "PageCount",
+           "dataType": "string",
+           "type": "element",
+           "guid": "64ea2e47-4345-4c7b-ac01-576f0d3c66ad"
+          }
+         ],
+         "guid": "861dd8bd-b0b7-4083-a1e4-c67016981fd7"
+        },
+        {
+         "name": "Approvers",
+         "guid": "4bcfc1d5-05ba-4086-b7b2-7b8913c43bf3",
+         "type": "element",
+         "dataType": "string"
+        },
+        {
+         "name": "AssignTasksInOrder",
+         "dataType": "boolean",
+         "type": "element",
+         "guid": "8a653039-63ab-4a8d-92e1-d6a09f8b324d"
+        },
+        {
+         "name": "Email",
+         "nodes": [
+          {
+           "name": "Sender",
+           "dataType": "string",
+           "type": "element",
+           "guid": "b5c46468-7578-4c0c-83e7-37a809f06bfe"
+          },
+          {
+           "name": "Subject",
+           "dataType": "string",
+           "type": "element",
+           "guid": "aa635880-daa1-4d9c-8daa-6ba559d79c58"
+          },
+          {
+           "name": "Body",
+           "dataType": "string",
+           "type": "element",
+           "guid": "5838e269-9f03-4d68-9a46-ee68387424b9"
+          }
+         ],
+         "guid": "c4e46e42-958d-456c-8169-d102bf692da9"
+        },
+        {
+         "type": "element",
+         "dataType": "string",
+         "guid": "d7325c66-58c2-47d2-ba37-c198b8a85428",
+         "name": "LinkToWorkflow"
+        }
+       ],
+       "guid": "32cff8c9-b44e-4ae2-bd39-4b400de173d3"
+      }
+     ]
+    },
+    "sortable": false,
+    "editable": true,
+    "editableValue": true,
+    "deletable": true,
+    "draggable": true,
+    "preDefined": false,
+    "isSecret": false,
+    "isContent": true,
+    "isLocal": false
+   }
+  },
+  {
+   "type": "User",
+   "value": {
+    "name": "SubmittedBy",
+    "displayName": "Submitted By",
+    "description": "",
+    "displayType": "Actor",
+    "schema": {
+     "name": "UserAccount",
+     "nodes": [
+      {
+       "name": "Name",
+       "dataType": "string",
+       "type": "element",
+       "guid": "d329181a-527a-4c10-866d-ccb24de541d8"
+      },
+      {
+       "name": "CreatedDate",
+       "dataType": "dateTime",
+       "type": "element",
+       "guid": "174259d5-78ce-4b8f-a8d6-b3a5c7a9e306"
+      },
+      {
+       "name": "Email",
+       "dataType": "string",
+       "type": "element",
+       "guid": "78e7ad61-0110-4145-b179-92d7b0121f16"
+      },
+      {
+       "name": "FirstName",
+       "dataType": "string",
+       "type": "element",
+       "guid": "1ba35aa7-3338-4c4d-8068-0592a640586a"
+      },
+      {
+       "name": "LastName",
+       "dataType": "string",
+       "type": "element",
+       "guid": "db32c866-5ed0-46dc-a373-9539534fd9a5"
+      },
+      {
+       "name": "ManagerUid",
+       "dataType": "string",
+       "type": "element",
+       "guid": "4b655006-13d8-4e3c-aec6-914685c04e03"
+      },
+      {
+       "name": "Role",
+       "dataType": "string",
+       "type": "element",
+       "guid": "6760f828-196e-4a92-9b5d-0fe067d9b828"
+      },
+      {
+       "name": "Uid",
+       "dataType": "string",
+       "type": "element",
+       "guid": "e60b3250-5e7a-414c-a49a-491da6f36839"
+      },
+      {
+       "name": "Language",
+       "dataType": "string",
+       "type": "element",
+       "guid": "23162841-2551-4f77-b257-f88e04deb8a0"
+      },
+      {
+       "name": "Region",
+       "dataType": "string",
+       "type": "element",
+       "guid": "86b3a3a4-8f18-493b-82e3-4b0fcdf5fb96"
+      }
+     ]
+    },
+    "sortable": false,
+    "editable": false,
+    "editableValue": false,
+    "deletable": false,
+    "draggable": true,
+    "preDefined": true,
+    "isSecret": false
+   }
+  },
+  {
+   "type": "System",
+   "value": {
+    "name": "Date",
+    "displayName": "Current Date",
+    "description": "",
+    "displayType": "System",
+    "schema": {},
+    "sortable": false,
+    "editable": false,
+    "editableValue": false,
+    "deletable": false,
+    "draggable": true,
+    "preDefined": true,
+    "isSecret": false
+   }
+  },
+  {
+   "type": "System",
+   "value": {
+    "name": "Time",
+    "displayName": "Current Time",
+    "description": "",
+    "displayType": "System",
+    "schema": {},
+    "sortable": false,
+    "editable": false,
+    "editableValue": false,
+    "deletable": false,
+    "draggable": true,
+    "preDefined": true,
+    "isSecret": false
+   }
+  },
+  {
+   "type": "System",
+   "value": {
+    "name": "Link",
+    "displayName": "Current Step Link",
+    "description": "",
+    "displayType": "System",
+    "schema": {},
+    "sortable": false,
+    "editable": false,
+    "editableValue": false,
+    "deletable": false,
+    "draggable": true,
+    "preDefined": true,
+    "isSecret": false
+   }
+  },
+  {
+   "type": "System",
+   "value": {
+    "name": "LastAbortEmail",
+    "displayName": "Last Abort Email",
+    "description": "",
+    "displayType": "System",
+    "schema": {},
+    "sortable": false,
+    "editable": false,
+    "editableValue": false,
+    "deletable": false,
+    "draggable": true,
+    "preDefined": true,
+    "isSecret": false
+   }
+  }
+ ],
+ "stringVariable": {
+  "type": "String",
+  "value": {
+   "name": "Comments",
+   "displayName": "Comments",
+   "description": "",
+   "displayType": "Text",
+   "schema": {},
+   "sortable": false,
+   "editable": false,
+   "editableValue": true,
+   "deletable": false,
+   "draggable": true,
+   "preDefined": false,
+   "isSecret": false
+  }
+ }
+}

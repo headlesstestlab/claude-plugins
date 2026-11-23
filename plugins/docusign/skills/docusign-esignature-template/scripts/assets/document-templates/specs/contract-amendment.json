@@ -1,0 +1,286 @@
+{
+  "id": "contract-amendment",
+  "name": "Amendment",
+  "description": "A numbered amendment to a signed agreement: its value, its expiration date and replaced sections, and nothing else.",
+  "agreementType": "Amendment",
+  "fields": {
+    "fontara_entity": {
+      "label": "Fontara contracting entity",
+      "type": "select",
+      "options": [
+        "Fontara, Inc.",
+        "Fontara UK Ltd",
+        "Fontara Europe Ltd"
+      ],
+      "optionValues": {
+        "Fontara, Inc.": "Fontara, Inc., a Delaware corporation with its principal place of business at 1500 Harbor Boulevard, Suite 1200, San Francisco, CA 94111",
+        "Fontara UK Ltd": "Fontara UK Ltd, a company registered in England and Wales with its registered office at 48 Ashcombe Street, London EC2A 4NE, United Kingdom",
+        "Fontara Europe Ltd": "Fontara Europe Ltd, a company registered in Ireland with its registered office at 3 Riverside Quay, Dublin 2, D02 X285, Ireland"
+      },
+      "required": true,
+      "description": "Prints the entity’s full legal description and address"
+    },
+    "currency": {
+      "label": "Currency",
+      "type": "select",
+      "options": [
+        "US$",
+        "£",
+        "€"
+      ],
+      "required": true,
+      "description": "The signing entity’s: US$ for Fontara, Inc., £ for Fontara UK Ltd, € for Fontara Europe Ltd"
+    },
+    "customer": {
+      "bind": {
+        "provision": "AgreementParty"
+      },
+      "required": true,
+      "description": "Customer legal name"
+    },
+    "customer_address": {
+      "label": "Customer street address",
+      "required": true
+    },
+    "customer_city": {
+      "label": "Customer city",
+      "required": true
+    },
+    "customer_region": {
+      "label": "Customer state",
+      "required": true
+    },
+    "customer_postal": {
+      "label": "Customer ZIP code",
+      "required": true
+    },
+    "customer_entity": {
+      "label": "Customer entity type",
+      "required": true,
+      "description": "For example: an Illinois corporation"
+    },
+    "amendment_number": {
+      "label": "Amendment number",
+      "required": true
+    },
+    "agreement": {
+      "label": "Agreement being amended",
+      "required": true
+    },
+    "agreement_date": {
+      "label": "Agreement date",
+      "type": "date",
+      "required": true
+    },
+    "changes_value": {
+      "label": "Changes the contract value",
+      "type": "select",
+      "options": [
+        "Yes",
+        "No"
+      ],
+      "required": true
+    },
+    "contract_value": {
+      "label": "New total contract value",
+      "type": "number",
+      "money": true,
+      "required": false
+    },
+    "annual_value": {
+      "label": "New annual value",
+      "type": "number",
+      "money": true,
+      "required": false
+    },
+    "changes_term": {
+      "label": "Changes the expiration date",
+      "type": "select",
+      "options": [
+        "Yes",
+        "No"
+      ],
+      "required": true
+    },
+    "new_expiration": {
+      "label": "New expiration date",
+      "type": "date"
+    },
+    "changes_section": {
+      "label": "Replaces a section",
+      "type": "select",
+      "options": [
+        "Yes",
+        "No"
+      ],
+      "required": true
+    },
+    "section_ref": {
+      "label": "Section replaced"
+    },
+    "section_text": {
+      "label": "Replacement text"
+    },
+    "effective": {
+      "bind": {
+        "provision": "EffectiveDate"
+      },
+      "required": true
+    }
+  },
+  "signers": [
+    "Customer",
+    "Fontara"
+  ],
+  "body": [
+    {
+      "title": "AMENDMENT"
+    },
+    {
+      "p": "This Amendment No. {{amendment_number}} (this \"Amendment\") amends the {{agreement}} dated {{agreement_date}} (the \"Agreement\") between {{fontara_entity}} (\"Vendor\") and **{{customer}}**, {{customer_entity}} with its principal place of business at {{customer_address}}, {{customer_city}}, {{customer_region}} {{customer_postal}} (\"Customer\")."
+    },
+    {
+      "p": "Background. The parties entered into the Agreement on the date stated above and now wish to amend it as set out in this Amendment. This background creates no obligations of its own."
+    },
+    {
+      "h": "1. Effective Date"
+    },
+    {
+      "p": "This Amendment takes effect on {{effective}}. A provision of this Amendment has retroactive effect only where it expressly says so."
+    },
+    {
+      "h": "2. Modified Provisions"
+    },
+    {
+      "p": "The Agreement is amended as follows:"
+    },
+    {
+      "if": {
+        "field": "changes_value",
+        "is": "Yes"
+      },
+      "then": [
+        {
+          "p": "The total contract value of the Agreement is amended to {{currency}}{{contract_value}}, with an annual value of {{currency}}{{annual_value}}."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "changes_term",
+        "is": "Yes"
+      },
+      "then": [
+        {
+          "p": "The expiration date of the Agreement is amended to {{new_expiration}}."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "changes_section",
+        "is": "Yes"
+      },
+      "then": [
+        {
+          "p": "Section {{section_ref}} of the Agreement is deleted and replaced with: \"{{section_text}}\""
+        }
+      ]
+    },
+    {
+      "p": "These are the only provisions of the Agreement this Amendment changes. If this Amendment conflicts with the Agreement, this Amendment governs."
+    },
+    {
+      "h": "3. No Other Changes"
+    },
+    {
+      "p": "Except as this Amendment expressly provides, the Agreement is unchanged and remains in full force and effect. This Amendment is the entire agreement of the parties on the changes it makes and supersedes all prior negotiations about them."
+    },
+    {
+      "h": "4. Counterparts and Electronic Signatures"
+    },
+    {
+      "p": "This Amendment may be signed in counterparts, each of which is an original, and by electronic signature through an electronic signature service, which is valid and binding. It is executed when the last party signs it."
+    },
+    {
+      "h": "5. Governing Law"
+    },
+    {
+      "p": "This Amendment is governed by the law that governs the Agreement, and any dispute under it is resolved in the manner the Agreement provides."
+    },
+    {
+      "sign": "Customer",
+      "title": true,
+      "company": true
+    },
+    {
+      "sign": "Fontara",
+      "title": true,
+      "company": true
+    }
+  ],
+  "examples": [
+    {
+      "values": {
+        "effective": "02/27/2026",
+        "customer": "LearnSphere Global",
+        "customer_entity": "a Delaware corporation",
+        "customer_address": "1777 Academic Drive",
+        "amendment_number": "1",
+        "agreement": "Master Services Agreement",
+        "agreement_date": "05/01/2024",
+        "changes_value": "Yes",
+        "contract_value": "1400000",
+        "annual_value": "700000",
+        "changes_term": "Yes",
+        "new_expiration": "04/26/2028",
+        "changes_section": "No",
+        "fontara_entity": "Fontara Europe Ltd",
+        "currency": "€",
+        "customer_city": "Boulder",
+        "customer_region": "CO",
+        "customer_postal": "80309"
+      },
+      "expect": [
+        "Amendment No. 1",
+        "€1,400,000.00",
+        "€700,000.00",
+        "amended to 04/26/2028",
+        "Fontara Europe Ltd"
+      ],
+      "absent": [
+        "is deleted and replaced",
+        "US$"
+      ]
+    },
+    {
+      "values": {
+        "effective": "07/01/2027",
+        "customer": "Vitality Horizons Medical",
+        "customer_entity": "a Minnesota corporation",
+        "customer_address": "1200 Wellness Boulevard",
+        "amendment_number": "1",
+        "agreement": "Master Services Agreement",
+        "agreement_date": "09/08/2024",
+        "changes_value": "No",
+        "changes_term": "No",
+        "changes_section": "Yes",
+        "section_ref": "9",
+        "section_text": "Vendor shall host Customer data only in data centers located in the United States.",
+        "fontara_entity": "Fontara, Inc.",
+        "currency": "US$",
+        "customer_city": "Minneapolis",
+        "customer_region": "MN",
+        "customer_postal": "55401"
+      },
+      "expect": [
+        "Section 9 of the Agreement is deleted",
+        "data centers located in the United States"
+      ],
+      "absent": [
+        "total contract value of the Agreement is amended"
+      ]
+    }
+  ],
+  "source": "vault: Contracts/Clauses/Amendment"
+}

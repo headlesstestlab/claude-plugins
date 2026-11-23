@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.com/docusign-skills/docs/schemas/workflow-config-instances.schema.json",
+  "title": "Workflow Builder step configurator values (maestroworkflow/<id>/config-instances.json)",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "required": [
+      "stepId",
+      "savedValues"
+    ],
+    "properties": {
+      "_id": {
+        "type": "string",
+        "pattern": "^[0-9a-f]{24}$"
+      },
+      "workflowDefinitionId": {
+        "type": "string",
+        "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+      },
+      "stepId": {
+        "type": "string"
+      },
+      "savedValues": {
+        "type": "object"
+      },
+      "__v": {
+        "type": "integer"
+      }
+    }
+  }
+}

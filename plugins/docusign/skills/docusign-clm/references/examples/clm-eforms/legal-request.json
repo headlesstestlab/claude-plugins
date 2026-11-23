@@ -1,0 +1,103 @@
+{
+  "id": "legal-request",
+  "name": "Legal Request",
+  "description": "Ask Legal to review a deal. Your answers pick the approvers. About 2 minutes.",
+  "submitFolder": "Intake",
+  "workflow": "Legal request intake",
+  "attributeIds": {},
+  "sections": [
+    {
+      "title": "The deal",
+      "fields": [
+        {
+          "kind": "text",
+          "id": "Counterparty",
+          "label": "Counterparty legal name",
+          "required": true
+        },
+        {
+          "kind": "select",
+          "id": "Side",
+          "label": "Side",
+          "options": [
+            "Sell",
+            "Buy"
+          ],
+          "required": true,
+          "help": "Sell: Fontara is the seller. Buy: Fontara is buying."
+        },
+        {
+          "kind": "number",
+          "id": "DealValue",
+          "label": "Deal value (USD)",
+          "required": true
+        },
+        {
+          "kind": "number",
+          "id": "PaymentTermsDays",
+          "label": "Payment terms (days)",
+          "placeholder": "30",
+          "help": "Beyond 60 days needs Finance approval."
+        },
+        {
+          "kind": "select",
+          "id": "TriageVerdict",
+          "label": "Triage verdict",
+          "options": [
+            "Green",
+            "Yellow",
+            "Red"
+          ],
+          "required": true,
+          "help": "Green: standard terms. Yellow: acceptable position. Red: non-standard."
+        }
+      ]
+    },
+    {
+      "title": "Data",
+      "fields": [
+        {
+          "kind": "select",
+          "id": "CoveredByDPA",
+          "label": "Covered by an existing DPA?",
+          "options": [
+            "Yes",
+            "No"
+          ],
+          "required": true
+        },
+        {
+          "kind": "select",
+          "id": "VendorTouchesData",
+          "label": "Will the vendor touch Fontara systems or data?",
+          "options": [
+            "Yes",
+            "No"
+          ],
+          "required": true
+        }
+      ]
+    },
+    {
+      "title": "Signer and purpose",
+      "fields": [
+        {
+          "kind": "text",
+          "id": "SignerName",
+          "label": "Counterparty signer name"
+        },
+        {
+          "kind": "email",
+          "id": "SignerEmail",
+          "label": "Signer email"
+        },
+        {
+          "kind": "textarea",
+          "id": "Purpose",
+          "label": "What is the deal for?",
+          "required": true
+        }
+      ]
+    }
+  ]
+}

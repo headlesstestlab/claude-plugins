@@ -1,0 +1,154 @@
+{
+  "id": "legal-hold-notice",
+  "prompt": "When legal opens a litigation hold, every custodian gets a hold notice and must acknowledge it. We need to know who hasn't acknowledged after 5 days, and send quarterly reminders until the hold is released.",
+  "industry": "manufacturing",
+  "department": "legal",
+  "variation_tags": {
+    "start": [
+      "request"
+    ],
+    "routing": [
+      "bulk"
+    ],
+    "approvals": [
+      "none"
+    ],
+    "data_source": [
+      "form"
+    ],
+    "locale": [
+      "en-US"
+    ],
+    "currency": [
+      "USD"
+    ],
+    "platform": "iam",
+    "ai": [
+      "none"
+    ],
+    "documents": [
+      "generated"
+    ],
+    "logic": [
+      "none"
+    ],
+    "notifications": [
+      "email",
+      "reminders"
+    ],
+    "identity": [
+      "none"
+    ],
+    "payment": false,
+    "agreement_desk": true
+  },
+  "expected_assets": [
+    {
+      "kind": "request-type",
+      "purpose": "legal hold",
+      "features": [
+        "matter name, custodians list, scope"
+      ]
+    },
+    {
+      "kind": "doc-template",
+      "purpose": "hold notice",
+      "features": [
+        "matter name, scope, preservation instructions"
+      ]
+    },
+    {
+      "kind": "workflow",
+      "purpose": "notice to each custodian",
+      "features": [
+        "generate",
+        "send per custodian"
+      ]
+    },
+    {
+      "kind": "workflow",
+      "purpose": "quarterly reminder",
+      "features": [
+        "From a Schedule, monthly every 3 months [inferred]"
+      ]
+    }
+  ],
+  "acceptance": [
+    "each custodian acknowledges individually",
+    "non-acknowledgment after 5 days escalates to legal",
+    "reminders continue until the hold is released"
+  ],
+  "hard_parts": [
+    "a list of custodians means one envelope each: a workflow sends to one set of roles, so bulk or a loop is needed",
+    "schedules repeat at most monthly and end within a year"
+  ],
+  "clarifying_questions": [
+    {
+      "question": "Up to how many custodians?",
+      "default": "50"
+    }
+  ],
+  "capabilities": [
+    "request-type.setting.name",
+    "request-type.setting.description",
+    "request-type.setting.import",
+    "request-type.setting.active",
+    "request-type.limit.name-empty",
+    "request-type.limit.unique-keys",
+    "request-type.field.text",
+    "request-type.field.description",
+    "request-type.field-setting.label",
+    "request-type.field-setting.help-text",
+    "request-type.field-setting.required",
+    "request-type.provision.field-once",
+    "request-type.assignment.manual-owner",
+    "request-type.approval.manual",
+    "account.setting.app-access",
+    "account.type.standard-agreement-types",
+    "request-type.field.longtext",
+    "doc-template.setting.name",
+    "doc-template.setting.agreement-type",
+    "doc-template.setting.format-builder",
+    "doc-template.setting.upload-zip",
+    "doc-template.setting.publish",
+    "doc-template.content.title",
+    "doc-template.content.heading",
+    "doc-template.content.paragraph",
+    "doc-template.field.text",
+    "doc-template.field-setting.label",
+    "doc-template.field-setting.required",
+    "doc-template.field-setting.key-syntax",
+    "doc-template.field-setting.unused-field",
+    "doc-template.recipient.needs-to-sign",
+    "doc-template.tab.signature-block",
+    "doc-template.tab.text",
+    "workflow.setting.participants",
+    "workflow.setting.description",
+    "workflow.setting.publish",
+    "workflow.setting.import-package",
+    "workflow.setting.workflow-name-rules",
+    "workflow.limit.size",
+    "workflow.variable.text",
+    "workflow.step.path-end",
+    "workflow.step-setting.done-screens",
+    "account.plan.iam-plan",
+    "account.limit.published-workflows",
+    "workflow.start.agreement-desk-submitted",
+    "request-type.automation.request-trigger",
+    "workflow.variable.request-fields",
+    "workflow.variable.op-request-dropdown",
+    "workflow.limit.connect-required",
+    "account.connection.connect",
+    "workflow.step.prepare-doc-template",
+    "workflow.step-setting.doc-template-fill",
+    "workflow.step-setting.doc-template-fill-request",
+    "workflow.step.ad-prepare-doc-for-request",
+    "workflow.step.ad-change-status",
+    "workflow.step.ad-assign-owner",
+    "request-type.assignment.owner-user",
+    "workflow.step.send-email",
+    "workflow.step-setting.email-variables",
+    "workflow.step-setting.email-bold",
+    "workflow.step.loop-per-item"
+  ]
+}

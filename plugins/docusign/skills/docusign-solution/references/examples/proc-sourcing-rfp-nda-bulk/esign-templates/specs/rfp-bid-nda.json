@@ -1,0 +1,73 @@
+{
+  "id": "rfp-bid-nda",
+  "from": {
+    "name": "RFP Bid Non-Disclosure Agreement",
+    "description": "A one-way NDA a supplier signs before receiving Fontara's RFP pack.",
+    "fields": {
+      "supplier": {
+        "label": "Supplier legal name",
+        "required": true
+      },
+      "rfp": {
+        "label": "RFP name",
+        "required": true
+      }
+    },
+    "signers": [
+      "Supplier"
+    ],
+    "body": [
+      {
+        "title": "RFP BID NON-DISCLOSURE AGREEMENT"
+      },
+      {
+        "p": "Supplier: {{supplier}}. RFP: {{rfp}}."
+      },
+      {
+        "h": "1. Confidential Information"
+      },
+      {
+        "p": "Fontara, Inc. (\"Fontara\") will give the Supplier the RFP pack and related information (\"Confidential Information\") only so the Supplier can prepare a bid."
+      },
+      {
+        "h": "2. Obligations"
+      },
+      {
+        "p": "The Supplier shall use the Confidential Information only to prepare its bid, keep it confidential with at least reasonable care, and share it only with its employees and advisers who need it for the bid and are bound by similar duties."
+      },
+      {
+        "h": "3. Return"
+      },
+      {
+        "p": "If the Supplier does not bid, or Fontara does not award it the contract, the Supplier shall destroy the Confidential Information on request."
+      },
+      {
+        "h": "4. Term and law"
+      },
+      {
+        "p": "These obligations last three years from signature. This Agreement is governed by the laws of the State of Delaware. It creates no obligation to award a contract."
+      },
+      {
+        "sign": "Supplier",
+        "title": true,
+        "company": true
+      }
+    ],
+    "examples": [
+      {
+        "values": {
+          "supplier": "Acme Components Ltd",
+          "rfp": "2027 Packaging RFP"
+        }
+      }
+    ]
+  },
+  "name": "RFP Bid NDA",
+  "summary": "A NEW one-signer bid NDA: the supplier fills its name and signs; sent by Bulk Send to every RFP supplier.",
+  "owners": {
+    "default": "Supplier"
+  },
+  "bulkSend": true,
+  "emailSubject": "Bid NDA for our RFP",
+  "emailBlurb": "Please sign our bid NDA. You receive the RFP pack by email as soon as it is signed."
+}

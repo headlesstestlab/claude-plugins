@@ -1,0 +1,292 @@
+{
+  "id": "independent-contractor-agreement",
+  "name": "Independent Contractor Agreement",
+  "agreementType": "Contractor",
+  "description": "Engage an individual or a one-person company as a contractor: services, payment, expenses, status, IP, compliance, insurance, indemnity, non-solicit, tax forms.",
+  "fields": {
+    "effective": {
+      "bind": {
+        "provision": "EffectiveDate"
+      },
+      "required": true
+    },
+    "contractor": {
+      "bind": {
+        "provision": "AgreementParty"
+      },
+      "required": true,
+      "description": "Contractor legal name"
+    },
+    "contractor_type": {
+      "label": "Contractor is",
+      "type": "select",
+      "options": [
+        "Individual",
+        "Entity"
+      ],
+      "required": true
+    },
+    "contractor_entity": {
+      "label": "Contractor entity type (if an entity)",
+      "description": "For example: a Colorado limited liability company"
+    },
+    "contractor_address": {
+      "label": "Contractor street address",
+      "required": true
+    },
+    "contractor_city": {
+      "label": "Contractor city",
+      "required": true
+    },
+    "contractor_region": {
+      "label": "Contractor state",
+      "required": true
+    },
+    "contractor_postal": {
+      "label": "Contractor ZIP code",
+      "required": true
+    },
+    "services": {
+      "label": "Services",
+      "required": true
+    },
+    "fee": {
+      "label": "Fee (USD)",
+      "type": "number",
+      "money": true,
+      "required": true
+    },
+    "basis": {
+      "label": "Fee basis",
+      "type": "select",
+      "options": [
+        "Per project",
+        "Per month"
+      ],
+      "required": true
+    },
+    "governing_law": {
+      "bind": {
+        "provision": "GoverningLaw"
+      },
+      "required": true,
+      "description": "Written after \"the laws of\": for example, the State of Delaware, or England and Wales"
+    }
+  },
+  "signers": [
+    "Contractor",
+    "Fontara"
+  ],
+  "body": [
+    {
+      "title": "INDEPENDENT CONTRACTOR AGREEMENT"
+    },
+    {
+      "if": {
+        "field": "contractor_type",
+        "is": "Individual"
+      },
+      "then": [
+        {
+          "p": "This Independent Contractor Agreement (this \"Agreement\") is entered into as of {{effective}} between **Fontara, Inc.**, a Delaware corporation with its principal place of business at 1500 Harbor Boulevard, Suite 1200, San Francisco, CA 94111 (\"Company\"), and **{{contractor}}**, an individual residing at {{contractor_address}}, {{contractor_city}}, {{contractor_region}} {{contractor_postal}} (\"Contractor\")."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "contractor_type",
+        "is": "Entity"
+      },
+      "then": [
+        {
+          "p": "This Independent Contractor Agreement (this \"Agreement\") is entered into as of {{effective}} between **Fontara, Inc.**, a Delaware corporation with its principal place of business at 1500 Harbor Boulevard, Suite 1200, San Francisco, CA 94111 (\"Company\"), and **{{contractor}}**, {{contractor_entity}} with its principal place of business at {{contractor_address}}, {{contractor_city}}, {{contractor_region}} {{contractor_postal}} (\"Contractor\")."
+        }
+      ]
+    },
+    {
+      "h": "1. Services"
+    },
+    {
+      "p": "Contractor will provide the following services: {{services}}. Contractor decides the manner and means of performing them and supplies its own equipment."
+    },
+    {
+      "h": "2. Payment"
+    },
+    {
+      "if": {
+        "field": "basis",
+        "is": "Per project"
+      },
+      "then": [
+        {
+          "p": "Company will pay Contractor a fee of US${{fee}} for the services, due within 30 days after Company accepts the deliverables."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "basis",
+        "is": "Per month"
+      },
+      "then": [
+        {
+          "p": "Company will pay Contractor US${{fee}} per month, in arrears, within 30 days after receiving Contractor’s invoice."
+        }
+      ]
+    },
+    {
+      "h": "3. Expenses"
+    },
+    {
+      "p": "Company reimburses reasonable out-of-pocket expenses that it approves in writing in advance, against receipts submitted with Contractor's invoice."
+    },
+    {
+      "h": "4. Independent Contractor Status"
+    },
+    {
+      "p": "Contractor is an independent contractor, not an employee, partner or agent of Company, and may not bind Company. Contractor is responsible for all taxes on amounts paid under this Agreement and is not eligible for Company’s employee benefits."
+    },
+    {
+      "h": "5. Intellectual Property"
+    },
+    {
+      "p": "Contractor assigns to Company all right, title and interest in the work product created under this Agreement, and will sign any document reasonably needed to perfect that assignment."
+    },
+    {
+      "h": "6. Confidentiality"
+    },
+    {
+      "p": "Contractor will hold Company’s confidential information in confidence during and after this Agreement, and use it only to perform the services."
+    },
+    {
+      "h": "7. Compliance"
+    },
+    {
+      "p": "Contractor shall comply with all applicable laws, and with the Company policies on information security, anti-bribery and workplace conduct that Company provides, and is responsible for its own licenses and permits."
+    },
+    {
+      "h": "8. Insurance"
+    },
+    {
+      "p": "Contractor shall maintain general liability insurance of at least US$1,000,000 per occurrence and, if it has employees, workers' compensation insurance as required by law, and shall provide a certificate of insurance on request."
+    },
+    {
+      "p": "Certificate of insurance (if available): [[attach?:Contractor:Certificate of insurance]]"
+    },
+    {
+      "h": "9. Indemnification"
+    },
+    {
+      "p": "Contractor shall indemnify Company against third-party claims arising from Contractor's negligence or willful misconduct, from its breach of the Intellectual Property section, or from any claim that Company is liable for Contractor's taxes, wages or benefits."
+    },
+    {
+      "h": "10. Non-Solicitation"
+    },
+    {
+      "p": "During this Agreement and for 12 months after it ends, Contractor shall not solicit any Company employee with whom it worked to leave Company, to the extent the law permits."
+    },
+    {
+      "h": "11. Term"
+    },
+    {
+      "p": "Either party may end this Agreement on 14 days’ written notice. Company pays for services performed through the end date."
+    },
+    {
+      "h": "12. Notices"
+    },
+    {
+      "p": "Notices under this Agreement must be in writing and delivered by hand, by recognized overnight courier or by email to the addresses stated in this Agreement or later notified in writing. A notice is effective on confirmed delivery or, for email, when the recipient acknowledges it. Notices of breach, termination or a legal claim must be sent by courier, with a copy by email."
+    },
+    {
+      "h": "13. Governing Law and Disputes"
+    },
+    {
+      "p": "This Agreement is governed by the laws of {{governing_law}}, without regard to its conflict-of-laws rules."
+    },
+    {
+      "h": "14. Entire Agreement and Amendment"
+    },
+    {
+      "p": "This Agreement is the entire agreement of the parties on its subject and supersedes all prior proposals, negotiations, representations and understandings about it. Each party confirms that in entering into it, it has not relied on any statement not set out in it. This Agreement may be amended only in a writing signed by authorized representatives of both parties."
+    },
+    {
+      "h": "15. Survival"
+    },
+    {
+      "p": "Any provision of this Agreement that by its nature is intended to survive its termination or expiration survives it, including the Intellectual Property, Confidentiality, Indemnification and Non-Solicitation sections, together with any payment obligation accrued before termination."
+    },
+    {
+      "h": "16. General"
+    },
+    {
+      "p": "If any provision of this Agreement is held invalid or unenforceable, it is enforced to the maximum extent permitted and the rest of this Agreement continues in full force. No failure or delay in exercising a right is a waiver of it, and a waiver is effective only if it is in writing and signed. No person other than the parties and their permitted successors and assigns has any right to enforce any term of this Agreement. This Agreement may be signed in counterparts and by electronic signature, each of which is an original and all of which together are one instrument."
+    },
+    {
+      "h": "Tax Information"
+    },
+    {
+      "p": "Taxpayer identification number (EIN or SSN on Form W-9): attach the completed form here [[attach:Contractor:Form W-9]]"
+    },
+    {
+      "sign": "Contractor",
+      "title": true,
+      "company": true,
+      "email": true
+    },
+    {
+      "sign": "Fontara",
+      "title": true,
+      "company": true
+    }
+  ],
+  "examples": [
+    {
+      "values": {
+        "effective": "05/15/2027",
+        "contractor": "Riley Morgan Design LLC",
+        "contractor_type": "Entity",
+        "contractor_entity": "a Colorado limited liability company",
+        "contractor_address": "410 Pearl Street",
+        "services": "a redesign of the Fontara onboarding flow, with design files and a component library",
+        "fee": "18500",
+        "basis": "Per project",
+        "governing_law": "the State of Colorado",
+        "contractor_city": "Denver",
+        "contractor_region": "CO",
+        "contractor_postal": "80203"
+      },
+      "expect": [
+        "fee of US$18,500.00",
+        "a Colorado limited liability company",
+        "US$1,000,000"
+      ],
+      "absent": [
+        "per month, in arrears",
+        "an individual residing"
+      ]
+    },
+    {
+      "values": {
+        "effective": "05/15/2027",
+        "contractor": "Sam Rivera",
+        "contractor_type": "Individual",
+        "contractor_address": "88 Lake Street",
+        "services": "ongoing data-engineering support",
+        "fee": "9500",
+        "basis": "Per month",
+        "governing_law": "the State of Washington",
+        "contractor_city": "Seattle",
+        "contractor_region": "WA",
+        "contractor_postal": "98101"
+      },
+      "expect": [
+        "US$9,500.00 per month",
+        "an individual residing"
+      ],
+      "absent": [
+        "for the services, due within"
+      ]
+    }
+  ],
+  "source": "written for the library — no vault clause set for this type"
+}

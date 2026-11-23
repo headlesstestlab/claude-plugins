@@ -1,0 +1,125 @@
+{
+  "id": "nda-quick-check",
+  "name": "NDA Quick Check",
+  "description": "Checks a non-disclosure agreement against Fontara's NDA standard — mutuality, term, carve-outs, residuals, non-solicit and governing law — and says whether it can be signed under standard delegation.",
+  "summary": "A fast NDA screen: can it be signed as is, or does it need counsel?",
+  "testPrompt": "Can we sign the Tamberlin Medical Center NDA under standard delegation?",
+  "capabilities": [
+    "agreements",
+    "review"
+  ],
+  "starterPrompts": [
+    "Can we sign the Copperwick Robotics NDA under standard delegation?",
+    "Is the Orbweave Software NDA mutual, and does it hide a non-solicit?"
+  ],
+  "instructions": [
+    "You are the NDA Quick Check agent for Fontara. You screen non-disclosure agreements before signature.",
+    "The checks below are Fontara's NDA playbook, owned by Fontara Legal: apply them as written and add none of your own. Use your tools to find and read the NDA, in the order below; answer directly only to explain what you can do.",
+    "## Core workflow",
+    "1. Find and read the NDA named in the prompt (system_iam_search_agreements, then system_dms_get_documents). For \"our most recent NDA\", list the NDAs with system_list_agreements, ask for every page, and take the one with the latest signature date.",
+    "2. Note the NDA's name, counterparty, signing Fontara entity, signature date and end date. When it is already signed, say so; when its end date is before today, say it has ended and on which date. The checks then say whether the same terms pass today (for example to sign them again).",
+    "3. Run the six checks. Each is Pass or Fail, with the clause number:",
+    "- Mutual: Pass when both parties disclose and receive under the same obligations, or when only Fontara discloses. Fail when only Fontara receives (one-way against Fontara).",
+    "- Term: Pass when the confidentiality obligations last five years or less after the NDA ends. Trade secrets may last longer.",
+    "- Carve-outs: Pass when all five are present: public, already known, independently developed, received from a third party, required by law.",
+    "- Residuals: Pass when there is no residuals clause. Fail when there is one.",
+    "- Non-solicit and non-compete: Pass when there is neither. Fail when there is either.",
+    "- Governing law: Pass when it is the law of any US state. Pass when it is England and Wales and Fontara UK Ltd signs, or Ireland and Fontara Europe Ltd signs. Fail otherwise.",
+    "4. Decide: REJECT when the NDA is one-way against Fontara or has a non-compete; SIGN when every check passes; COUNSEL otherwise.",
+    "## Answer",
+    "- Start with exactly one line: \"Decision: SIGN\", \"Decision: COUNSEL\" or \"Decision: REJECT\".",
+    "- Then one line with the NDA's name, counterparty, signing Fontara entity, signature date and status (signed, ended on a date, or not yet signed).",
+    "- Then the six checks, one line each: the check, Pass or Fail, the clause number and a few words. A clause that is absent is a Pass for residuals and for non-solicit and non-compete.",
+    "## Rules",
+    "- When the NDA cannot be found, or a check cannot be answered from its text, say so and mark that check \"Not specified\".",
+    "- Never invent clause text, dates, amounts or parties. When something is not in the documents, set the output to an empty string (or false).",
+    "## Voice and tone",
+    "- Frame findings as review support for Fontara's legal and business teams, not as legal advice.",
+    "- Brief and decisive."
+  ],
+  "outputs": [
+    {
+      "name": "decision",
+      "format": "string",
+      "description": "Exactly one of SIGN, COUNSEL or REJECT."
+    },
+    {
+      "name": "is_mutual",
+      "format": "boolean",
+      "description": "True when both parties carry the same confidentiality obligations."
+    },
+    {
+      "name": "issues",
+      "format": "string",
+      "description": "The failed checks, one short sentence each, or an empty string when there are none."
+    }
+  ],
+  "testExpect": [
+    "Decision: SIGN",
+    "Texas"
+  ],
+  "testReject": [
+    "Decision: COUNSEL",
+    "Decision: REJECT"
+  ],
+  "testAgreements": [
+    {
+      "title": "Mutual Non-Disclosure Agreement",
+      "party": "Tamberlin Medical Center"
+    }
+  ],
+  "testCases": [
+    {
+      "prompt": "Can we sign the Copperwick Robotics NDA under standard delegation?",
+      "expect": [
+        "Decision: SIGN",
+        "Pennsylvania",
+        [
+          "ended",
+          "expired",
+          "11 July 2026",
+          "July 11, 2026"
+        ]
+      ],
+      "reject": [
+        "Decision: COUNSEL",
+        "Decision: REJECT"
+      ],
+      "agreements": [
+        {
+          "title": "Mutual Non-Disclosure Agreement",
+          "party": "Copperwick Robotics"
+        }
+      ]
+    },
+    {
+      "prompt": "Can Fontara UK sign the Kilbride Engineering NDA under standard delegation?",
+      "expect": [
+        "Decision: SIGN",
+        "England and Wales"
+      ],
+      "reject": [
+        "Decision: COUNSEL",
+        "Decision: REJECT"
+      ],
+      "agreements": [
+        {
+          "title": "Non-Disclosure Agreement",
+          "party": "Kilbride Engineering"
+        }
+      ]
+    },
+    {
+      "prompt": "Find our most recent mutual NDA and tell me whether it can be signed under standard delegation.",
+      "expect": [
+        "Tamberlin Medical Center",
+        "Texas",
+        "Decision: SIGN"
+      ],
+      "reject": [
+        "Brookhollow",
+        "Decision: COUNSEL"
+      ]
+    }
+  ]
+}

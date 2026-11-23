@@ -1,0 +1,317 @@
+{
+  "id": "fontara-legal-request-intake",
+  "name": "Legal request intake",
+  "description": "Starts from the 'Legal Request' eForm (Routing ▸ Set Workflow): reads the form answers from Params ▸ Documents ▸ Document ▸ CustomFormFields, names the run 'Legal request - <Counterparty>', then routes as Contract Request to Execution: the contract is marked In Review and routed by the Escalation matrix (the child workflow Escalation matrix approvals): a red triage verdict to Legal, a yellow one to Legal Operations; sell side over $1M to Sales Leadership and payment terms beyond Net 60 to Finance; buy side to Procurement; no existing DPA to Privacy; a vendor that touches Fontara systems or data to IT and Security. Once approved, the Deal Desk negotiates (edits for counterparty redlines, or Terms changed: route again) and marks it Ready for signature, where the workflow ends. It never sends or signs anything. A rejection sets Approval Status to Rejected and the Status back to Draft. A step that fails ends the run as Failed and CLM emails the person who started it.",
+  "variables": [
+    {
+      "name": "DealValue",
+      "type": "number"
+    },
+    {
+      "name": "PayDays",
+      "type": "number"
+    },
+    "Side",
+    "Verdict",
+    "CoveredByDPA",
+    "TouchesData",
+    "SignerEmail",
+    "SignerName",
+    "Changed",
+    "ValueOver",
+    "Counterparty",
+    "Title",
+    {
+      "name": "MatrixIn",
+      "type": "xml",
+      "schema": "<Params><Documents><Document><Id/><Name/></Document></Documents><Title/><Side/><DealValue/><PayDays/><Verdict/><CoveredByDPA/><TouchesData/><ValueOver/></Params>"
+    },
+    {
+      "name": "MatrixResult",
+      "type": "text",
+      "writableByChild": true
+    }
+  ],
+  "paramsSchema": "<Params><Documents><Document><Id/><Name/><CustomFormFields><Side/><DealValue/><PaymentTermsDays/><TriageVerdict/><CoveredByDPA/><VendorTouchesData/><Counterparty/><SignerName/><SignerEmail/><Purpose/></CustomFormFields></Document></Documents></Params>",
+  "steps": [
+    {
+      "id": "intake",
+      "name": "Read the eForm answers",
+      "kind": "setVariable",
+      "set": {
+        "Side": "<%#XmlVariables.Params.Documents.Document.CustomFormFields.Side%>",
+        "DealValue": "<%#XmlVariables.Params.Documents.Document.CustomFormFields.DealValue%>",
+        "PayDays": "<%#XmlVariables.Params.Documents.Document.CustomFormFields.PaymentTermsDays%>",
+        "Verdict": "<%#XmlVariables.Params.Documents.Document.CustomFormFields.TriageVerdict%>",
+        "CoveredByDPA": "<%#XmlVariables.Params.Documents.Document.CustomFormFields.CoveredByDPA%>",
+        "TouchesData": "<%#XmlVariables.Params.Documents.Document.CustomFormFields.VendorTouchesData%>",
+        "SignerEmail": "<%#XmlVariables.Params.Documents.Document.CustomFormFields.SignerEmail%>",
+        "SignerName": "<%#XmlVariables.Params.Documents.Document.CustomFormFields.SignerName%>",
+        "Counterparty": "<%#XmlVariables.Params.Documents.Document.CustomFormFields.Counterparty%>",
+        "Title": "<%#XmlVariables.Params.Documents.Document.Name%>"
+      },
+      "next": "runName"
+    },
+    {
+      "id": "runName",
+      "name": "Name the run",
+      "kind": "setWorkflowProcessName",
+      "processName": "Legal request - <%#Variable.Counterparty%>",
+      "next": "inReview"
+    },
+    {
+      "id": "inReview",
+      "name": "Mark In Review",
+      "kind": "updateMetadata",
+      "set": [
+        {
+          "attribute": "Contract Process.Status",
+          "value": "In Review"
+        },
+        {
+          "attribute": "Contract Process.Approval Status",
+          "value": "Pending"
+        }
+      ],
+      "on": {
+        "success": "handoff",
+        "failure": "handoff"
+      }
+    },
+    {
+      "id": "handoff",
+      "name": "Hand the deal to the matrix",
+      "kind": "prefillXml",
+      "output": "MatrixIn",
+      "root": "Params",
+      "copyDocument": true,
+      "fields": {
+        "Title": "Title",
+        "Side": "Side",
+        "DealValue": "DealValue",
+        "PayDays": "PayDays",
+        "Verdict": "Verdict",
+        "CoveredByDPA": "CoveredByDPA",
+        "TouchesData": "TouchesData",
+        "ValueOver": "ValueOver"
+      },
+      "next": "matrix"
+    },
+    {
+      "id": "matrix",
+      "name": "Escalation matrix approvals",
+      "kind": "childWorkflow",
+      "workflow": "Escalation matrix approvals",
+      "params": "MatrixIn",
+      "wait": true,
+      "description": "Runs Escalation matrix approvals: rules 1 to 6 in order, each matching rule adds an approver; it sets MatrixResult to Approved or Rejected.",
+      "on": {
+        "success": "matrixSaid"
+      }
+    },
+    {
+      "id": "matrixSaid",
+      "name": "Approved by the matrix?",
+      "kind": "decision",
+      "branches": [
+        {
+          "label": "Approved",
+          "when": {
+            "var": "MatrixResult",
+            "op": "equals",
+            "value": "Approved"
+          },
+          "to": "approved"
+        }
+      ],
+      "else": {
+        "label": "Rejected",
+        "to": "rejected"
+      }
+    },
+    {
+      "id": "approved",
+      "name": "Approved: mark In Negotiation",
+      "kind": "updateMetadata",
+      "set": [
+        {
+          "attribute": "Contract Process.Approval Status",
+          "value": "Approved"
+        },
+        {
+          "attribute": "Contract Process.Status",
+          "value": "In Negotiation"
+        }
+      ],
+      "on": {
+        "success": "negotiate",
+        "failure": "negotiate"
+      }
+    },
+    {
+      "id": "negotiate",
+      "name": "Deal desk: edit, re-route or send?",
+      "kind": "choice",
+      "assignee": {
+        "taskGroup": "Deal Desk"
+      },
+      "displayName": "Negotiate: <%#XmlVariables.Params.Documents.Document.Name%>",
+      "stage": "Negotiation",
+      "subject": "Negotiate, or mark ready for signature",
+      "instructions": "Apply the counterparty's redline from the clause library's approved alternatives (Edit the contract). If the redline changes a term the Escalation matrix routes on, choose Terms changed: route again. Choose Ready for signature when both sides agree. This workflow does not send or sign anything.",
+      "comments": "Yes",
+      "options": [
+        {
+          "label": "Edit the contract",
+          "to": "edit"
+        },
+        {
+          "label": "Terms changed: route again",
+          "to": "changed"
+        },
+        {
+          "label": "Ready for signature",
+          "to": "logReady"
+        }
+      ]
+    },
+    {
+      "id": "edit",
+      "name": "Edit the redline",
+      "kind": "editDocument",
+      "assignee": {
+        "taskGroup": "Deal Desk"
+      },
+      "stage": "Negotiation",
+      "instructions": "Upload the new version (or edit it online), then complete the task.",
+      "comments": "Yes",
+      "on": {
+        "completed": "negotiate"
+      }
+    },
+    {
+      "id": "changed",
+      "name": "Which term changed?",
+      "kind": "routing",
+      "assignee": {
+        "taskGroup": "Deal Desk"
+      },
+      "options": [
+        "Legal terms now non-standard (red)",
+        "Legal terms now at the acceptable position (yellow)",
+        "Value now over $1M",
+        "Payment terms now Net 90",
+        "New personal data no DPA covers",
+        "Vendor will now touch Fontara systems or data"
+      ],
+      "output": "Changed",
+      "displayName": "Route again: <%#XmlVariables.Params.Documents.Document.Name%>",
+      "stage": "Negotiation",
+      "subject": "Which term did the redline change?",
+      "instructions": "Pick the term the counterparty's redline changed. The contract goes back through the Escalation matrix's approvals with it.",
+      "comments": "Yes",
+      "on": {
+        "success": "applyChange"
+      }
+    },
+    {
+      "id": "applyChange",
+      "name": "Apply the changed term",
+      "kind": "setVariable",
+      "set": {
+        "Verdict": {
+          "map": "Changed",
+          "cases": {
+            "Legal terms now non-standard (red)": "Red",
+            "Legal terms now at the acceptable position (yellow)": "Yellow"
+          }
+        },
+        "ValueOver": {
+          "map": "Changed",
+          "cases": {
+            "Value now over $1M": "Yes"
+          }
+        },
+        "PayDays": {
+          "map": "Changed",
+          "cases": {
+            "Payment terms now Net 90": "90"
+          }
+        },
+        "CoveredByDPA": {
+          "map": "Changed",
+          "cases": {
+            "New personal data no DPA covers": "No"
+          }
+        },
+        "TouchesData": {
+          "map": "Changed",
+          "cases": {
+            "Vendor will now touch Fontara systems or data": "Yes"
+          }
+        }
+      },
+      "next": "reroute"
+    },
+    {
+      "id": "reroute",
+      "name": "Back to In Review",
+      "kind": "updateMetadata",
+      "set": [
+        {
+          "attribute": "Contract Process.Status",
+          "value": "In Review"
+        },
+        {
+          "attribute": "Contract Process.Approval Status",
+          "value": "Pending"
+        }
+      ],
+      "on": {
+        "success": "handoff",
+        "failure": "handoff"
+      }
+    },
+    {
+      "id": "logReady",
+      "name": "Ready for signature",
+      "kind": "logger",
+      "message": "Approved and negotiated: ready for signature (not sent)",
+      "next": "finish"
+    },
+    {
+      "id": "rejected",
+      "name": "Rejected: back to Draft",
+      "kind": "updateMetadata",
+      "set": [
+        {
+          "attribute": "Contract Process.Approval Status",
+          "value": "Rejected"
+        },
+        {
+          "attribute": "Contract Process.Status",
+          "value": "Draft"
+        }
+      ],
+      "on": {
+        "success": "logRejected",
+        "failure": "logRejected"
+      }
+    },
+    {
+      "id": "logRejected",
+      "name": "Log rejected",
+      "kind": "logger",
+      "message": "An approver rejected the contract: Status back to Draft",
+      "next": "finish"
+    },
+    {
+      "id": "finish",
+      "name": "Finish",
+      "kind": "finish"
+    }
+  ],
+  "errorNotify": [
+    "submitter"
+  ]
+}

@@ -1,0 +1,86 @@
+{
+  "id": "ai-acceptable-use-acknowledgment",
+  "name": "AI Acceptable Use Acknowledgment",
+  "agreementType": "Other",
+  "description": "Fontara's one-page rules for AI writing assistants at work — approved tools on Fontara accounts only, what never goes into a tool, checking every output, disclosure where a customer requires it, reporting — signed by the employee.",
+  "fields": {
+    "policy_date": {
+      "label": "Rules effective date",
+      "type": "date",
+      "required": true
+    }
+  },
+  "signers": [
+    "Employee"
+  ],
+  "body": [
+    {
+      "title": "AI ACCEPTABLE USE ACKNOWLEDGMENT"
+    },
+    {
+      "p": "Fontara, Inc., Fontara UK Ltd and Fontara Europe Ltd (\"Fontara\"): rules for AI writing assistants at work, effective {{policy_date}}."
+    },
+    {
+      "p": "These rules apply to every employee who uses an AI writing assistant (a tool or feature that drafts, summarizes, translates or rewrites text) for Fontara work, and form part of Fontara's information security policy."
+    },
+    {
+      "h": "1. Use only approved tools"
+    },
+    {
+      "p": "Use only the AI tools on the approved list that IT & Security keeps, and only through your Fontara account (single sign-on). Do not use a personal account, a free trial or a browser extension for Fontara work. Free and consumer versions of these tools may train their models on what you type; Fontara's business versions are set up not to. To ask for a new tool, submit a New Software Request."
+    },
+    {
+      "h": "2. What never goes into a tool that is not approved for it"
+    },
+    {
+      "p": "The approved list says which data each tool may take. If you are not sure, ask IT & Security first. Never put in:"
+    },
+    {
+      "list": [
+        "Customer data, including anything a customer sends Fontara, and personal data about anyone",
+        "Passwords, API keys, access tokens or other credentials, and Fontara source code",
+        "A customer's or prospect's confidential documents, such as an RFP or a draft contract shared under an NDA"
+      ]
+    },
+    {
+      "h": "3. Check every output, and say when AI was used"
+    },
+    {
+      "p": "You are responsible for everything you send. Before AI-assisted text goes to a customer, check its facts, figures, prices, product claims and citations (AI tools can invent them), and remove any commitment Fontara has not approved. Where a customer's contract or RFP asks, say that a deliverable was drafted with AI, in the way the customer asks."
+    },
+    {
+      "h": "4. Report problems"
+    },
+    {
+      "p": "Tell IT & Security at once if a wrong AI output reaches a customer, if you put data into a tool by mistake, or if you think a tool has leaked data."
+    },
+    {
+      "h": "5. Why these rules"
+    },
+    {
+      "p": "Fontara supports its staff's AI literacy: knowing how to use these tools well and understanding their risks. Article 4 of the EU AI Act, on AI literacy, applies to Fontara Europe Ltd; Fontara applies the same rules across the group. Breaking these rules may lead to disciplinary action under Fontara's policies and local law."
+    },
+    {
+      "p": "I have read these rules, I understand them, and I will follow them when I use AI tools for Fontara work. [[check:Employee:Agreed]]"
+    },
+    {
+      "sign": "Employee",
+      "title": true
+    }
+  ],
+  "examples": [
+    {
+      "values": {
+        "policy_date": "11/16/2026"
+      },
+      "expect": [
+        "AI ACCEPTABLE USE ACKNOWLEDGMENT",
+        "effective 11/16/2026",
+        "Article 4 of the EU AI Act",
+        "single sign-on"
+      ],
+      "absent": []
+    }
+  ],
+  "source": "written for the library — no vault clause set for this type"
+}

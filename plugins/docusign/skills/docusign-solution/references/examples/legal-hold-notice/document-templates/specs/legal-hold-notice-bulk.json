@@ -1,0 +1,148 @@
+{
+  "id": "legal-hold-notice-bulk",
+  "name": "Legal Hold Notice (bulk send)",
+  "agreementType": "Other",
+  "description": "Fontara Legal's written preservation notice to one custodian: the matter, what to preserve and from when, the ban on deleting or altering anything, and the custodian's signed acknowledgment.",
+  "fields": {
+    "fontara_entity": {
+      "label": "Fontara contracting entity",
+      "type": "select",
+      "options": [
+        "Fontara, Inc.",
+        "Fontara UK Ltd",
+        "Fontara Europe Ltd"
+      ],
+      "optionValues": {
+        "Fontara, Inc.": "Fontara, Inc., a Delaware corporation with its principal place of business at 1500 Harbor Boulevard, Suite 1200, San Francisco, CA 94111",
+        "Fontara UK Ltd": "Fontara UK Ltd, a company registered in England and Wales with its registered office at 48 Ashcombe Street, London EC2A 4NE, United Kingdom",
+        "Fontara Europe Ltd": "Fontara Europe Ltd, a company registered in Ireland with its registered office at 3 Riverside Quay, Dublin 2, D02 X285, Ireland"
+      },
+      "required": true,
+      "description": "Prints the entity’s full legal description and address"
+    },
+    "matter": {
+      "label": "Matter",
+      "required": true,
+      "description": "The dispute, investigation or proceeding"
+    },
+    "matter_id": {
+      "label": "Matter ID",
+      "required": true
+    },
+    "custodian": {
+      "label": "Custodian name",
+      "required": true
+    },
+    "legal_contact": {
+      "label": "Legal contact (name and email)",
+      "required": true
+    },
+    "issued": {
+      "label": "Date issued",
+      "type": "date",
+      "required": true
+    },
+    "scope": {
+      "label": "What to preserve (claims, subjects and systems)",
+      "required": true
+    },
+    "period_start": {
+      "label": "Preserve material from",
+      "type": "date",
+      "required": true
+    }
+  },
+  "signers": [
+    "Custodian"
+  ],
+  "body": [
+    {
+      "title": "LEGAL HOLD NOTICE"
+    },
+    {
+      "p": "**Privileged and confidential — attorney-client communication**"
+    },
+    {
+      "p": "Date: {{issued}}"
+    },
+    {
+      "p": "To: {{custodian}}"
+    },
+    {
+      "p": "From: Legal Department, {{fontara_entity}} (\"Fontara\")"
+    },
+    {
+      "p": "Re: {{matter}} (Matter {{matter_id}})"
+    },
+    {
+      "h": "1. Why you are receiving this notice"
+    },
+    {
+      "p": "Fontara reasonably anticipates litigation or a formal proceeding concerning {{matter}}. Fontara has a legal duty to preserve all information that may be relevant to it. You have been identified as a custodian: a person who may hold such information. This notice takes effect immediately and overrides any retention or deletion schedule that would otherwise apply."
+    },
+    {
+      "h": "2. What you must preserve"
+    },
+    {
+      "p": "Preserve every document and item of electronically stored information, in whatever form and wherever kept, that relates to: {{scope}}. This covers material created or received on or after {{period_start}}, and earlier material that relates to the same subjects."
+    },
+    {
+      "list": [
+        "Email, chat and messaging (including Slack, Teams and text messages on any device used for Fontara business)",
+        "Documents and files on Fontara systems, shared drives, cloud services and personal devices",
+        "Agreements, amendments, drafts and signature records, including documents that were never signed or countersigned",
+        "Invoices, billing and system records, calendars, notes and paper files"
+      ]
+    },
+    {
+      "h": "3. What you must not do"
+    },
+    {
+      "p": "Do not delete, discard, alter, overwrite, re-sign, amend or correct any of this material, and do not change auto-delete settings to shorten them. Do not move material out of Fontara systems. If you are unsure whether something is covered, preserve it."
+    },
+    {
+      "h": "4. How long this applies"
+    },
+    {
+      "p": "This hold remains in effect until Fontara Legal releases it in writing, even if you change roles or leave Fontara. Before you leave, tell Fontara Legal so your data can be preserved before your accounts are closed. You may receive periodic reminders."
+    },
+    {
+      "h": "5. Questions"
+    },
+    {
+      "p": "Contact {{legal_contact}} with any question about this notice. Do not discuss the matter with anyone outside Fontara."
+    },
+    {
+      "h": "Acknowledgment"
+    },
+    {
+      "p": "[[check:Custodian:I have read this notice, I understand it, and I will preserve all material it covers until Fontara Legal releases the hold in writing]] I have read this notice, I understand it, and I will preserve all material it covers until Fontara Legal releases the hold in writing."
+    },
+    {
+      "sign": "Custodian"
+    }
+  ],
+  "bulkSend": true,
+  "examples": [
+    {
+      "values": {
+        "matter": "Momentum Driver dispute over premium support fees",
+        "matter_id": "LIT-2027-014",
+        "custodian": "Jonathan Wright, Revenue Controller",
+        "issued": "03/08/2027",
+        "scope": "the Momentum Driver MSA and Amendment 1, the premium support fees invoiced under it, and every communication with Momentum Driver about them",
+        "period_start": "01/01/2025",
+        "legal_contact": "Elena Rodriguez, General Counsel (fontara.elena.rodriguez@example.com)",
+        "fontara_entity": "Fontara, Inc."
+      },
+      "expect": [
+        "LEGAL HOLD NOTICE",
+        "LIT-2027-014",
+        "premium support fees",
+        "until Fontara Legal releases it in writing"
+      ],
+      "absent": []
+    }
+  ],
+  "source": "written for the library — no vault clause set for this type"
+}

@@ -1,0 +1,104 @@
+{
+  "id": "contract-closeout",
+  "name": "Contract Closeout",
+  "description": "Closes out a contract that ended early: the requester stops watching it (Remove Documents from Watched Documents List), its renewal reminder is deleted (the same name, date and hour as scheduled by signed-contract-filing), and Find Documents by Folder lists what is left in the closed-contracts folder. Each outcome is logged.",
+  "paramsSchema": "<Params><Documents><Document><Id/><Name/></Document></Documents><ContractName/><ExpirationDate/></Params>",
+  "variables": [
+    {
+      "name": "LeftInFolder",
+      "type": "document"
+    }
+  ],
+  "steps": [
+    {
+      "id": "unwatch",
+      "name": "Stop watching",
+      "kind": "removeDocumentsFromWatchedDocumentsList",
+      "users": [
+        "submitter"
+      ],
+      "on": {
+        "success": "reminder",
+        "failure": "failUnwatch"
+      }
+    },
+    {
+      "id": "reminder",
+      "name": "Delete the reminder",
+      "kind": "deleteDocumentReminder",
+      "reminderName": "Renewal review",
+      "date": {
+        "var": "Params.ExpirationDate",
+        "addDays": -90
+      },
+      "hour": 8,
+      "on": {
+        "success": "list",
+        "notFound": "noReminder",
+        "failure": "failReminder"
+      }
+    },
+    {
+      "id": "noReminder",
+      "name": "Log no reminder",
+      "kind": "logger",
+      "message": "No renewal reminder on <%#XmlVariables.Params.ContractName%>",
+      "next": "list"
+    },
+    {
+      "id": "list",
+      "name": "List the folder",
+      "kind": "findDocumentsByFolder",
+      "folder": {
+        "path": "/Contracts/Closed/"
+      },
+      "limit": 50,
+      "output": "LeftInFolder",
+      "on": {
+        "match": "log",
+        "noMatch": "empty",
+        "failure": "failList"
+      }
+    },
+    {
+      "id": "log",
+      "name": "Log the closeout",
+      "kind": "logger",
+      "message": "Closed out <%#XmlVariables.Params.ContractName%>: unwatched, reminder deleted, folder listed",
+      "next": "finish"
+    },
+    {
+      "id": "empty",
+      "name": "Log empty folder",
+      "kind": "logger",
+      "message": "Closed out <%#XmlVariables.Params.ContractName%>: the folder is empty",
+      "next": "finish"
+    },
+    {
+      "id": "failUnwatch",
+      "name": "Failed: Remove Documents from Watched Do",
+      "kind": "logger",
+      "message": "Failed: Remove Documents from Watched Documents List",
+      "next": "finish"
+    },
+    {
+      "id": "failReminder",
+      "name": "Failed: Delete Document Reminder",
+      "kind": "logger",
+      "message": "Failed: Delete Document Reminder",
+      "next": "finish"
+    },
+    {
+      "id": "failList",
+      "name": "Failed: Find Documents by Folder",
+      "kind": "logger",
+      "message": "Failed: Find Documents by Folder",
+      "next": "finish"
+    },
+    {
+      "id": "finish",
+      "name": "Finish",
+      "kind": "finish"
+    }
+  ]
+}

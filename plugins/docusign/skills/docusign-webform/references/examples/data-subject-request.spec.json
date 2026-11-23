@@ -1,0 +1,285 @@
+{
+  "name": "Fontara Privacy Request",
+  "description": "How anyone exercises their privacy rights with Fontara — GDPR and UK GDPR (access, erasure, rectification, portability, objection, restriction, withdrawal of consent) and the CCPA (know, delete, correct, opt out of sale or sharing, limit sensitive data): who is asking and from where, their relationship to Fontara, identifiers, the requests, the correction wanted, a date scope, delivery, proof of identity, and an authorised agent's details and signed authorisation when an agent asks.",
+  "welcome": {
+    "title": "Make a privacy request",
+    "text": "Use this form to see, correct, delete or move the personal data Fontara holds about you, or to object to how we use it. Fontara's Data Protection Officer is Alexandra Kim.",
+    "button": "Start"
+  },
+  "hidden": [
+    {
+      "key": "source",
+      "type": "text",
+      "label": "Source"
+    }
+  ],
+  "pages": [
+    {
+      "key": "pg_who",
+      "title": "About you",
+      "fields": [
+        {
+          "key": "requester_is",
+          "type": "radio",
+          "label": "Who is making this request?",
+          "options": [
+            "I am asking about my own data",
+            "An authorised agent acting for someone else"
+          ],
+          "required": true
+        },
+        {
+          "key": "agent_sec",
+          "type": "section",
+          "label": "Authorised agent",
+          "fields": [
+            {
+              "key": "agent_name",
+              "type": "text",
+              "label": "Agent name (or firm)",
+              "required": true
+            },
+            {
+              "key": "agent_email",
+              "type": "email",
+              "label": "Agent email",
+              "required": true
+            },
+            {
+              "key": "agent_auth",
+              "type": "file",
+              "label": "Signed permission from the person, or a power of attorney",
+              "formats": [
+                "pdf",
+                "png",
+                "jpg",
+                "jpeg"
+              ],
+              "maxFileSizeInMB": 10,
+              "required": true
+            }
+          ]
+        },
+        {
+          "key": "jurisdiction",
+          "type": "radio",
+          "label": "Where does the person live?",
+          "options": [
+            "European Union or EEA",
+            "United Kingdom",
+            "California",
+            "Another US state",
+            "Elsewhere"
+          ],
+          "required": true
+        },
+        {
+          "key": "relationship",
+          "type": "checkbox",
+          "label": "Their relationship to Fontara",
+          "options": [
+            "A user of a Fontara customer's platform",
+            "A Fontara customer contact",
+            "A current or former Fontara employee",
+            "A job applicant",
+            "A supplier contact",
+            "A website visitor or event attendee",
+            "Other"
+          ],
+          "required": true,
+          "select": {
+            "atLeast": 1
+          }
+        },
+        {
+          "key": "subject_name",
+          "type": "text",
+          "label": "Full name of the person the data is about",
+          "required": true
+        },
+        {
+          "key": "subject_email",
+          "type": "email",
+          "label": "Their email address",
+          "required": true
+        },
+        {
+          "key": "identifiers",
+          "type": "longtext",
+          "label": "Other details that help us find the data (account email, customer company, employee ID, dates)"
+        }
+      ]
+    },
+    {
+      "key": "pg_request",
+      "title": "Your request",
+      "fields": [
+        {
+          "key": "requests",
+          "type": "checkbox",
+          "label": "What would you like Fontara to do?",
+          "options": [
+            "Give me a copy of my data (access)",
+            "Delete my data",
+            "Correction of inaccurate data",
+            "Send my data to me or another company (portability)",
+            "Stop using my data for a purpose I object to",
+            "Restrict use of my data while a complaint is resolved",
+            "Withdraw consent I gave",
+            "Opt out of sale or sharing (California)",
+            "Limit use of my sensitive personal information (California)"
+          ],
+          "required": true,
+          "select": {
+            "atLeast": 1
+          }
+        },
+        {
+          "key": "correction",
+          "type": "longtext",
+          "label": "What is wrong, and what should it say?",
+          "required": true
+        },
+        {
+          "key": "scope",
+          "type": "radio",
+          "label": "Which period?",
+          "options": [
+            "All time",
+            "A specific period"
+          ],
+          "required": true
+        },
+        {
+          "key": "scope_sec",
+          "type": "section",
+          "label": "Period",
+          "fields": [
+            {
+              "key": "scope_from",
+              "type": "date",
+              "label": "From",
+              "required": true
+            },
+            {
+              "key": "scope_to",
+              "type": "date",
+              "label": "To",
+              "required": true
+            }
+          ]
+        },
+        {
+          "key": "delivery",
+          "type": "radio",
+          "label": "How should we reply?",
+          "options": [
+            "By email, with an encrypted download link",
+            "By post"
+          ],
+          "required": true
+        },
+        {
+          "key": "post_address",
+          "type": "text",
+          "label": "Postal address",
+          "required": true
+        },
+        {
+          "key": "id_proof",
+          "type": "file",
+          "label": "Proof of identity (photo ID, or a recent document showing your name and address)",
+          "formats": [
+            "pdf",
+            "png",
+            "jpg",
+            "jpeg"
+          ],
+          "maxFileSizeInMB": 10,
+          "required": true,
+          "description": "Only used to confirm we are giving the data to the right person, and deleted 30 days after we reply. Cover any ID number you do not need to show."
+        }
+      ]
+    },
+    {
+      "key": "pg_submit",
+      "title": "Submit",
+      "fields": [
+        {
+          "key": "how",
+          "type": "description",
+          "text": "**How we handle your request.** Fontara acknowledges every request within 5 business days and replies within **one month** under the GDPR and UK GDPR (extendable by two months for complex requests, which we will tell you about) or **45 days** under the CCPA. Responding is free. We may need to keep some data where the law requires it, and will tell you what and why. You may complain to your data protection authority — the Irish Data Protection Commission, the UK Information Commissioner's Office or the California Privacy Protection Agency."
+        },
+        {
+          "key": "truthful",
+          "type": "checkbox",
+          "label": "I confirm that I am the person named, or authorised to act for them. Fontara may refuse a request made under false pretences.",
+          "options": [
+            "I confirm"
+          ],
+          "required": true
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "title": "Review your request"
+  },
+  "thankYou": {
+    "title": "Request received",
+    "text": "Fontara's privacy team acknowledges your request by email within 5 business days and tells you the date we will reply by. If we need to confirm your identity, we contact you at the email address you gave."
+  },
+  "rules": [
+    {
+      "when": [
+        {
+          "field": "requester_is",
+          "is": "An authorised agent acting for someone else"
+        }
+      ],
+      "then": {
+        "agent_sec": "show",
+        "agent_name": "show",
+        "agent_email": "show",
+        "agent_auth": "show"
+      }
+    },
+    {
+      "when": [
+        {
+          "field": "requests",
+          "isAnyOf": [
+            "Correction of inaccurate data"
+          ]
+        }
+      ],
+      "then": {
+        "correction": "show"
+      }
+    },
+    {
+      "when": [
+        {
+          "field": "scope",
+          "is": "A specific period"
+        }
+      ],
+      "then": {
+        "scope_sec": "show",
+        "scope_from": "show",
+        "scope_to": "show"
+      }
+    },
+    {
+      "when": [
+        {
+          "field": "delivery",
+          "is": "By post"
+        }
+      ],
+      "then": {
+        "post_address": "show"
+      }
+    }
+  ]
+}

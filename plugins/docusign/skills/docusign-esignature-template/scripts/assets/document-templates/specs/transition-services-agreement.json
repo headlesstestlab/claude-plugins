@@ -1,0 +1,273 @@
+{
+  "id": "transition-services-agreement",
+  "name": "Transition Services Agreement",
+  "description": "A customer moves off Fontara: final services, transition services and fees for a transition period (Schedule 1), hand-over of work and data, final accounting.",
+  "agreementType": "Termination",
+  "fields": {
+    "fontara_entity": {
+      "label": "Fontara contracting entity",
+      "type": "select",
+      "options": [
+        "Fontara, Inc.",
+        "Fontara UK Ltd",
+        "Fontara Europe Ltd"
+      ],
+      "optionValues": {
+        "Fontara, Inc.": "Fontara, Inc., a Delaware corporation with its principal place of business at 1500 Harbor Boulevard, Suite 1200, San Francisco, CA 94111",
+        "Fontara UK Ltd": "Fontara UK Ltd, a company registered in England and Wales with its registered office at 48 Ashcombe Street, London EC2A 4NE, United Kingdom",
+        "Fontara Europe Ltd": "Fontara Europe Ltd, a company registered in Ireland with its registered office at 3 Riverside Quay, Dublin 2, D02 X285, Ireland"
+      },
+      "required": true,
+      "description": "Prints the entity’s full legal description and address"
+    },
+    "currency": {
+      "label": "Currency",
+      "type": "select",
+      "options": [
+        "US$",
+        "£",
+        "€"
+      ],
+      "required": true,
+      "description": "The signing entity’s: US$ for Fontara, Inc., £ for Fontara UK Ltd, € for Fontara Europe Ltd"
+    },
+    "customer": {
+      "bind": {
+        "provision": "AgreementParty"
+      },
+      "required": true,
+      "description": "Customer legal name"
+    },
+    "customer_address": {
+      "label": "Customer street address",
+      "required": true
+    },
+    "customer_city": {
+      "label": "Customer city",
+      "required": true
+    },
+    "customer_region": {
+      "label": "Customer state",
+      "required": true
+    },
+    "customer_postal": {
+      "label": "Customer ZIP code",
+      "required": true
+    },
+    "customer_entity": {
+      "label": "Customer entity type",
+      "required": true,
+      "description": "For example: an Illinois corporation"
+    },
+    "agreement": {
+      "label": "Agreement ending",
+      "required": true
+    },
+    "separation": {
+      "label": "Separation Date",
+      "type": "date",
+      "required": true
+    },
+    "transition_end": {
+      "label": "Transition Period ends",
+      "type": "date",
+      "required": true
+    },
+    "tsa_fees": {
+      "label": "Estimated transition fees",
+      "type": "number",
+      "money": true,
+      "required": true
+    },
+    "position": {
+      "label": "Negotiated position",
+      "type": "select",
+      "options": [
+        "Balanced",
+        "Favours Fontara",
+        "Favours the counterparty"
+      ],
+      "required": true,
+      "description": "For the clauses most often negotiated"
+    },
+    "effective": {
+      "bind": {
+        "provision": "EffectiveDate"
+      },
+      "required": true
+    }
+  },
+  "signers": [
+    "Customer",
+    "Fontara"
+  ],
+  "body": [
+    {
+      "title": "TRANSITION SERVICES AGREEMENT"
+    },
+    {
+      "p": "This Transition Services Agreement (this \"TSA\"), dated {{effective}}, is between {{fontara_entity}} (\"Vendor\") and **{{customer}}**, {{customer_entity}} with its principal place of business at {{customer_address}}, {{customer_city}}, {{customer_region}} {{customer_postal}} (\"Customer\"). The {{agreement}} between them (the \"Agreement\") ends on {{separation}} (the \"Separation Date\"), and Customer is moving the Services to a new provider. From the Separation Date until {{transition_end}} (the \"Transition Period\") Vendor will provide the Transition Services in Schedule 1."
+    },
+    {
+      "h": "1. Final Services"
+    },
+    {
+      "p": "Vendor shall continue to provide the Services through the Separation Date at the service levels in the Agreement, and the Agreement ends on the Separation Date except for the provisions that survive under it. Vendor shall complete the work in progress that can reasonably be finished before the Separation Date, and Customer shall accept or reject it under the acceptance procedure in the Agreement."
+    },
+    {
+      "h": "2. Transition Services"
+    },
+    {
+      "p": "During the Transition Period Vendor shall provide the services listed in Schedule 1 (the \"Transition Services\") to the same standard as the Services under the Agreement, and shall cooperate reasonably with Customer's new provider. Customer may end any Transition Service early on 15 days' written notice, and its fee ends with it."
+    },
+    {
+      "h": "3. Transition Fees"
+    },
+    {
+      "p": "Customer shall pay the monthly fee stated for each Transition Service in Schedule 1, invoiced monthly in arrears, prorated for a partial month, and payable under the payment terms of the Agreement. The parties estimate the fees for the whole Transition Period at {{currency}}{{tsa_fees}}."
+    },
+    {
+      "h": "4. Hand-Over of Work and Data"
+    },
+    {
+      "p": "On the Separation Date Vendor shall deliver to Customer all paid-for deliverables and work in progress, with the documentation reasonably needed to use them, and a complete export of Customer data in a commonly used, machine-readable format. For 30 days after the Separation Date Vendor shall answer reasonable questions from Customer or its new provider. Within 30 days after Customer confirms receipt of the export, Vendor shall delete Customer data and certify the deletion in writing."
+    },
+    {
+      "p": "Customer contact for the data export: [[text:Customer:Data-export contact]]  Email: [[email:Customer:Data-export email]]"
+    },
+    {
+      "h": "5. Return of Property and Access"
+    },
+    {
+      "p": "Within 15 days after the Separation Date each party shall return or destroy the other's equipment, materials and Confidential Information (as the Agreement defines it) in its possession, except copies that law or a bona fide retention policy requires it to keep, which remain confidential. On the Separation Date each party shall disable the other's user accounts, credentials and network access, and each party shall confirm in writing that it has done so."
+    },
+    {
+      "h": "6. Final Accounting"
+    },
+    {
+      "if": {
+        "field": "position",
+        "is": "Balanced"
+      },
+      "then": [
+        {
+          "p": "Within 15 days after the Separation Date Vendor shall issue a final invoice for fees and approved expenses accrued through the Separation Date, net of any service credits owed and of the unused portion of prepaid fees. Customer shall pay the undisputed amount within 30 days after receipt, or Vendor shall refund any net credit within the same period, and the parties shall resolve any disputed item under the dispute procedure in the Agreement."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "position",
+        "is": "Favours Fontara"
+      },
+      "then": [
+        {
+          "p": "Within 15 days after the Separation Date Customer shall pay all fees and expenses invoiced or accrued through the Separation Date, together with the fees for the remainder of the current billing period. Prepaid fees are non-refundable, service credits lapse on the date of this TSA, and Vendor may invoice any amount later found to be owed."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "position",
+        "is": "Favours the counterparty"
+      },
+      "then": [
+        {
+          "p": "Customer shall pay only undisputed fees for Services delivered and accepted, and expenses approved in writing, through the Separation Date. Within 15 days after the Separation Date Vendor shall refund all prepaid fees for any period after it, and Customer may set off any service credits owed. Customer has no obligation to pay any amount not invoiced within 60 days after the Separation Date."
+        }
+      ]
+    },
+    {
+      "h": "7. Communications and Non-Disparagement"
+    },
+    {
+      "p": "The parties shall agree on the wording of any announcement of the separation to employees, customers or the public before it is made. Neither party shall make any public statement disparaging the other in connection with the Agreement, without restricting truthful statements required by law or made in legal proceedings. Vendor shall remove Customer from its customer lists and references within 30 days after the Separation Date."
+    },
+    {
+      "h": "8. Claims Preserved"
+    },
+    {
+      "p": "Except for amounts settled under the Final Accounting section, nothing in this TSA releases any claim under the Agreement, and any release of claims must be in a separate written mutual release signed by both parties."
+    },
+    {
+      "h": "9. General"
+    },
+    {
+      "p": "This TSA is governed by the law that governs the Agreement, any dispute under it is resolved in the manner the Agreement provides, and notices under it are given as the Agreement provides. This TSA is the entire agreement of the parties on its subject and may be amended only in a writing signed by both parties. It may be signed in counterparts and by electronic signature, each of which is an original."
+    },
+    {
+      "sign": "Customer",
+      "title": true,
+      "company": true
+    },
+    {
+      "sign": "Fontara",
+      "title": true,
+      "company": true
+    },
+    {
+      "h": "Schedule 1 — Transition Services"
+    },
+    {
+      "lineItems": {
+        "name": "TransitionServices",
+        "label": "Transition services",
+        "columns": [
+          {
+            "key": "service",
+            "label": "Service"
+          },
+          {
+            "key": "monthly_fee",
+            "label": "Monthly Fee"
+          },
+          {
+            "key": "ends",
+            "label": "Ends"
+          }
+        ]
+      }
+    }
+  ],
+  "examples": [
+    {
+      "values": {
+        "effective": "07/01/2027",
+        "customer": "Helix Learning",
+        "customer_entity": "a Delaware corporation",
+        "customer_address": "2850 Life Sciences Parkway, Suite 250",
+        "agreement": "Master Services Agreement dated 05/01/2024",
+        "separation": "09/30/2027",
+        "transition_end": "12/31/2027",
+        "tsa_fees": "36000",
+        "fontara_entity": "Fontara UK Ltd",
+        "currency": "£",
+        "position": "Balanced",
+        "customer_city": "Cambridge",
+        "customer_region": "MA",
+        "customer_postal": "02142"
+      },
+      "tables": {
+        "TransitionServices": [
+          [
+            "Read-only platform access",
+            "6,000.00",
+            "12/31/2027"
+          ],
+          [
+            "Data migration support",
+            "6,000.00",
+            "11/30/2027"
+          ]
+        ]
+      },
+      "expect": [
+        "Transition Period",
+        "Read-only platform access",
+        "£36,000.00",
+        "separate written mutual release"
+      ]
+    }
+  ],
+  "source": "vault: Contracts/Clauses/Separation Agreement"
+}

@@ -1,0 +1,62 @@
+{
+  "id": "camp-registration",
+  "from": {
+    "name": "Summer Camp Registration",
+    "description": "A parent or guardian registers a child for a summer camp week and pays the deposit while signing.",
+    "fields": {},
+    "signers": [
+      "Parent or Guardian"
+    ],
+    "body": [
+      {
+        "title": "SUMMER CAMP REGISTRATION"
+      },
+      {
+        "p": "Camper name: [[text:Parent or Guardian:Camper name]]  Age: [[text:Parent or Guardian:Camper age]]"
+      },
+      {
+        "p": "Camp week: [[radio:Parent or Guardian:Camp week:July 6-10|July 13-17|July 20-24]]"
+      },
+      {
+        "h": "1. Deposit and Fees"
+      },
+      {
+        "p": "A deposit of USD 250 is paid with this registration and is credited against the camp fee. It is refundable until 30 days before the camp week."
+      },
+      {
+        "h": "2. Health and Emergency"
+      },
+      {
+        "p": "Emergency contact: [[text:Parent or Guardian:Emergency contact name]]  Phone: [[text:Parent or Guardian:Emergency contact phone]]"
+      },
+      {
+        "p": "Allergies or medical needs: [[text?:Parent or Guardian:Allergies and medical needs]]"
+      },
+      {
+        "p": "[[check:Parent or Guardian:Medical consent]] In an emergency, I authorize camp staff to obtain medical treatment for the camper if I cannot be reached."
+      },
+      {
+        "sign": "Parent or Guardian",
+        "title": false
+      }
+    ]
+  },
+  "name": "Summer Camp Registration",
+  "summary": "A NEW document inline, offered as a PowerForm (a public self-service link, direct signing, up to 300 uses): the parent registers a camper and pays a USD 250 deposit with a payment tab. The payment needs the account's payment gateway.",
+  "owners": {
+    "default": "Parent or Guardian"
+  },
+  "payment": {
+    "role": "Parent or Guardian",
+    "item": "Camp deposit",
+    "amount": 250,
+    "description": "Credited against the camp fee"
+  },
+  "powerForm": {
+    "signingMode": "direct",
+    "instructions": "Fill in the camper's details, sign and pay the deposit.",
+    "maxUses": 300
+  },
+  "emailSubject": "Summer camp registration",
+  "emailBlurb": "Please complete the registration, sign and pay the deposit."
+}

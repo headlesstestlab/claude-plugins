@@ -1,0 +1,24 @@
+{
+  "id": "legal-hold-monthly-reminder",
+  "name": "Legal Hold Reminder Sweep",
+  "description": "Every month Legal Operations is reminded to re-send the hold notice to the custodians of every open legal hold, and to escalate the ones who have not acknowledged.",
+  "trigger": {
+    "schedule": {
+      "start": "2026-12-01T09:00:00-05:00",
+      "repeat": "monthly",
+      "ends": "1 year"
+    }
+  },
+  "steps": [
+    {
+      "email": {
+        "to": [
+          "legal.ops@example.com"
+        ],
+        "subject": "Legal hold reminders are due",
+        "headline": "Re-send open legal hold notices",
+        "body": "Open Agreement Desk ▸ Requests, filter Legal Hold Request by status, and for each open hold:\n- re-send the hold notice (Legal Hold Notice and Acknowledgment) to each custodian;\n- escalate to the matter's lawyer every custodian who has not acknowledged."
+      }
+    }
+  ]
+}

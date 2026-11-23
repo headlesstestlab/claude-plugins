@@ -1,0 +1,63 @@
+{
+  "id": "supplier-clm-sources",
+  "name": "Supplier Terms from CLM",
+  "description": "Supplier contract intake whose choices come from CLM: an attribute list, a multi-select attribute, the document owner, a clause from a term document and the contracting entity from a CSV document.",
+  "attributeIds": {
+    "Party Region": "c1425376-6fb3-f111-93b3-e8e4a5d525fb",
+    "Third Party": "8b425376-6fb3-f111-93b3-e8e4a5d525fb",
+    "Document Owner": "af425376-6fb3-f111-93b3-e8e4a5d525fb"
+  },
+  "termIds": {
+    "Governing Law": "58c3895b-641c-4417-80b7-7b705d2cc7cc"
+  },
+  "csvIds": {
+    "Entities": "952b21f2-b595-4baa-86ed-f5eee1c67579"
+  },
+  "fields": [
+    {
+      "kind": "text",
+      "label": "Supplier Name",
+      "required": true
+    },
+    {
+      "kind": "attributeDropdown",
+      "label": "Supplier Region",
+      "attribute": "Party Region"
+    },
+    {
+      "kind": "attributeMultiselect",
+      "label": "Third Party Paper",
+      "attribute": "Third Party",
+      "options": [
+        "Yes",
+        "No"
+      ]
+    },
+    {
+      "kind": "user",
+      "label": "Contract Owner",
+      "attribute": "Document Owner"
+    },
+    {
+      "kind": "term",
+      "label": "Governing Law Clause",
+      "term": "Governing Law"
+    },
+    {
+      "kind": "csvDropdown",
+      "label": "Contracting Entity",
+      "csv": "Entities",
+      "show": "Entity Name",
+      "columns": [
+        {
+          "label": "Entity Name",
+          "column": "Entity Name Legal"
+        },
+        {
+          "label": "Entity Region",
+          "column": "Region"
+        }
+      ]
+    }
+  ]
+}

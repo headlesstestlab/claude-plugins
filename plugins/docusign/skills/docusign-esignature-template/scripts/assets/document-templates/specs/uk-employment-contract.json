@@ -1,0 +1,336 @@
+{
+  "id": "uk-employment-contract",
+  "name": "Contract of Employment (UK)",
+  "agreementType": "Other",
+  "description": "Fontara UK Ltd’s contract with an employee in England: the section 1 particulars, probation, hours, salary and bonus, holiday, sick pay, pension auto-enrolment, notice, garden leave and restrictive covenants.",
+  "fields": {
+    "employee": {
+      "bind": {
+        "provision": "AgreementParty"
+      },
+      "required": true,
+      "description": "Employee name"
+    },
+    "employee_address": {
+      "label": "Employee home street address",
+      "required": true
+    },
+    "employee_city": {
+      "label": "Employee home city",
+      "required": true
+    },
+    "employee_postal": {
+      "label": "Employee home postcode",
+      "required": true
+    },
+    "title": {
+      "label": "Job title",
+      "required": true
+    },
+    "manager": {
+      "label": "Reports to",
+      "required": true
+    },
+    "start": {
+      "bind": {
+        "provision": "HireDate"
+      },
+      "required": true,
+      "dateFormat": "dd/MM/yyyy"
+    },
+    "employment_type": {
+      "bind": {
+        "provision": "EmploymentType"
+      },
+      "required": true
+    },
+    "probation": {
+      "label": "Probationary period (months)",
+      "type": "select",
+      "options": [
+        "3",
+        "6"
+      ],
+      "required": true
+    },
+    "arrangement": {
+      "label": "Work arrangement",
+      "type": "select",
+      "options": [
+        "Office-based",
+        "Hybrid",
+        "Home-based"
+      ],
+      "required": true
+    },
+    "salary": {
+      "label": "Annual salary (£)",
+      "type": "number",
+      "money": true,
+      "required": true
+    },
+    "bonus_target": {
+      "label": "Bonus target (% of salary)",
+      "type": "number"
+    },
+    "holiday_days": {
+      "label": "Holiday (working days, plus public holidays)",
+      "type": "number",
+      "required": true
+    },
+    "pension_pct": {
+      "label": "Employer pension contribution (%)",
+      "type": "number",
+      "required": true
+    },
+    "notice": {
+      "label": "Notice period after probation",
+      "type": "select",
+      "options": [
+        "one month's",
+        "three months'"
+      ],
+      "required": true
+    },
+    "restriction_months": {
+      "label": "Restrictive covenant period (months)",
+      "type": "select",
+      "options": [
+        "6",
+        "12"
+      ],
+      "required": true
+    }
+  },
+  "signers": [
+    "Employee",
+    "Fontara"
+  ],
+  "body": [
+    {
+      "title": "CONTRACT OF EMPLOYMENT"
+    },
+    {
+      "p": "This contract of employment (the \"Contract\") is between Fontara UK Ltd, a company registered in England and Wales with its registered office at 48 Ashcombe Street, London EC2A 4NE, United Kingdom (the \"Company\"), and **{{employee}}** of {{employee_address}}, {{employee_city}} {{employee_postal}} (the \"Employee\"). It contains the written statement of particulars of employment required by section 1 of the Employment Rights Act 1996."
+    },
+    {
+      "h": "1. Start of Employment"
+    },
+    {
+      "p": "Employment begins on {{start}}. No previous employment counts towards the Employee's period of continuous employment. Employment is conditional on the Employee showing evidence of the right to work in the United Kingdom before the start date."
+    },
+    {
+      "h": "2. Job Title and Duties"
+    },
+    {
+      "p": "The Employee is employed as {{title}}, reporting to {{manager}}, and shall perform the duties of that role and any other reasonable duties the Company assigns. Type of employment: {{employment_type}}."
+    },
+    {
+      "h": "3. Probationary Period"
+    },
+    {
+      "p": "The first {{probation}} months of employment are a probationary period, during which either party may end employment on one week's written notice. The Company may extend the probationary period once, by up to three months, by written notice."
+    },
+    {
+      "h": "4. Place of Work"
+    },
+    {
+      "if": {
+        "field": "arrangement",
+        "is": "Office-based"
+      },
+      "then": [
+        {
+          "p": "The Employee's place of work is the Company's office at 48 Ashcombe Street, London, or another location in Greater London the Company reasonably requires."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "arrangement",
+        "is": "Hybrid"
+      },
+      "then": [
+        {
+          "p": "The Employee's place of work is the Company's office at 48 Ashcombe Street, London, where the Employee works at least three days a week, working otherwise from home in the United Kingdom."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "arrangement",
+        "is": "Home-based"
+      },
+      "then": [
+        {
+          "p": "The Employee works from home in the United Kingdom and travels to the Company's London office as reasonably required."
+        }
+      ]
+    },
+    {
+      "p": "The Employee will not be required to work outside the United Kingdom for more than one month at a time."
+    },
+    {
+      "h": "5. Hours of Work"
+    },
+    {
+      "p": "Normal working hours are 9:00am to 5:30pm, Monday to Friday, with an unpaid hour for lunch, together with any additional hours reasonably necessary to perform the Employee's duties, for which no additional pay is due. The Employee agrees that the 48-hour average weekly limit in regulation 4 of the Working Time Regulations 1998 does not apply, and may withdraw that agreement by three months' written notice."
+    },
+    {
+      "h": "6. Salary"
+    },
+    {
+      "p": "The Employee's salary is £{{salary}} a year, accruing daily and paid monthly in arrears on or about the last working day of each month by bank transfer, subject to deductions for income tax and National Insurance. Salary is reviewed annually, without any obligation to increase it."
+    },
+    {
+      "if": {
+        "field": "bonus_target",
+        "gt": 0
+      },
+      "then": [
+        {
+          "p": "The Employee may participate in the Company's discretionary bonus scheme, with a target of {{bonus_target}}% of salary, subject to its rules as in force from time to time."
+        }
+      ]
+    },
+    {
+      "h": "7. Holiday"
+    },
+    {
+      "p": "The holiday year runs from 1 January to 31 December. The Employee is entitled to {{holiday_days}} working days' paid holiday in each holiday year, plus the usual public holidays in England and Wales, pro rata for a part year. Up to five days of unused holiday may be carried over into the next holiday year; any other unused holiday is lost. On termination the Employee is paid for accrued untaken holiday, and repays pay for holiday taken beyond the amount accrued."
+    },
+    {
+      "h": "8. Sickness Absence"
+    },
+    {
+      "p": "The Employee must tell their manager by 10:00am on the first day of any absence. Statutory Sick Pay is payable when the Employee qualifies for it, and the Company pays full salary, inclusive of Statutory Sick Pay, for up to 20 working days of sickness absence in any rolling 12-month period."
+    },
+    {
+      "h": "9. Pension"
+    },
+    {
+      "p": "The Company complies with its automatic-enrolment duties under the Pensions Act 2008. The Employee will be enrolled in the Company's qualifying workplace pension scheme, subject to its rules, with the Company contributing {{pension_pct}}% of qualifying earnings, or more if the law requires, and the Employee contributing at least the statutory minimum. The Employee may opt out under the scheme's rules."
+    },
+    {
+      "h": "10. Other Benefits and Training"
+    },
+    {
+      "p": "The Employee is eligible for private medical insurance, life assurance of four times salary and income protection under the Company's schemes, subject to their rules and to the insurer accepting cover. The Company does not require the Employee to complete any training at their own cost; any training the Company requires is provided during working hours at its expense."
+    },
+    {
+      "h": "11. Notice"
+    },
+    {
+      "p": "After the probationary period, either party may end employment by giving the other {{notice}} written notice, or, if it is longer, the statutory minimum notice under section 86 of the Employment Rights Act 1996. The Company may pay salary in lieu of all or part of the notice period."
+    },
+    {
+      "h": "12. Garden Leave"
+    },
+    {
+      "p": "During all or part of any notice period the Company may require the Employee not to perform any duties, attend work or contact clients or colleagues, while continuing to receive salary and benefits."
+    },
+    {
+      "h": "13. Confidentiality and Intellectual Property"
+    },
+    {
+      "p": "The Employee shall not use or disclose the confidential information of the Company or of any Fontara group company, during or after employment, except in performing their duties or as the law requires. Nothing prevents a protected disclosure under the Public Interest Disclosure Act 1998 or a report to a regulator. Intellectual property the Employee creates in the course of employment belongs to the Company, and the Employee waives their moral rights in it to the extent the law permits."
+    },
+    {
+      "h": "14. Restrictive Covenants"
+    },
+    {
+      "p": "For {{restriction_months}} months after employment ends, less any period of garden leave, the Employee shall not (a) solicit or deal with any client of the Company with whom the Employee had material dealings in the last 12 months of employment, or (b) solicit any senior employee with whom the Employee worked in that period to leave the Company. Each restriction is separate, and is intended to protect the Company's legitimate business interests."
+    },
+    {
+      "h": "15. Disciplinary and Grievance Procedures"
+    },
+    {
+      "p": "The Company's disciplinary and grievance procedures are in its Employee Handbook, which does not form part of this Contract. The Employee should raise a grievance in writing with their manager, and appeal a disciplinary decision in writing to the HR Director. No collective agreement affects the Employee's terms of employment."
+    },
+    {
+      "h": "16. Data Protection"
+    },
+    {
+      "p": "The Company processes the Employee's personal data as described in its employee privacy notice, in accordance with the UK GDPR and the Data Protection Act 2018."
+    },
+    {
+      "h": "17. Governing Law and Entire Agreement"
+    },
+    {
+      "p": "This Contract is governed by the law of England and Wales, and the courts of England and Wales have exclusive jurisdiction. It is the entire agreement between the parties about the Employee's employment and supersedes any previous agreement or arrangement."
+    },
+    {
+      "sign": "Employee",
+      "title": false
+    },
+    {
+      "sign": "Fontara",
+      "title": true,
+      "company": true
+    }
+  ],
+  "examples": [
+    {
+      "values": {
+        "employee": "Alexandra Kim",
+        "employee_address": "12 Calvert Avenue",
+        "title": "Data Protection Officer, EMEA",
+        "manager": "Elena Rodriguez",
+        "start": "01/07/2027",
+        "employment_type": "Full Time",
+        "probation": "6",
+        "arrangement": "Hybrid",
+        "salary": "92000",
+        "bonus_target": "10",
+        "holiday_days": "25",
+        "pension_pct": "5",
+        "notice": "three months'",
+        "restriction_months": "6",
+        "employee_city": "London",
+        "employee_postal": "E2 7JP"
+      },
+      "expect": [
+        "section 1 of the Employment Rights Act 1996",
+        "Employment begins on 01/07/2027",
+        "Type of employment: Full Time",
+        "£92,000.00",
+        "25 working days",
+        "three months' written notice",
+        "at least three days a week",
+        "target of 10%"
+      ],
+      "absent": [
+        "US$"
+      ]
+    },
+    {
+      "values": {
+        "employee": "Maya Patel",
+        "employee_address": "7 Kingsland Road",
+        "title": "Legal Operations Manager, EMEA",
+        "manager": "Elena Rodriguez",
+        "start": "01/09/2027",
+        "employment_type": "Part Time",
+        "probation": "3",
+        "arrangement": "Home-based",
+        "salary": "64000",
+        "holiday_days": "25",
+        "pension_pct": "5",
+        "notice": "one month's",
+        "restriction_months": "6",
+        "employee_city": "London",
+        "employee_postal": "E8 4AA"
+      },
+      "expect": [
+        "works from home in the United Kingdom",
+        "Employment begins on 01/09/2027",
+        "Type of employment: Part Time",
+        "one month's written notice"
+      ],
+      "absent": [
+        "discretionary bonus scheme"
+      ]
+    }
+  ],
+  "source": "written for the library — no vault clause set for this type"
+}

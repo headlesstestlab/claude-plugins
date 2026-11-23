@@ -1,0 +1,320 @@
+{
+  "id": "fontara-nda-request",
+  "name": "NDA Request",
+  "description": "Launched by the Fontara Mutual NDA document generation configuration. Fontara's standard mutual NDA needs no approval (the NDA playbook's green position): the workflow files its attributes (Non-Disclosure Agreement, Legal, the Fontara entity, the counterparty; Status In Negotiation), the Deal Desk edits it for a counterparty redline or sends it, the counterparty signs and then the general counsel, and Status becomes Executed. The generated document is renamed '<counterparty> Mutual NDA.docx' and moved to Contracts/Legal. After filing, the run sets CLM's standard agreement attributes from the form (the owner 11-21): Find Party (Counterparty Legal Name), check-out, Edit CLM Agreement Attributes (Type Nondisclosure Agreement, Party, Effective, Expiration = effective + 24 months − 1 day), cancel the check-out, and Update Document Keywords writes a one-line summary as the Description. A failing step goes on to naming the document.",
+  "variables": [
+    "SignerEmail",
+    "SignerName",
+    "GcEmail",
+    "GcName",
+    "AgreementStart",
+    "AgreementEnd",
+    "Summary",
+    {
+      "name": "Party",
+      "type": "xml",
+      "schema": "<Parties><CLMPartyData><CLMPartyId/><ExternalId/><Name/><BusinessContactName/><BusinessType/><Source/></CLMPartyData></Parties>"
+    }
+  ],
+  "paramsSchema": "<Params><Documents><Document><Id/><Name/></Document></Documents><TemplateFieldData><Counterparty_Legal_Name/><Legal_Entity/><Counterparty_Signer_Name/><Counterparty_Signer_Email/></TemplateFieldData></Params>",
+  "steps": [
+    {
+      "id": "intake",
+      "name": "Read the request",
+      "kind": "setVariable",
+      "set": {
+        "SignerEmail": "<%#XmlVariables.Params.TemplateFieldData.Counterparty_Signer_Email%>",
+        "SignerName": "<%#XmlVariables.Params.TemplateFieldData.Counterparty_Signer_Name%>",
+        "GcEmail": "fontara.elena.rodriguez@example.com",
+        "GcName": "Elena Rodriguez"
+      },
+      "next": "profile"
+    },
+    {
+      "id": "profile",
+      "name": "File the NDA's attributes",
+      "kind": "updateMetadata",
+      "set": [
+        {
+          "attribute": "Agreement Profile.Agreement Type",
+          "value": "Non-Disclosure Agreement"
+        },
+        {
+          "attribute": "Agreement Profile.Line of Business",
+          "value": "Sales"
+        },
+        {
+          "attribute": "Agreement Profile.Department",
+          "value": "Legal"
+        },
+        {
+          "attribute": "Agreement Profile.Legal Entity",
+          "value": "<%#XmlVariables.Params.TemplateFieldData.Legal_Entity%>"
+        },
+        {
+          "attribute": "Agreement Profile.Counterparty",
+          "value": "<%#XmlVariables.Params.TemplateFieldData.Counterparty_Legal_Name%>"
+        },
+        {
+          "attribute": "Contract Process.Status",
+          "value": "In Negotiation"
+        },
+        {
+          "attribute": "Contract Process.Approval Status",
+          "value": "Approved"
+        },
+        {
+          "attribute": "Contract Process.Risk Level",
+          "value": "Low"
+        }
+      ],
+      "on": {
+        "success": "stdDates",
+        "failure": "logFailed"
+      }
+    },
+    {
+      "id": "stdDates",
+      "name": "Work out the agreement dates",
+      "kind": "setVariable",
+      "set": {
+        "AgreementStart": {
+          "code": "return Convert.ToString(GetVariableValue(\"Params.Params.TemplateFieldData.Effective_Date_unformatted\")).Substring(0, 10);"
+        },
+        "AgreementEnd": {
+          "code": "var start = DateTime.Parse(Convert.ToString(GetVariableValue(\"Params.Params.TemplateFieldData.Effective_Date_unformatted\")).Substring(0, 10)); return start.AddMonths(24).AddDays(-1).ToString(\"yyyy-MM-dd\");"
+        },
+        "Summary": "Mutual NDA: <%#XmlVariables.Params.TemplateFieldData.Legal_Entity%> with <%#XmlVariables.Params.TemplateFieldData.Counterparty_Legal_Name%>, for <%#XmlVariables.Params.TemplateFieldData.Purpose%>, two years from <%#XmlVariables.Params.TemplateFieldData.Effective_Date%>; confidentiality survives three years"
+      },
+      "next": "stdParty"
+    },
+    {
+      "id": "stdParty",
+      "name": "Find the party",
+      "kind": "findParty",
+      "partyName": "<%#XmlVariables.Params.TemplateFieldData.Counterparty_Legal_Name%>",
+      "output": "Party",
+      "on": {
+        "match": "stdLock",
+        "noMatch": "stdLock",
+        "failure": "stdLock"
+      }
+    },
+    {
+      "id": "stdLock",
+      "name": "Check out",
+      "kind": "checkOutDocument",
+      "user": "submitter",
+      "on": {
+        "success": "stdAttributes",
+        "failure": "stdDescribe"
+      }
+    },
+    {
+      "id": "stdAttributes",
+      "name": "Set the CLM agreement attributes",
+      "kind": "editClmAgreementAttributes",
+      "set": {
+        "partyId": "<%#XmlVariables.Party.Parties.CLMPartyData.CLMPartyId%>",
+        "documentType": "Nondisclosure Agreement",
+        "effectiveDate": "<%#Variable.AgreementStart%>",
+        "expirationDate": "<%#Variable.AgreementEnd%>"
+      },
+      "on": {
+        "success": "stdUnlock",
+        "failure": "stdUnlock"
+      }
+    },
+    {
+      "id": "stdUnlock",
+      "name": "Cancel the check out",
+      "kind": "checkOutDocumentCancellation",
+      "user": "submitter",
+      "on": {
+        "success": "stdDescribe",
+        "failure": "stdDescribe"
+      }
+    },
+    {
+      "id": "stdDescribe",
+      "name": "Describe the agreement",
+      "kind": "updateDocumentKeywords",
+      "keywords": "<%#Variable.Summary%>",
+      "on": {
+        "success": "rename",
+        "failure": "rename"
+      }
+    },
+    {
+      "id": "rename",
+      "name": "Name the document",
+      "kind": "renameDocument",
+      "newName": "<%#XmlVariables.Params.TemplateFieldData.Counterparty_Legal_Name%> Mutual NDA.docx",
+      "on": {
+        "success": "file",
+        "failure": "logFailed"
+      }
+    },
+    {
+      "id": "file",
+      "name": "File it in the department folder",
+      "kind": "copyOrMoveDocument",
+      "action": "move",
+      "folder": {
+        "uid": "03299d15-b7d9-f111-aeaf-fdd8e4e0fb99"
+      },
+      "on": {
+        "success": "negotiate",
+        "failure": "logFailed"
+      }
+    },
+    {
+      "id": "negotiate",
+      "name": "Deal desk: edit, re-route or send?",
+      "kind": "choice",
+      "assignee": {
+        "taskGroup": "Deal Desk"
+      },
+      "displayName": "Negotiate: <%#XmlVariables.Params.TemplateFieldData.Counterparty_Legal_Name%> Mutual NDA",
+      "stage": "Negotiation",
+      "subject": "Negotiate or send for signature",
+      "instructions": "Fontara's standard NDA needs no approval. Edit the NDA for a counterparty redline (the NDA playbook's positions), or send it for signature.",
+      "comments": "Yes",
+      "options": [
+        {
+          "label": "Edit the contract",
+          "to": "edit"
+        },
+        {
+          "label": "Send for signature",
+          "to": "send"
+        }
+      ],
+      "on": {
+        "failure": "logFailed"
+      }
+    },
+    {
+      "id": "edit",
+      "name": "Edit the redline",
+      "kind": "editDocument",
+      "assignee": {
+        "taskGroup": "Deal Desk"
+      },
+      "stage": "Negotiation",
+      "instructions": "Upload the new version (or edit it online), then complete the task.",
+      "comments": "Yes",
+      "on": {
+        "completed": "negotiate",
+        "failure": "logFailed"
+      }
+    },
+    {
+      "id": "send",
+      "name": "Send for signature",
+      "kind": "reviewAndSendForSignature",
+      "assignee": "submitter",
+      "recipients": [
+        {
+          "var": "SignerEmail",
+          "role": "Signer 1",
+          "name": {
+            "var": "SignerName"
+          }
+        },
+        {
+          "var": "GcEmail",
+          "role": "Signer 2",
+          "name": {
+            "var": "GcName"
+          }
+        }
+      ],
+      "subject": "Please sign: <%#XmlVariables.Params.TemplateFieldData.Counterparty_Legal_Name%> Mutual NDA",
+      "message": "Fontara has approved this agreement. Please sign it.",
+      "instructions": "The counterparty signs first, then the general counsel (NDAs are signed by the general counsel, whatever their value).",
+      "stage": "Signature",
+      "on": {
+        "sent": "outForSignature",
+        "canceled": "negotiate",
+        "failure": "logFailed"
+      }
+    },
+    {
+      "id": "outForSignature",
+      "name": "Mark Out for Signature",
+      "kind": "updateMetadata",
+      "set": [
+        {
+          "attribute": "Contract Process.Status",
+          "value": "Out for Signature"
+        }
+      ],
+      "on": {
+        "success": "wait",
+        "failure": "logFailed"
+      }
+    },
+    {
+      "id": "wait",
+      "name": "Wait for signature",
+      "kind": "waitForSignature",
+      "on": {
+        "signed": "executed",
+        "rejected": "backToNegotiation",
+        "cancelled": "backToNegotiation",
+        "failure": "logFailed",
+        "timedOut": "backToNegotiation"
+      }
+    },
+    {
+      "id": "backToNegotiation",
+      "name": "Back to In Negotiation",
+      "kind": "updateMetadata",
+      "set": [
+        {
+          "attribute": "Contract Process.Status",
+          "value": "In Negotiation"
+        }
+      ],
+      "on": {
+        "success": "negotiate",
+        "failure": "logFailed"
+      }
+    },
+    {
+      "id": "executed",
+      "name": "Mark Executed",
+      "kind": "updateMetadata",
+      "set": [
+        {
+          "attribute": "Contract Process.Status",
+          "value": "Executed"
+        }
+      ],
+      "on": {
+        "success": "logDone",
+        "failure": "logFailed"
+      }
+    },
+    {
+      "id": "logDone",
+      "name": "Log executed",
+      "kind": "logger",
+      "message": "Signed: Status set to Executed",
+      "next": "finish"
+    },
+    {
+      "id": "logFailed",
+      "name": "Log failure",
+      "kind": "logger",
+      "message": "A step failed",
+      "next": "finish"
+    },
+    {
+      "id": "finish",
+      "name": "Finish",
+      "kind": "finish"
+    }
+  ]
+}

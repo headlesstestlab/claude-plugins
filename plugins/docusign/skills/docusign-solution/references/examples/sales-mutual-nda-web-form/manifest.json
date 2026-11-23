@@ -1,0 +1,13 @@
+{
+  "id": "sales-mutual-nda-web-form",
+  "name": "Mutual NDA requested from the website",
+  "description": "A link on the website starts the workflow: the prospect fills a web form, Fontara's mutual NDA is generated from the answers, the prospect's signer signs, then the general counsel countersigns.",
+  "namePrefix": "",
+  "workflows": [
+    "prospect-mutual-nda"
+  ],
+  "prerequisites": [
+    "Replace general.counsel@example.com in the workflow's participants with the general counsel's name and email.",
+    "After publishing, put the workflow's link on the website page."
+  ]
+}

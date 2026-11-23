@@ -1,0 +1,37 @@
+{
+  "id": "contract-handoff-to-workflow-builder",
+  "name": "Contract Handoff to Workflow Builder",
+  "description": "Hands a contract in CLM over to a Workflow Builder workflow: Update Variable Value writes a short note for the receiving workflow, then Maestro Workflow starts the account's published Workflow Builder workflow (its start is From Docusign CLM Workflow) with that note as the payload and keeps the Maestro instance id in a variable for the record. Pattern: CLM to Workflow Builder handoff (one output link). Account-bound: the step names a published Workflow Builder workflow of the same account by id and trigger URL; here the lab's standing 'ZZ Lab · Maestro Step Target', which a customer replaces with their own.",
+  "variables": [
+    "HandoffNote",
+    "MaestroId"
+  ],
+  "steps": [
+    {
+      "id": "note",
+      "name": "Write the handoff note",
+      "kind": "setVariable",
+      "set": {
+        "HandoffNote": "Contract ready for the Workflow Builder handoff"
+      },
+      "next": "handoff"
+    },
+    {
+      "id": "handoff",
+      "name": "Start the Workflow Builder workflow",
+      "kind": "maestroWorkflow",
+      "workflow": {
+        "id": "84abb52a-7924-4b37-96ac-0e1b607eab52",
+        "name": "ZZ Lab · Maestro Step Target",
+        "triggerUrl": "https://apps-d.docusign.com/api/maestro/v1/accounts/00000000-0000-0000-0000-000000000000/workflow_definitions/84abb52a-7924-4b37-96ac-0e1b607eab52/trigger?hash=ZDQwY2M4OTFkODNmNzZmMjM0NjhjZmFlNzc3YzlhYjY4YmQ3ZmY1NzEwY2Q1MDAyN2QwYzRmNTUxMTk5ZjU0ZmJjOTdmNjQzOTk2NGY4OGEyYmQ3YjhkNjllODA3YmZjOGMwN2JmYmY1MjQ2ZDUzZjAwMTZlYzhhOTcwNjEzZGQwMWVlNjIwNWYxY2FlYjhjMTE0MzI5ZDgxN2FhZGU0ZjQ4ODQ1OTJhNGIwNWZlYjdhMGU2MmZjYTdkZjIzN2E4NTU1NGQ5YzEwNjcwZThiNmM4NGU4NzhlYWI0ZWEyZDg4ZjIwNWI2NDQxMTJjODVjYmJiYzg0NmUxYjA1Njk4MA=="
+      },
+      "payload": "HandoffNote",
+      "output": "MaestroId",
+      "next": "finish"
+    },
+    {
+      "id": "finish",
+      "kind": "finish"
+    }
+  ]
+}

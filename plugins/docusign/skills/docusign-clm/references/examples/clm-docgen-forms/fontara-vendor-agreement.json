@@ -1,0 +1,256 @@
+{
+  "id": "fontara-vendor-agreement",
+  "name": "Vendor Agreement",
+  "description": "Fontara's own paper when it buys (buy side, Fontara is the customer): services, fees and term, with the liability, termination and payment positions picked from the buy-side playbook's pre-approved options (Standard or Acceptable), a data processing paragraph only when the supplier handles personal data, and governing law by the buying Fontara entity.",
+  "templateOnly": true,
+  "fields": [
+    {
+      "kind": "heading",
+      "label": "Supplier"
+    },
+    {
+      "kind": "text",
+      "label": "Supplier Legal Name",
+      "required": true
+    },
+    {
+      "kind": "text",
+      "label": "Supplier Address",
+      "required": true
+    },
+    {
+      "kind": "dropdown",
+      "label": "Legal Entity",
+      "options": [
+        "Fontara, Inc.",
+        "Fontara UK Ltd",
+        "Fontara Europe Ltd",
+        "Fontara GmbH"
+      ],
+      "required": true
+    },
+    {
+      "kind": "heading",
+      "label": "Agreement"
+    },
+    {
+      "kind": "text",
+      "label": "Agreement Number",
+      "required": true
+    },
+    {
+      "kind": "date",
+      "label": "Effective Date",
+      "format": "MMMM d, yyyy",
+      "required": true
+    },
+    {
+      "kind": "text",
+      "label": "Services",
+      "required": true
+    },
+    {
+      "kind": "dropdown",
+      "label": "Currency",
+      "options": [
+        "USD",
+        "GBP",
+        "EUR"
+      ],
+      "required": true
+    },
+    {
+      "kind": "currency",
+      "label": "Annual Fee",
+      "decimals": 2,
+      "required": true
+    },
+    {
+      "kind": "radio",
+      "label": "Supplier Processes Personal Data",
+      "options": [
+        "Yes",
+        "No"
+      ],
+      "required": true
+    },
+    {
+      "kind": "dropdown",
+      "label": "Liability Position",
+      "options": [
+        "Standard",
+        "Acceptable"
+      ],
+      "required": true,
+      "help": "Buy-side playbook: Standard = sign; Acceptable = procurement and legal operations review."
+    },
+    {
+      "kind": "dropdown",
+      "label": "Termination Position",
+      "options": [
+        "Standard",
+        "Acceptable"
+      ],
+      "required": true,
+      "help": "Standard: Fontara may terminate for convenience on 30 days' notice. Acceptable: no termination for convenience."
+    },
+    {
+      "kind": "dropdown",
+      "label": "Payment Position",
+      "options": [
+        "Standard",
+        "Acceptable"
+      ],
+      "required": true,
+      "help": "Standard: net 45, fixed pricing. Acceptable: net 30, renewal increase capped at 3%."
+    },
+    {
+      "kind": "heading",
+      "label": "Signers"
+    },
+    {
+      "kind": "text",
+      "label": "Supplier Signer Name",
+      "required": true
+    },
+    {
+      "kind": "text",
+      "label": "Supplier Signer Email",
+      "required": true
+    },
+    {
+      "kind": "text",
+      "label": "Company Signer Name",
+      "required": true
+    },
+    {
+      "kind": "text",
+      "label": "Company Signer Email",
+      "required": true
+    },
+    {
+      "kind": "text",
+      "label": "Agreement Type",
+      "hidden": true,
+      "default": "Services Agreement"
+    },
+    {
+      "kind": "text",
+      "label": "Line of Business",
+      "hidden": true,
+      "default": "Procurement"
+    }
+  ],
+  "template": [
+    "VENDOR AGREEMENT {{Agreement Number}}",
+    "This Vendor Agreement is made on {{Effective Date}} between {{Supplier Legal Name}}, {{Supplier Address}} (\"Vendor\") and {{Legal Entity}} (\"Customer\").",
+    "1. Services. Vendor provides these services: {{Services}}",
+    "2. Term. This Agreement begins on the Effective Date and continues for an Initial Term of 1 year, expiring on the first anniversary of the Effective Date unless terminated earlier. It renews automatically for successive 1-year periods unless either party gives written notice of non-renewal at least 60 days before the end of the then-current term.",
+    "3. Fees. Customer pays {{Currency}} {{Annual Fee}} a year.",
+    {
+      "text": "4. Fees and payment. The total contract value is the total in the applicable Order Form, with an annualized value of its annual equivalent. Pricing is fixed for the full contract term, and Vendor may not increase it unilaterally. Payment is due net 45 from the invoice date. Vendor may not suspend the services without 30 days' prior written notice. Customer may dispute any invoice in good faith within 60 days of receiving it, and no interest or late charge accrues on a disputed amount. On termination, Vendor shall refund prepaid fees for unused services pro rata, except where this Agreement requires Customer to pay the fees for the rest of the term.",
+      "when": {
+        "field": "Payment Position",
+        "is": "Standard"
+      }
+    },
+    {
+      "text": "4. Fees and payment. The total contract value is the total in the applicable Order Form, with an annualized value of its annual equivalent. Fees are as set out in the applicable Order Form, invoiced annually in advance. Payment is due net 30 from the invoice date, and overdue amounts accrue interest at 1.5% per month. Fees may increase at renewal by no more than 3% a year over the fees for the prior period. Vendor may suspend services for invoices more than 30 days overdue after written notice.",
+      "when": {
+        "field": "Payment Position",
+        "is": "Acceptable"
+      }
+    },
+    {
+      "text": "5. Termination. Customer may terminate this Agreement or any Order Form for convenience on 30 days' written notice, without penalty or any obligation for fees for the rest of the term. Either party may terminate for material breach on 30 days' written notice if the breach is not cured within that period.",
+      "when": {
+        "field": "Termination Position",
+        "is": "Standard"
+      }
+    },
+    {
+      "text": "5. Termination. Neither party may terminate this Agreement for convenience. Either party may terminate for material breach on 30 days' written notice if the breach is not cured within that period. Termination does not affect the rights and obligations accrued before it.",
+      "when": {
+        "field": "Termination Position",
+        "is": "Acceptable"
+      }
+    },
+    {
+      "text": "6. Limitation of liability. Vendor's aggregate liability is capped at 2 times the fees paid in the prior 12 months. Neither party is liable for indirect, incidental or consequential damages, except as this clause provides. Liability for breach of confidentiality obligations, for data breaches, under indemnification obligations and for IP infringement is excluded from both the cap and that exclusion of damages. Vendor is liable for direct lost profits caused by service outages that exceed the agreed service level thresholds.",
+      "when": {
+        "field": "Liability Position",
+        "is": "Standard"
+      }
+    },
+    {
+      "text": "6. Limitation of liability. Each party's total aggregate liability is capped at fees paid in the prior 12 months. Neither party is liable for indirect, incidental, or consequential damages including lost profits. Confidentiality breaches, IP infringement, and fraud are excluded from the cap and consequential damages waiver.",
+      "when": {
+        "field": "Liability Position",
+        "is": "Acceptable"
+      }
+    },
+    "7. Indemnity. Vendor shall defend, indemnify and hold harmless Customer against all third-party claims arising from Vendor's acts, omissions or breach of this Agreement, including claims that the services infringe a third party's intellectual property rights, and Vendor's liability under this indemnity is uncapped. Customer may participate in the defense of any claim against it with counsel of its choosing, at Vendor's cost.",
+    {
+      "text": "8. Data. Before Vendor processes any personal data on Customer's behalf, the parties shall sign a data processing agreement, which forms part of this Agreement. Vendor shall process that personal data only on Customer's documented instructions and in accordance with the data processing agreement.",
+      "when": {
+        "field": "Supplier Processes Personal Data",
+        "is": "Yes"
+      }
+    },
+    {
+      "text": "8. Data. Vendor does not process personal data on Customer's behalf under this Agreement; if that changes, the parties first sign a data processing agreement.",
+      "when": {
+        "field": "Supplier Processes Personal Data",
+        "is": "No"
+      }
+    },
+    {
+      "text": "9. Governing law. This Agreement is governed by the laws of the State of Delaware.",
+      "when": {
+        "field": "Legal Entity",
+        "is": "Fontara, Inc."
+      }
+    },
+    {
+      "text": "9. Governing law. This Agreement is governed by the laws of England and Wales.",
+      "when": {
+        "field": "Legal Entity",
+        "is": "Fontara UK Ltd"
+      }
+    },
+    {
+      "text": "9. Governing law. This Agreement is governed by the laws of Ireland.",
+      "when": {
+        "field": "Legal Entity",
+        "is": "Fontara Europe Ltd"
+      }
+    },
+    {
+      "text": "9. Governing law. This Agreement is governed by the laws of the Federal Republic of Germany, and the courts of Munich have exclusive jurisdiction.",
+      "when": {
+        "field": "Legal Entity",
+        "is": "Fontara GmbH"
+      }
+    },
+    "Signed for {{Supplier Legal Name}}: {{Supplier Signer Name}}",
+    "Signed for {{Legal Entity}}: {{Company Signer Name}}"
+  ],
+  "sample": {
+    "Supplier Legal Name": "Strataline Cloud, Inc.",
+    "Supplier Address": "1 Datahall Plaza, Reston, VA 20190",
+    "Legal Entity": "Fontara, Inc.",
+    "Agreement Number": "FON-VA-0107",
+    "Effective Date": "01/04/2027",
+    "Services": "Managed cloud hosting for the Fontara platform's US region, with 24x7 support.",
+    "Currency": "USD",
+    "Annual Fee": "312,000.00",
+    "Supplier Processes Personal Data": "Yes",
+    "Liability Position": "Standard",
+    "Termination Position": "Standard",
+    "Payment Position": "Standard",
+    "Supplier Signer Name": "Benedict Ouellette",
+    "Supplier Signer Email": "strataline-cloud.benedict.ouellette@example.com",
+    "Company Signer Name": "Victoria Lee",
+    "Company Signer Email": "fontara.victoria.lee@example.com"
+  }
+}

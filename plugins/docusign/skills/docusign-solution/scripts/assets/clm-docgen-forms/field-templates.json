@@ -1,0 +1,581 @@
+{
+ "$comment": "Field templates of a CLM Document Generation form, one per editor templateId, harvested read-only 2026-10-29 from the lab account's own forms (FormConfig page view model) and from the ZZ merge tag lab form (custom-table, and the custom-options dropdown: the harvested account dropdown is a CLM-attribute one, which the editor cannot open with custom options); names, tags and track ids blanked. textbox: from a ZZ Lab form made in the editor (Text Box, Rich Text on: objectType Html). sxterm, actor, multi-select-dropdown, csv-row-chooser and record: from the ZZ Lab form 'Harvest Settings' made in the editor (harvest B3-H1, the lab CLM account, 2026-11-02), names, tags, uids and track ids blanked; the attribute dropdown is the dropdown template with the attribute keys (src/clm-docgen-form.ts).",
+ "fields": {
+  "textfield": {
+   "width": "ExtraWide",
+   "displayName": "",
+   "required": false,
+   "visible": true,
+   "readOnly": false,
+   "objectType": "Text",
+   "ContainerType": "Field",
+   "fieldName": "Text Field",
+   "templateId": "textfield",
+   "trackId": 0,
+   "scrollTo": false,
+   "firstPass": true,
+   "validateName": true,
+   "validateSecondaryProperties": true,
+   "selectedUserDefinedValidationType": null,
+   "isSalesforce": false,
+   "isHidden": false,
+   "TargetIdentifier": ""
+  },
+  "numberfield": {
+   "width": "ExtraWide",
+   "displayName": "",
+   "required": false,
+   "visible": true,
+   "readOnly": false,
+   "objectType": "Text",
+   "ContainerType": "Field",
+   "fieldName": "Number",
+   "templateId": "numberfield",
+   "trackId": 0,
+   "scrollTo": false,
+   "firstPass": true,
+   "validateName": true,
+   "validateSecondaryProperties": true,
+   "selectedUserDefinedValidationType": null,
+   "Transformers": [
+    {
+     "type": "TypeConvertToDecimal"
+    },
+    {
+     "type": "NumericFormatTransformer",
+     "Parameters": [
+      {
+       "Name": "Format",
+       "Parameter": "#,##0"
+      },
+      {
+       "Name": "NumberGroupSeparator",
+       "Parameter": ","
+      },
+      {
+       "Name": "NumberDecimalSeparator",
+       "Parameter": "."
+      }
+     ]
+    }
+   ],
+   "digitGroupingIndex": 0,
+   "showDecimal": false,
+   "decimalPlaces": "2",
+   "exactNumberOfDigits": null,
+   "showDollar": false,
+   "validator": "NumberFormatValidator",
+   "validatorParameters": "[]",
+   "customValidatorParameters": {
+    "numberGroupSeparator": ",",
+    "numberDecimalSeparator": ".",
+    "showThousandsSeparator": true,
+    "decimalPlaces": 0,
+    "exactNumberOfDigits": null
+   },
+   "isSalesforce": false,
+   "isHidden": false,
+   "TargetIdentifier": "",
+   "showDigits": false
+  },
+  "currencyfield": {
+   "width": "ExtraWide",
+   "displayName": "",
+   "required": false,
+   "visible": true,
+   "readOnly": false,
+   "objectType": "Text",
+   "ContainerType": "Field",
+   "fieldName": "Currency",
+   "templateId": "currencyfield",
+   "trackId": 0,
+   "scrollTo": false,
+   "firstPass": true,
+   "validateName": true,
+   "validateSecondaryProperties": true,
+   "selectedUserDefinedValidationType": null,
+   "Transformers": [
+    {
+     "type": "TypeConvertToDecimal"
+    },
+    {
+     "type": "NumericFormatTransformer",
+     "Parameters": [
+      {
+       "Name": "Format",
+       "Parameter": "#,##0"
+      },
+      {
+       "Name": "NumberGroupSeparator",
+       "Parameter": ","
+      },
+      {
+       "Name": "NumberDecimalSeparator",
+       "Parameter": "."
+      }
+     ]
+    }
+   ],
+   "digitGroupingIndex": 0,
+   "showDecimal": false,
+   "decimalPlaces": "2",
+   "exactNumberOfDigits": null,
+   "showDollar": false,
+   "validator": "NumberFormatValidator",
+   "validatorParameters": "[]",
+   "customValidatorParameters": {
+    "numberGroupSeparator": ",",
+    "numberDecimalSeparator": ".",
+    "showThousandsSeparator": true,
+    "decimalPlaces": 0,
+    "exactNumberOfDigits": null
+   },
+   "isSalesforce": false,
+   "isHidden": false,
+   "TargetIdentifier": "",
+   "showDigits": false
+  },
+  "date-field": {
+   "width": "ExtraWide",
+   "displayName": "",
+   "required": false,
+   "visible": true,
+   "readOnly": false,
+   "objectType": "Date",
+   "ContainerType": "Field",
+   "fieldName": "Date",
+   "templateId": "date-field",
+   "trackId": 0,
+   "scrollTo": false,
+   "firstPass": true,
+   "validateName": true,
+   "validateSecondaryProperties": true,
+   "selectedUserDefinedValidationType": null,
+   "isSalesforce": false,
+   "isHidden": false,
+   "TargetIdentifier": "",
+   "formatString": "MM/dd/yyyy"
+  },
+  "checkbox": {
+   "width": "ExtraWide",
+   "displayName": "",
+   "required": false,
+   "visible": true,
+   "readOnly": false,
+   "objectType": "Checkbox",
+   "ContainerType": "Field",
+   "fieldName": "Checkbox",
+   "templateId": "checkbox",
+   "trackId": 0,
+   "scrollTo": false,
+   "firstPass": true,
+   "validateName": true,
+   "validateSecondaryProperties": true,
+   "selectedUserDefinedValidationType": null,
+   "isSalesforce": false,
+   "isHidden": false,
+   "TargetIdentifier": ""
+  },
+  "dropdown": {
+   "width": "ExtraWide",
+   "displayName": "",
+   "required": false,
+   "visible": true,
+   "readOnly": false,
+   "objectType": "PickList",
+   "ContainerType": "Container",
+   "fieldName": "Dropdown",
+   "templateId": "dropdown",
+   "trackId": 0,
+   "scrollTo": false,
+   "firstPass": true,
+   "validateName": true,
+   "validateSecondaryProperties": true,
+   "selectedUserDefinedValidationType": null,
+   "UserDefinedValidators": [
+    {
+     "Type": "",
+     "Message": "",
+     "Reguired": null,
+     "Params": null
+    }
+   ],
+   "isSalesforce": false,
+   "TargetIdentifier": "",
+   "Items": [],
+   "isHidden": false
+  },
+  "radio-button": {
+   "width": "ExtraWide",
+   "displayName": "",
+   "required": false,
+   "visible": true,
+   "readOnly": false,
+   "objectType": "RadioButtonGroup",
+   "ContainerType": "Container",
+   "fieldName": "Radio Buttons",
+   "templateId": "radio-button",
+   "trackId": 0,
+   "scrollTo": false,
+   "firstPass": true,
+   "validateName": true,
+   "validateSecondaryProperties": true,
+   "selectedUserDefinedValidationType": null,
+   "UserDefinedValidators": [
+    {
+     "Type": "",
+     "Message": "",
+     "Reguired": null,
+     "Params": null
+    }
+   ],
+   "isSalesforce": false,
+   "isHidden": false,
+   "TargetIdentifier": "",
+   "Items": []
+  },
+  "heading": {
+   "width": "ExtraWide",
+   "displayName": "",
+   "required": false,
+   "visible": true,
+   "readOnly": false,
+   "objectType": "Heading",
+   "ContainerType": "Field",
+   "fieldName": "Heading",
+   "templateId": "heading",
+   "trackId": 0,
+   "scrollTo": false,
+   "firstPass": true,
+   "validateName": true,
+   "validateSecondaryProperties": true,
+   "selectedUserDefinedValidationType": null,
+   "size": "medium",
+   "isSalesforce": false,
+   "isHidden": false,
+   "TargetIdentifier": ""
+  },
+  "section": {
+   "width": "ExtraWide",
+   "displayName": "",
+   "required": false,
+   "visible": true,
+   "readOnly": false,
+   "objectType": "Composite",
+   "ContainerType": "Container",
+   "fieldName": "Section",
+   "templateId": "section",
+   "trackId": 0,
+   "scrollTo": false,
+   "firstPass": true,
+   "validateName": true,
+   "validateSecondaryProperties": true,
+   "selectedUserDefinedValidationType": null,
+   "UserDefinedValidators": [
+    {
+     "Type": "",
+     "Message": "",
+     "Reguired": null,
+     "Params": null
+    }
+   ],
+   "Items": [],
+   "containerDisplayType": "accordion",
+   "isSalesforce": false,
+   "isHidden": false,
+   "blockDrag": false,
+   "hideEmptyState": false,
+   "TargetIdentifier": ""
+  },
+  "attachment": {
+   "width": "ExtraWide",
+   "displayName": "",
+   "required": false,
+   "visible": true,
+   "readOnly": false,
+   "objectType": "Attachment",
+   "ContainerType": "Field",
+   "fieldName": "Attachment",
+   "templateId": "attachment",
+   "trackId": 0,
+   "scrollTo": false,
+   "firstPass": true,
+   "validateName": true,
+   "validateSecondaryProperties": true,
+   "selectedUserDefinedValidationType": null,
+   "AttachmentSource": 0,
+   "isSalesforce": false,
+   "isHidden": false,
+   "TargetIdentifier": ""
+  },
+  "custom-table": {
+   "width": "ExtraWide",
+   "displayName": "",
+   "required": false,
+   "visible": true,
+   "readOnly": false,
+   "objectType": "CustomTable",
+   "ContainerType": "Container",
+   "fieldName": "Custom Table",
+   "templateId": "custom-table",
+   "trackId": 0,
+   "scrollTo": false,
+   "firstPass": true,
+   "validateName": true,
+   "validateSecondaryProperties": true,
+   "selectedUserDefinedValidationType": null,
+   "UserDefinedValidators": [
+    {
+     "Type": "",
+     "Message": "",
+     "Reguired": null,
+     "Params": null
+    }
+   ],
+   "Items": [
+    {
+     "width": "ExtraWide",
+     "displayName": "",
+     "required": false,
+     "visible": true,
+     "readOnly": false,
+     "objectType": "Composite",
+     "ContainerType": "Container",
+     "fieldName": "section",
+     "templateId": "section",
+     "trackId": 0,
+     "scrollTo": true,
+     "firstPass": true,
+     "validateName": false,
+     "validateSecondaryProperties": false,
+     "selectedUserDefinedValidationType": null,
+     "UserDefinedValidators": [
+      {
+       "Type": "",
+       "Message": "",
+       "Reguired": null,
+       "Params": null
+      }
+     ],
+     "Items": [],
+     "CustomTableField": true,
+     "TargetIdentifier": ""
+    }
+   ],
+   "isSalesforce": false,
+   "TargetIdentifier": "",
+   "isHidden": false
+  },
+  "textbox": {
+   "width": "ExtraWide",
+   "displayName": "",
+   "required": false,
+   "visible": true,
+   "readOnly": false,
+   "objectType": "Html",
+   "ContainerType": "Field",
+   "fieldName": "Text Box",
+   "templateId": "textbox",
+   "trackId": 0,
+   "scrollTo": false,
+   "firstPass": true,
+   "validateName": true,
+   "validateSecondaryProperties": true,
+   "selectedUserDefinedValidationType": null,
+   "isSalesforce": false,
+   "TargetIdentifier": "",
+   "isHidden": false
+  },
+  "multi-select-dropdown": {
+   "width": "ExtraWide",
+   "displayName": "",
+   "required": false,
+   "visible": true,
+   "readOnly": false,
+   "objectType": "MultiSelectPickList",
+   "ContainerType": "Container",
+   "fieldName": "Dropdown - Docusign CLM Multiselect Attribute Field",
+   "templateId": "multi-select-dropdown",
+   "trackId": 0,
+   "scrollTo": false,
+   "firstPass": true,
+   "validateName": true,
+   "validateSecondaryProperties": true,
+   "selectedUserDefinedValidationType": null,
+   "UserDefinedValidators": [
+    {
+     "Type": "",
+     "Message": "",
+     "Reguired": null,
+     "Params": null
+    }
+   ],
+   "isMetadataField": true,
+   "isSalesforce": false,
+   "isHidden": false,
+   "TargetIdentifier": "",
+   "filterBySalesforceRecordType": false,
+   "SourceIdentifier": ""
+  },
+  "actor": {
+   "width": "ExtraWide",
+   "displayName": "",
+   "required": false,
+   "visible": true,
+   "readOnly": false,
+   "objectType": "Actor",
+   "ContainerType": "Field",
+   "fieldName": "Users and Groups",
+   "templateId": "actor",
+   "trackId": 0,
+   "scrollTo": false,
+   "firstPass": true,
+   "validateName": true,
+   "validateSecondaryProperties": true,
+   "selectedUserDefinedValidationType": null,
+   "isSalesforce": false,
+   "Fields": {
+    "FullName": true,
+    "GroupName": true
+   },
+   "isHidden": false,
+   "TargetIdentifier": ""
+  },
+  "sxterm": {
+   "width": "ExtraWide",
+   "displayName": "",
+   "required": false,
+   "visible": true,
+   "readOnly": false,
+   "objectType": "Composite",
+   "ContainerType": "Container",
+   "fieldName": "Term",
+   "templateId": "sxterm",
+   "trackId": 0,
+   "scrollTo": false,
+   "firstPass": true,
+   "validateName": true,
+   "validateSecondaryProperties": true,
+   "selectedUserDefinedValidationType": null,
+   "UserDefinedValidators": [
+    {
+     "Type": "",
+     "Message": "",
+     "Reguired": null,
+     "Params": null
+    }
+   ],
+   "isSalesforce": false,
+   "isHidden": false,
+   "TargetIdentifier": ""
+  },
+  "csv-row-chooser": {
+   "width": "ExtraWide",
+   "displayName": "",
+   "required": false,
+   "visible": true,
+   "readOnly": false,
+   "objectType": "CsvRowChooser",
+   "ContainerType": "Container",
+   "fieldName": "Dropdown - CSV Document",
+   "templateId": "csv-row-chooser",
+   "trackId": 0,
+   "scrollTo": false,
+   "firstPass": true,
+   "validateName": true,
+   "validateSecondaryProperties": true,
+   "selectedUserDefinedValidationType": null,
+   "UserDefinedValidators": [
+    {
+     "Type": "",
+     "Message": "",
+     "Reguired": null,
+     "Params": null
+    }
+   ],
+   "isSalesforce": false,
+   "isHidden": false,
+   "TargetIdentifier": "",
+   "Items": [
+    {
+     "width": "ExtraWide",
+     "displayName": "",
+     "required": false,
+     "visible": true,
+     "readOnly": false,
+     "objectType": "Text",
+     "ContainerType": "Field",
+     "fieldName": "textfield",
+     "templateId": "textfield",
+     "trackId": 0,
+     "scrollTo": true,
+     "firstPass": true,
+     "validateName": false,
+     "validateSecondaryProperties": false,
+     "selectedUserDefinedValidationType": null,
+     "TableAddInType": "dropdown",
+     "TargetIdentifier": ""
+    },
+    {
+     "width": "ExtraWide",
+     "displayName": "",
+     "required": false,
+     "visible": true,
+     "readOnly": false,
+     "objectType": "Composite",
+     "ContainerType": "Container",
+     "fieldName": "section",
+     "templateId": "section",
+     "trackId": 0,
+     "scrollTo": true,
+     "firstPass": true,
+     "validateName": false,
+     "validateSecondaryProperties": false,
+     "selectedUserDefinedValidationType": null,
+     "UserDefinedValidators": [
+      {
+       "Type": "",
+       "Message": "",
+       "Reguired": null,
+       "Params": null
+      }
+     ],
+     "ExtractionSourceId": "CsvDocument",
+     "type": "Repeating",
+     "SourceIdentifier": "",
+     "possibleFields": [],
+     "TargetIdentifier": ""
+    }
+   ]
+  },
+  "record": {
+   "width": "ExtraWide",
+   "displayName": "",
+   "required": false,
+   "visible": true,
+   "readOnly": false,
+   "objectType": "Text",
+   "ContainerType": "Field",
+   "fieldName": "Field",
+   "templateId": "record",
+   "trackId": 0,
+   "scrollTo": false,
+   "firstPass": true,
+   "validateName": true,
+   "validateSecondaryProperties": true,
+   "selectedUserDefinedValidationType": null,
+   "tableItem": false,
+   "csvRecord": true,
+   "isSalesforce": false,
+   "TargetIdentifier": "",
+   "SourceIdentifier": "",
+   "ExtractionSourceId": "CsvDocument"
+  }
+ },
+ "config": {
+  "ContainerType": "Container",
+  "OutputClass": {
+   "type": "ADEXS.Etl.Visitors.FormMappingVisitor, ADEXS.Etl"
+  }
+ }
+}

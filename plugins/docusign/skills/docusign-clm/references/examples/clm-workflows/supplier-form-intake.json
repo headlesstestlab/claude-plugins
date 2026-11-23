@@ -1,0 +1,112 @@
+{
+  "id": "supplier-form-intake",
+  "name": "Supplier Form Intake",
+  "description": "Procurement reads a supplier's filled PDF form and asks Docusign AI about the supplier's contract. Extract PDF Fields reads the form's fields into an XML variable; Find Documents by Folder takes the contract from the Supplier Contracts folder; Use Docusign AI suggests its attributes into an XML variable, with a Review Data task as the help asks when the AI step fails. A Logger line closes each path.",
+  "variables": [
+    {
+      "name": "FormFields",
+      "type": "xml"
+    },
+    {
+      "name": "Contract",
+      "type": "document"
+    },
+    {
+      "name": "Suggested",
+      "type": "xml"
+    },
+    {
+      "name": "Reviewed",
+      "type": "xml"
+    }
+  ],
+  "steps": [
+    {
+      "id": "fields",
+      "name": "Read the form fields",
+      "kind": "extractPdfFields",
+      "output": "FormFields",
+      "on": {
+        "success": "logFields",
+        "failure": "logNoFields",
+        "timedOut": "logNoFields"
+      }
+    },
+    {
+      "id": "logFields",
+      "name": "Log form read",
+      "kind": "logger",
+      "message": "Supplier form read",
+      "next": "contract"
+    },
+    {
+      "id": "logNoFields",
+      "name": "Log no form fields",
+      "kind": "logger",
+      "message": "The supplier form's fields could not be read",
+      "next": "contract"
+    },
+    {
+      "id": "contract",
+      "name": "Find the contract",
+      "kind": "findDocumentsByFolder",
+      "folder": {
+        "name": "Supplier Contracts"
+      },
+      "output": "Contract",
+      "on": {
+        "match": "ai",
+        "noMatch": "logFailed",
+        "failure": "logFailed"
+      }
+    },
+    {
+      "id": "ai",
+      "name": "Suggest attributes",
+      "kind": "useDocusignAi",
+      "documents": {
+        "var": "Contract"
+      },
+      "output": "Suggested",
+      "on": {
+        "success": "logDone",
+        "failure": "review",
+        "timedOut": "review"
+      }
+    },
+    {
+      "id": "review",
+      "name": "Review the attributes",
+      "kind": "reviewData",
+      "assignee": "submitter",
+      "review": [
+        {
+          "attribute": "Document Type"
+        }
+      ],
+      "output": "Reviewed",
+      "on": {
+        "success": "logDone",
+        "failure": "logFailed"
+      }
+    },
+    {
+      "id": "logDone",
+      "name": "Log intake done",
+      "kind": "logger",
+      "message": "Supplier intake done",
+      "next": "finish"
+    },
+    {
+      "id": "logFailed",
+      "name": "Log failed",
+      "kind": "logger",
+      "message": "Failed: the supplier intake stopped",
+      "next": "finish"
+    },
+    {
+      "id": "finish",
+      "kind": "finish"
+    }
+  ]
+}

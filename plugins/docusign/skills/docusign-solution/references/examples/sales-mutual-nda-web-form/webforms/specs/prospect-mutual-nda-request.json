@@ -1,0 +1,133 @@
+{
+  "name": "Request Our Mutual NDA",
+  "description": "A prospect asks for Fontara's standard mutual NDA from the website: their company, address, purpose and signer. The answers fill the NDA.",
+  "pages": [
+    {
+      "key": "pg_company",
+      "title": "Your company",
+      "fields": [
+        {
+          "key": "company",
+          "type": "text",
+          "label": "Company legal name",
+          "required": true
+        },
+        {
+          "key": "entity_type",
+          "type": "text",
+          "label": "Company type and place of registration",
+          "required": true,
+          "description": "For example: a Delaware corporation"
+        },
+        {
+          "key": "street",
+          "type": "text",
+          "label": "Street address",
+          "required": true
+        },
+        {
+          "key": "city",
+          "type": "text",
+          "label": "City",
+          "required": true
+        },
+        {
+          "key": "region",
+          "type": "text",
+          "label": "State, county or region",
+          "required": true
+        },
+        {
+          "key": "postal",
+          "type": "text",
+          "label": "ZIP or postal code",
+          "required": true
+        },
+        {
+          "key": "fontara_entity",
+          "type": "dropdown",
+          "label": "Which Fontara company are you working with?",
+          "options": [
+            "Fontara, Inc.",
+            "Fontara UK Ltd",
+            "Fontara Europe Ltd"
+          ],
+          "required": true,
+          "description": "Fontara, Inc. in the Americas; Fontara UK Ltd in the UK; Fontara Europe Ltd in the EU."
+        },
+        {
+          "key": "purpose",
+          "type": "longtext",
+          "label": "What will we discuss?",
+          "required": true,
+          "description": "For example: evaluating a partnership"
+        }
+      ]
+    },
+    {
+      "key": "pg_terms",
+      "title": "Terms",
+      "fields": [
+        {
+          "key": "disclosure_period",
+          "type": "dropdown",
+          "label": "Disclosure period",
+          "options": [
+            {
+              "label": "1 year"
+            },
+            {
+              "label": "2 years",
+              "selected": true
+            },
+            {
+              "label": "3 years"
+            }
+          ],
+          "required": true,
+          "description": "Our standard is 2 years."
+        },
+        {
+          "key": "confidentiality_period",
+          "type": "dropdown",
+          "label": "Confidentiality period",
+          "options": [
+            {
+              "label": "1 year"
+            },
+            {
+              "label": "2 years"
+            },
+            {
+              "label": "3 years",
+              "selected": true
+            },
+            {
+              "label": "5 years"
+            }
+          ],
+          "required": true,
+          "description": "Our standard is 3 years."
+        }
+      ]
+    },
+    {
+      "key": "pg_signer",
+      "title": "Who signs for your company",
+      "fields": [
+        {
+          "key": "signer_name",
+          "type": "text",
+          "label": "Signer's full name",
+          "required": true
+        },
+        {
+          "key": "signer_email",
+          "type": "email",
+          "label": "Signer's email",
+          "required": true
+        }
+      ]
+    }
+  ]
+}

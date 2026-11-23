@@ -1,0 +1,84 @@
+{
+  "id": "legal-litigation-settlement",
+  "prompt": "Settlement agreements: outside counsel uploads the final settlement, both parties and their lawyers sign, the order is plaintiff, defendant, then both counsel at the same time. Plaintiff needs ID verification.",
+  "industry": "insurance",
+  "department": "legal",
+  "variation_tags": {
+    "start": [
+      "manual"
+    ],
+    "routing": [
+      "serial",
+      "parallel"
+    ],
+    "approvals": [
+      "none"
+    ],
+    "data_source": [
+      "none"
+    ],
+    "locale": [
+      "en-US"
+    ],
+    "currency": [
+      "USD"
+    ],
+    "platform": "iam",
+    "ai": [
+      "none"
+    ],
+    "documents": [
+      "uploaded"
+    ],
+    "logic": [
+      "none"
+    ],
+    "notifications": [
+      "email"
+    ],
+    "identity": [
+      "idv"
+    ],
+    "payment": false,
+    "agreement_desk": false
+  },
+  "expected_assets": [
+    {
+      "kind": "esign-template",
+      "purpose": "settlement signature routing",
+      "features": [
+        "4 roles: plaintiff 1, defendant 2, counsel 3 and 3",
+        "IDV on plaintiff"
+      ]
+    }
+  ],
+  "acceptance": [
+    "plaintiff, then defendant, then both counsel together",
+    "only the plaintiff has ID verification"
+  ],
+  "hard_parts": [
+    "IDV per recipient needs IDV enabled on the account"
+  ],
+  "clarifying_questions": [
+    {
+      "question": "Do counsel sign or only approve?",
+      "default": "sign"
+    }
+  ],
+  "capabilities": [
+    "esign-template.setting.upload-json",
+    "esign-template.setting.email-subject",
+    "esign-template.setting.email-message",
+    "esign-template.recipient.signer-role",
+    "esign-template.tab.sign-here",
+    "esign-template.tab.full-name",
+    "esign-template.tab.date-signed",
+    "esign-template.tab-setting.anchor",
+    "esign-template.tab-setting.required",
+    "esign-template.tab-setting.owner",
+    "esign-template.tab-setting.owner-per-field",
+    "esign-template.routing.sequential",
+    "esign-template.tab.initial-here",
+    "esign-template.setting.from-new-document"
+  ]
+}

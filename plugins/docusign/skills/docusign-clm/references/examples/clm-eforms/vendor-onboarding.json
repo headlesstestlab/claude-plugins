@@ -1,0 +1,199 @@
+{
+  "id": "vendor-onboarding",
+  "name": "Vendor Onboarding",
+  "description": "This first form only decides which reviews are needed. Procurement, Security and Privacy follow up with their own questions.",
+  "submitFolder": "eForms/Vendor Onboarding/Submitted",
+  "repositoryAttachments": true,
+  "sections": [
+    {
+      "title": "1. Supplier",
+      "fields": [
+        {
+          "kind": "attribute",
+          "attribute": "External Party.Business Name",
+          "label": "Supplier legal name"
+        },
+        {
+          "kind": "attribute",
+          "attribute": "External Party.Party Industry",
+          "label": "Industry"
+        },
+        {
+          "kind": "attribute",
+          "attribute": "External Party.Party Region",
+          "label": "Region"
+        },
+        {
+          "kind": "attribute",
+          "attribute": "External Party.Country",
+          "label": "Country of incorporation"
+        },
+        {
+          "kind": "attribute",
+          "attribute": "External Party.Contact Name",
+          "label": "Supplier contact"
+        },
+        {
+          "kind": "attribute",
+          "attribute": "External Party.Contact Email",
+          "label": "Supplier contact email"
+        }
+      ]
+    },
+    {
+      "title": "2. Internal sponsor",
+      "fields": [
+        {
+          "kind": "attribute",
+          "attribute": "Internal Entity.Entity Business Unit",
+          "label": "Sponsoring business unit",
+          "required": true
+        },
+        {
+          "kind": "attribute",
+          "attribute": "Internal Entity.Entity Name",
+          "label": "Contracting entity",
+          "required": true
+        },
+        {
+          "kind": "attribute",
+          "attribute": "Document.Document Owner",
+          "label": "Business sponsor",
+          "help": "Owns the relationship and approves the spend."
+        }
+      ]
+    },
+    {
+      "title": "3. Data and risk",
+      "help": "The matrix shows who reviews the supplier. Your answers below pick the row.",
+      "fields": [
+        {
+          "kind": "html",
+          "html": "<table class=\"fx-matrix\"><tr><th>Reviews needed</th><th>Spend under $25,000</th><th>Spend $25,000 or more</th></tr><tr><td>Unrestricted data</td><td>Procurement</td><td>Procurement, Finance</td></tr><tr><td>Internal use data</td><td>Procurement, Security</td><td>Procurement, Finance, Security, Privacy</td></tr></table>"
+        },
+        {
+          "kind": "attribute",
+          "attribute": "Document.Information Classification",
+          "label": "Most sensitive Fontara data the supplier will see",
+          "help": "Saved as a CLM attribute, so it can drive search, reports and routing."
+        },
+        {
+          "kind": "select",
+          "id": "voPersonalData",
+          "label": "Will the supplier process personal data?",
+          "options": [
+            "Yes",
+            "No"
+          ],
+          "help": "We ask so Privacy reviews only the suppliers that need it: customer, employee or patient data counts."
+        },
+        {
+          "kind": "select",
+          "id": "voConnectivity",
+          "label": "Will it connect to Fontara systems?",
+          "options": [
+            "Yes",
+            "No"
+          ],
+          "help": "Network access, single sign-on, an API or a file transfer. Security reviews these."
+        },
+        {
+          "kind": "number",
+          "id": "voSpend",
+          "label": "Estimated annual spend"
+        },
+        {
+          "kind": "select",
+          "id": "voCurrency",
+          "label": "Currency",
+          "options": [
+            "USD",
+            "EUR",
+            "GBP"
+          ]
+        },
+        {
+          "kind": "select",
+          "id": "voAgreement",
+          "label": "Agreement needed",
+          "options": [
+            "MSA + SOW",
+            "Order form",
+            "Data Processing Agreement",
+            "Not sure"
+          ]
+        }
+      ]
+    },
+    {
+      "title": "3a. Security and privacy due diligence",
+      "help": "List what the supplier must provide before signature, one item per row (for example: SOC 2 report, penetration test summary, cyber insurance certificate).",
+      "repeating": true,
+      "showIf": {
+        "any": [
+          {
+            "field": "Document.Information Classification",
+            "equals": "Internal use"
+          },
+          {
+            "field": "voPersonalData",
+            "equals": "Yes"
+          },
+          {
+            "field": "voConnectivity",
+            "equals": "Yes"
+          }
+        ]
+      },
+      "fields": [
+        {
+          "kind": "attribute",
+          "attribute": "Oblligations.Name",
+          "label": "Item"
+        },
+        {
+          "kind": "attribute",
+          "attribute": "Oblligations.Category",
+          "label": "Type"
+        },
+        {
+          "kind": "attribute",
+          "attribute": "Oblligations.Description",
+          "label": "What we need"
+        },
+        {
+          "kind": "attribute",
+          "attribute": "Oblligations.Due Date",
+          "label": "Needed by"
+        }
+      ]
+    },
+    {
+      "title": "4. Supporting documents",
+      "fields": [
+        {
+          "kind": "attachment",
+          "label": "Security package, insurance certificate",
+          "count": 2,
+          "help": "Optional. You can also link documents that are already in CLM."
+        }
+      ]
+    }
+  ],
+  "attributeIds": {
+    "External Party.Business Name": "c0425376-6fb3-f111-93b3-e8e4a5d525fb",
+    "External Party.Party Industry": "c3425376-6fb3-f111-93b3-e8e4a5d525fb",
+    "External Party.Party Region": "c1425376-6fb3-f111-93b3-e8e4a5d525fb",
+    "External Party.Country": "d0425376-6fb3-f111-93b3-e8e4a5d525fb",
+    "External Party.Contact Name": "c7425376-6fb3-f111-93b3-e8e4a5d525fb",
+    "External Party.Contact Email": "c8425376-6fb3-f111-93b3-e8e4a5d525fb",
+    "Internal Entity.Entity Business Unit": "df425376-6fb3-f111-93b3-e8e4a5d525fb",
+    "Internal Entity.Entity Name": "d3425376-6fb3-f111-93b3-e8e4a5d525fb",
+    "Document.Document Owner": "af425376-6fb3-f111-93b3-e8e4a5d525fb",
+    "Document.Information Classification": "b7425376-6fb3-f111-93b3-e8e4a5d525fb",
+    "Oblligations.Name": "36435376-6fb3-f111-93b3-e8e4a5d525fb",
+    "Oblligations.Category": "37435376-6fb3-f111-93b3-e8e4a5d525fb",
+    "Oblligations.Description": "51435376-6fb3-f111-93b3-e8e4a5d525fb",
+    "Oblligations.Due Date": "58435376-6fb3-f111-93b3-e8e4a5d525fb"
+  }
+}

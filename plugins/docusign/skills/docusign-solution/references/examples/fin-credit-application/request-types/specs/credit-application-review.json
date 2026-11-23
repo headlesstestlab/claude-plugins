@@ -1,0 +1,71 @@
+{
+  "id": "credit-application-review",
+  "name": "Credit Application Review",
+  "description": "A signed B2B credit application waiting for the credit team's decision. Opened by the credit application workflow; the signed application is on the Documents tab.",
+  "pages": [
+    {
+      "title": "Credit application",
+      "fields": [
+        {
+          "key": "applicant",
+          "type": "text",
+          "label": "Company legal name",
+          "bind": {
+            "custom": "CreditApplicantName",
+            "label": "Credit Applicant Name",
+            "type": "Text"
+          },
+          "required": true
+        },
+        {
+          "key": "ein",
+          "type": "text",
+          "label": "EIN",
+          "bind": {
+            "custom": "CreditApplicantEin",
+            "label": "Credit Applicant EIN",
+            "type": "Text"
+          },
+          "required": true
+        },
+        {
+          "key": "limit",
+          "type": "currency",
+          "label": "Credit limit requested",
+          "currency": "usd",
+          "bind": {
+            "custom": "CreditLimitRequested",
+            "label": "Credit Limit Requested",
+            "type": "Currency"
+          },
+          "required": true
+        },
+        {
+          "key": "guarantee",
+          "type": "dropdown",
+          "label": "Personal guarantee (limit over $50,000)",
+          "options": [
+            "No",
+            "Yes"
+          ],
+          "bind": {
+            "custom": "CreditGuarantee",
+            "label": "Personal Guarantee",
+            "type": "Text"
+          },
+          "required": true
+        },
+        {
+          "key": "contact_email",
+          "type": "email",
+          "label": "Applicant contact email",
+          "bind": {
+            "custom": "IntakeCounterpartyEmail",
+            "label": "Counterparty Signer Email"
+          },
+          "required": true
+        }
+      ]
+    }
+  ]
+}

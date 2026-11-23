@@ -1,0 +1,16 @@
+{
+  "id": "board-written-consent",
+  "from": "board-written-consent",
+  "summary": "The company secretary prepares the consent before sending (the authorized officer, the effective date and the resolutions are sender prefill fields); the three directors sign in parallel, then the secretary signs the certificate that every director signed.",
+  "owners": {
+    "default": "sender"
+  },
+  "routingOrder": {
+    "Director 1": 1,
+    "Director 2": 1,
+    "Director 3": 1,
+    "Secretary": 2
+  },
+  "emailSubject": "Board written consent for signature",
+  "emailBlurb": "Please review the resolutions and sign the written consent."
+}

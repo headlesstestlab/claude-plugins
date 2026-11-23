@@ -1,0 +1,150 @@
+{
+  "id": "legal-clm-nda-self-service",
+  "prompt": "In CLM: a self-service NDA. The requester fills a form, an NDA is generated with no legal touch if they pick the standard template, and emailed to the counterparty for signature.",
+  "industry": "pharmaceuticals",
+  "department": "legal",
+  "variation_tags": {
+    "start": [
+      "clm"
+    ],
+    "routing": [
+      "single-signer"
+    ],
+    "approvals": [
+      "none"
+    ],
+    "data_source": [
+      "form"
+    ],
+    "locale": [
+      "en-US"
+    ],
+    "currency": [
+      "USD"
+    ],
+    "platform": "clm",
+    "ai": [
+      "none"
+    ],
+    "documents": [
+      "generated"
+    ],
+    "logic": [
+      "branch"
+    ],
+    "notifications": [
+      "email"
+    ],
+    "identity": [
+      "none"
+    ],
+    "payment": false,
+    "agreement_desk": false
+  },
+  "expected_assets": [
+    {
+      "kind": "clm-form",
+      "purpose": "NDA request",
+      "features": [
+        "counterparty, mutual/one-way, purpose"
+      ]
+    },
+    {
+      "kind": "clm-word-template",
+      "purpose": "NDA template",
+      "features": [
+        "merge tags"
+      ]
+    },
+    {
+      "kind": "clm-workflow",
+      "purpose": "self-service NDA",
+      "features": [
+        "Rule on template choice",
+        "Email Document",
+        "Finish"
+      ]
+    }
+  ],
+  "acceptance": [
+    "a standard choice skips legal; non-standard sends to legal review",
+    "the email step merges the document name"
+  ],
+  "hard_parts": [
+    "signature in CLM goes through an eSignature step not yet in the compiled step kinds"
+  ],
+  "clarifying_questions": [
+    {
+      "question": "Signature via Docusign eSignature from CLM?",
+      "default": "yes"
+    }
+  ],
+  "capabilities": [
+    "clm-form.setting.create-form",
+    "clm-form.setting.configuration",
+    "clm-form.setting.launch-workflow",
+    "clm-form.field-setting.field-name",
+    "clm-form.field-setting.required",
+    "clm-form.field-setting.visible",
+    "clm-form.field-setting.default-value",
+    "clm-form.field-setting.target-identifier",
+    "clm-form.field.text",
+    "clm-form.field.section",
+    "clm-form.merge-tag.default-tag",
+    "clm-form.merge-tag.template-docx",
+    "clm-form.field.dropdown",
+    "clm-form.field.text-box",
+    "clm-form.binding.xml-prefill-workflow",
+    "clm-form.field-setting.field-value-source",
+    "clm-workflow.start.start-step-name",
+    "clm-workflow.variable.params",
+    "clm-workflow.variable.text",
+    "clm-workflow.variable.system-variables",
+    "clm-workflow.variable.merge-tag-in-text",
+    "clm-workflow.variable.undeclared-refused",
+    "clm-workflow.variable.params-schema",
+    "clm-workflow.step.finish",
+    "clm-workflow.path.next-single",
+    "clm-workflow.path.outcome-links",
+    "clm-workflow.path.validation-reachability",
+    "clm-workflow.setting.import-json",
+    "clm-workflow.setting.publish",
+    "clm-workflow.limit.activities-per-instance",
+    "clm-workflow.limit.workflow-name-chars",
+    "clm-workflow.limit.duplicate-name",
+    "clm-workflow.step-setting.step-name",
+    "clm-workflow.step.document-generation",
+    "clm-workflow.start.trigger-docgen",
+    "clm-workflow.step.create-or-upload-doc",
+    "clm-workflow.step-setting.document-source",
+    "clm-workflow.step.review-and-send-for-external-review",
+    "clm-workflow.step.wait-for-external-review",
+    "clm-workflow.path.ext-review-outcomes",
+    "clm-workflow.path.wait-ext-review-outcomes",
+    "clm-workflow.step-setting.ext-review-assignee-submitter",
+    "clm-workflow.step-setting.ext-review-subject",
+    "clm-workflow.step-setting.ext-review-body",
+    "clm-workflow.step-setting.ext-review-instructions",
+    "clm-workflow.setting.templates-negotiation",
+    "clm-workflow.step.rule",
+    "clm-workflow.path.rule-true-false",
+    "clm-workflow.step-setting.rule-condition-equals",
+    "clm-workflow.path.branch-merge",
+    "clm-workflow.step.email",
+    "clm-workflow.step.email-document",
+    "clm-workflow.step-setting.email-document-to",
+    "clm-workflow.step-setting.email-body",
+    "clm-workflow.step.send-for-signature",
+    "clm-workflow.step.review-and-send-for-signature",
+    "clm-workflow.step.wait-for-signature",
+    "clm-workflow.setting.templates-signature",
+    "clm-workflow.start.manual-start",
+    "clm-workflow.variable.submitted-by",
+    "clm-workflow.step.choice",
+    "clm-form.field.radio",
+    "clm-form.rule.condition-user-input",
+    "clm-workflow.step-setting.set-variable-from-path",
+    "clm-workflow.step-setting.approve-instructions",
+    "clm-workflow.step-setting.signer-name"
+  ]
+}

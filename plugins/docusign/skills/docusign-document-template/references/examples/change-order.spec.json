@@ -1,0 +1,411 @@
+{
+  "id": "change-order",
+  "name": "Change Order",
+  "description": "A numbered change to a statement of work: what changes, the revised completion date, and the effect on fees.",
+  "agreementType": "ChangeOrder",
+  "fields": {
+    "fontara_entity": {
+      "label": "Fontara contracting entity",
+      "type": "select",
+      "options": [
+        "Fontara, Inc.",
+        "Fontara UK Ltd",
+        "Fontara Europe Ltd"
+      ],
+      "optionValues": {
+        "Fontara, Inc.": "Fontara, Inc., a Delaware corporation with its principal place of business at 1500 Harbor Boulevard, Suite 1200, San Francisco, CA 94111",
+        "Fontara UK Ltd": "Fontara UK Ltd, a company registered in England and Wales with its registered office at 48 Ashcombe Street, London EC2A 4NE, United Kingdom",
+        "Fontara Europe Ltd": "Fontara Europe Ltd, a company registered in Ireland with its registered office at 3 Riverside Quay, Dublin 2, D02 X285, Ireland"
+      },
+      "required": true,
+      "description": "Prints the entity’s full legal description and address"
+    },
+    "currency": {
+      "label": "Currency",
+      "type": "select",
+      "options": [
+        "US$",
+        "£",
+        "€"
+      ],
+      "required": true,
+      "description": "The signing entity’s: US$ for Fontara, Inc., £ for Fontara UK Ltd, € for Fontara Europe Ltd"
+    },
+    "customer": {
+      "bind": {
+        "provision": "AgreementParty"
+      },
+      "required": true,
+      "description": "Customer legal name"
+    },
+    "customer_address": {
+      "label": "Customer street address",
+      "required": true
+    },
+    "customer_city": {
+      "label": "Customer city",
+      "required": true
+    },
+    "customer_region": {
+      "label": "Customer state",
+      "required": true
+    },
+    "customer_postal": {
+      "label": "Customer ZIP code",
+      "required": true
+    },
+    "customer_entity": {
+      "label": "Customer entity type",
+      "required": true,
+      "description": "For example: an Illinois corporation"
+    },
+    "co_number": {
+      "label": "Change order number",
+      "required": true
+    },
+    "sow_number": {
+      "label": "SOW number",
+      "required": true
+    },
+    "sow_date": {
+      "label": "Statement of work date",
+      "type": "date",
+      "required": true
+    },
+    "msa_date": {
+      "label": "Master agreement date",
+      "type": "date",
+      "required": true
+    },
+    "change": {
+      "label": "Description of the change",
+      "required": true
+    },
+    "revised_completion": {
+      "label": "Revised completion date",
+      "type": "date",
+      "required": true
+    },
+    "impact": {
+      "label": "Fee impact",
+      "type": "select",
+      "options": [
+        "No change",
+        "Increase",
+        "Decrease"
+      ],
+      "required": true
+    },
+    "amount": {
+      "label": "Fee change",
+      "type": "number",
+      "money": true
+    },
+    "effective": {
+      "bind": {
+        "provision": "EffectiveDate"
+      },
+      "required": true
+    }
+  },
+  "signers": [
+    "Customer",
+    "Fontara"
+  ],
+  "body": [
+    {
+      "title": "CHANGE ORDER"
+    },
+    {
+      "p": "This Change Order No. {{co_number}} (this \"Change Order\"), effective {{effective}}, amends Statement of Work No. {{sow_number}} dated {{sow_date}} (the \"Statement of Work\") under the Master Services Agreement dated {{msa_date}} (the \"Agreement\") between {{fontara_entity}} (\"Vendor\") and **{{customer}}**, {{customer_entity}} with its principal place of business at {{customer_address}}, {{customer_city}}, {{customer_region}} {{customer_postal}} (\"Customer\")."
+    },
+    {
+      "p": "Change requested: {{change}}"
+    },
+    {
+      "lineItems": {
+        "name": "Changes",
+        "label": "Changes",
+        "columns": [
+          {
+            "key": "item",
+            "label": "Item"
+          },
+          {
+            "key": "current",
+            "label": "Current"
+          },
+          {
+            "key": "revised",
+            "label": "Revised"
+          },
+          {
+            "key": "fee_impact",
+            "label": "Fee Impact"
+          }
+        ]
+      }
+    },
+    {
+      "if": {
+        "field": "impact",
+        "is": "No change"
+      },
+      "then": [
+        {
+          "p": "This change does not affect the fees."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "impact",
+        "is": "Increase"
+      },
+      "then": [
+        {
+          "p": "The fees increase by {{currency}}{{amount}}."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "impact",
+        "is": "Decrease"
+      },
+      "then": [
+        {
+          "p": "The fees decrease by {{currency}}{{amount}}."
+        }
+      ]
+    },
+    {
+      "if": {
+        "field": "impact",
+        "isNot": "No change"
+      },
+      "then": [
+        {
+          "p": "Fee breakdown for this change:"
+        },
+        {
+          "lineItems": {
+            "name": "FeeLines",
+            "label": "Fee breakdown",
+            "columns": [
+              {
+                "key": "item",
+                "label": "Item"
+              },
+              {
+                "key": "basis",
+                "label": "Basis"
+              },
+              {
+                "key": "amount",
+                "label": "Amount"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "p": "[Who approves this Change Order]{font-family:Times New Roman}"
+    },
+    {
+      "table": {
+        "header": [
+          "Approver",
+          "Approves"
+        ],
+        "rows": [
+          [
+            "Customer project sponsor",
+            "Scope and fees"
+          ],
+          [
+            "Fontara engagement manager",
+            "Delivery dates"
+          ]
+        ],
+        "align": [
+          "left",
+          "right"
+        ],
+        "fill": "#fff2cc",
+        "borders": false
+      }
+    },
+    {
+      "h": "1. Relationship to the Statement of Work"
+    },
+    {
+      "p": "This Change Order amends the Statement of Work it identifies, which it incorporates by reference, and the Agreement and the Statement of Work continue to apply to the work performed under it. It takes effect only when both parties have signed it, before the changed work begins, and it replaces the earlier versions of the sections it changes."
+    },
+    {
+      "h": "2. Description of Change"
+    },
+    {
+      "p": "This Change Order describes the work it adds to, changes in and removes from the Statement of Work, in the table above, with the revised completion date and the fees for the change, and the Statement of Work otherwise continues unchanged."
+    },
+    {
+      "h": "3. Impact on Timeline"
+    },
+    {
+      "p": "The Statement of Work's completion date is revised to {{revised_completion}}, and its remaining milestone dates move with it. Where Customer requested the change, the timeline is extended by the time the change adds plus reasonable time for Vendor to remobilize. The revised dates bind both parties once this Change Order is signed."
+    },
+    {
+      "h": "4. Impact on Fees"
+    },
+    {
+      "p": "This Change Order states the additional fees for the change, on a fixed-fee or time-and-materials basis, and they are due on completion of the milestone the change affects. It does not reduce the fees for work already begun under the Statement of Work."
+    },
+    {
+      "h": "5. No Other Changes"
+    },
+    {
+      "p": "This Change Order changes only the provisions of the Statement of Work it expressly identifies, and the rest of the Statement of Work remains in full force and effect. Prior discussions, correspondence and negotiations about this change form part of it only where this Change Order expressly says so."
+    },
+    {
+      "h": "6. Signatures and Authority"
+    },
+    {
+      "p": "This Change Order binds the parties once authorized representatives of both have signed it, and electronic signatures are valid. No work under it may begin, and no fees for it accrue, until both parties have signed."
+    },
+    {
+      "h": "7. General"
+    },
+    {
+      "p": "This Change Order is governed by the law that governs the Agreement, any dispute under it is resolved in the manner the Agreement provides, and notices under it are given as the Agreement provides. This Change Order is the entire agreement of the parties on its subject and may be amended only in a writing signed by both parties."
+    },
+    {
+      "p": "Customer decision on this Change Order: approve [[approve:Customer]] or decline [[decline:Customer]]"
+    },
+    {
+      "p": "Fontara note to Customer: [[note:Fontara:Rates in this Change Order hold until the revised completion date.]]"
+    },
+    {
+      "sign": "Customer",
+      "title": true,
+      "company": true
+    },
+    {
+      "sign": "Fontara",
+      "title": true,
+      "company": true
+    }
+  ],
+  "examples": [
+    {
+      "values": {
+        "effective": "04/20/2027",
+        "customer": "Momentum Driver",
+        "customer_entity": "a Delaware corporation",
+        "customer_address": "5500 Enterprise Drive",
+        "co_number": "CO-02",
+        "sow_number": "SOW-003",
+        "sow_date": "03/01/2027",
+        "msa_date": "03/05/2025",
+        "change": "Add the Northeast region to wave 2.",
+        "revised_completion": "10/31/2027",
+        "impact": "Increase",
+        "amount": "120000",
+        "fontara_entity": "Fontara, Inc.",
+        "currency": "US$",
+        "customer_city": "Chicago",
+        "customer_region": "IL",
+        "customer_postal": "60661"
+      },
+      "tables": {
+        "Changes": [
+          [
+            "Regions in wave 2",
+            "Midwest, Southeast",
+            "Midwest, Southeast, Northeast",
+            "+120,000.00"
+          ],
+          [
+            "Wave 2 completion",
+            "08/31/2027",
+            "10/31/2027",
+            "none"
+          ]
+        ],
+        "FeeLines": [
+          [
+            "Northeast configuration",
+            "fixed fee",
+            "90,000.00"
+          ],
+          [
+            "Northeast go-live support",
+            "150 hours at 200.00",
+            "30,000.00"
+          ]
+        ]
+      },
+      "expect": [
+        "Change Order No. CO-02",
+        "+120,000.00",
+        "is revised to 10/31/2027",
+        "increase by US$120,000.00",
+        "Fee breakdown for this change",
+        "Northeast go-live support",
+        "Customer decision on this Change Order",
+        "Who approves this Change Order",
+        "Fontara engagement manager"
+      ],
+      "absent": [
+        "does not affect the fees"
+      ]
+    },
+    {
+      "values": {
+        "effective": "06/01/2027",
+        "customer": "Momentum Driver",
+        "customer_entity": "a Delaware corporation",
+        "customer_address": "5500 Enterprise Drive",
+        "co_number": "CO-03",
+        "sow_number": "SOW-003",
+        "sow_date": "03/01/2027",
+        "msa_date": "03/05/2025",
+        "change": "Move the wave 2 training sessions online.",
+        "revised_completion": "10/31/2027",
+        "impact": "No change",
+        "fontara_entity": "Fontara, Inc.",
+        "currency": "US$",
+        "customer_city": "Chicago",
+        "customer_region": "IL",
+        "customer_postal": "60661"
+      },
+      "tables": {
+        "Changes": [
+          [
+            "Wave 2 training",
+            "On site",
+            "Online",
+            "none"
+          ]
+        ],
+        "FeeLines": [
+          [
+            "None",
+            "n/a",
+            "0.00"
+          ]
+        ]
+      },
+      "expect": [
+        "Change Order No. CO-03",
+        "does not affect the fees",
+        "Move the wave 2 training sessions online."
+      ],
+      "absent": [
+        "Fee breakdown for this change",
+        "The fees increase"
+      ]
+    }
+  ],
+  "source": "vault: Contracts/Clauses/Change Order"
+}

@@ -1,0 +1,25 @@
+{
+  "id": "rfp-pack-on-nda-signed",
+  "name": "RFP Pack on Signed Bid NDA",
+  "description": "When a bid NDA sent from the bundle's RFP Bid NDA template is completed, the supplier who signed it (the envelope's first recipient) gets an email with the RFP pack link.",
+  "trigger": {
+    "event": "envelope-completed",
+    "when": {
+      "template": {
+        "esign": "rfp-bid-nda"
+      }
+    }
+  },
+  "steps": [
+    {
+      "email": {
+        "to": [
+          "start.FirstRecipientEmail"
+        ],
+        "subject": "Your RFP pack from Fontara",
+        "headline": "Thank you for signing the NDA",
+        "body": "Dear {{start.FirstRecipientName}},\nThank you for signing the bid NDA. You can now download the RFP pack here: https://example.com/rfp-pack\nPlease send your questions and your response by the dates the pack gives."
+      }
+    }
+  ]
+}

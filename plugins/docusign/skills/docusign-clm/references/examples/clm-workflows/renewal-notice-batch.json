@@ -1,0 +1,309 @@
+{
+  "id": "renewal-notice-batch",
+  "name": "Renewal Notice Batch",
+  "description": "A batch run over a folder of contracts up for renewal. Write Text Document keeps a rate table as CSV and Update Variable From CSV reads the B2 rate from it; a C# expression sets a counter and a redacted note is kept; a Rule with two conditions joined by or checks them, and one with three joined by and keeps the counter in bounds (<, <=, >=); Find Documents by Folder fills an ID List and a Document variable, and a For-Each Loop over an iterator on the Document variable's repeating Document node logs each contract (Next Loop closes the body; a failed loop is logged and the batch goes on); a For Loop runs two reminder rounds; a child workflow sends the notice and writes back to this workflow (Update Parent Variable); Wait for Signal then waits a minute for a signal from an outside system. Groups and a Pool with Lanes label the parts on the canvas.",
+  "variables": [
+    {
+      "name": "RatesDoc",
+      "type": "document"
+    },
+    "Rate",
+    {
+      "name": "N",
+      "type": "number"
+    },
+    {
+      "name": "Secret",
+      "type": "text",
+      "description": "A note the process monitor redacts",
+      "secret": true
+    },
+    {
+      "name": "Ids",
+      "type": "idList"
+    },
+    {
+      "name": "Round",
+      "type": "number"
+    },
+    {
+      "name": "ParentNote",
+      "type": "text",
+      "writableByChild": true
+    },
+    "Signal",
+    {
+      "name": "Renewals",
+      "type": "document"
+    },
+    {
+      "name": "Each",
+      "type": "iterator",
+      "of": "Renewals.Documents.Document"
+    }
+  ],
+  "paramsSchema": "<Params><Documents><Document><Id/><Name/></Document></Documents><Batch/></Params>",
+  "steps": [
+    {
+      "id": "rates",
+      "name": "Write the rate table",
+      "kind": "writeTextDocument",
+      "text": "Code,Rate\nA1,100\nB2,200",
+      "documentName": "<%#XmlVariables.Params.Batch%> rates.csv",
+      "folder": {
+        "path": "/Parties/"
+      },
+      "output": "RatesDoc",
+      "on": {
+        "success": "rate",
+        "failure": "logFailed"
+      }
+    },
+    {
+      "id": "rate",
+      "name": "Read the B2 rate",
+      "kind": "updateVariableFromCsv",
+      "documents": {
+        "var": "RatesDoc"
+      },
+      "field": "Code",
+      "value": "B2",
+      "set": {
+        "Rate": "Rate"
+      },
+      "on": {
+        "success": "count",
+        "failure": "logFailed"
+      }
+    },
+    {
+      "id": "count",
+      "name": "Counter and note",
+      "kind": "setVariable",
+      "set": {
+        "N": {
+          "code": "return 1 + 1;"
+        },
+        "Secret": "zz renewal note"
+      },
+      "next": "check"
+    },
+    {
+      "id": "check",
+      "name": "Counter or note",
+      "kind": "rule",
+      "condition": {
+        "any": [
+          {
+            "left": "<%#Variable.N%>",
+            "op": "greaterThan",
+            "right": "1"
+          },
+          {
+            "left": "<%#Variable.Secret%>",
+            "op": "contains",
+            "right": "zz"
+          }
+        ]
+      },
+      "on": {
+        "true": "bounds",
+        "false": "logFailed",
+        "failure": "logFailed"
+      }
+    },
+    {
+      "id": "bounds",
+      "name": "Counter in bounds",
+      "kind": "rule",
+      "condition": {
+        "all": [
+          {
+            "left": "<%#Variable.N%>",
+            "op": "lessThan",
+            "right": "3"
+          },
+          {
+            "left": "<%#Variable.N%>",
+            "op": "lessOrEqual",
+            "right": "2"
+          },
+          {
+            "left": "<%#Variable.N%>",
+            "op": "greaterOrEqual",
+            "right": "2"
+          }
+        ]
+      },
+      "on": {
+        "true": "list",
+        "false": "logFailed",
+        "failure": "logFailed"
+      }
+    },
+    {
+      "id": "list",
+      "name": "List the renewals",
+      "kind": "findDocumentsByFolder",
+      "folder": {
+        "name": "Renewals"
+      },
+      "output": "Ids",
+      "on": {
+        "match": "listDocs",
+        "noMatch": "logFailed",
+        "failure": "logFailed"
+      }
+    },
+    {
+      "id": "listDocs",
+      "name": "Renewal documents",
+      "kind": "findDocumentsByFolder",
+      "folder": {
+        "name": "Renewals"
+      },
+      "output": "Renewals",
+      "on": {
+        "match": "each",
+        "noMatch": "logFailed",
+        "failure": "logFailed"
+      }
+    },
+    {
+      "id": "each",
+      "name": "For each renewal",
+      "kind": "forEachLoop",
+      "iterator": "Each",
+      "on": {
+        "step": "logEach",
+        "loopEnd": "rounds",
+        "failure": "logEachFailed"
+      }
+    },
+    {
+      "id": "logEach",
+      "name": "Log the renewal",
+      "kind": "logger",
+      "message": "Renewal <%#Variable.Each%>",
+      "next": "nextEach"
+    },
+    {
+      "id": "nextEach",
+      "name": "Next renewal",
+      "kind": "nextLoop",
+      "loop": "each"
+    },
+    {
+      "id": "logEachFailed",
+      "name": "Log the loop failed",
+      "kind": "logger",
+      "message": "The for-each loop failed",
+      "next": "rounds"
+    },
+    {
+      "id": "rounds",
+      "name": "Reminder rounds",
+      "kind": "forLoop",
+      "variable": "Round",
+      "times": 2,
+      "on": {
+        "step": "logRound",
+        "loopEnd": "child",
+        "failure": "logFailed"
+      }
+    },
+    {
+      "id": "logRound",
+      "name": "Log the round",
+      "kind": "logger",
+      "message": "Round <%#Variable.Round%>",
+      "next": "nextRound"
+    },
+    {
+      "id": "nextRound",
+      "name": "Next round",
+      "kind": "nextLoop",
+      "loop": "rounds"
+    },
+    {
+      "id": "child",
+      "name": "Send the notice",
+      "kind": "childWorkflow",
+      "workflow": "Renewal Notice Child",
+      "params": "Params",
+      "wait": true,
+      "on": {
+        "success": "signal",
+        "failure": "logFailed",
+        "aborted": "logFailed",
+        "childFailure": "logFailed"
+      }
+    },
+    {
+      "id": "signal",
+      "name": "Wait for a signal",
+      "kind": "waitForSignal",
+      "timeout": {
+        "minutes": 1
+      },
+      "output": "Signal",
+      "on": {
+        "signalled": "logDone",
+        "timeout": "logDone",
+        "failure": "logFailed"
+      }
+    },
+    {
+      "id": "logDone",
+      "name": "Log batch done",
+      "kind": "logger",
+      "message": "Batch done: <%#Variable.ParentNote%>",
+      "next": "finish"
+    },
+    {
+      "id": "logFailed",
+      "name": "Log failed",
+      "kind": "logger",
+      "message": "Failed: the batch stopped",
+      "next": "finish"
+    },
+    {
+      "id": "finish",
+      "kind": "finish"
+    }
+  ],
+  "groups": [
+    {
+      "name": "Rates",
+      "steps": [
+        "rates",
+        "rate"
+      ]
+    }
+  ],
+  "pools": [
+    {
+      "name": "Batch",
+      "lanes": [
+        {
+          "name": "Renewals",
+          "steps": [
+            "list",
+            "listDocs",
+            "each",
+            "logEach",
+            "nextEach"
+          ]
+        },
+        {
+          "name": "Rounds",
+          "steps": [
+            "rounds",
+            "logRound",
+            "nextRound"
+          ]
+        }
+      ]
+    }
+  ]
+}

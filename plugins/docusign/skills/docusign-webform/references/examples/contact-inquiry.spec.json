@@ -1,0 +1,260 @@
+{
+  "name": "Contact Fontara",
+  "description": "Fontara's website contact form: name, work email, company and job title, country (US state required when the country is the United States), company size, a topic that routes the inquiry (support questions get a pointer to the Support portal), message, an unticked marketing opt-in, and a short privacy notice. UTM source, campaign and page URL are hidden prefill.",
+  "welcome": false,
+  "hidden": [
+    {
+      "key": "utm_source",
+      "type": "text",
+      "label": "UTM source"
+    },
+    {
+      "key": "utm_campaign",
+      "type": "text",
+      "label": "UTM campaign"
+    },
+    {
+      "key": "page_url",
+      "type": "text",
+      "label": "Page URL"
+    }
+  ],
+  "pages": [
+    {
+      "key": "pg_contact",
+      "title": "Contact us",
+      "subtitle": "A real person reads every message",
+      "fields": [
+        {
+          "key": "first_name",
+          "type": "text",
+          "label": "First name",
+          "required": true
+        },
+        {
+          "key": "last_name",
+          "type": "text",
+          "label": "Last name",
+          "required": true
+        },
+        {
+          "key": "email",
+          "type": "email",
+          "label": "Work email",
+          "required": true
+        },
+        {
+          "key": "company",
+          "type": "text",
+          "label": "Company",
+          "required": true
+        },
+        {
+          "key": "job_title",
+          "type": "text",
+          "label": "Job title",
+          "required": true
+        },
+        {
+          "key": "country",
+          "type": "dropdown",
+          "label": "Country",
+          "options": [
+            "United States",
+            "United Kingdom",
+            "Australia",
+            "Austria",
+            "Belgium",
+            "Brazil",
+            "Bulgaria",
+            "Canada",
+            "China",
+            "Croatia",
+            "Cyprus",
+            "Czechia",
+            "Denmark",
+            "Estonia",
+            "Finland",
+            "France",
+            "Germany",
+            "Greece",
+            "Hungary",
+            "India",
+            "Ireland",
+            "Israel",
+            "Italy",
+            "Japan",
+            "Latvia",
+            "Lithuania",
+            "Luxembourg",
+            "Malta",
+            "Mexico",
+            "Netherlands",
+            "New Zealand",
+            "Norway",
+            "Poland",
+            "Portugal",
+            "Romania",
+            "Singapore",
+            "Slovakia",
+            "Slovenia",
+            "South Africa",
+            "South Korea",
+            "Spain",
+            "Sweden",
+            "Switzerland",
+            "United Arab Emirates",
+            "Other"
+          ],
+          "required": true
+        },
+        {
+          "key": "state",
+          "type": "dropdown",
+          "label": "State",
+          "options": [
+            "Alabama",
+            "Alaska",
+            "Arizona",
+            "Arkansas",
+            "California",
+            "Colorado",
+            "Connecticut",
+            "Delaware",
+            "District of Columbia",
+            "Florida",
+            "Georgia",
+            "Hawaii",
+            "Idaho",
+            "Illinois",
+            "Indiana",
+            "Iowa",
+            "Kansas",
+            "Kentucky",
+            "Louisiana",
+            "Maine",
+            "Maryland",
+            "Massachusetts",
+            "Michigan",
+            "Minnesota",
+            "Mississippi",
+            "Missouri",
+            "Montana",
+            "Nebraska",
+            "Nevada",
+            "New Hampshire",
+            "New Jersey",
+            "New Mexico",
+            "New York",
+            "North Carolina",
+            "North Dakota",
+            "Ohio",
+            "Oklahoma",
+            "Oregon",
+            "Pennsylvania",
+            "Rhode Island",
+            "South Carolina",
+            "South Dakota",
+            "Tennessee",
+            "Texas",
+            "Utah",
+            "Vermont",
+            "Virginia",
+            "Washington",
+            "West Virginia",
+            "Wisconsin",
+            "Wyoming"
+          ],
+          "required": true
+        },
+        {
+          "key": "phone",
+          "type": "phone",
+          "label": "Phone (optional)"
+        },
+        {
+          "key": "company_size",
+          "type": "dropdown",
+          "label": "Company size",
+          "options": [
+            "1 to 49 employees",
+            "50 to 249 employees",
+            "250 to 999 employees",
+            "1000 to 4999 employees",
+            "5000 or more employees"
+          ],
+          "required": true
+        },
+        {
+          "key": "topic",
+          "type": "dropdown",
+          "label": "How can we help?",
+          "options": [
+            "Talk to sales",
+            "Request a demo",
+            "Customer support",
+            "Partnerships",
+            "Media and analyst relations",
+            "Careers",
+            "Something else"
+          ],
+          "required": true
+        },
+        {
+          "key": "support_note",
+          "type": "description",
+          "text": "**Already a customer?** The Fontara Support portal gives you a case number straight away and reaches the on-call engineer for an outage. Use this form only if you cannot sign in."
+        },
+        {
+          "key": "message",
+          "type": "longtext",
+          "label": "Message",
+          "required": true,
+          "maxLength": 3000
+        },
+        {
+          "key": "marketing",
+          "type": "checkbox",
+          "label": "Email updates (optional)",
+          "options": [
+            "Send me Fontara news, product updates and event invitations. I can unsubscribe at any time."
+          ]
+        },
+        {
+          "key": "priv",
+          "type": "description",
+          "text": "**Privacy.** Fontara, Inc. uses your details to answer your message and, if you ticked the box, to send you updates (your consent, which you can withdraw at any time). Inquiries from the UK and Europe are handled by Fontara UK Ltd and Fontara Europe Ltd. We keep inquiries for 2 years, never sell them, and do not share them for advertising. Our privacy policy explains your rights, including your rights under GDPR and the California Consumer Privacy Act."
+        }
+      ]
+    }
+  ],
+  "summary": false,
+  "thankYou": {
+    "title": "Message sent",
+    "text": "Sales and demo requests get a reply from a Fontara account executive within 1 business day; partnership, media and other inquiries within 3 business days. A copy of your message is on its way to your inbox."
+  },
+  "rules": [
+    {
+      "when": [
+        {
+          "field": "country",
+          "is": "United States"
+        }
+      ],
+      "then": {
+        "state": "show"
+      }
+    },
+    {
+      "when": [
+        {
+          "field": "topic",
+          "is": "Customer support"
+        }
+      ],
+      "then": {
+        "support_note": "show"
+      }
+    }
+  ]
+}

@@ -1,0 +1,116 @@
+{
+  "id": "legal-clm-nda-self-service",
+  "name": "CLM: self-service NDA, legal only for non-standard",
+  "description": "A CLM self-service NDA. The requester fills the NDA doc-gen form (counterparty, signer, mutual or one-way, template, purpose; the disclosing party shows only for one-way and extra terms only for non-standard) and generates the NDA from its Word template. The doc-gen configuration launches the workflow: the standard template goes straight to the counterparty's signer with no legal touch; a non-standard choice goes to Legal to approve first. The requester is emailed the signed NDA.",
+  "clmWorkflows": [
+    "nda-self-service-routing"
+  ],
+  "prerequisites": [
+    "The configuration's folder (/Docusign/Legal/NDAs/) exists in CLM; replace the path with yours. Publish the CLM workflow NDA Self Service Routing before the configuration is saved (it launches it).",
+    "Legal (legal@example.com in the file) is a CLM user; replace the address and pick the user again after Import.",
+    "CLM's eSignature integration is set up for Send for Signature."
+  ],
+  "clmDocgenForms": [
+    {
+      "id": "nda-self-service-form",
+      "spec": {
+        "id": "nda-self-service-form",
+        "name": "NDA Self Service",
+        "description": "The requester's NDA form: the counterparty and its signer, mutual or one-way, the template and the purpose.",
+        "fields": [
+          {
+            "kind": "heading",
+            "label": "Counterparty"
+          },
+          {
+            "kind": "text",
+            "label": "Counterparty Name",
+            "required": true
+          },
+          {
+            "kind": "text",
+            "label": "Counterparty Signer Name",
+            "required": true
+          },
+          {
+            "kind": "text",
+            "label": "Counterparty Signer Email",
+            "required": true
+          },
+          {
+            "kind": "radio",
+            "label": "NDA Type",
+            "options": [
+              "Mutual",
+              "One-way"
+            ],
+            "required": true
+          },
+          {
+            "kind": "dropdown",
+            "label": "Disclosing Party",
+            "options": [
+              "Fontara",
+              "Counterparty"
+            ],
+            "mergeIf": [
+              {
+                "field": "NDA Type",
+                "op": "equals",
+                "value": "One-way"
+              }
+            ]
+          },
+          {
+            "kind": "dropdown",
+            "label": "NDA Template",
+            "options": [
+              "Standard",
+              "Non-standard"
+            ],
+            "required": true
+          },
+          {
+            "kind": "textBox",
+            "label": "Non-standard Terms",
+            "mergeIf": [
+              {
+                "field": "NDA Template",
+                "op": "equals",
+                "value": "Non-standard"
+              }
+            ]
+          },
+          {
+            "kind": "text",
+            "label": "Purpose",
+            "required": true
+          },
+          {
+            "kind": "date",
+            "label": "Effective Date",
+            "required": true
+          }
+        ],
+        "template": [
+          "This Non-Disclosure Agreement is made between Fontara, Inc. and {{Counterparty Name}}, effective {{Effective Date}}.",
+          "Type: {{NDA Type}}. Disclosing party (one-way NDAs only): {{Disclosing Party}}.",
+          "Purpose: {{Purpose}}.",
+          "Additional terms: {{Non-standard Terms}}",
+          "Signed for {{Counterparty Name}} by {{Counterparty Signer Name}}."
+        ]
+      }
+    }
+  ],
+  "clmDocgenConfigs": [
+    {
+      "form": "nda-self-service-form",
+      "name": "NDA Self Service",
+      "launch": "NDA Self Service Routing",
+      "folder": {
+        "path": "/Docusign/Legal/NDAs/",
+        "name": "NDAs"
+      }
+    }
+  ]
+}

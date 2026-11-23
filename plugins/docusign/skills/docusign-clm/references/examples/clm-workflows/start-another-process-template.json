@@ -1,0 +1,67 @@
+{
+  "id": "start-another-process-template",
+  "name": "Start Another Process Template",
+  "description": "The Start Another Process template's pattern (help hut1684508047877: Update Variable Value, Create or Upload Doc, Rule, Workflow): the requester creates or uploads a contract from the Contract - CREATE doc gen configuration, and when it is an MSA the negotiation workflow starts on it.",
+  "variables": [
+    {
+      "name": "NewDoc",
+      "type": "document"
+    },
+    "ContractType"
+  ],
+  "paramsSchema": "<Params><ContractType/></Params>",
+  "steps": [
+    {
+      "id": "type",
+      "name": "Contract type",
+      "kind": "setVariable",
+      "set": {
+        "ContractType": "<%#XmlVariables.Params.ContractType%>"
+      },
+      "next": "create"
+    },
+    {
+      "id": "create",
+      "name": "Create or upload the contract",
+      "kind": "createOrUploadDoc",
+      "assignee": "submitter",
+      "configuration": "Contract - CREATE",
+      "outputDocuments": "NewDoc",
+      "on": {
+        "completed": "msa",
+        "canceled": "finish",
+        "failure": "finish"
+      }
+    },
+    {
+      "id": "msa",
+      "name": "Is it an MSA",
+      "kind": "rule",
+      "condition": {
+        "left": "<%#Variable.ContractType%>",
+        "op": "equals",
+        "right": "MSA"
+      },
+      "on": {
+        "true": "negotiate",
+        "false": "finish"
+      }
+    },
+    {
+      "id": "negotiate",
+      "name": "Start the negotiation",
+      "kind": "childWorkflow",
+      "workflow": "MSA Negotiation with External Review",
+      "params": "NewDoc",
+      "wait": false,
+      "on": {
+        "success": "finish",
+        "failure": "finish"
+      }
+    },
+    {
+      "id": "finish",
+      "kind": "finish"
+    }
+  ]
+}

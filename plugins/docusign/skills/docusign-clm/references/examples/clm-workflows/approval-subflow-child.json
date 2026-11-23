@@ -1,0 +1,27 @@
+{
+  "id": "approval-subflow-child",
+  "name": "Approval Subflow Child",
+  "description": "The child of approval-subflow: it decides (here, without a task) and writes the answer into the parent's ApprovalResult. It declares a variable of the same name, so Update Parent Variable names it as a variable.",
+  "steps": [
+    {
+      "id": "tell",
+      "name": "Tell the parent",
+      "kind": "updateParentVariable",
+      "set": {
+        "ApprovalResult": "Approved by the subflow"
+      },
+      "on": {
+        "updated": "finish",
+        "notUpdated": "finish",
+        "failure": "finish"
+      }
+    },
+    {
+      "id": "finish",
+      "kind": "finish"
+    }
+  ],
+  "variables": [
+    "ApprovalResult"
+  ]
+}

@@ -1,0 +1,85 @@
+{
+  "name": "Fontara Legal Hold Notice",
+  "description": "Fontara Legal's request to place one custodian under a legal hold: the requester, the matter name and ID, the custodian and their email, what must be preserved, the date preservation starts from and the Legal contact. The hold notice itself goes to the custodian for acknowledgement.",
+  "welcome": {
+    "title": "Place a legal hold",
+    "text": "One request per custodian. The custodian receives the hold notice and must acknowledge it.",
+    "button": "Start"
+  },
+  "pages": [
+    {
+      "key": "pg_you",
+      "title": "You",
+      "fields": [
+        {
+          "key": "requester",
+          "type": "text",
+          "label": "Your name",
+          "required": true
+        },
+        {
+          "key": "requester_email",
+          "type": "email",
+          "label": "Your Fontara email",
+          "required": true
+        }
+      ]
+    },
+    {
+      "key": "pg_hold",
+      "title": "The hold",
+      "fields": [
+        {
+          "key": "matter",
+          "type": "text",
+          "label": "Matter name",
+          "required": true
+        },
+        {
+          "key": "matter_id",
+          "type": "text",
+          "label": "Matter ID",
+          "required": true
+        },
+        {
+          "key": "custodian",
+          "type": "text",
+          "label": "Custodian full name",
+          "required": true
+        },
+        {
+          "key": "custodian_email",
+          "type": "email",
+          "label": "Custodian email",
+          "required": true
+        },
+        {
+          "key": "scope",
+          "type": "longtext",
+          "label": "What must be preserved",
+          "required": true,
+          "description": "Systems, mailboxes, files and paper records, and the subjects they concern."
+        },
+        {
+          "key": "period_start",
+          "type": "date",
+          "label": "Preserve from",
+          "required": true
+        },
+        {
+          "key": "legal_contact",
+          "type": "text",
+          "label": "Legal contact (name and email)",
+          "required": true
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "title": "Check the hold"
+  },
+  "thankYou": {
+    "title": "Hold requested",
+    "text": "The custodian will receive the legal hold notice to acknowledge. Questions go to the Legal contact you named."
+  }
+}

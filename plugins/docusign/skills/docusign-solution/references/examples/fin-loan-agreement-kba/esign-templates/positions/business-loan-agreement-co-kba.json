@@ -1,0 +1,93 @@
+{
+ "id": "business-loan-agreement-co-kba",
+ "templateHash": "176f046ffc223149",
+ "account": "default",
+ "at": "2026-10-31T02:17:18.158Z",
+ "tabs": {
+  "Borrower/Signature": {
+   "pageNumber": "2",
+   "xPosition": "59",
+   "yPosition": "103"
+  },
+  "Borrower/Name": {
+   "pageNumber": "2",
+   "xPosition": "63",
+   "yPosition": "158"
+  },
+  "Borrower/Date signed": {
+   "pageNumber": "2",
+   "xPosition": "63",
+   "yPosition": "255"
+  },
+  "Borrower/Company": {
+   "pageNumber": "2",
+   "xPosition": "63",
+   "yPosition": "207"
+  },
+  "Co-Borrower/Signature": {
+   "pageNumber": "2",
+   "xPosition": "302",
+   "yPosition": "103"
+  },
+  "Co-Borrower/Name": {
+   "pageNumber": "2",
+   "xPosition": "306",
+   "yPosition": "158"
+  },
+  "Co-Borrower/Date signed": {
+   "pageNumber": "2",
+   "xPosition": "306",
+   "yPosition": "207"
+  },
+  "Lender/Signature": {
+   "pageNumber": "2",
+   "xPosition": "59",
+   "yPosition": "339"
+  },
+  "Lender/Name": {
+   "pageNumber": "2",
+   "xPosition": "63",
+   "yPosition": "393"
+  },
+  "Lender/Date signed": {
+   "pageNumber": "2",
+   "xPosition": "63",
+   "yPosition": "491"
+  },
+  "Lender/Title": {
+   "pageNumber": "2",
+   "xPosition": "63",
+   "yPosition": "442"
+  },
+  "Lender/effective": {
+   "pageNumber": "1",
+   "xPosition": "272",
+   "yPosition": "101"
+  },
+  "Lender/borrower": {
+   "pageNumber": "1",
+   "xPosition": "132",
+   "yPosition": "117"
+  },
+  "Lender/co_borrower": {
+   "pageNumber": "1",
+   "xPosition": "291",
+   "yPosition": "117"
+  },
+  "Lender/principal": {
+   "pageNumber": "1",
+   "xPosition": "335",
+   "yPosition": "184"
+  },
+  "Lender/apr": {
+   "pageNumber": "1",
+   "xPosition": "149",
+   "yPosition": "199"
+  },
+  "Lender/term": {
+   "pageNumber": "1",
+   "xPosition": "316",
+   "yPosition": "199"
+  }
+ }
+}

@@ -1,0 +1,178 @@
+{
+ "id": "nda-account-counterparty",
+ "name": "Mutual NDA with counterparty details (Account)",
+ "summary": "Mutual NDA from an Account: the counterparty's legal entity, address and signatory from its contacts, its parent company when it has one, governing law from the Fontara entity, and a longer term for Strategic accounts.",
+ "description": "Fontara mutual NDA from an Account and its contacts. Built from assets/salesforce-gen-templates/specs/nda-account-counterparty.json.",
+ "sourceObject": "Account",
+ "lists": {
+  "Contacts": {
+   "orderBy": "CreatedDate ASC",
+   "max": 1,
+   "filter": "Title != null"
+  }
+ },
+ "partyName": "Name",
+ "documents": [
+  {
+   "file": "Fontara_Mutual_NDA.docx",
+   "output": {
+    "name": "Fontara Mutual NDA",
+    "suffix": "name_date",
+    "format": "PDF"
+   },
+   "footer": "Fontara Mutual NDA · {{Name}} · Page {page} of {pages}",
+   "body": [
+    {
+     "title": "Mutual Non-Disclosure Agreement"
+    },
+    {
+     "p": "This Mutual Non-Disclosure Agreement is made between **{{Fontara_Entity__c}}** (\"Fontara\") and **{{Name}}**, {{Legal_Entity_Type__c?}}, with offices at {{BillingStreet?}}, {{BillingCity?}}, {{BillingState?}} {{BillingPostalCode?}}, {{BillingCountry?}} (\"Counterparty\")."
+    },
+    {
+     "if": {
+      "field": "Parent.Name",
+      "empty": false
+     },
+     "then": [
+      {
+       "p": "Counterparty signs for itself and for the other companies of the **{{Parent.Name}}** group that receive Fontara's confidential information."
+      }
+     ]
+    },
+    {
+     "fields": [
+      [
+       "Counterparty",
+       "{{Name}}"
+      ],
+      [
+       "Industry",
+       "{{Industry?}}"
+      ],
+      [
+       "Region",
+       "{{Region__c}}"
+      ],
+      [
+       "Counterparty phone",
+       "{{Phone?}}"
+      ],
+      [
+       "Counterparty website",
+       "{{Website?}}"
+      ]
+     ]
+    },
+    {
+     "h": "1. Purpose"
+    },
+    {
+     "p": "The parties will share confidential information with each other to evaluate and carry out a commercial relationship involving Fontara's products (the \"Purpose\"). Each party is a \"Discloser\" for what it shares and a \"Recipient\" for what it receives."
+    },
+    {
+     "h": "2. Obligations"
+    },
+    {
+     "p": "The Recipient uses confidential information only for the Purpose, protects it with at least the care it uses for its own confidential information of a similar kind, and shares it only with employees, contractors and advisers who need it for the Purpose and are bound by duties of confidentiality at least as strict as these."
+    },
+    {
+     "h": "3. Term"
+    },
+    {
+     "if": {
+      "field": "Tier__c",
+      "equals": "Strategic"
+     },
+     "then": [
+      {
+       "p": "This Agreement lasts five years from the date of the last signature. Obligations for information shared during that time last five years after it ends, and trade secrets stay protected for as long as they remain trade secrets."
+      }
+     ],
+     "else": [
+      {
+       "p": "This Agreement lasts three years from the date of the last signature. Obligations for information shared during that time last three years after it ends, and trade secrets stay protected for as long as they remain trade secrets."
+      }
+     ]
+    },
+    {
+     "if": {
+      "field": "DPA_In_Place__c",
+      "equals": "Yes"
+     },
+     "then": [
+      {
+       "h": "4. Personal data"
+      },
+      {
+       "p": "Personal data either party shares under this Agreement is handled under the Data Processing Agreement already in place between Fontara and Counterparty, which prevails for personal data."
+      }
+     ],
+     "else": [
+      {
+       "h": "4. Personal data"
+      },
+      {
+       "p": "The parties do not intend to share personal data under this Agreement. If they need to, they will first sign a data processing agreement."
+      }
+     ]
+    },
+    {
+     "h": "5. Governing law"
+    },
+    {
+     "if": {
+      "field": "Fontara_Entity__c",
+      "equals": "Fontara, Inc."
+     },
+     "then": [
+      {
+       "p": "This Agreement is governed by the laws of the State of New York, and the courts of New York County have exclusive jurisdiction."
+      }
+     ],
+     "else": [
+      {
+       "p": "This Agreement is governed by the laws of England and Wales, and the courts of England have exclusive jurisdiction."
+      }
+     ]
+    },
+    {
+     "h": "6. Notices"
+    },
+    {
+     "repeat": {
+      "rows": "Contacts",
+      "body": [
+       {
+        "p": "Notices to Counterparty go to **{{Name}}**, {{Title}}, at {{Email}}. Notices to Fontara go to its General Counsel, Elena Rodriguez, at Fontara's address on its website."
+       }
+      ]
+     }
+    },
+    {
+     "signature": {
+      "signer": 1,
+      "label": "Signed for {{Name}}",
+      "fields": [
+       "s",
+       "n",
+       "t",
+       "d"
+      ]
+     }
+    },
+    {
+     "signature": {
+      "signer": 2,
+      "label": "Signed for {{Fontara_Entity__c}}",
+      "fields": [
+       "s",
+       "n",
+       "t",
+       "d"
+      ]
+     }
+    }
+   ]
+  }
+ ]
+}

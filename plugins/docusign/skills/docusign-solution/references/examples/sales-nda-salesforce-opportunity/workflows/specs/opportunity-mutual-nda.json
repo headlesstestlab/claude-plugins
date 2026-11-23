@@ -1,0 +1,114 @@
+{
+  "id": "opportunity-mutual-nda",
+  "name": "Mutual NDA from the Opportunity",
+  "description": "A rep presses Start with Docusign on an Opportunity, the customer's signer is read from the Opportunity's contact role, and the mutual NDA is generated from the Opportunity's Account (name and billing address); the rep completes the terms at preview. The customer signs, then the rep. Once it is completed, the Opportunity's NDA Status is set to Signed. The signed NDA (one PDF with the Certificate of Completion) is filed on the Opportunity's Files.",
+  "trigger": {
+    "api": {
+      "variables": [
+        {
+          "name": "recordId",
+          "type": "String"
+        },
+        {
+          "name": "objectName",
+          "type": "String"
+        },
+        {
+          "name": "applicationName",
+          "type": "String"
+        },
+        {
+          "name": "orgId",
+          "type": "String"
+        }
+      ],
+      "salesforce": {
+        "object": "Opportunity"
+      }
+    }
+  },
+  "participants": [
+    {
+      "role": "Customer signer",
+      "name": "contact.Contact.Name",
+      "email": "contact.Contact.Email"
+    }
+  ],
+  "steps": [
+    {
+      "salesforceRead": {
+        "object": "Opportunity",
+        "fields": [
+          "Id",
+          "Name"
+        ]
+      },
+      "as": "opp"
+    },
+    {
+      "salesforceRead": {
+        "object": "OpportunityContactRole",
+        "by": "OpportunityId",
+        "fields": [
+          "Contact.Name",
+          "Contact.Email"
+        ]
+      },
+      "as": "contact"
+    },
+    {
+      "generate": "mutual-nda-salesforce",
+      "recordId": "start.recordId",
+      "fill": {
+        "effective": "run.startDate"
+      }
+    },
+    {
+      "sign": {
+        "Counterparty": "Customer signer",
+        "Fontara": "starter"
+      },
+      "subject": "Mutual NDA for signature",
+      "message": "Please review and sign the mutual NDA. We countersign after you.",
+      "as": "nda"
+    },
+    {
+      "if": {
+        "field": "nda.status",
+        "is": "completed"
+      },
+      "then": [
+        {
+          "salesforceWrite": {
+            "object": "Opportunity",
+            "fields": {
+              "Name": "opp.Name",
+              "StageName": {
+                "text": "Prospecting"
+              },
+              "CloseDate": {
+                "text": "2026-12-31"
+              },
+              "NDA_Status__c": {
+                "text": "Signed"
+              }
+            },
+            "keep": [
+              "Name",
+              "StageName",
+              "CloseDate"
+            ]
+          },
+          "as": "written"
+        },
+        {
+          "storeFiles": {
+            "record": "opp.Id",
+            "fileName": "Signed NDA - {{opp.Name}}",
+            "envelope": "nda"
+          }
+        }
+      ]
+    }
+  ]
+}

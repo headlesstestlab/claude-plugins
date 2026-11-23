@@ -1,0 +1,420 @@
+{
+  "id": "fontara-ai-insights-write-back",
+  "name": "AI insights write-back",
+  "description": "CLM with IAM: when Agreement Manager's AI has read a document (smart rule 'AI insights write-back', event Document Processed for AI Insights, in /Contracts), this workflow reads what the AI found (Use AI Data Insights) and what CLM already holds (Find Document into an XML variable, which carries every attribute group, CLM Agreement Details included), and writes the AI's values only into the CLM fields that are still empty: the counterparty party and Counterparty, effective and expiration dates, value (only a USD amount: CLM Value reaches Agreement Manager as USD) and Currency, renewal term (in months) and renewal notice (in days; a notice in months counts 30 days each; also as Termination Notice, as Import agreement dates does). Loop guard: its first step stops when Contract Process ▸ AI Write-back is Done, and otherwise sets Done, waits 5 minutes (a document that has just entered the folder is not in Agreement Manager yet, and Use AI Data Insights started before it is there never finishes: 2 ZZ Lab runs waited over 35 minutes) and then runs Use AI Data Insights, because that step makes Agreement Manager process the document again (an unguarded rule on Document Processed for AI Insights looped: about 1,000 runs in 33 minutes on 21 documents, 2026-11-21, nothing overwritten). It is started once per document by the smart rules in assets/clm-smart-rules/specs/fontara-iamclm-ai-write-back.json: a document entering /Contracts is marked Pending, and a chained rule that requires Pending starts this workflow. A value a person entered or reviewed is never overwritten: Edit CLM Agreement Attributes leaves a field alone when its value is empty. The run log names what was written.",
+  "paramsSchema": "<Params><Documents><Document><Id/><Name/></Document></Documents></Params>",
+  "variables": [
+    {
+      "name": "DocXml",
+      "type": "xml",
+      "schema": "<Documents><Document><Id/><Name/><AgreementProfile><Counterparty/><Currency/></AgreementProfile><CLMAgreementDetails><EffectiveDate/><ExpirationDate/><Value/><PartyID/><PartyName/><RenewalTerm/><RenewalTermUnit/><RenewalNoticePeriod/><RenewalNoticePeriodUnit/><TerminationNotice/></CLMAgreementDetails><ContractProcess><AIWriteback/></ContractProcess></Document></Documents>"
+    },
+    {
+      "name": "AiInsights",
+      "type": "xml",
+      "schema": "<AIExtractions><FlattenedFieldCollections><effectiveDate><value><Value/></value></effectiveDate><expirationDate><value><Value/></value></expirationDate><totalValue><value><doubleValue><Value/></doubleValue><currencyCode><Value/></currencyCode></value></totalValue><renewal><term><Value/></term><noticePeriod><Value/></noticePeriod></renewal><parties><Field><displayName><Value/></displayName><role><Value/></role></Field></parties></FlattenedFieldCollections></AIExtractions>"
+    },
+    {
+      "name": "Party",
+      "type": "xml",
+      "schema": "<Parties><CLMPartyData><CLMPartyId/><ExternalId/><Name/><BusinessContactName/><BusinessType/><Source/></CLMPartyData></Parties>"
+    },
+    {
+      "name": "Counterparty",
+      "type": "xml",
+      "schema": "<Value/>"
+    },
+    "WCounterparty",
+    "WEffective",
+    "WExpiration",
+    "WValue",
+    "WCurrency",
+    "WRenewalCount",
+    "WNoticeCount",
+    "WPartyId",
+    "WCounterpartyField",
+    "WGuard"
+  ],
+  "steps": [
+    {
+      "id": "name",
+      "name": "Name the run",
+      "kind": "setWorkflowProcessName",
+      "processName": "AI write-back - <%#XmlVariables.Params.Documents.Document.Name%>",
+      "on": {
+        "success": "current",
+        "failure": "current"
+      }
+    },
+    {
+      "id": "current",
+      "name": "Read the CLM values",
+      "kind": "findDocument",
+      "output": "DocXml",
+      "next": "guardValue"
+    },
+    {
+      "id": "guardValue",
+      "name": "Read the write-back marker",
+      "kind": "setVariable",
+      "set": {
+        "WGuard": {
+          "code": "// The marker as CLM holds it now: Done means a run has written back already\nreturn Convert.ToString(GetVariableValue(\"DocXml.Documents.Document.ContractProcess.AIWriteback\")).Trim();"
+        }
+      },
+      "next": "guard"
+    },
+    {
+      "id": "guard",
+      "name": "Written back already?",
+      "kind": "rule",
+      "condition": {
+        "left": "<%#Variable.WGuard%>",
+        "op": "equals",
+        "right": "Done"
+      },
+      "on": {
+        "true": "skip",
+        "false": "claim"
+      }
+    },
+    {
+      "id": "claim",
+      "name": "Mark the write-back done",
+      "kind": "updateMetadata",
+      "set": [
+        {
+          "attribute": "Contract Process.AI Write-back",
+          "value": "Done"
+        }
+      ],
+      "on": {
+        "success": "settle",
+        "failure": "settle"
+      }
+    },
+    {
+      "id": "settle",
+      "name": "Wait for Agreement Manager to read it",
+      "kind": "timerTrigger",
+      "after": {
+        "minutes": 5
+      },
+      "next": "ai"
+    },
+    {
+      "id": "skip",
+      "name": "Done already: stop",
+      "kind": "logger",
+      "message": "AI write-back on <%#XmlVariables.Params.Documents.Document.Name%>: marked Done already, nothing to do",
+      "next": "finish"
+    },
+    {
+      "id": "ai",
+      "name": "Read the AI values",
+      "kind": "useAiDataInsights",
+      "output": "AiInsights",
+      "on": {
+        "success": "who",
+        "failure": "failAi",
+        "timedOut": "failAi"
+      }
+    },
+    {
+      "id": "who",
+      "name": "Find the counterparty",
+      "kind": "evaluateXPath",
+      "source": "AiInsights",
+      "xpath": "/AIExtractions/FlattenedFieldCollections/parties/Field[not(starts-with(normalize-space(displayName/Value), 'Fontara'))][1]/displayName/Value",
+      "output": "Counterparty",
+      "on": {
+        "match": "empty",
+        "noMatch": "empty",
+        "failure": "empty"
+      }
+    },
+    {
+      "id": "empty",
+      "name": "Keep only what CLM lacks",
+      "kind": "setVariable",
+      "set": {
+        "WCounterparty": {
+          "code": "// The counterparty the XPath found (the first party not named Fontara), only where CLM has no party\nvar cur = Convert.ToString(GetVariableValue(\"DocXml.Documents.Document.CLMAgreementDetails.PartyName\")).Trim();\nif (cur != \"\") return \"\";\nvar v = Convert.ToString(GetVariableValue(\"Counterparty.Value\")).Trim();\nreturn v;"
+        },
+        "WEffective": {
+          "code": "// AI value only where CLM is empty: CLMAgreementDetails.EffectiveDate <- effectiveDate.value.Value\nvar cur = Convert.ToString(GetVariableValue(\"DocXml.Documents.Document.CLMAgreementDetails.EffectiveDate\")).Trim();\nvar ai = Convert.ToString(GetVariableValue(\"AiInsights.AIExtractions.FlattenedFieldCollections.effectiveDate.value.Value\")).Trim();\nif (cur == \"\" && ai != \"\") return ai;\nreturn \"\";"
+        },
+        "WExpiration": {
+          "code": "// AI value only where CLM is empty: CLMAgreementDetails.ExpirationDate <- expirationDate.value.Value\nvar cur = Convert.ToString(GetVariableValue(\"DocXml.Documents.Document.CLMAgreementDetails.ExpirationDate\")).Trim();\nvar ai = Convert.ToString(GetVariableValue(\"AiInsights.AIExtractions.FlattenedFieldCollections.expirationDate.value.Value\")).Trim();\nif (cur == \"\" && ai != \"\") return ai;\nreturn \"\";"
+        },
+        "WValue": {
+          "code": "// AI total value only where CLM Value is empty and the AI read it in US dollars (CLM Value reaches Agreement Manager as USD)\nvar cur = Convert.ToString(GetVariableValue(\"DocXml.Documents.Document.CLMAgreementDetails.Value\")).Trim();\nvar ai = Convert.ToString(GetVariableValue(\"AiInsights.AIExtractions.FlattenedFieldCollections.totalValue.value.doubleValue.Value\")).Trim();\nvar ccy = Convert.ToString(GetVariableValue(\"AiInsights.AIExtractions.FlattenedFieldCollections.totalValue.value.currencyCode.Value\")).Trim();\nif (cur == \"\" && ai != \"\" && ccy == \"USD\") return ai;\nreturn \"\";"
+        },
+        "WCurrency": {
+          "code": "// Currency only where Agreement Profile has none\nvar cur = Convert.ToString(GetVariableValue(\"DocXml.Documents.Document.AgreementProfile.Currency\")).Trim();\nvar ai = Convert.ToString(GetVariableValue(\"AiInsights.AIExtractions.FlattenedFieldCollections.totalValue.value.currencyCode.Value\")).Trim();\nif (cur == \"\" && ai != \"\") return ai;\nreturn \"\";"
+        },
+        "WRenewalCount": {
+          "code": "// AI duration in Months, only where CLM is empty: CLMAgreementDetails.RenewalTerm <- renewal.term.Value (ISO 8601: P12M, P1Y, P90D, P2W)\nvar cur = Convert.ToString(GetVariableValue(\"DocXml.Documents.Document.CLMAgreementDetails.RenewalTerm\")).Trim();\nvar ai = Convert.ToString(GetVariableValue(\"AiInsights.AIExtractions.FlattenedFieldCollections.renewal.term.Value\")).Trim();\nif (cur != \"\" || ai.Length < 3 || !ai.StartsWith(\"P\") || ai.Contains(\"T\")) return \"\";\nvar u = ai.Substring(ai.Length - 1);\nvar n = Convert.ToInt32(ai.Substring(1, ai.Length - 2));\nif (u == \"M\") return Convert.ToString(n);\nif (u == \"Y\") return Convert.ToString(n * 12);\nreturn \"\";"
+        },
+        "WNoticeCount": {
+          "code": "// AI duration in Days, only where CLM is empty: CLMAgreementDetails.RenewalNoticePeriod <- renewal.noticePeriod.Value (ISO 8601: P12M, P1Y, P90D, P2W)\nvar cur = Convert.ToString(GetVariableValue(\"DocXml.Documents.Document.CLMAgreementDetails.RenewalNoticePeriod\")).Trim();\nvar ai = Convert.ToString(GetVariableValue(\"AiInsights.AIExtractions.FlattenedFieldCollections.renewal.noticePeriod.Value\")).Trim();\nif (cur != \"\" || ai.Length < 3 || !ai.StartsWith(\"P\") || ai.Contains(\"T\")) return \"\";\nvar u = ai.Substring(ai.Length - 1);\nvar n = Convert.ToInt32(ai.Substring(1, ai.Length - 2));\nif (u == \"D\") return Convert.ToString(n);\nif (u == \"W\") return Convert.ToString(n * 7);\nif (u == \"M\") return Convert.ToString(n * 30);\nreturn \"\";"
+        },
+        "WCounterpartyField": {
+          "code": "// The counterparty the XPath found (the first party not named Fontara), only where Agreement Profile has no Counterparty\nvar cur = Convert.ToString(GetVariableValue(\"DocXml.Documents.Document.AgreementProfile.Counterparty\")).Trim();\nif (cur != \"\") return \"\";\nvar v = Convert.ToString(GetVariableValue(\"Counterparty.Value\")).Trim();\nreturn v;"
+        }
+      },
+      "next": "hasParty"
+    },
+    {
+      "id": "hasParty",
+      "name": "A counterparty to file?",
+      "kind": "rule",
+      "condition": {
+        "left": "<%#Variable.WCounterparty%>",
+        "op": "equals",
+        "right": ""
+      },
+      "on": {
+        "true": "details",
+        "false": "party"
+      }
+    },
+    {
+      "id": "party",
+      "name": "Find the party",
+      "kind": "findParty",
+      "partyName": "<%#Variable.WCounterparty%>",
+      "output": "Party",
+      "on": {
+        "match": "partyId",
+        "noMatch": "details",
+        "failure": "details"
+      }
+    },
+    {
+      "id": "partyId",
+      "name": "Take the party id",
+      "kind": "setVariable",
+      "set": {
+        "WPartyId": {
+          "var": "Party.CLMPartyData.CLMPartyId"
+        }
+      },
+      "next": "details"
+    },
+    {
+      "id": "details",
+      "name": "Write the empty agreement details",
+      "kind": "editClmAgreementAttributes",
+      "set": {
+        "partyId": "<%#Variable.WPartyId%>",
+        "effectiveDate": "<%#Variable.WEffective%>",
+        "expirationDate": "<%#Variable.WExpiration%>",
+        "totalContractValue": "<%#Variable.WValue%>"
+      },
+      "on": {
+        "success": "hasRenewal",
+        "failure": "failDetails"
+      }
+    },
+    {
+      "id": "hasRenewal",
+      "name": "Renewal term to write?",
+      "kind": "rule",
+      "condition": {
+        "left": "<%#Variable.WRenewalCount%>",
+        "op": "equals",
+        "right": ""
+      },
+      "on": {
+        "true": "hasNotice",
+        "false": "hasNoticeToo"
+      }
+    },
+    {
+      "id": "hasNoticeToo",
+      "name": "Renewal notice too?",
+      "kind": "rule",
+      "condition": {
+        "left": "<%#Variable.WNoticeCount%>",
+        "op": "equals",
+        "right": ""
+      },
+      "on": {
+        "true": "renewal",
+        "false": "terms"
+      }
+    },
+    {
+      "id": "terms",
+      "name": "Write the renewal term and notice",
+      "kind": "editClmAgreementAttributes",
+      "set": {
+        "renewalTermCount": "<%#Variable.WRenewalCount%>",
+        "renewalTermUnit": "Months",
+        "renewalNoticePeriodCount": "<%#Variable.WNoticeCount%>",
+        "renewalNoticePeriodUnit": "Days",
+        "noticePeriodCount": "<%#Variable.WNoticeCount%>",
+        "noticePeriodUnit": "Days"
+      },
+      "on": {
+        "success": "profile",
+        "failure": "failTerms"
+      }
+    },
+    {
+      "id": "renewal",
+      "name": "Write the renewal term",
+      "kind": "editClmAgreementAttributes",
+      "set": {
+        "renewalTermCount": "<%#Variable.WRenewalCount%>",
+        "renewalTermUnit": "Months"
+      },
+      "on": {
+        "success": "profile",
+        "failure": "failRenewal"
+      }
+    },
+    {
+      "id": "hasNotice",
+      "name": "Renewal notice to write?",
+      "kind": "rule",
+      "condition": {
+        "left": "<%#Variable.WNoticeCount%>",
+        "op": "equals",
+        "right": ""
+      },
+      "on": {
+        "true": "profile",
+        "false": "notice"
+      }
+    },
+    {
+      "id": "notice",
+      "name": "Write the renewal notice",
+      "kind": "editClmAgreementAttributes",
+      "set": {
+        "renewalNoticePeriodCount": "<%#Variable.WNoticeCount%>",
+        "renewalNoticePeriodUnit": "Days",
+        "noticePeriodCount": "<%#Variable.WNoticeCount%>",
+        "noticePeriodUnit": "Days"
+      },
+      "on": {
+        "success": "profile",
+        "failure": "failNotice"
+      }
+    },
+    {
+      "id": "profile",
+      "name": "Counterparty to write?",
+      "kind": "rule",
+      "condition": {
+        "left": "<%#Variable.WCounterpartyField%>",
+        "op": "equals",
+        "right": ""
+      },
+      "on": {
+        "true": "hasCurrency",
+        "false": "counterparty"
+      }
+    },
+    {
+      "id": "counterparty",
+      "name": "Write the Counterparty",
+      "kind": "updateMetadata",
+      "set": [
+        {
+          "attribute": "Agreement Profile.Counterparty",
+          "value": "<%#Variable.WCounterpartyField%>"
+        }
+      ],
+      "on": {
+        "success": "hasCurrency",
+        "failure": "failProfile"
+      }
+    },
+    {
+      "id": "hasCurrency",
+      "name": "Currency to write?",
+      "kind": "rule",
+      "condition": {
+        "left": "<%#Variable.WCurrency%>",
+        "op": "equals",
+        "right": ""
+      },
+      "on": {
+        "true": "log",
+        "false": "currency"
+      }
+    },
+    {
+      "id": "currency",
+      "name": "Write the Currency",
+      "kind": "updateMetadata",
+      "set": [
+        {
+          "attribute": "Agreement Profile.Currency",
+          "value": "<%#Variable.WCurrency%>"
+        }
+      ],
+      "on": {
+        "success": "log",
+        "failure": "failProfile"
+      }
+    },
+    {
+      "id": "log",
+      "name": "Log what was written",
+      "kind": "logger",
+      "message": "AI write-back on <%#XmlVariables.Params.Documents.Document.Name%>: party [<%#Variable.WCounterparty%>], Counterparty [<%#Variable.WCounterpartyField%>], effective [<%#Variable.WEffective%>], expiration [<%#Variable.WExpiration%>], value USD [<%#Variable.WValue%>], currency [<%#Variable.WCurrency%>], renewal months [<%#Variable.WRenewalCount%>], notice days [<%#Variable.WNoticeCount%>]; empty brackets: CLM had a value or the AI found none",
+      "next": "finish"
+    },
+    {
+      "id": "failAi",
+      "name": "Failed: Use AI Data Insights",
+      "kind": "logger",
+      "message": "Failed or timed out: Use AI Data Insights on <%#XmlVariables.Params.Documents.Document.Name%>",
+      "next": "finish"
+    },
+    {
+      "id": "failDetails",
+      "name": "Failed: Edit CLM Agreement Attributes",
+      "kind": "logger",
+      "message": "Failed: Edit CLM Agreement Attributes",
+      "next": "hasRenewal"
+    },
+    {
+      "id": "failProfile",
+      "name": "Failed: Update Document Metadata Value",
+      "kind": "logger",
+      "message": "Failed: Update Document Metadata Value",
+      "next": "log"
+    },
+    {
+      "id": "failRenewal",
+      "name": "Failed: write the renewal term",
+      "kind": "logger",
+      "message": "Failed: Edit CLM Agreement Attributes (renewal term)",
+      "next": "profile"
+    },
+    {
+      "id": "failNotice",
+      "name": "Failed: write the renewal notice",
+      "kind": "logger",
+      "message": "Failed: Edit CLM Agreement Attributes (renewal notice)",
+      "next": "profile"
+    },
+    {
+      "id": "failTerms",
+      "name": "Failed: write the renewal term and notice",
+      "kind": "logger",
+      "message": "Failed: Edit CLM Agreement Attributes (renewal term and notice)",
+      "next": "profile"
+    },
+    {
+      "id": "finish",
+      "name": "Finish",
+      "kind": "finish"
+    }
+  ]
+}
