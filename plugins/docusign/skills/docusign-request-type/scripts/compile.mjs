@@ -44,7 +44,7 @@ const describe = (types, ofSpecs) => {
   const cf = fieldsOf(types);
   if (cf.length) {
     console.log(`  custom fields (C_…): ${cf.map((f) => `${f.name} "${f.label}" ${f.type}`).join(', ')}`);
-    console.log('WARNING custom fields are account-wide and permanent: import creates or UPDATES them (a different label or option list on an existing field rewrites it in every form), and deleting the type leaves them');
+    console.log('WARNING custom fields are account-wide and permanent: import creates or UPDATES them (a different label renames an existing field in every form; the option list of an existing Dropdown field cannot change: that import fails whole, so a new list needs a new field name), and deleting the type leaves them');
   }
 };
 

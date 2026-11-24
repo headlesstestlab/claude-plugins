@@ -1,0 +1,211 @@
+{
+  "id": "employee-onboarding",
+  "name": "New Hire Agreements",
+  "description": "The agreements a new hire signs before day one: confidentiality and IP assignment, a country employment contract, equity or relocation terms.",
+  "pages": [
+    {
+      "title": "New Hire Agreements",
+      "fields": [
+        {
+          "key": "employee_name",
+          "bind": {
+            "provision": "Party"
+          },
+          "label": "New hire's full name",
+          "required": true,
+          "description": "The person, as a party to the agreement."
+        },
+        {
+          "key": "employee_email",
+          "type": "email",
+          "label": "Personal email for sending",
+          "bind": {
+            "custom": "IntakeCounterpartyEmail",
+            "label": "Counterparty Signer Email"
+          },
+          "required": true,
+          "description": "Agreements are sent here for signature before the hire has a Fontara account."
+        },
+        {
+          "key": "job_title",
+          "type": "text",
+          "label": "Job title",
+          "bind": {
+            "custom": "IntakeJobTitle",
+            "label": "Job Title"
+          },
+          "required": true
+        },
+        {
+          "key": "department",
+          "type": "dropdown",
+          "label": "Department",
+          "bind": {
+            "custom": "DeskDepartment",
+            "label": "Department",
+            "type": "Dropdown",
+            "accountWideOptions": true
+          },
+          "options": [
+            "Sales",
+            "Partnerships",
+            "Corporate development",
+            "Procurement",
+            "Product",
+            "Engineering",
+            "Marketing",
+            "Human Resources",
+            "Legal",
+            "Finance",
+            "IT",
+            "Operations",
+            "Other"
+          ],
+          "required": true
+        },
+        {
+          "key": "employment_type",
+          "bind": {
+            "provision": "EmploymentType"
+          },
+          "label": "Employment type",
+          "required": true
+        },
+        {
+          "key": "location",
+          "bind": {
+            "provision": "EmploymentLocation"
+          },
+          "label": "Work location (city and country)",
+          "required": true,
+          "description": "UK and EU hires need a written employment contract."
+        },
+        {
+          "key": "hire_date",
+          "bind": {
+            "provision": "HireDate"
+          },
+          "label": "Start date",
+          "required": true
+        },
+        {
+          "key": "agreements",
+          "type": "checkbox",
+          "label": "Agreements needed",
+          "options": [
+            "Confidentiality and IP assignment",
+            "Employment contract (UK or EU)",
+            "Equity agreement",
+            "Relocation repayment agreement"
+          ],
+          "required": true,
+          "select": {
+            "atLeast": 1
+          }
+        },
+        {
+          "key": "non_standard",
+          "type": "radio",
+          "label": "Any non-standard terms in the offer?",
+          "bind": {
+            "custom": "IntakeNonStandard",
+            "label": "Non-standard Terms Requested",
+            "type": "Text"
+          },
+          "options": [
+            "Yes",
+            "No"
+          ]
+        },
+        {
+          "key": "details",
+          "type": "longtext",
+          "label": "Which terms?",
+          "bind": {
+            "custom": "RequestDescription"
+          }
+        },
+        {
+          "key": "owner",
+          "type": "text",
+          "label": "Hiring manager",
+          "bind": {
+            "custom": "BusinessOwnerName"
+          },
+          "required": true,
+          "description": "The person accountable for this agreement after it is signed."
+        },
+        {
+          "key": "urgency",
+          "type": "dropdown",
+          "label": "Urgency",
+          "bind": {
+            "custom": "DeskUrgency",
+            "label": "Urgency",
+            "type": "Dropdown",
+            "accountWideOptions": true
+          },
+          "options": [
+            "Standard (5 business days)",
+            "Expedited (2 business days)",
+            "Urgent (24 hours, VP approval)"
+          ],
+          "required": true,
+          "description": "Standard is five business days. Urgent needs a VP's approval: name them in the reason. Urgency changes how fast Legal Operations (Maya Patel) works the request, not who approves the deal, which follows Fontara's escalation matrix."
+        },
+        {
+          "key": "urgency_reason",
+          "type": "longtext",
+          "label": "Why is this urgent?",
+          "bind": {
+            "custom": "IntakeUrgencyReason",
+            "label": "Urgency Reason"
+          },
+          "description": "The business deadline or risk, and the VP who approved the urgency."
+        },
+        {
+          "key": "needed_by",
+          "type": "date",
+          "label": "Needed by",
+          "bind": {
+            "custom": "TargetDueDate"
+          },
+          "description": "At least five business days before the start date."
+        },
+        {
+          "key": "documents",
+          "type": "file",
+          "label": "Signed offer",
+          "formats": [
+            "pdf"
+          ],
+          "maxFileSizeInMB": 10
+        }
+      ]
+    }
+  ],
+  "rules": [
+    {
+      "when": [
+        {
+          "field": "non_standard",
+          "is": "Yes"
+        }
+      ],
+      "then": {
+        "details": "show"
+      }
+    },
+    {
+      "when": [
+        {
+          "field": "urgency",
+          "is": "Urgent (24 hours, VP approval)"
+        }
+      ],
+      "then": {
+        "urgency_reason": "show"
+      }
+    }
+  ]
+}

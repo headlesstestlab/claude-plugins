@@ -1,0 +1,166 @@
+{
+  "id": "legal-hold-request",
+  "name": "Legal Hold Request",
+  "description": "Preserve documents and data for a dispute, investigation or claim that is threatened, filed or reasonably anticipated. Legal-only routing.",
+  "pages": [
+    {
+      "title": "Legal Hold Request",
+      "fields": [
+        {
+          "key": "subject_title_note",
+          "type": "description",
+          "text": "**Matter name:** put it in the request title above the form."
+        },
+        {
+          "key": "matter_type",
+          "type": "dropdown",
+          "label": "Matter type",
+          "bind": {
+            "custom": "DeskMatterType",
+            "label": "Matter Type",
+            "type": "Dropdown",
+            "accountWideOptions": true
+          },
+          "options": [
+            "Litigation",
+            "Government or regulatory investigation",
+            "Internal investigation",
+            "Employment claim",
+            "Intellectual property dispute",
+            "Other"
+          ],
+          "required": true
+        },
+        {
+          "key": "dispute",
+          "type": "dropdown",
+          "label": "Status",
+          "bind": {
+            "custom": "DeskHoldTrigger",
+            "label": "Hold Trigger",
+            "type": "Dropdown",
+            "accountWideOptions": true
+          },
+          "options": [
+            "Reasonably anticipated",
+            "Dispute or claim threatened",
+            "Claim filed",
+            "Investigation opened"
+          ],
+          "required": true
+        },
+        {
+          "key": "aware",
+          "type": "date",
+          "label": "When did Fontara first anticipate it?",
+          "bind": {
+            "custom": "IntakeAwareDate",
+            "label": "Date Received or Discovered"
+          },
+          "required": true,
+          "description": "The preservation duty starts from this date."
+        },
+        {
+          "key": "party",
+          "bind": {
+            "provision": "Party"
+          },
+          "label": "Opposing or investigating party"
+        },
+        {
+          "key": "details",
+          "type": "longtext",
+          "label": "What happened, and who must preserve what?",
+          "bind": {
+            "custom": "RequestDescription"
+          },
+          "required": true,
+          "description": "The facts as you know them, and outside counsel if one is engaged. Do not speculate. Then the custodians, one per line with their title, and the systems: email, Slack, Google Drive, Salesforce, HR system, laptops."
+        },
+        {
+          "key": "entity",
+          "type": "dropdown",
+          "label": "Fontara contracting entity",
+          "bind": {
+            "custom": "DeskFontaraEntity",
+            "label": "Contracting Entity",
+            "type": "Dropdown",
+            "accountWideOptions": true
+          },
+          "options": [
+            "Fontara, Inc.",
+            "Fontara UK Ltd",
+            "Fontara Europe Ltd"
+          ],
+          "required": true,
+          "description": "The Fontara company that signs. US business: Fontara, Inc. UK: Fontara UK Ltd. EU: Fontara Europe Ltd."
+        },
+        {
+          "key": "owner",
+          "type": "text",
+          "label": "Requesting manager",
+          "bind": {
+            "custom": "BusinessOwnerName"
+          },
+          "required": true,
+          "description": "The manager accountable for the custodians."
+        },
+        {
+          "key": "urgency",
+          "type": "dropdown",
+          "label": "Urgency",
+          "bind": {
+            "custom": "DeskUrgency",
+            "label": "Urgency",
+            "type": "Dropdown",
+            "accountWideOptions": true
+          },
+          "options": [
+            "Standard (5 business days)",
+            "Expedited (2 business days)",
+            "Urgent (24 hours, VP approval)"
+          ],
+          "required": true,
+          "description": "Standard is five business days. Urgent needs a VP's approval: name them in the reason. Urgency changes how fast Legal Operations (Maya Patel) works the request, not who approves the deal, which follows Fontara's escalation matrix."
+        },
+        {
+          "key": "urgency_reason",
+          "type": "longtext",
+          "label": "Why is this urgent?",
+          "bind": {
+            "custom": "IntakeUrgencyReason",
+            "label": "Urgency Reason"
+          },
+          "description": "The business deadline or risk, and the VP who approved the urgency."
+        },
+        {
+          "key": "needed_by",
+          "type": "date",
+          "label": "Needed by",
+          "bind": {
+            "custom": "TargetDueDate"
+          },
+          "description": "When you need Legal's work finished. Not the contract's start or end date."
+        },
+        {
+          "key": "documents",
+          "type": "file",
+          "label": "The complaint, letter or notice"
+        }
+      ]
+    }
+  ],
+  "rules": [
+    {
+      "when": [
+        {
+          "field": "urgency",
+          "is": "Urgent (24 hours, VP approval)"
+        }
+      ],
+      "then": {
+        "urgency_reason": "show"
+      }
+    }
+  ]
+}

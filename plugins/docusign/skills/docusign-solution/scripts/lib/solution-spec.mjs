@@ -34,6 +34,11 @@ import { makeZip, readZip } from './zip.mjs';
 import { deskSettingsSheet, validateDeskSettings } from './desk-settings.mjs';
 import { SPEC_DIRS, capabilitiesUsedBy } from './capabilities.mjs';
 const ASSETS = path.join(path.dirname(fileURLToPath(import.meta.url)), '..', 'assets');
+/** Every request type of the library (the skill ships them all in scripts/assets/ for this). */
+export function libraryRequestTypes() {
+    const dir = path.join(ASSETS, 'request-types', 'specs');
+    return fs.readdirSync(dir).filter((f) => f.endsWith('.json')).sort().map((f) => JSON.parse(fs.readFileSync(path.join(dir, f), 'utf8')));
+}
 /** Fixed, so a rebuild writes the same bytes (the gallery's date). */
 export const BUNDLE_AT = new Date('2026-10-21T00:00:00Z');
 const OWNER = { userId: '00000000-0000-0000-0000-000000000000', userName: 'Docusign screen gallery' };

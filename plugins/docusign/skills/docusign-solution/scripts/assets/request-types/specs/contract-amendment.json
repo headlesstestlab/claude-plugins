@@ -1,0 +1,282 @@
+{
+  "id": "contract-amendment",
+  "name": "Contract Amendment",
+  "description": "Change an agreement that is already signed: scope, pricing, term, entity, assignment or data processing.",
+  "pages": [
+    {
+      "title": "Contract Amendment",
+      "fields": [
+        {
+          "key": "existing",
+          "type": "text",
+          "label": "Existing agreement",
+          "bind": {
+            "custom": "IntakeExistingAgreement",
+            "label": "Related Agreement"
+          },
+          "required": true,
+          "description": "CLM ID or exact title, e.g. 'Acme MSA 2024'."
+        },
+        {
+          "key": "party",
+          "bind": {
+            "provision": "Party"
+          },
+          "label": "Counterparty",
+          "required": true
+        },
+        {
+          "key": "side",
+          "type": "dropdown",
+          "label": "Is Fontara buying or selling?",
+          "bind": {
+            "custom": "DeskDealSide",
+            "label": "Buying or Selling",
+            "type": "Dropdown",
+            "accountWideOptions": true
+          },
+          "options": [
+            "Buying: Fontara is the customer",
+            "Selling: Fontara is the supplier",
+            "Neither or mutual"
+          ],
+          "required": true,
+          "description": "Decides whose template applies and who signs: the Head of Procurement (Victoria Lee) when buying, the VP of Sales (Corey Ikso) when selling, the CFO (Marcus Chen) over $1,000,000. Legal Operations (Maya Patel) reviews; non-standard terms go to the General Counsel (Elena Rodriguez)."
+        },
+        {
+          "key": "amendment_type",
+          "type": "dropdown",
+          "label": "What is changing?",
+          "bind": {
+            "custom": "DeskAmendmentType",
+            "label": "Amendment Type",
+            "type": "Dropdown",
+            "accountWideOptions": true
+          },
+          "options": [
+            "Scope",
+            "Pricing",
+            "Term or extension",
+            "Entity or name change",
+            "Assignment",
+            "Data processing",
+            "Other"
+          ],
+          "required": true
+        },
+        {
+          "key": "details",
+          "type": "longtext",
+          "label": "Describe the change",
+          "bind": {
+            "custom": "RequestDescription"
+          },
+          "required": true,
+          "description": "What the clause says now, and what it should say."
+        },
+        {
+          "key": "value",
+          "bind": {
+            "provision": "ContractValue"
+          },
+          "label": "New total contract value (TCV)",
+          "required": false,
+          "description": "The agreement's new total, all years, excluding tax."
+        },
+        {
+          "key": "expiration",
+          "bind": {
+            "provision": "ExpirationDate"
+          },
+          "label": "New end date"
+        },
+        {
+          "key": "data_details",
+          "type": "longtext",
+          "label": "What personal data processing is changing?",
+          "bind": {
+            "custom": "IntakeDataDetails",
+            "label": "Personal Data Description"
+          },
+          "description": "New data, new purposes, new sub-processors or new locations."
+        },
+        {
+          "key": "data_class",
+          "type": "dropdown",
+          "label": "Data classification",
+          "bind": {
+            "custom": "DeskDataClass",
+            "label": "Data Class",
+            "type": "Dropdown",
+            "accountWideOptions": true
+          },
+          "options": [
+            "Public",
+            "Internal",
+            "Confidential",
+            "Restricted (special-category, children's or financial data)"
+          ]
+        },
+        {
+          "key": "paper",
+          "type": "dropdown",
+          "label": "Whose paper?",
+          "bind": {
+            "custom": "DeskPaperSource",
+            "label": "Whose Paper",
+            "type": "Dropdown",
+            "accountWideOptions": true
+          },
+          "options": [
+            "Fontara's paper",
+            "Counterparty's paper"
+          ],
+          "required": true,
+          "description": "Our amendment template means Fontara's standard form. Counterparty's paper means their draft."
+        },
+        {
+          "key": "their_draft",
+          "type": "file",
+          "label": "Counterparty's draft",
+          "required": false,
+          "description": "Their latest version, in Word if you have it."
+        },
+        {
+          "key": "effective",
+          "bind": {
+            "provision": "EffectiveDate"
+          },
+          "label": "Amendment effective date"
+        },
+        {
+          "key": "entity",
+          "type": "dropdown",
+          "label": "Fontara contracting entity",
+          "bind": {
+            "custom": "DeskFontaraEntity",
+            "label": "Contracting Entity",
+            "type": "Dropdown",
+            "accountWideOptions": true
+          },
+          "options": [
+            "Fontara, Inc.",
+            "Fontara UK Ltd",
+            "Fontara Europe Ltd"
+          ],
+          "required": true,
+          "description": "The Fontara company that signs. US business: Fontara, Inc. UK: Fontara UK Ltd. EU: Fontara Europe Ltd."
+        },
+        {
+          "key": "owner",
+          "type": "text",
+          "label": "Business owner",
+          "bind": {
+            "custom": "BusinessOwnerName"
+          },
+          "required": true,
+          "description": "The person accountable for this agreement after it is signed."
+        },
+        {
+          "key": "urgency",
+          "type": "dropdown",
+          "label": "Urgency",
+          "bind": {
+            "custom": "DeskUrgency",
+            "label": "Urgency",
+            "type": "Dropdown",
+            "accountWideOptions": true
+          },
+          "options": [
+            "Standard (5 business days)",
+            "Expedited (2 business days)",
+            "Urgent (24 hours, VP approval)"
+          ],
+          "required": true,
+          "description": "Standard is five business days. Urgent needs a VP's approval: name them in the reason. Urgency changes how fast Legal Operations (Maya Patel) works the request, not who approves the deal, which follows Fontara's escalation matrix."
+        },
+        {
+          "key": "urgency_reason",
+          "type": "longtext",
+          "label": "Why is this urgent?",
+          "bind": {
+            "custom": "IntakeUrgencyReason",
+            "label": "Urgency Reason"
+          },
+          "description": "The business deadline or risk, and the VP who approved the urgency."
+        },
+        {
+          "key": "needed_by",
+          "type": "date",
+          "label": "Needed by",
+          "bind": {
+            "custom": "TargetDueDate"
+          },
+          "description": "When you need Legal's work finished. Not the contract's start or end date."
+        },
+        {
+          "key": "documents",
+          "type": "file",
+          "label": "The current agreement"
+        }
+      ]
+    }
+  ],
+  "rules": [
+    {
+      "when": [
+        {
+          "field": "amendment_type",
+          "is": "Pricing"
+        }
+      ],
+      "then": {
+        "value": "show"
+      }
+    },
+    {
+      "when": [
+        {
+          "field": "amendment_type",
+          "is": "Term or extension"
+        }
+      ],
+      "then": {
+        "expiration": "show"
+      }
+    },
+    {
+      "when": [
+        {
+          "field": "amendment_type",
+          "is": "Data processing"
+        }
+      ],
+      "then": {
+        "data_details": "show",
+        "data_class": "show"
+      }
+    },
+    {
+      "when": [
+        {
+          "field": "paper",
+          "is": "Counterparty's paper"
+        }
+      ],
+      "then": {
+        "their_draft": "show"
+      }
+    },
+    {
+      "when": [
+        {
+          "field": "urgency",
+          "is": "Urgent (24 hours, VP approval)"
+        }
+      ],
+      "then": {
+        "urgency_reason": "show"
+      }
+    }
+  ]
+}

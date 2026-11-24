@@ -1,0 +1,197 @@
+{
+  "id": "penetration-test-authorization",
+  "name": "Penetration Test Authorization",
+  "description": "An authorization and rules of engagement for a security test, signed by the testing firm, Fontara's CISO and the hosting provider before testing begins.",
+  "pages": [
+    {
+      "title": "Penetration Test Authorization",
+      "fields": [
+        {
+          "key": "subject_title_note",
+          "type": "description",
+          "text": "**Test name:** put it in the request title above the form, for example: 2026 annual penetration test."
+        },
+        {
+          "key": "party",
+          "label": "Testing firm",
+          "bind": {
+            "provision": "Party"
+          },
+          "required": true,
+          "description": "The testing firm's legal name, as on its agreement with Fontara."
+        },
+        {
+          "key": "related",
+          "type": "text",
+          "label": "Related agreement",
+          "bind": {
+            "custom": "IntakeExistingAgreement",
+            "label": "Related Agreement"
+          },
+          "required": true,
+          "description": "The agreement the test is performed under, for example: Master Services Agreement dated 11/07/2023 and the 2026 Statement of Work."
+        },
+        {
+          "key": "firm_signer",
+          "type": "text",
+          "label": "Testing firm signer name",
+          "bind": {
+            "custom": "CounterpartySigner"
+          },
+          "required": true,
+          "description": "The person who signs for the testing firm, usually its managing director. Signs first."
+        },
+        {
+          "key": "firm_signer_email",
+          "type": "email",
+          "label": "Testing firm signer email",
+          "bind": {
+            "custom": "IntakeCounterpartyEmail",
+            "label": "Counterparty Signer Email"
+          },
+          "required": true
+        },
+        {
+          "key": "scope",
+          "type": "longtext",
+          "label": "Systems in scope",
+          "bind": {
+            "custom": "IntakeTestScope",
+            "label": "Systems in Scope"
+          },
+          "required": true,
+          "description": "Applications, APIs, hostnames, IP ranges and environments the testers may test."
+        },
+        {
+          "key": "out_of_scope",
+          "type": "longtext",
+          "label": "Out of scope",
+          "bind": {
+            "custom": "IntakeOutOfScope",
+            "label": "Out of Scope"
+          },
+          "required": true,
+          "description": "Systems the testers must not touch: the hosting provider's shared infrastructure, other customers' environments, third-party services."
+        },
+        {
+          "key": "start",
+          "type": "date",
+          "label": "Testing starts",
+          "bind": {
+            "custom": "IntakeTestStart",
+            "label": "Testing Starts"
+          },
+          "required": true,
+          "description": "Most hosting providers need the request 10 business days before this date."
+        },
+        {
+          "key": "end",
+          "type": "date",
+          "label": "Testing ends",
+          "bind": {
+            "custom": "IntakeTestEnd",
+            "label": "Testing Ends"
+          },
+          "required": true
+        },
+        {
+          "key": "hours",
+          "type": "text",
+          "label": "Testing hours",
+          "bind": {
+            "custom": "IntakeTestHours",
+            "label": "Testing Hours"
+          },
+          "required": true,
+          "description": "Days and hours, with the time zone, for example: Monday to Friday, 8:00 p.m. to 6:00 a.m. Eastern Time."
+        },
+        {
+          "key": "source_ips",
+          "type": "text",
+          "label": "Source IP addresses",
+          "bind": {
+            "custom": "IntakeSourceIps",
+            "label": "Source IP Addresses"
+          },
+          "required": true,
+          "description": "The addresses all test traffic will come from."
+        },
+        {
+          "key": "host",
+          "type": "text",
+          "label": "Hosting provider",
+          "bind": {
+            "custom": "IntakeHostingProvider",
+            "label": "Hosting Provider"
+          },
+          "required": true,
+          "description": "The provider whose services the systems in scope run on. It approves the test and signs last."
+        },
+        {
+          "key": "host_approver",
+          "type": "text",
+          "label": "Hosting provider approver name",
+          "bind": {
+            "custom": "IntakeHostApprover",
+            "label": "Hosting Provider Approver"
+          },
+          "required": true,
+          "description": "The person at the hosting provider who approves customer security testing."
+        },
+        {
+          "key": "host_approver_email",
+          "type": "email",
+          "label": "Hosting provider approver email",
+          "bind": {
+            "custom": "IntakeHostApproverEmail",
+            "label": "Hosting Provider Approver Email"
+          },
+          "required": true
+        },
+        {
+          "key": "fontara_emergency",
+          "type": "text",
+          "label": "Fontara emergency contact",
+          "bind": {
+            "custom": "IntakeEmergencyContact",
+            "label": "Fontara Emergency Contact"
+          },
+          "required": true,
+          "description": "Name, title and a phone number answered during testing hours."
+        },
+        {
+          "key": "firm_emergency",
+          "type": "text",
+          "label": "Testing firm emergency contact",
+          "bind": {
+            "custom": "IntakeVendorEmergencyContact",
+            "label": "Testing Firm Emergency Contact"
+          },
+          "required": true,
+          "description": "Name, title and a phone number answered during testing hours."
+        },
+        {
+          "key": "owner",
+          "type": "text",
+          "label": "Business owner",
+          "bind": {
+            "custom": "BusinessOwnerName"
+          },
+          "required": true,
+          "description": "The Fontara person accountable for the test, who gets the daily status. Name and title."
+        },
+        {
+          "key": "cost_center",
+          "type": "text",
+          "label": "Cost center",
+          "bind": {
+            "custom": "IntakeCostCenter",
+            "label": "Cost Center"
+          },
+          "required": true,
+          "description": "The cost center that pays, e.g. 5200-IT Security."
+        }
+      ]
+    }
+  ]
+}

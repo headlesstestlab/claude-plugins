@@ -1,0 +1,300 @@
+{
+  "id": "contract-termination",
+  "name": "Contract Termination",
+  "description": "End an agreement early, or confirm it will not renew: the reason, the notice deadline and what has been said to the other side.",
+  "pages": [
+    {
+      "title": "Contract Termination",
+      "fields": [
+        {
+          "key": "existing",
+          "type": "text",
+          "label": "Existing agreement",
+          "bind": {
+            "custom": "IntakeExistingAgreement",
+            "label": "Related Agreement"
+          },
+          "required": true,
+          "description": "CLM ID or exact title, e.g. 'Acme MSA 2024'.",
+          "placeholder": "e.g. Acme MSA 2024",
+          "maxLength": 120
+        },
+        {
+          "key": "agreement_title",
+          "bind": {
+            "provision": "Title"
+          },
+          "label": "Agreement title as signed",
+          "description": "The title on the signed agreement, e.g. Master Services Agreement."
+        },
+        {
+          "key": "signed_on",
+          "bind": {
+            "provision": "ExecutionDate"
+          },
+          "label": "Date the agreement was signed"
+        },
+        {
+          "key": "msa_note",
+          "type": "description",
+          "text": "Ending a master agreement also ends the SOWs and Order Forms under it. List them in Background."
+        },
+        {
+          "key": "party",
+          "bind": {
+            "provision": "Party"
+          },
+          "label": "Counterparty",
+          "required": true
+        },
+        {
+          "key": "side",
+          "type": "dropdown",
+          "label": "Is Fontara buying or selling?",
+          "bind": {
+            "custom": "DeskDealSide",
+            "label": "Buying or Selling",
+            "type": "Dropdown",
+            "accountWideOptions": true
+          },
+          "options": [
+            "Buying: Fontara is the customer",
+            "Selling: Fontara is the supplier",
+            "Neither or mutual"
+          ],
+          "required": true,
+          "description": "Decides whose template applies and who signs: the Head of Procurement (Victoria Lee) when buying, the VP of Sales (Corey Ikso) when selling, the CFO (Marcus Chen) over $1,000,000. Legal Operations (Maya Patel) reviews; non-standard terms go to the General Counsel (Elena Rodriguez)."
+        },
+        {
+          "key": "reason",
+          "type": "dropdown",
+          "label": "Reason",
+          "bind": {
+            "custom": "DeskTerminationReason",
+            "label": "Reason for Termination",
+            "type": "Dropdown",
+            "accountWideOptions": true
+          },
+          "options": [
+            {
+              "label": "Convenience",
+              "selected": true
+            },
+            {
+              "label": "Breach",
+              "description": "Do not contact the counterparty. Legal advises on notice."
+            },
+            "Non-renewal",
+            "Mutual agreement",
+            "Other"
+          ],
+          "required": true,
+          "description": "Breach: do not contact the counterparty. Legal will advise on notice."
+        },
+        {
+          "key": "breach_note",
+          "type": "description",
+          "text": "Breach: please do not contact the counterparty or send any notice. Legal will advise on the notice and how to preserve our position."
+        },
+        {
+          "key": "dispute",
+          "type": "dropdown",
+          "label": "Where do things stand with them?",
+          "bind": {
+            "custom": "DeskTerminationDispute",
+            "label": "Dispute Before Termination",
+            "type": "Dropdown",
+            "accountWideOptions": true
+          },
+          "options": [
+            "Not raised with them",
+            "Discussed informally",
+            "Formal notice sent",
+            "Dispute or claim threatened",
+            "Claim filed"
+          ],
+          "required": true
+        },
+        {
+          "key": "dispute_note",
+          "type": "description",
+          "text": "Legal Operations (Maya Patel) brings in the General Counsel (Elena Rodriguez) on any dispute."
+        },
+        {
+          "key": "courts",
+          "bind": {
+            "provision": "Jurisdiction"
+          },
+          "label": "Courts named in the agreement",
+          "description": "Only needed for a breach or a dispute."
+        },
+        {
+          "key": "notice",
+          "bind": {
+            "provision": "RenewalNoticeDate"
+          },
+          "label": "Notice deadline"
+        },
+        {
+          "key": "end_date",
+          "bind": {
+            "provision": "TerminationDate"
+          },
+          "label": "Termination date",
+          "required": true
+        },
+        {
+          "key": "exit",
+          "type": "section",
+          "label": "Exit plan",
+          "text": "What Fontara needs when the agreement ends.",
+          "fields": [
+            {
+              "key": "details",
+              "type": "longtext",
+              "label": "Background",
+              "bind": {
+                "custom": "RequestDescription"
+              },
+              "description": "What happened, and what we need at exit: data return or deletion, transition services, final invoices.",
+              "maxLineBreaks": 20
+            }
+          ]
+        },
+        {
+          "key": "entity",
+          "type": "dropdown",
+          "label": "Fontara contracting entity",
+          "bind": {
+            "custom": "DeskFontaraEntity",
+            "label": "Contracting Entity",
+            "type": "Dropdown",
+            "accountWideOptions": true
+          },
+          "options": [
+            "Fontara, Inc.",
+            "Fontara UK Ltd",
+            "Fontara Europe Ltd"
+          ],
+          "required": true,
+          "description": "The Fontara company that signs. US business: Fontara, Inc. UK: Fontara UK Ltd. EU: Fontara Europe Ltd."
+        },
+        {
+          "key": "owner",
+          "type": "text",
+          "label": "Business owner",
+          "bind": {
+            "custom": "BusinessOwnerName"
+          },
+          "required": true,
+          "description": "The person accountable for this agreement after it is signed."
+        },
+        {
+          "key": "urgency",
+          "type": "dropdown",
+          "label": "Urgency",
+          "bind": {
+            "custom": "DeskUrgency",
+            "label": "Urgency",
+            "type": "Dropdown",
+            "accountWideOptions": true
+          },
+          "options": [
+            "Standard (5 business days)",
+            "Expedited (2 business days)",
+            "Urgent (24 hours, VP approval)"
+          ],
+          "required": true,
+          "description": "Standard is five business days. Urgent needs a VP's approval: name them in the reason. Urgency changes how fast Legal Operations (Maya Patel) works the request, not who approves the deal, which follows Fontara's escalation matrix."
+        },
+        {
+          "key": "urgency_reason",
+          "type": "longtext",
+          "label": "Why is this urgent?",
+          "bind": {
+            "custom": "IntakeUrgencyReason",
+            "label": "Urgency Reason"
+          },
+          "description": "The business deadline or risk, and the VP who approved the urgency."
+        },
+        {
+          "key": "needed_by",
+          "type": "date",
+          "label": "Needed by",
+          "bind": {
+            "custom": "TargetDueDate"
+          },
+          "description": "When you need Legal's work finished. Not the contract's start or end date."
+        },
+        {
+          "key": "documents",
+          "type": "file",
+          "label": "The agreement and any notices"
+        }
+      ],
+      "subtitle": "Tell Legal which agreement ends, why, and by when."
+    }
+  ],
+  "rules": [
+    {
+      "match": "any",
+      "when": [
+        {
+          "field": "reason",
+          "is": "Breach"
+        },
+        {
+          "field": "dispute",
+          "is": "Claim filed"
+        }
+      ],
+      "then": {
+        "breach_note": "show"
+      }
+    },
+    {
+      "when": [
+        {
+          "field": "reason",
+          "is": "Mutual agreement"
+        }
+      ],
+      "then": {
+        "notice": "hide"
+      }
+    },
+    {
+      "when": [
+        {
+          "field": "existing",
+          "contains": "MSA"
+        }
+      ],
+      "then": {
+        "msa_note": "show"
+      }
+    },
+    {
+      "when": [
+        {
+          "field": "dispute",
+          "isNot": "Not raised with them"
+        }
+      ],
+      "then": {
+        "dispute_note": "show"
+      }
+    },
+    {
+      "when": [
+        {
+          "field": "urgency",
+          "is": "Urgent (24 hours, VP approval)"
+        }
+      ],
+      "then": {
+        "urgency_reason": "show"
+      }
+    }
+  ]
+}

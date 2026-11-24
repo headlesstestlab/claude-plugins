@@ -86,6 +86,16 @@ const CUSTOM_NS_VERSION = '1.0.0';
 /** "RequestDescription" → "Request Description"; "SLAUptime" → "SLA Uptime". */
 export const humanize = (n) => n.replace(/_/g, ' ').replace(/([a-z0-9])([A-Z])/g, '$1 $2').replace(/([A-Z]+)([A-Z][a-z])/g, '$1 $2').trim();
 const customTypeOf = (f, b) => b.type ?? (f.type === 'date' ? 'Date' : f.type === 'number' ? 'Number' : f.type === 'dropdown' || f.type === 'radio' ? 'Dropdown' : 'Text');
+/** The option labels of each Dropdown custom field these request types bind, and the first type (its id) that binds it. */
+export function dropdownLists(specs) {
+    const out = new Map();
+    for (const s of specs)
+        for (const f of buildRequestType(s).customFields) {
+            if (f.type === 'Dropdown' && !out.has(f.name))
+                out.set(f.name, { options: (f.options ?? []).map((o) => o.label), by: s.id });
+        }
+    return out;
+}
 /** Every field in the spec, depth first. */
 function allFields(spec) {
     const out = [];

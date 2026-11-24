@@ -1,0 +1,200 @@
+{
+  "id": "trademark-use-request",
+  "name": "Trademark and Brand Use",
+  "description": "Use of Fontara's marks by a third party, or of a third party's marks by Fontara: logos on websites, case studies, events and co-branding.",
+  "pages": [
+    {
+      "title": "Trademark and Brand Use",
+      "fields": [
+        {
+          "key": "direction",
+          "type": "dropdown",
+          "label": "Whose marks?",
+          "bind": {
+            "custom": "DeskMarkDirection",
+            "label": "Whose Marks",
+            "type": "Dropdown",
+            "accountWideOptions": true
+          },
+          "options": [
+            "A third party wants to use Fontara's marks",
+            "Fontara wants to use a third party's marks",
+            "Both (co-branding)"
+          ],
+          "required": true
+        },
+        {
+          "key": "party",
+          "bind": {
+            "provision": "Party"
+          },
+          "label": "Third party",
+          "required": true
+        },
+        {
+          "key": "channel",
+          "type": "dropdown",
+          "label": "Where will the marks appear?",
+          "bind": {
+            "custom": "DeskChannel",
+            "label": "Marketing Channel",
+            "type": "Dropdown",
+            "accountWideOptions": true
+          },
+          "options": [
+            "Web",
+            "Email",
+            "Social",
+            "Print",
+            "Event",
+            "Other"
+          ],
+          "required": true
+        },
+        {
+          "key": "details",
+          "type": "longtext",
+          "label": "How will they be used?",
+          "bind": {
+            "custom": "RequestDescription"
+          },
+          "required": true,
+          "description": "Logo on a partner page, case study, event signage, product listing. Include any wording that goes with it."
+        },
+        {
+          "key": "trademark",
+          "type": "dropdown",
+          "label": "Is written permission already in place?",
+          "bind": {
+            "custom": "DeskMarkConsent",
+            "label": "Trademark Consent",
+            "type": "Dropdown",
+            "accountWideOptions": true
+          },
+          "options": [
+            "Yes: written consent on file",
+            "Yes: covered by an existing agreement",
+            "Yes: consent not yet obtained"
+          ],
+          "required": true
+        },
+        {
+          "key": "regions",
+          "type": "dropdown",
+          "label": "Where will it be used?",
+          "bind": {
+            "custom": "DeskMarkets",
+            "label": "Markets",
+            "type": "Dropdown",
+            "accountWideOptions": true
+          },
+          "options": [
+            "United States",
+            "United Kingdom",
+            "EU or EEA",
+            "Global"
+          ],
+          "required": true
+        },
+        {
+          "key": "effective",
+          "bind": {
+            "provision": "EffectiveDate"
+          },
+          "label": "Start of use"
+        },
+        {
+          "key": "expiration",
+          "bind": {
+            "provision": "ExpirationDate"
+          },
+          "label": "End of use"
+        },
+        {
+          "key": "entity",
+          "type": "dropdown",
+          "label": "Fontara contracting entity",
+          "bind": {
+            "custom": "DeskFontaraEntity",
+            "label": "Contracting Entity",
+            "type": "Dropdown",
+            "accountWideOptions": true
+          },
+          "options": [
+            "Fontara, Inc.",
+            "Fontara UK Ltd",
+            "Fontara Europe Ltd"
+          ],
+          "required": true,
+          "description": "The Fontara company that signs. US business: Fontara, Inc. UK: Fontara UK Ltd. EU: Fontara Europe Ltd."
+        },
+        {
+          "key": "owner",
+          "type": "text",
+          "label": "Brand owner",
+          "bind": {
+            "custom": "BusinessOwnerName"
+          },
+          "required": true,
+          "description": "The marketing or partner manager accountable for the use."
+        },
+        {
+          "key": "urgency",
+          "type": "dropdown",
+          "label": "Urgency",
+          "bind": {
+            "custom": "DeskUrgency",
+            "label": "Urgency",
+            "type": "Dropdown",
+            "accountWideOptions": true
+          },
+          "options": [
+            "Standard (5 business days)",
+            "Expedited (2 business days)",
+            "Urgent (24 hours, VP approval)"
+          ],
+          "required": true,
+          "description": "Standard is five business days. Urgent needs a VP's approval: name them in the reason. Urgency changes how fast Legal Operations (Maya Patel) works the request, not who approves the deal, which follows Fontara's escalation matrix."
+        },
+        {
+          "key": "urgency_reason",
+          "type": "longtext",
+          "label": "Why is this urgent?",
+          "bind": {
+            "custom": "IntakeUrgencyReason",
+            "label": "Urgency Reason"
+          },
+          "description": "The business deadline or risk, and the VP who approved the urgency."
+        },
+        {
+          "key": "needed_by",
+          "type": "date",
+          "label": "Needed by",
+          "bind": {
+            "custom": "TargetDueDate"
+          },
+          "description": "When you need Legal's work finished. Not the contract's start or end date."
+        },
+        {
+          "key": "documents",
+          "type": "file",
+          "label": "Mock-up or proof",
+          "required": true
+        }
+      ]
+    }
+  ],
+  "rules": [
+    {
+      "when": [
+        {
+          "field": "urgency",
+          "is": "Urgent (24 hours, VP approval)"
+        }
+      ],
+      "then": {
+        "urgency_reason": "show"
+      }
+    }
+  ]
+}

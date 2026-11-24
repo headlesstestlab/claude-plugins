@@ -1,0 +1,277 @@
+{
+  "id": "it-incident-report",
+  "name": "Security or Privacy Incident",
+  "description": "Notify Legal of a security or privacy incident: severity, when it was discovered, whether personal data is involved, and any vendor or customer affected.",
+  "pages": [
+    {
+      "title": "Security or Privacy Incident",
+      "fields": [
+        {
+          "key": "incident_type",
+          "type": "dropdown",
+          "label": "Incident type",
+          "bind": {
+            "custom": "DeskIncidentType",
+            "label": "Incident Type",
+            "type": "Dropdown",
+            "accountWideOptions": true
+          },
+          "options": [
+            "Security breach",
+            "Personal data breach",
+            "Service outage",
+            "Lost or stolen device",
+            "Vendor or supplier incident",
+            "Other"
+          ],
+          "required": true
+        },
+        {
+          "key": "severity",
+          "type": "dropdown",
+          "label": "Severity",
+          "bind": {
+            "custom": "DeskSeverity",
+            "label": "Severity",
+            "type": "Dropdown",
+            "accountWideOptions": true
+          },
+          "options": [
+            "SEV1 Critical",
+            "SEV2 High",
+            "SEV3 Medium",
+            "SEV4 Low"
+          ],
+          "required": true,
+          "description": "As declared by the incident commander."
+        },
+        {
+          "key": "ticket",
+          "type": "text",
+          "label": "Incident ticket",
+          "bind": {
+            "custom": "IntakeReferenceId",
+            "label": "External Reference ID"
+          },
+          "required": true,
+          "description": "The INC number in the incident tracker."
+        },
+        {
+          "key": "aware",
+          "type": "date",
+          "label": "When was it discovered?",
+          "bind": {
+            "custom": "IntakeAwareDate",
+            "label": "Date Received or Discovered"
+          },
+          "required": true,
+          "description": "GDPR: regulators must be told within 72 hours of awareness."
+        },
+        {
+          "key": "callback_phone",
+          "type": "phone",
+          "label": "Callback phone",
+          "countryCode": "44",
+          "bind": {
+            "custom": "IntakeContactPhone",
+            "label": "Contact Phone"
+          },
+          "description": "A number the incident team can call now. The default country is the UK (+44); change it if needed."
+        },
+        {
+          "key": "site_zip",
+          "type": "text",
+          "label": "Site ZIP code",
+          "preset": "zip",
+          "bind": {
+            "custom": "IntakeSitePostalCode",
+            "label": "Site Postal Code"
+          },
+          "description": "US sites: the ZIP code where it happened."
+        },
+        {
+          "key": "subject_title_note",
+          "type": "description",
+          "text": "**System or service affected:** put it in the request title above the form."
+        },
+        {
+          "key": "details",
+          "type": "longtext",
+          "label": "What happened, and is it still ongoing?",
+          "bind": {
+            "custom": "RequestDescription"
+          },
+          "required": true,
+          "description": "Facts only. Say when it started, and whether it is contained."
+        },
+        {
+          "key": "personal_data",
+          "type": "dropdown",
+          "label": "Is personal data involved?",
+          "bind": {
+            "custom": "DeskPersonalData",
+            "label": "Personal Data Involved",
+            "type": "Dropdown",
+            "accountWideOptions": true
+          },
+          "options": [
+            "Yes",
+            "No",
+            "Not sure"
+          ],
+          "required": true
+        },
+        {
+          "key": "data_details",
+          "type": "longtext",
+          "label": "What personal data, about whom?",
+          "bind": {
+            "custom": "IntakeDataDetails",
+            "label": "Personal Data Description"
+          }
+        },
+        {
+          "key": "affected",
+          "type": "number",
+          "label": "Approximate number of individuals affected",
+          "bind": {
+            "custom": "IntakeQuantity",
+            "label": "Quantity"
+          }
+        },
+        {
+          "key": "regions",
+          "type": "dropdown",
+          "label": "Where are the affected individuals?",
+          "bind": {
+            "custom": "DeskDataLocation",
+            "label": "Data Location",
+            "type": "Dropdown",
+            "accountWideOptions": true
+          },
+          "options": [
+            "United States",
+            "United Kingdom",
+            "EU or EEA",
+            "Multiple regions",
+            "Unknown"
+          ]
+        },
+        {
+          "key": "party",
+          "bind": {
+            "provision": "Party"
+          },
+          "label": "Vendor or customer involved",
+          "description": "Leave blank if no vendor or customer is involved."
+        },
+        {
+          "key": "existing",
+          "type": "text",
+          "label": "Their agreement",
+          "bind": {
+            "custom": "IntakeExistingAgreement",
+            "label": "Related Agreement"
+          },
+          "description": "CLM ID or exact title. Leave blank if no vendor or customer is involved."
+        },
+        {
+          "key": "entity",
+          "type": "dropdown",
+          "label": "Fontara contracting entity",
+          "bind": {
+            "custom": "DeskFontaraEntity",
+            "label": "Contracting Entity",
+            "type": "Dropdown",
+            "accountWideOptions": true
+          },
+          "options": [
+            "Fontara, Inc.",
+            "Fontara UK Ltd",
+            "Fontara Europe Ltd"
+          ],
+          "required": true,
+          "description": "The Fontara company that signs. US business: Fontara, Inc. UK: Fontara UK Ltd. EU: Fontara Europe Ltd."
+        },
+        {
+          "key": "owner",
+          "type": "text",
+          "label": "Incident owner",
+          "bind": {
+            "custom": "BusinessOwnerName"
+          },
+          "required": true,
+          "description": "The incident commander or security lead."
+        },
+        {
+          "key": "urgency",
+          "type": "dropdown",
+          "label": "Urgency",
+          "bind": {
+            "custom": "DeskUrgency",
+            "label": "Urgency",
+            "type": "Dropdown",
+            "accountWideOptions": true
+          },
+          "options": [
+            "Standard (5 business days)",
+            "Expedited (2 business days)",
+            "Urgent (24 hours, VP approval)"
+          ],
+          "required": true,
+          "description": "Standard is five business days. Urgent needs a VP's approval: name them in the reason. Urgency changes how fast Legal Operations (Maya Patel) works the request, not who approves the deal, which follows Fontara's escalation matrix."
+        },
+        {
+          "key": "urgency_reason",
+          "type": "longtext",
+          "label": "Why is this urgent?",
+          "bind": {
+            "custom": "IntakeUrgencyReason",
+            "label": "Urgency Reason"
+          },
+          "description": "The business deadline or risk, and the VP who approved the urgency."
+        },
+        {
+          "key": "needed_by",
+          "type": "date",
+          "label": "Needed by",
+          "bind": {
+            "custom": "TargetDueDate"
+          },
+          "description": "When you need Legal's work finished. Not the contract's start or end date."
+        },
+        {
+          "key": "documents",
+          "type": "file",
+          "label": "Logs or screenshots"
+        }
+      ]
+    }
+  ],
+  "rules": [
+    {
+      "when": [
+        {
+          "field": "personal_data",
+          "is": "Yes"
+        }
+      ],
+      "then": {
+        "data_details": "show",
+        "affected": "show",
+        "regions": "show"
+      }
+    },
+    {
+      "when": [
+        {
+          "field": "urgency",
+          "is": "Urgent (24 hours, VP approval)"
+        }
+      ],
+      "then": {
+        "urgency_reason": "show"
+      }
+    }
+  ]
+}

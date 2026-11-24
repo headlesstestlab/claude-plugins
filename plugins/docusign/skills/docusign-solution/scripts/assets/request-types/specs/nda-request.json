@@ -1,0 +1,274 @@
+{
+  "id": "nda-request",
+  "name": "NDA Request",
+  "description": "A one-way or mutual nondisclosure agreement with a new counterparty, before any confidential information is shared.",
+  "pages": [
+    {
+      "title": "NDA Request",
+      "fields": [
+        {
+          "key": "nda_type",
+          "bind": {
+            "provision": "NdaType"
+          },
+          "label": "NDA type",
+          "required": true,
+          "description": "Mutual when both sides share information; one-way when only one side does."
+        },
+        {
+          "key": "party",
+          "bind": {
+            "provision": "Party"
+          },
+          "label": "Counterparty",
+          "required": true,
+          "description": "The legal name of the other company, as registered."
+        },
+        {
+          "key": "purpose_type",
+          "type": "dropdown",
+          "label": "Purpose of the NDA",
+          "bind": {
+            "custom": "DeskNdaPurpose",
+            "label": "NDA Purpose",
+            "type": "Dropdown",
+            "accountWideOptions": true
+          },
+          "options": [
+            "Sales opportunity",
+            "Partnership or integration",
+            "Mergers and acquisitions",
+            "Vendor evaluation",
+            "Hiring a contractor or consultant",
+            "Other"
+          ],
+          "required": true
+        },
+        {
+          "key": "ma_note",
+          "type": "description",
+          "text": "M&A and investment NDAs go to Corporate Legal. Mention any standstill or non-solicit the other side has asked for."
+        },
+        {
+          "key": "purpose",
+          "type": "longtext",
+          "label": "What will be shared, and why?",
+          "bind": {
+            "custom": "IntakeBusinessPurpose",
+            "label": "Business Purpose"
+          },
+          "required": true,
+          "description": "For example: our product roadmap, so they can scope an integration."
+        },
+        {
+          "key": "entity",
+          "type": "dropdown",
+          "label": "Fontara contracting entity",
+          "bind": {
+            "custom": "DeskFontaraEntity",
+            "label": "Contracting Entity",
+            "type": "Dropdown",
+            "accountWideOptions": true
+          },
+          "options": [
+            "Fontara, Inc.",
+            "Fontara UK Ltd",
+            "Fontara Europe Ltd"
+          ],
+          "required": true,
+          "description": "The Fontara company that signs. US business: Fontara, Inc. UK: Fontara UK Ltd. EU: Fontara Europe Ltd."
+        },
+        {
+          "key": "country",
+          "type": "dropdown",
+          "label": "Counterparty country",
+          "bind": {
+            "custom": "DeskCountry",
+            "label": "Country of Counterparty",
+            "type": "Dropdown",
+            "accountWideOptions": true
+          },
+          "options": [
+            "United States",
+            "United Kingdom",
+            "Australia",
+            "Austria",
+            "Belgium",
+            "Brazil",
+            "Bulgaria",
+            "Canada",
+            "China",
+            "Croatia",
+            "Cyprus",
+            "Czechia",
+            "Denmark",
+            "Estonia",
+            "Finland",
+            "France",
+            "Germany",
+            "Greece",
+            "Hungary",
+            "India",
+            "Ireland",
+            "Israel",
+            "Italy",
+            "Japan",
+            "Latvia",
+            "Lithuania",
+            "Luxembourg",
+            "Malta",
+            "Mexico",
+            "Netherlands",
+            "New Zealand",
+            "Norway",
+            "Poland",
+            "Portugal",
+            "Romania",
+            "Singapore",
+            "Slovakia",
+            "Slovenia",
+            "South Africa",
+            "South Korea",
+            "Spain",
+            "Sweden",
+            "Switzerland",
+            "United Arab Emirates",
+            "Other"
+          ],
+          "required": true,
+          "description": "Where the other party is established. It drives governing law, data-transfer and tax review."
+        },
+        {
+          "key": "effective",
+          "bind": {
+            "provision": "EffectiveDate"
+          },
+          "label": "Effective date"
+        },
+        {
+          "key": "paper",
+          "type": "dropdown",
+          "label": "Whose paper?",
+          "bind": {
+            "custom": "DeskNdaPaper",
+            "label": "NDA Paper",
+            "type": "Dropdown",
+            "accountWideOptions": true
+          },
+          "options": [
+            "Fontara's standard NDA",
+            "The counterparty's NDA"
+          ],
+          "required": true,
+          "description": "Our template means Fontara's standard mutual NDA on file. Counterparty's paper means their draft, which Legal reviews in full."
+        },
+        {
+          "key": "their_draft",
+          "type": "file",
+          "label": "Counterparty's draft",
+          "required": true,
+          "description": "Their latest version, in Word if you have it."
+        },
+        {
+          "key": "signer",
+          "type": "text",
+          "label": "Counterparty signer",
+          "bind": {
+            "custom": "CounterpartySigner"
+          },
+          "description": "Name and title of the person who signs for them."
+        },
+        {
+          "key": "signer_email",
+          "type": "email",
+          "label": "Counterparty signer email",
+          "bind": {
+            "custom": "IntakeCounterpartyEmail",
+            "label": "Counterparty Signer Email"
+          }
+        },
+        {
+          "key": "owner",
+          "type": "text",
+          "label": "Business owner",
+          "bind": {
+            "custom": "BusinessOwnerName"
+          },
+          "required": true,
+          "description": "The person accountable for this agreement after it is signed."
+        },
+        {
+          "key": "urgency",
+          "type": "dropdown",
+          "label": "Urgency",
+          "bind": {
+            "custom": "DeskNdaUrgency",
+            "label": "NDA Turnaround",
+            "type": "Dropdown",
+            "accountWideOptions": true
+          },
+          "options": [
+            "Standard: within 3 business days",
+            "Urgent: needed within 1 business day"
+          ],
+          "required": true,
+          "description": "Standard is five business days. Urgent needs a VP's approval: name them in the reason. Urgency changes how fast Legal Operations (Maya Patel) works the request, not who approves the deal, which follows Fontara's escalation matrix."
+        },
+        {
+          "key": "urgency_reason",
+          "type": "longtext",
+          "label": "Why is this urgent?",
+          "bind": {
+            "custom": "IntakeUrgencyReason",
+            "label": "Urgency Reason"
+          },
+          "description": "The business deadline or risk, and the VP who approved the urgency."
+        },
+        {
+          "key": "needed_by",
+          "type": "date",
+          "label": "Needed by",
+          "bind": {
+            "custom": "TargetDueDate"
+          },
+          "description": "When you need Legal's work finished. Not the contract's start or end date."
+        }
+      ]
+    }
+  ],
+  "rules": [
+    {
+      "when": [
+        {
+          "field": "purpose_type",
+          "is": "Mergers and acquisitions"
+        }
+      ],
+      "then": {
+        "ma_note": "show"
+      }
+    },
+    {
+      "when": [
+        {
+          "field": "paper",
+          "is": "The counterparty's NDA"
+        }
+      ],
+      "then": {
+        "their_draft": "show"
+      }
+    },
+    {
+      "when": [
+        {
+          "field": "urgency",
+          "is": "Urgent: needed within 1 business day"
+        }
+      ],
+      "then": {
+        "urgency_reason": "show"
+      }
+    }
+  ]
+}

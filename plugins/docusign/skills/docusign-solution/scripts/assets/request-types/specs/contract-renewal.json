@@ -1,0 +1,263 @@
+{
+  "id": "contract-renewal",
+  "name": "Contract Renewal",
+  "description": "Renew an agreement before its notice deadline: as-is, with changes, or renegotiated.",
+  "pages": [
+    {
+      "title": "Contract Renewal",
+      "fields": [
+        {
+          "key": "existing",
+          "type": "text",
+          "label": "Existing agreement",
+          "bind": {
+            "custom": "IntakeExistingAgreement",
+            "label": "Related Agreement"
+          },
+          "required": true,
+          "description": "CLM ID or exact title, e.g. 'Acme MSA 2024'."
+        },
+        {
+          "key": "party",
+          "bind": {
+            "provision": "Party"
+          },
+          "label": "Counterparty",
+          "required": true
+        },
+        {
+          "key": "side",
+          "type": "dropdown",
+          "label": "Is Fontara buying or selling?",
+          "bind": {
+            "custom": "DeskDealSide",
+            "label": "Buying or Selling",
+            "type": "Dropdown",
+            "accountWideOptions": true
+          },
+          "options": [
+            "Buying: Fontara is the customer",
+            "Selling: Fontara is the supplier",
+            "Neither or mutual"
+          ],
+          "required": true,
+          "description": "Decides whose template applies and who signs: the Head of Procurement (Victoria Lee) when buying, the VP of Sales (Corey Ikso) when selling, the CFO (Marcus Chen) over $1,000,000. Legal Operations (Maya Patel) reviews; non-standard terms go to the General Counsel (Elena Rodriguez)."
+        },
+        {
+          "key": "crm_id",
+          "type": "text",
+          "label": "Salesforce opportunity ID",
+          "bind": {
+            "custom": "IntakeCrmId",
+            "label": "CRM Opportunity ID"
+          },
+          "description": "From the opportunity URL: 15 or 18 characters starting 006."
+        },
+        {
+          "key": "cost_center",
+          "type": "text",
+          "label": "Cost center",
+          "bind": {
+            "custom": "IntakeCostCenter",
+            "label": "Cost Center"
+          },
+          "required": false,
+          "description": "The cost center that pays, e.g. 4100-Marketing."
+        },
+        {
+          "key": "expiration",
+          "bind": {
+            "provision": "ExpirationDate"
+          },
+          "label": "Current expiration date",
+          "required": true
+        },
+        {
+          "key": "notice",
+          "bind": {
+            "provision": "RenewalNoticeDate"
+          },
+          "label": "Notice or opt-out deadline",
+          "required": true
+        },
+        {
+          "key": "renew_action",
+          "type": "dropdown",
+          "label": "How should it renew?",
+          "bind": {
+            "custom": "DeskRenewalAction",
+            "label": "Renewal Action",
+            "type": "Dropdown",
+            "accountWideOptions": true
+          },
+          "options": [
+            "Renew as-is",
+            "Renew with changes or renegotiate"
+          ],
+          "required": true
+        },
+        {
+          "key": "details",
+          "type": "longtext",
+          "label": "What should change?",
+          "bind": {
+            "custom": "RequestDescription"
+          },
+          "description": "Price, scope, term or terms you want to renegotiate."
+        },
+        {
+          "key": "renewal_type",
+          "bind": {
+            "provision": "RenewalType"
+          },
+          "label": "Renewal type"
+        },
+        {
+          "key": "term_months",
+          "type": "number",
+          "label": "Renewal term (months)",
+          "bind": {
+            "custom": "IntakeTermMonths",
+            "label": "Term in Months"
+          },
+          "required": true
+        },
+        {
+          "key": "price_change",
+          "bind": {
+            "provision": "RenewalInfo"
+          },
+          "label": "Price change vs current",
+          "description": "For example: +5% uplift, or flat. Leave blank if unknown."
+        },
+        {
+          "key": "value",
+          "bind": {
+            "provision": "ContractValue"
+          },
+          "label": "Renewal total contract value (TCV)",
+          "required": true,
+          "description": "The renewal term only, excluding tax."
+        },
+        {
+          "key": "payment_terms",
+          "bind": {
+            "provision": "PaymentTerms"
+          },
+          "label": "Payment terms"
+        },
+        {
+          "key": "entity",
+          "type": "dropdown",
+          "label": "Fontara contracting entity",
+          "bind": {
+            "custom": "DeskFontaraEntity",
+            "label": "Contracting Entity",
+            "type": "Dropdown",
+            "accountWideOptions": true
+          },
+          "options": [
+            "Fontara, Inc.",
+            "Fontara UK Ltd",
+            "Fontara Europe Ltd"
+          ],
+          "required": true,
+          "description": "The Fontara company that signs. US business: Fontara, Inc. UK: Fontara UK Ltd. EU: Fontara Europe Ltd."
+        },
+        {
+          "key": "owner",
+          "type": "text",
+          "label": "Business owner",
+          "bind": {
+            "custom": "BusinessOwnerName"
+          },
+          "required": true,
+          "description": "The person accountable for this agreement after it is signed."
+        },
+        {
+          "key": "urgency",
+          "type": "dropdown",
+          "label": "Urgency",
+          "bind": {
+            "custom": "DeskUrgency",
+            "label": "Urgency",
+            "type": "Dropdown",
+            "accountWideOptions": true
+          },
+          "options": [
+            "Standard (5 business days)",
+            "Expedited (2 business days)",
+            "Urgent (24 hours, VP approval)"
+          ],
+          "required": true,
+          "description": "Standard is five business days. Urgent needs a VP's approval: name them in the reason. Urgency changes how fast Legal Operations (Maya Patel) works the request, not who approves the deal, which follows Fontara's escalation matrix."
+        },
+        {
+          "key": "urgency_reason",
+          "type": "longtext",
+          "label": "Why is this urgent?",
+          "bind": {
+            "custom": "IntakeUrgencyReason",
+            "label": "Urgency Reason"
+          },
+          "description": "The business deadline or risk, and the VP who approved the urgency."
+        },
+        {
+          "key": "needed_by",
+          "type": "date",
+          "label": "Needed by",
+          "bind": {
+            "custom": "TargetDueDate"
+          },
+          "description": "When you need Legal's work finished. Not the contract's start or end date."
+        }
+      ]
+    }
+  ],
+  "rules": [
+    {
+      "when": [
+        {
+          "field": "side",
+          "is": "Selling: Fontara is the supplier"
+        }
+      ],
+      "then": {
+        "crm_id": "show"
+      }
+    },
+    {
+      "when": [
+        {
+          "field": "side",
+          "is": "Buying: Fontara is the customer"
+        }
+      ],
+      "then": {
+        "cost_center": "show"
+      }
+    },
+    {
+      "when": [
+        {
+          "field": "renew_action",
+          "is": "Renew with changes or renegotiate"
+        }
+      ],
+      "then": {
+        "details": "show"
+      }
+    },
+    {
+      "when": [
+        {
+          "field": "urgency",
+          "is": "Urgent (24 hours, VP approval)"
+        }
+      ],
+      "then": {
+        "urgency_reason": "show"
+      }
+    }
+  ]
+}

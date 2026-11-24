@@ -2,7 +2,7 @@
 name: docusign-request-type
 description: Builds Docusign Agreement Desk request types - the entries in Create Request's picker with the intake form a requester fills in - as an importable .zip, with fields stored to agreement fields or the account's custom fields and show/hide rules, with optional import in the user's signed-in browser. Use it when someone wants only the intake side of Agreement Desk - a request type, intake form, legal front door, request catalogue, or requests that arrive by email - for NDAs, contracts, legal questions, purchases or policy exceptions. Not when the request must also be handled automatically (generate, approve, send) - use docusign-solution; for CLM eForms use docusign-clm.
 metadata:
-  version: "v2026.11.23"
+  version: "v2026.11.23.2"
 ---
 
 # Docusign request type builder

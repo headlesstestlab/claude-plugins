@@ -1,0 +1,524 @@
+{
+  "id": "sales-contract-request-from-salesforce",
+  "name": "Sales Contract Request from Salesforce",
+  "description": "A Sales Contract Request opened by Salesforce itself: ticking Send to Docusign on the Opportunity creates it, filled from the Opportunity and its contact role. The same intake as the Sales Contract Request (the same fields, so the same deal approval runs on it); only what Salesforce fills is required, and the deal desk completes the rest.",
+  "pages": [
+    {
+      "title": "Sales Contract Request",
+      "fields": [
+        {
+          "key": "party",
+          "bind": {
+            "provision": "Party"
+          },
+          "label": "Customer",
+          "required": false,
+          "description": "The customer's legal name, as registered."
+        },
+        {
+          "key": "signer",
+          "type": "text",
+          "label": "Customer signer: name",
+          "required": true,
+          "bind": {
+            "custom": "CounterpartySigner"
+          },
+          "description": "The person who signs for the customer, with their title."
+        },
+        {
+          "key": "signer_email",
+          "type": "email",
+          "label": "Customer signer: email",
+          "required": true,
+          "bind": {
+            "custom": "IntakeCounterpartyEmail",
+            "label": "Counterparty Signer Email"
+          }
+        },
+        {
+          "key": "crm_id",
+          "type": "text",
+          "label": "Salesforce opportunity ID",
+          "bind": {
+            "custom": "IntakeCrmId",
+            "label": "CRM Opportunity ID"
+          },
+          "required": false,
+          "description": "Filled by the Salesforce launcher when the request is created from the Opportunity; it cannot be typed here.",
+          "pattern": {
+            "regex": "^006[A-Za-z0-9]{12,15}$",
+            "message": "A Salesforce opportunity ID starts with 006 and is 15 or 18 characters.",
+            "example": "006Hs00001AbCdEIAV"
+          },
+          "readOnly": true
+        },
+        {
+          "key": "agreement_type",
+          "type": "dropdown",
+          "label": "Agreement type",
+          "bind": {
+            "custom": "DeskSalesAgreementType",
+            "label": "Sales Agreement Type",
+            "type": "Dropdown",
+            "accountWideOptions": true
+          },
+          "options": [
+            "Customer agreement",
+            "MSA",
+            "Order Form",
+            "SOW"
+          ],
+          "required": false
+        },
+        {
+          "key": "entity",
+          "type": "dropdown",
+          "label": "Fontara contracting entity",
+          "bind": {
+            "custom": "DeskFontaraEntity",
+            "label": "Contracting Entity",
+            "type": "Dropdown",
+            "accountWideOptions": true
+          },
+          "options": [
+            "Fontara, Inc.",
+            "Fontara UK Ltd",
+            "Fontara Europe Ltd"
+          ],
+          "required": true,
+          "description": "The Fontara company that signs. US business: Fontara, Inc. UK: Fontara UK Ltd. EU: Fontara Europe Ltd."
+        },
+        {
+          "key": "country",
+          "type": "dropdown",
+          "label": "Counterparty country",
+          "bind": {
+            "custom": "DeskCountry",
+            "label": "Country of Counterparty",
+            "type": "Dropdown",
+            "accountWideOptions": true
+          },
+          "options": [
+            "United States",
+            "United Kingdom",
+            "Australia",
+            "Austria",
+            "Belgium",
+            "Brazil",
+            "Bulgaria",
+            "Canada",
+            "China",
+            "Croatia",
+            "Cyprus",
+            "Czechia",
+            "Denmark",
+            "Estonia",
+            "Finland",
+            "France",
+            "Germany",
+            "Greece",
+            "Hungary",
+            "India",
+            "Ireland",
+            "Israel",
+            "Italy",
+            "Japan",
+            "Latvia",
+            "Lithuania",
+            "Luxembourg",
+            "Malta",
+            "Mexico",
+            "Netherlands",
+            "New Zealand",
+            "Norway",
+            "Poland",
+            "Portugal",
+            "Romania",
+            "Singapore",
+            "Slovakia",
+            "Slovenia",
+            "South Africa",
+            "South Korea",
+            "Spain",
+            "Sweden",
+            "Switzerland",
+            "United Arab Emirates",
+            "Other"
+          ],
+          "required": true,
+          "description": "Where the other party is established. It drives governing law, data-transfer and tax review."
+        },
+        {
+          "key": "value",
+          "bind": {
+            "provision": "ContractValue"
+          },
+          "label": "Total contract value (TCV)",
+          "required": true,
+          "description": "All years, excluding tax."
+        },
+        {
+          "key": "deal_size",
+          "type": "dropdown",
+          "label": "Is the total contract value over 1,000,000 USD?",
+          "options": [
+            "Up to 1,000,000 USD",
+            "Over 1,000,000 USD"
+          ],
+          "required": true,
+          "bind": {
+            "custom": "DeskDealSize",
+            "label": "Deal Size",
+            "type": "Dropdown",
+            "accountWideOptions": true
+          },
+          "description": "Routes the approval by Fontara's escalation matrix: over 1,000,000 USD goes to the VP of Sales (Corey Ikso) and the CFO (Marcus Chen). If this disagrees with the total contract value, the deal desk is flagged 🟡."
+        },
+        {
+          "key": "approver",
+          "type": "text",
+          "label": "Deal desk approver",
+          "bind": {
+            "custom": "IntakeApprover",
+            "label": "Budget Approver"
+          },
+          "description": "Over $1,000,000 total: the VP of Sales (Corey Ikso), who approves with the CFO."
+        },
+        {
+          "key": "cfo_note",
+          "type": "description",
+          "text": "Over $1,000,000 total: the CFO (Marcus Chen) must also approve before signature."
+        },
+        {
+          "key": "discount",
+          "type": "number",
+          "label": "Discount off list (%)",
+          "bind": {
+            "custom": "IntakeDiscount",
+            "label": "Discount Percent"
+          },
+          "description": "The overall discount from list price. 0 if none."
+        },
+        {
+          "key": "payment_terms",
+          "bind": {
+            "provision": "PaymentTerms"
+          },
+          "label": "Payment terms"
+        },
+        {
+          "key": "effective",
+          "bind": {
+            "provision": "EffectiveDate"
+          },
+          "label": "Effective date"
+        },
+        {
+          "key": "expiration",
+          "bind": {
+            "provision": "ExpirationDate"
+          },
+          "label": "Expiration date"
+        },
+        {
+          "key": "renewal_type",
+          "type": "dropdown",
+          "label": "Renewal type",
+          "bind": {
+            "custom": "DeskRenewalTerms",
+            "label": "Renewal Terms",
+            "type": "Dropdown",
+            "accountWideOptions": true
+          },
+          "options": [
+            "Auto-renews yearly",
+            "Fixed term",
+            "Follows the master agreement"
+          ],
+          "required": false,
+          "description": "How the order form renews. It fills the order form's Renewal clause."
+        },
+        {
+          "key": "plan",
+          "type": "dropdown",
+          "label": "Plan",
+          "bind": {
+            "custom": "DeskPlan",
+            "label": "Plan Tier",
+            "type": "Dropdown",
+            "accountWideOptions": true
+          },
+          "options": [
+            "Standard",
+            "Professional",
+            "Enterprise"
+          ],
+          "required": false,
+          "description": "The Fontara plan on the order form."
+        },
+        {
+          "key": "overage_rate",
+          "label": "Overage rate",
+          "bind": {
+            "custom": "IntakeOverageRate",
+            "label": "Overage Rate"
+          },
+          "required": false,
+          "description": "For example: $45 per additional user per month.",
+          "type": "text"
+        },
+        {
+          "key": "position",
+          "type": "dropdown",
+          "label": "Negotiated position",
+          "bind": {
+            "custom": "DeskNegotiatedPosition",
+            "label": "Position Negotiated",
+            "type": "Dropdown",
+            "accountWideOptions": true
+          },
+          "options": [
+            "Balanced",
+            "Favours Fontara",
+            "Favours the counterparty"
+          ],
+          "required": false,
+          "description": "For the order form's fees and discounts clause."
+        },
+        {
+          "key": "paper",
+          "type": "dropdown",
+          "label": "Whose paper?",
+          "bind": {
+            "custom": "DeskPaperSource",
+            "label": "Whose Paper",
+            "type": "Dropdown",
+            "accountWideOptions": true
+          },
+          "options": [
+            "Fontara's paper",
+            "Counterparty's paper"
+          ],
+          "required": false,
+          "description": "Our template means Fontara's standard on file. Counterparty's paper means their draft, which Legal reviews in full."
+        },
+        {
+          "key": "their_draft",
+          "type": "file",
+          "label": "Counterparty's draft",
+          "required": false,
+          "description": "Their latest version, in Word if you have it."
+        },
+        {
+          "key": "non_standard",
+          "type": "dropdown",
+          "label": "Are any non-standard terms requested?",
+          "bind": {
+            "custom": "DeskNonStandard",
+            "label": "Non-standard Terms",
+            "type": "Dropdown",
+            "accountWideOptions": true
+          },
+          "options": [
+            "Yes",
+            "No"
+          ],
+          "required": true
+        },
+        {
+          "key": "details",
+          "type": "longtext",
+          "label": "Describe what the customer is asking for",
+          "bind": {
+            "custom": "RequestDescription"
+          },
+          "description": "For example: liability cap at 2x fees, Net 90 payment (anything beyond Net 60 goes to the Finance Director), termination for convenience."
+        },
+        {
+          "key": "personal_data",
+          "type": "dropdown",
+          "label": "Will the customer give Fontara personal data to process?",
+          "bind": {
+            "custom": "DeskPersonalData",
+            "label": "Personal Data Involved",
+            "type": "Dropdown",
+            "accountWideOptions": true
+          },
+          "options": [
+            "Yes",
+            "No",
+            "Not sure"
+          ],
+          "required": true,
+          "description": "If Yes, say whether an existing DPA covers it: only new processing goes to the Data Protection Officer (Alexandra Kim)."
+        },
+        {
+          "key": "existing_dpa",
+          "type": "dropdown",
+          "label": "Is this covered by an existing DPA?",
+          "options": [
+            "Yes",
+            "No"
+          ],
+          "bind": {
+            "custom": "DeskExistingDpa",
+            "label": "Existing DPA Covers It",
+            "type": "Dropdown",
+            "accountWideOptions": true
+          },
+          "description": "No, or new data categories, new sub-processors or a new cross-border transfer: the Data Protection Officer (Alexandra Kim) reviews it. Yes, with nothing new: no privacy review."
+        },
+        {
+          "key": "data_details",
+          "type": "longtext",
+          "label": "What personal data, about whom, and where will it be stored?",
+          "bind": {
+            "custom": "IntakeDataDetails",
+            "label": "Personal Data Description"
+          },
+          "description": "For example: customer contact names and emails, stored in the vendor's EU data centre."
+        },
+        {
+          "key": "data_class",
+          "type": "dropdown",
+          "label": "Data classification",
+          "bind": {
+            "custom": "DeskDataClass",
+            "label": "Data Class",
+            "type": "Dropdown",
+            "accountWideOptions": true
+          },
+          "options": [
+            "Public",
+            "Internal",
+            "Confidential",
+            "Restricted (special-category, children's or financial data)"
+          ],
+          "description": "The highest class of Fontara data involved. Restricted data needs Security/IT's vendor risk review before signature."
+        },
+        {
+          "key": "privacy_note",
+          "type": "description",
+          "text": "The Data protection officer (Alexandra Kim) will follow up to confirm whether personal data is involved. If it is, and no existing DPA covers it, a DPA is needed before signature."
+        },
+        {
+          "key": "owner",
+          "type": "text",
+          "label": "Account owner",
+          "bind": {
+            "custom": "BusinessOwnerName"
+          },
+          "required": true,
+          "description": "The account executive who owns the deal."
+        },
+        {
+          "key": "urgency",
+          "type": "dropdown",
+          "label": "Urgency",
+          "bind": {
+            "custom": "DeskUrgency",
+            "label": "Urgency",
+            "type": "Dropdown",
+            "accountWideOptions": true
+          },
+          "options": [
+            "Standard (5 business days)",
+            "Expedited (2 business days)",
+            "Urgent (24 hours, VP approval)"
+          ],
+          "required": false,
+          "description": "Standard is five business days. Urgent needs a VP's approval: name them in the reason. Urgency changes how fast Legal Operations (Maya Patel) works the request, not who approves the deal, which follows Fontara's escalation matrix."
+        },
+        {
+          "key": "urgency_reason",
+          "type": "longtext",
+          "label": "Why is this urgent?",
+          "bind": {
+            "custom": "IntakeUrgencyReason",
+            "label": "Urgency Reason"
+          },
+          "description": "The business deadline or risk, and the VP who approved the urgency."
+        },
+        {
+          "key": "needed_by",
+          "type": "date",
+          "label": "Needed to close by",
+          "bind": {
+            "custom": "TargetDueDate"
+          },
+          "description": "The date the deal must be signed to close in quarter."
+        }
+      ]
+    }
+  ],
+  "rules": [
+    {
+      "when": [
+        {
+          "field": "paper",
+          "is": "Counterparty's paper"
+        }
+      ],
+      "then": {
+        "their_draft": "show"
+      }
+    },
+    {
+      "when": [
+        {
+          "field": "non_standard",
+          "is": "Yes"
+        }
+      ],
+      "then": {
+        "details": "show"
+      }
+    },
+    {
+      "when": [
+        {
+          "field": "personal_data",
+          "is": "Yes"
+        }
+      ],
+      "then": {
+        "data_details": "show",
+        "data_class": "show",
+        "existing_dpa": "show"
+      }
+    },
+    {
+      "when": [
+        {
+          "field": "personal_data",
+          "is": "Not sure"
+        }
+      ],
+      "then": {
+        "privacy_note": "show"
+      }
+    },
+    {
+      "when": [
+        {
+          "field": "urgency",
+          "is": "Urgent (24 hours, VP approval)"
+        }
+      ],
+      "then": {
+        "urgency_reason": "show"
+      }
+    },
+    {
+      "when": [
+        {
+          "field": "deal_size",
+          "is": "Over 1,000,000 USD"
+        }
+      ],
+      "then": {
+        "cfo_note": "show"
+      }
+    }
+  ]
+}

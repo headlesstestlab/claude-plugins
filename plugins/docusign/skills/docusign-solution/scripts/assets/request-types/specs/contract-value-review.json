@@ -1,0 +1,54 @@
+{
+  "id": "contract-value-review",
+  "name": "Contract Value Review",
+  "description": "A finance review of a customer deal's contract value before the paper goes out: the customer, the total contract value in its currency, and what changed.",
+  "pages": [
+    {
+      "title": "Contract Value Review",
+      "fields": [
+        {
+          "key": "party",
+          "bind": {
+            "provision": "Party"
+          },
+          "label": "Customer",
+          "required": true
+        },
+        {
+          "key": "owner",
+          "type": "text",
+          "label": "Account owner",
+          "bind": {
+            "custom": "BusinessOwnerName"
+          },
+          "required": true,
+          "description": "The account executive who owns the deal."
+        },
+        {
+          "key": "amount",
+          "type": "currency",
+          "label": "Total contract value",
+          "currency": "usd",
+          "currencyEditable": true,
+          "bind": {
+            "custom": "IntakeContractAmount",
+            "label": "Contract Amount",
+            "type": "Currency"
+          },
+          "required": true,
+          "description": "The total over the full term, in the deal's currency."
+        },
+        {
+          "key": "details",
+          "type": "longtext",
+          "label": "What changed",
+          "bind": {
+            "custom": "RequestDescription"
+          },
+          "required": true,
+          "description": "Why finance should look at this value: new pricing, a discount, a change of term."
+        }
+      ]
+    }
+  ]
+}

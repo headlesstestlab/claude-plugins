@@ -1,0 +1,170 @@
+{
+  "id": "general-legal-request",
+  "name": "General Legal Request",
+  "description": "Ask Legal for help with anything that is not a standard agreement: a contract question, a dispute, a regulatory point or advice.",
+  "pages": [
+    {
+      "title": "General Legal Request",
+      "fields": [
+        {
+          "key": "category",
+          "type": "dropdown",
+          "label": "What is it about?",
+          "bind": {
+            "custom": "DeskLegalArea",
+            "label": "Legal Area",
+            "type": "Dropdown",
+            "accountWideOptions": true
+          },
+          "options": [
+            "Contract question",
+            "Dispute, claim or investigation",
+            "Regulatory or compliance",
+            "Employment",
+            "Intellectual property",
+            "Corporate or entity matter",
+            "Other"
+          ],
+          "required": true,
+          "description": "Routes the request to the right lawyer."
+        },
+        {
+          "key": "privilege_note",
+          "type": "description",
+          "text": "Disputes and investigations are privileged. Do not copy the other side or forward Legal's advice outside Fontara."
+        },
+        {
+          "key": "department",
+          "type": "dropdown",
+          "label": "Department",
+          "bind": {
+            "custom": "DeskDepartment",
+            "label": "Department",
+            "type": "Dropdown",
+            "accountWideOptions": true
+          },
+          "options": [
+            "Sales",
+            "Partnerships",
+            "Corporate development",
+            "Procurement",
+            "Product",
+            "Engineering",
+            "Marketing",
+            "Human Resources",
+            "Legal",
+            "Finance",
+            "IT",
+            "Operations",
+            "Other"
+          ],
+          "required": false
+        },
+        {
+          "key": "details",
+          "type": "longtext",
+          "label": "What do you need?",
+          "bind": {
+            "custom": "RequestDescription"
+          },
+          "required": true,
+          "description": "The question, the background, and what a good answer looks like."
+        },
+        {
+          "key": "entity",
+          "type": "dropdown",
+          "label": "Fontara contracting entity",
+          "bind": {
+            "custom": "DeskFontaraEntity",
+            "label": "Contracting Entity",
+            "type": "Dropdown",
+            "accountWideOptions": true
+          },
+          "options": [
+            "Fontara, Inc.",
+            "Fontara UK Ltd",
+            "Fontara Europe Ltd"
+          ],
+          "required": false,
+          "description": "The Fontara company involved, if any."
+        },
+        {
+          "key": "owner",
+          "type": "text",
+          "label": "Business owner",
+          "bind": {
+            "custom": "BusinessOwnerName"
+          },
+          "required": true,
+          "description": "The person accountable for this agreement after it is signed."
+        },
+        {
+          "key": "urgency",
+          "type": "dropdown",
+          "label": "Urgency",
+          "bind": {
+            "custom": "DeskUrgency",
+            "label": "Urgency",
+            "type": "Dropdown",
+            "accountWideOptions": true
+          },
+          "options": [
+            "Standard (5 business days)",
+            "Expedited (2 business days)",
+            "Urgent (24 hours, VP approval)"
+          ],
+          "required": true,
+          "description": "Standard is five business days. Urgent needs a VP's approval: name them in the reason. Urgency changes how fast Legal Operations (Maya Patel) works the request, not who approves the deal, which follows Fontara's escalation matrix."
+        },
+        {
+          "key": "urgency_reason",
+          "type": "longtext",
+          "label": "Why is this urgent?",
+          "bind": {
+            "custom": "IntakeUrgencyReason",
+            "label": "Urgency Reason"
+          },
+          "description": "The business deadline or risk, and the VP who approved the urgency."
+        },
+        {
+          "key": "needed_by",
+          "type": "date",
+          "label": "Needed by",
+          "bind": {
+            "custom": "TargetDueDate"
+          },
+          "description": "When you need Legal's work finished. Not the contract's start or end date."
+        },
+        {
+          "key": "documents",
+          "type": "file",
+          "label": "Supporting documents"
+        }
+      ]
+    }
+  ],
+  "rules": [
+    {
+      "when": [
+        {
+          "field": "category",
+          "is": "Dispute, claim or investigation"
+        }
+      ],
+      "then": {
+        "privilege_note": "show"
+      }
+    },
+    {
+      "when": [
+        {
+          "field": "urgency",
+          "is": "Urgent (24 hours, VP approval)"
+        }
+      ],
+      "then": {
+        "urgency_reason": "show"
+      }
+    }
+  ]
+}

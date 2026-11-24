@@ -1,0 +1,249 @@
+{
+  "id": "deal-desk-exception",
+  "name": "Non-Standard Terms Request",
+  "description": "Deal desk exception for a customer deal: terms outside Fontara's standard positions, with the business case for each.",
+  "pages": [
+    {
+      "title": "Non-Standard Terms Request",
+      "fields": [
+        {
+          "key": "party",
+          "bind": {
+            "provision": "Party"
+          },
+          "label": "Customer",
+          "required": true
+        },
+        {
+          "key": "crm_id",
+          "type": "text",
+          "label": "Salesforce opportunity ID",
+          "bind": {
+            "custom": "IntakeCrmId",
+            "label": "CRM Opportunity ID"
+          },
+          "required": true,
+          "description": "From the opportunity URL: 15 or 18 characters starting 006.",
+          "pattern": {
+            "regex": "^006[A-Za-z0-9]{12,15}$",
+            "message": "A Salesforce opportunity ID starts with 006 and is 15 or 18 characters.",
+            "example": "006Hs00001AbCdEIAV"
+          }
+        },
+        {
+          "key": "exceptions",
+          "type": "checkbox",
+          "label": "Which terms are outside standard?",
+          "options": [
+            "Liability cap above standard",
+            "Payment terms over 60 days",
+            "Most-favoured-customer pricing",
+            "Termination for convenience",
+            "Source-code escrow",
+            "Uncapped indemnity",
+            "Other"
+          ],
+          "required": true,
+          "description": "Tick every one the customer has asked for."
+        },
+        {
+          "key": "liability",
+          "bind": {
+            "provision": "LiabilityCap"
+          },
+          "label": "Requested liability cap",
+          "description": "The cap the customer wants, if a cap is in play."
+        },
+        {
+          "key": "payment_terms",
+          "bind": {
+            "provision": "PaymentTerms"
+          },
+          "label": "Requested payment terms"
+        },
+        {
+          "key": "discount",
+          "type": "number",
+          "label": "Discount off list (%)",
+          "bind": {
+            "custom": "IntakeDiscount",
+            "label": "Discount Percent"
+          },
+          "description": "The overall discount from list price. 0 if none."
+        },
+        {
+          "key": "details",
+          "type": "longtext",
+          "label": "Business case",
+          "bind": {
+            "custom": "RequestDescription"
+          },
+          "required": true,
+          "description": "Why the deal needs each exception, what the customer gives in return, and the risk if we say no."
+        },
+        {
+          "key": "entity",
+          "type": "dropdown",
+          "label": "Fontara contracting entity",
+          "bind": {
+            "custom": "DeskFontaraEntity",
+            "label": "Contracting Entity",
+            "type": "Dropdown",
+            "accountWideOptions": true
+          },
+          "options": [
+            "Fontara, Inc.",
+            "Fontara UK Ltd",
+            "Fontara Europe Ltd"
+          ],
+          "required": true,
+          "description": "The Fontara company that signs. US business: Fontara, Inc. UK: Fontara UK Ltd. EU: Fontara Europe Ltd."
+        },
+        {
+          "key": "country",
+          "type": "dropdown",
+          "label": "Counterparty country",
+          "bind": {
+            "custom": "DeskCountry",
+            "label": "Country of Counterparty",
+            "type": "Dropdown",
+            "accountWideOptions": true
+          },
+          "options": [
+            "United States",
+            "United Kingdom",
+            "Australia",
+            "Austria",
+            "Belgium",
+            "Brazil",
+            "Bulgaria",
+            "Canada",
+            "China",
+            "Croatia",
+            "Cyprus",
+            "Czechia",
+            "Denmark",
+            "Estonia",
+            "Finland",
+            "France",
+            "Germany",
+            "Greece",
+            "Hungary",
+            "India",
+            "Ireland",
+            "Israel",
+            "Italy",
+            "Japan",
+            "Latvia",
+            "Lithuania",
+            "Luxembourg",
+            "Malta",
+            "Mexico",
+            "Netherlands",
+            "New Zealand",
+            "Norway",
+            "Poland",
+            "Portugal",
+            "Romania",
+            "Singapore",
+            "Slovakia",
+            "Slovenia",
+            "South Africa",
+            "South Korea",
+            "Spain",
+            "Sweden",
+            "Switzerland",
+            "United Arab Emirates",
+            "Other"
+          ],
+          "required": true,
+          "description": "Where the other party is established. It drives governing law, data-transfer and tax review."
+        },
+        {
+          "key": "value",
+          "bind": {
+            "provision": "ContractValue"
+          },
+          "label": "Total contract value (TCV)",
+          "required": true,
+          "description": "All years, excluding tax."
+        },
+        {
+          "key": "approver",
+          "type": "text",
+          "label": "Deal desk approver",
+          "bind": {
+            "custom": "IntakeApprover",
+            "label": "Budget Approver"
+          },
+          "description": "Over $1,000,000 total: the VP of Sales (Corey Ikso), who approves with the CFO (Marcus Chen)."
+        },
+        {
+          "key": "owner",
+          "type": "text",
+          "label": "Account owner",
+          "bind": {
+            "custom": "BusinessOwnerName"
+          },
+          "required": true,
+          "description": "The account executive who owns the deal."
+        },
+        {
+          "key": "urgency",
+          "type": "dropdown",
+          "label": "Urgency",
+          "bind": {
+            "custom": "DeskUrgency",
+            "label": "Urgency",
+            "type": "Dropdown",
+            "accountWideOptions": true
+          },
+          "options": [
+            "Standard (5 business days)",
+            "Expedited (2 business days)",
+            "Urgent (24 hours, VP approval)"
+          ],
+          "required": true,
+          "description": "Standard is five business days. Urgent needs a VP's approval: name them in the reason. Urgency changes how fast Legal Operations (Maya Patel) works the request, not who approves the deal, which follows Fontara's escalation matrix."
+        },
+        {
+          "key": "urgency_reason",
+          "type": "longtext",
+          "label": "Why is this urgent?",
+          "bind": {
+            "custom": "IntakeUrgencyReason",
+            "label": "Urgency Reason"
+          },
+          "description": "The business deadline or risk, and the VP who approved the urgency."
+        },
+        {
+          "key": "needed_by",
+          "type": "date",
+          "label": "Needed to close by",
+          "bind": {
+            "custom": "TargetDueDate"
+          },
+          "description": "When you need Legal's work finished. Not the contract's start or end date."
+        },
+        {
+          "key": "documents",
+          "type": "file",
+          "label": "Customer redlines or emails"
+        }
+      ]
+    }
+  ],
+  "rules": [
+    {
+      "when": [
+        {
+          "field": "urgency",
+          "is": "Urgent (24 hours, VP approval)"
+        }
+      ],
+      "then": {
+        "urgency_reason": "show"
+      }
+    }
+  ]
+}

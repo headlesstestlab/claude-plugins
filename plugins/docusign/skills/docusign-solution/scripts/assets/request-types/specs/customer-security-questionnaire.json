@@ -1,0 +1,241 @@
+{
+  "id": "customer-security-questionnaire",
+  "name": "Customer Security Questionnaire",
+  "description": "A customer's security questionnaire, security exhibit or audit request on a live deal. Security/IT answers the security questions, the Data Protection Officer (Alexandra Kim) the privacy ones, and Legal Operations (Maya Patel) the contract terms.",
+  "pages": [
+    {
+      "title": "Customer Security Questionnaire",
+      "fields": [
+        {
+          "key": "party",
+          "bind": {
+            "provision": "Party"
+          },
+          "label": "Customer",
+          "required": true
+        },
+        {
+          "key": "crm_id",
+          "type": "text",
+          "label": "Salesforce opportunity ID",
+          "bind": {
+            "custom": "IntakeCrmId",
+            "label": "CRM Opportunity ID"
+          },
+          "required": true,
+          "description": "From the opportunity URL: 15 or 18 characters starting 006.",
+          "pattern": {
+            "regex": "^006[A-Za-z0-9]{12,15}$",
+            "message": "A Salesforce opportunity ID starts with 006 and is 15 or 18 characters.",
+            "example": "006Hs00001AbCdEIAV"
+          }
+        },
+        {
+          "key": "request_type",
+          "type": "dropdown",
+          "label": "What has the customer sent?",
+          "bind": {
+            "custom": "DeskSecurityAsk",
+            "label": "Security Ask",
+            "type": "Dropdown",
+            "accountWideOptions": true
+          },
+          "options": [
+            "Security questionnaire",
+            "Security exhibit or addendum",
+            "Privacy or DPA questions",
+            "Audit or penetration-test request",
+            "Other"
+          ],
+          "required": true
+        },
+        {
+          "key": "entity",
+          "type": "dropdown",
+          "label": "Fontara contracting entity",
+          "bind": {
+            "custom": "DeskFontaraEntity",
+            "label": "Contracting Entity",
+            "type": "Dropdown",
+            "accountWideOptions": true
+          },
+          "options": [
+            "Fontara, Inc.",
+            "Fontara UK Ltd",
+            "Fontara Europe Ltd"
+          ],
+          "required": true,
+          "description": "The Fontara company that signs. US business: Fontara, Inc. UK: Fontara UK Ltd. EU: Fontara Europe Ltd."
+        },
+        {
+          "key": "country",
+          "type": "dropdown",
+          "label": "Counterparty country",
+          "bind": {
+            "custom": "DeskCountry",
+            "label": "Country of Counterparty",
+            "type": "Dropdown",
+            "accountWideOptions": true
+          },
+          "options": [
+            "United States",
+            "United Kingdom",
+            "Australia",
+            "Austria",
+            "Belgium",
+            "Brazil",
+            "Bulgaria",
+            "Canada",
+            "China",
+            "Croatia",
+            "Cyprus",
+            "Czechia",
+            "Denmark",
+            "Estonia",
+            "Finland",
+            "France",
+            "Germany",
+            "Greece",
+            "Hungary",
+            "India",
+            "Ireland",
+            "Israel",
+            "Italy",
+            "Japan",
+            "Latvia",
+            "Lithuania",
+            "Luxembourg",
+            "Malta",
+            "Mexico",
+            "Netherlands",
+            "New Zealand",
+            "Norway",
+            "Poland",
+            "Portugal",
+            "Romania",
+            "Singapore",
+            "Slovakia",
+            "Slovenia",
+            "South Africa",
+            "South Korea",
+            "Spain",
+            "Sweden",
+            "Switzerland",
+            "United Arab Emirates",
+            "Other"
+          ],
+          "required": true,
+          "description": "Where the other party is established. It drives governing law, data-transfer and tax review."
+        },
+        {
+          "key": "value",
+          "bind": {
+            "provision": "ContractValue"
+          },
+          "label": "Total contract value (TCV)",
+          "required": true,
+          "description": "The deal's total value, all years, excluding tax. Larger deals are answered first."
+        },
+        {
+          "key": "priority_note",
+          "type": "description",
+          "text": "Questionnaires on large deals are answered first. Say in the notes if it blocks signature."
+        },
+        {
+          "key": "data_class",
+          "type": "dropdown",
+          "label": "Highest class of customer data Fontara will hold",
+          "bind": {
+            "custom": "DeskDataClass",
+            "label": "Data Class",
+            "type": "Dropdown",
+            "accountWideOptions": true
+          },
+          "options": [
+            "Public",
+            "Internal",
+            "Confidential",
+            "Restricted (special-category, children's or financial data)"
+          ],
+          "required": true
+        },
+        {
+          "key": "details",
+          "type": "longtext",
+          "label": "Anything Security/IT or Legal Operations should know?",
+          "bind": {
+            "custom": "RequestDescription"
+          },
+          "description": "Which questions are blocking, any previous answers to reuse, the customer's security contact."
+        },
+        {
+          "key": "owner",
+          "type": "text",
+          "label": "Account owner",
+          "bind": {
+            "custom": "BusinessOwnerName"
+          },
+          "required": true,
+          "description": "The account executive who owns the deal."
+        },
+        {
+          "key": "urgency",
+          "type": "dropdown",
+          "label": "Urgency",
+          "bind": {
+            "custom": "DeskUrgency",
+            "label": "Urgency",
+            "type": "Dropdown",
+            "accountWideOptions": true
+          },
+          "options": [
+            "Standard (5 business days)",
+            "Expedited (2 business days)",
+            "Urgent (24 hours, VP approval)"
+          ],
+          "required": true,
+          "description": "Standard is five business days. Urgent needs a VP's approval: name them in the reason. Urgency changes how fast Legal Operations (Maya Patel) works the request, not who approves the deal, which follows Fontara's escalation matrix."
+        },
+        {
+          "key": "urgency_reason",
+          "type": "longtext",
+          "label": "Why is this urgent?",
+          "bind": {
+            "custom": "IntakeUrgencyReason",
+            "label": "Urgency Reason"
+          },
+          "description": "The business deadline or risk, and the VP who approved the urgency."
+        },
+        {
+          "key": "needed_by",
+          "type": "date",
+          "label": "Customer due date",
+          "bind": {
+            "custom": "TargetDueDate"
+          },
+          "description": "When the customer expects the completed questionnaire.",
+          "required": true
+        },
+        {
+          "key": "documents",
+          "type": "file",
+          "label": "The questionnaire or exhibit",
+          "required": true
+        }
+      ]
+    }
+  ],
+  "rules": [
+    {
+      "when": [
+        {
+          "field": "urgency",
+          "is": "Urgent (24 hours, VP approval)"
+        }
+      ],
+      "then": {
+        "urgency_reason": "show"
+      }
+    }
+  ]
+}

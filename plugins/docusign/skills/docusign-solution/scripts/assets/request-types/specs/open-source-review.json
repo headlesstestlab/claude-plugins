@@ -1,0 +1,212 @@
+{
+  "id": "open-source-review",
+  "name": "Open Source Review",
+  "description": "Approval to use an open-source component: the licence, how it is used and distributed, and whether we modify it.",
+  "pages": [
+    {
+      "title": "Open Source Review",
+      "fields": [
+        {
+          "key": "subject_title_note",
+          "type": "description",
+          "text": "**Component name and version:** put it in the request title above the form."
+        },
+        {
+          "key": "repo",
+          "type": "text",
+          "label": "Repository or package URL",
+          "bind": {
+            "custom": "IntakeReferenceId",
+            "label": "External Reference ID"
+          },
+          "required": true,
+          "description": "The GitHub, npm, PyPI or Maven page."
+        },
+        {
+          "key": "license",
+          "type": "dropdown",
+          "label": "License",
+          "bind": {
+            "custom": "DeskLicense",
+            "label": "Open Source Licence",
+            "type": "Dropdown",
+            "accountWideOptions": true
+          },
+          "options": [
+            "MIT",
+            "Apache-2.0",
+            "BSD-2-Clause or BSD-3-Clause",
+            "ISC",
+            "MPL-2.0",
+            "LGPL-2.1 or LGPL-3.0",
+            "GPL-2.0",
+            "GPL-3.0",
+            "AGPL-3.0",
+            "EPL-2.0",
+            "SSPL or BUSL (source-available)",
+            "Other or no license"
+          ],
+          "required": true,
+          "description": "As stated in the repository's LICENSE file."
+        },
+        {
+          "key": "usage",
+          "type": "dropdown",
+          "label": "How will it be used?",
+          "bind": {
+            "custom": "DeskOssUsage",
+            "label": "How the Code Is Used",
+            "type": "Dropdown",
+            "accountWideOptions": true
+          },
+          "options": [
+            "Internal tool only",
+            "Distributed in our product",
+            "Distributed on-prem or in a mobile app",
+            "Offered as a service"
+          ],
+          "required": true
+        },
+        {
+          "key": "modify",
+          "type": "dropdown",
+          "label": "Will we modify it?",
+          "bind": {
+            "custom": "DeskOssModify",
+            "label": "Use or Modify",
+            "type": "Dropdown",
+            "accountWideOptions": true
+          },
+          "options": [
+            "Use as-is",
+            "Modify or fork"
+          ],
+          "required": true
+        },
+        {
+          "key": "copyleft_note",
+          "type": "description",
+          "text": "Copyleft or source-available licence: Legal needs to know how the component is linked and distributed. Fill in the details below."
+        },
+        {
+          "key": "agpl_note",
+          "type": "description",
+          "text": "AGPL in a hosted service can require publishing our source code. Legal review is required before any use."
+        },
+        {
+          "key": "purpose",
+          "type": "longtext",
+          "label": "What does it do for us?",
+          "bind": {
+            "custom": "IntakeBusinessPurpose",
+            "label": "Business Purpose"
+          }
+        },
+        {
+          "key": "details",
+          "type": "longtext",
+          "label": "How is it linked, modified or distributed?",
+          "bind": {
+            "custom": "RequestDescription"
+          },
+          "description": "Static or dynamic linking, a separate process, or copied source."
+        },
+        {
+          "key": "owner",
+          "type": "text",
+          "label": "Engineering owner",
+          "bind": {
+            "custom": "BusinessOwnerName"
+          },
+          "required": true,
+          "description": "The person accountable for this agreement after it is signed."
+        },
+        {
+          "key": "urgency",
+          "type": "dropdown",
+          "label": "Urgency",
+          "bind": {
+            "custom": "DeskUrgency",
+            "label": "Urgency",
+            "type": "Dropdown",
+            "accountWideOptions": true
+          },
+          "options": [
+            "Standard (5 business days)",
+            "Expedited (2 business days)",
+            "Urgent (24 hours, VP approval)"
+          ],
+          "required": true,
+          "description": "Standard is five business days. Urgent needs a VP's approval: name them in the reason. Urgency changes how fast Legal Operations (Maya Patel) works the request, not who approves the deal, which follows Fontara's escalation matrix."
+        },
+        {
+          "key": "urgency_reason",
+          "type": "longtext",
+          "label": "Why is this urgent?",
+          "bind": {
+            "custom": "IntakeUrgencyReason",
+            "label": "Urgency Reason"
+          },
+          "description": "The business deadline or risk, and the VP who approved the urgency."
+        },
+        {
+          "key": "needed_by",
+          "type": "date",
+          "label": "Needed by",
+          "bind": {
+            "custom": "TargetDueDate"
+          },
+          "description": "When you need Legal's work finished. Not the contract's start or end date."
+        }
+      ]
+    }
+  ],
+  "rules": [
+    {
+      "when": [
+        {
+          "field": "license",
+          "isAnyOf": [
+            "LGPL-2.1 or LGPL-3.0",
+            "GPL-2.0",
+            "GPL-3.0",
+            "AGPL-3.0",
+            "EPL-2.0",
+            "SSPL or BUSL (source-available)",
+            "Other or no license"
+          ]
+        }
+      ],
+      "then": {
+        "copyleft_note": "show"
+      }
+    },
+    {
+      "when": [
+        {
+          "field": "license",
+          "is": "AGPL-3.0"
+        },
+        {
+          "field": "usage",
+          "is": "Offered as a service"
+        }
+      ],
+      "match": "all",
+      "then": {
+        "agpl_note": "show"
+      }
+    },
+    {
+      "when": [
+        {
+          "field": "urgency",
+          "is": "Urgent (24 hours, VP approval)"
+        }
+      ],
+      "then": {
+        "urgency_reason": "show"
+      }
+    }
+  ]
+}

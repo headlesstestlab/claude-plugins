@@ -1,0 +1,85 @@
+{
+  "id": "data-sharing-check",
+  "name": "Data Sharing Check",
+  "description": "Before Fontara shares data with a vendor or partner: the data's classification on page one; restricted data opens a second page for the impact assessment.",
+  "pages": [
+    {
+      "title": "Data sharing",
+      "fields": [
+        {
+          "key": "owner",
+          "type": "text",
+          "label": "Business owner",
+          "bind": {
+            "custom": "BusinessOwnerName"
+          },
+          "required": true,
+          "description": "The person accountable for this agreement after it is signed."
+        },
+        {
+          "key": "existing",
+          "type": "text",
+          "label": "Existing agreement",
+          "bind": {
+            "custom": "IntakeExistingAgreement",
+            "label": "Related Agreement"
+          },
+          "description": "The agreement the sharing falls under, if there is one: CLM ID or exact title."
+        },
+        {
+          "key": "data_class",
+          "type": "dropdown",
+          "label": "Data classification",
+          "bind": {
+            "custom": "DeskDataClass",
+            "label": "Data Class",
+            "type": "Dropdown",
+            "accountWideOptions": true
+          },
+          "options": [
+            "Public",
+            "Internal",
+            "Confidential",
+            "Restricted (special-category, children's or financial data)"
+          ],
+          "required": true
+        }
+      ]
+    },
+    {
+      "title": "Impact assessment",
+      "key": "impact",
+      "fields": [
+        {
+          "key": "data_details",
+          "type": "longtext",
+          "label": "What personal data, about whom?",
+          "bind": {
+            "custom": "IntakeDataDetails",
+            "label": "Personal Data Description"
+          },
+          "required": true,
+          "description": "Categories of data and of people, e.g. customer employees' names and work emails."
+        },
+        {
+          "key": "special_note",
+          "type": "description",
+          "text": "Special-category or children's data needs a data protection impact assessment before signature. The Data Protection Officer (Alexandra Kim) will contact you."
+        }
+      ]
+    }
+  ],
+  "rules": [
+    {
+      "when": [
+        {
+          "field": "data_class",
+          "is": "Restricted (special-category, children's or financial data)"
+        }
+      ],
+      "then": {
+        "impact": "show"
+      }
+    }
+  ]
+}

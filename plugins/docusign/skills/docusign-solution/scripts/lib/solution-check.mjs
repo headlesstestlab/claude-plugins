@@ -6,7 +6,8 @@
  * names a capability that is really missing. The gallery's eval (scripts/eval-corpus.ts) and the
  * docusign-solution skill both run it; neither imports anything.
  */
-import { compileSolution } from './solution-spec.mjs';
+import { compileSolution, libraryRequestTypes } from './solution-spec.mjs';
+import { dropdownLists } from './request-type-spec.mjs';
 import { helpChecks, hiddenEsignFills, parityErrors, requiredFieldErrors, undeclaredFormReferences, workflowSize } from './workflow-checks.mjs';
 import { readZip } from './zip.mjs';
 import { SPEC_DIRS, capabilitiesUsedBy } from './capabilities.mjs';
@@ -72,11 +73,31 @@ export function checkSolution(s, o) {
         if (u.dir === SPEC_DIRS['doc-template'])
             for (const e of exampleErrors(u.spec))
                 r.errors.push(`document-templates/${u.id}: ${e}`);
+    for (const e of dropdownClashes(r.bundle.specs.filter((u) => u.dir === SPEC_DIRS['request-type']).map((u) => u.spec), libraryRequestTypes()))
+        r.errors.push(e);
     for (const w of r.bundle.solution.warnings ?? [])
         r.warnings.push(w);
     if (r.bundle.solution.customFields.length)
         r.warnings.push(`the imports create or update ${r.bundle.solution.customFields.length} account custom field(s), permanently: ${r.bundle.solution.customFields.join(', ')}`);
     return r;
+}
+/**
+ * A Dropdown custom field's option list is fixed once an account has the field: an import that changes it fails whole
+ * (Test 4, 2026-11-15), and Demo Studio's Load a bundle refuses it ("reoption"). An account that loaded the library has
+ * the library's lists, so a bundle's request type that binds a library field keeps that field's list exactly; its own
+ * list needs a field name of its own (claude-e2e-journey 2026-11-24: Northwind's entities on C_DeskFontaraEntity).
+ */
+export function dropdownClashes(specs, library) {
+    const lib = dropdownLists(library);
+    const out = [];
+    for (const s of specs)
+        for (const [name, f] of dropdownLists([s])) {
+            const l = lib.get(name);
+            if (!l || JSON.stringify(l.options) === JSON.stringify(f.options))
+                continue;
+            out.push(`request-types/${s.id}: ${name} is a library field (request type ${l.by}) with the options ${JSON.stringify(l.options)}; an account that has it refuses another list (the import fails). Keep that list exactly, or bind your own field name for your own list (for example "custom": "<Company>${name.replace(/^C_/, '').replace('Fontara', '')}")`);
+        }
+    return out;
 }
 const STOP = new Set(['the', 'and', 'for', 'with', 'from', 'into', 'onto', 'back', 'that', 'this', 'when', 'each', 'their', 'them', 'they', 'without', 'after', 'before', 'there', 'then', 'have', 'been', 'will', 'your', 'ours', 'what', 'which']);
 const words = (t) => new Set(t.toLowerCase().replace(/\{\{[^}]*\}\}/g, ' ').split(/[^a-z0-9]+/).filter((w) => w.length > 2 && !STOP.has(w)).map((w) => w.replace(/(?:ing|ed|s)$/, '')));

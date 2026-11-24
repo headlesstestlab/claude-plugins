@@ -1,0 +1,388 @@
+{
+  "id": "vendor-agreement-review",
+  "name": "Vendor Agreement Request",
+  "description": "Contract with a supplier: what you are buying, from whom, for how much, who pays and what data they touch.",
+  "pages": [
+    {
+      "title": "Vendor Agreement Request",
+      "fields": [
+        {
+          "key": "party",
+          "bind": {
+            "provision": "Party"
+          },
+          "label": "Vendor",
+          "required": true,
+          "description": "The supplier's legal name, as registered."
+        },
+        {
+          "key": "agreement_type",
+          "type": "dropdown",
+          "label": "Agreement type",
+          "bind": {
+            "custom": "DeskVendorAgreementType",
+            "label": "Vendor Agreement Type",
+            "type": "Dropdown",
+            "accountWideOptions": true
+          },
+          "options": [
+            "Purchase agreement",
+            "Services agreement",
+            "Subscription / SaaS",
+            "Supply agreement",
+            "Other"
+          ],
+          "required": true
+        },
+        {
+          "key": "purpose",
+          "type": "longtext",
+          "label": "What are you buying, and why?",
+          "bind": {
+            "custom": "IntakeBusinessPurpose",
+            "label": "Business Purpose"
+          },
+          "required": true,
+          "description": "The goods or services, and the business need."
+        },
+        {
+          "key": "entity",
+          "type": "dropdown",
+          "label": "Fontara contracting entity",
+          "bind": {
+            "custom": "DeskFontaraEntity",
+            "label": "Contracting Entity",
+            "type": "Dropdown",
+            "accountWideOptions": true
+          },
+          "options": [
+            "Fontara, Inc.",
+            "Fontara UK Ltd",
+            "Fontara Europe Ltd"
+          ],
+          "required": true,
+          "description": "The Fontara company that signs. US business: Fontara, Inc. UK: Fontara UK Ltd. EU: Fontara Europe Ltd."
+        },
+        {
+          "key": "country",
+          "type": "dropdown",
+          "label": "Counterparty country",
+          "bind": {
+            "custom": "DeskCountry",
+            "label": "Country of Counterparty",
+            "type": "Dropdown",
+            "accountWideOptions": true
+          },
+          "options": [
+            "United States",
+            "United Kingdom",
+            "Australia",
+            "Austria",
+            "Belgium",
+            "Brazil",
+            "Bulgaria",
+            "Canada",
+            "China",
+            "Croatia",
+            "Cyprus",
+            "Czechia",
+            "Denmark",
+            "Estonia",
+            "Finland",
+            "France",
+            "Germany",
+            "Greece",
+            "Hungary",
+            "India",
+            "Ireland",
+            "Israel",
+            "Italy",
+            "Japan",
+            "Latvia",
+            "Lithuania",
+            "Luxembourg",
+            "Malta",
+            "Mexico",
+            "Netherlands",
+            "New Zealand",
+            "Norway",
+            "Poland",
+            "Portugal",
+            "Romania",
+            "Singapore",
+            "Slovakia",
+            "Slovenia",
+            "South Africa",
+            "South Korea",
+            "Spain",
+            "Sweden",
+            "Switzerland",
+            "United Arab Emirates",
+            "Other"
+          ],
+          "required": true,
+          "description": "Where the other party is established. It drives governing law, data-transfer and tax review."
+        },
+        {
+          "key": "value",
+          "bind": {
+            "provision": "ContractValue"
+          },
+          "label": "Total contract value (TCV)",
+          "required": true,
+          "description": "All years, excluding tax."
+        },
+        {
+          "key": "approver",
+          "type": "text",
+          "label": "Budget approver",
+          "bind": {
+            "custom": "IntakeApprover",
+            "label": "Budget Approver"
+          },
+          "description": "Up to $1,000,000 total: the Head of Procurement (Victoria Lee). Over $1,000,000: the CFO (Marcus Chen)."
+        },
+        {
+          "key": "cfo_note",
+          "type": "description",
+          "text": "Over $1,000,000 total: the CFO (Marcus Chen) approves and signs. Up to $1,000,000, the Head of Procurement (Victoria Lee) signs."
+        },
+        {
+          "key": "cost_center",
+          "type": "text",
+          "label": "Cost center",
+          "bind": {
+            "custom": "IntakeCostCenter",
+            "label": "Cost Center"
+          },
+          "required": true,
+          "description": "The cost center that pays, e.g. 4100-Marketing."
+        },
+        {
+          "key": "payment_terms",
+          "bind": {
+            "provision": "PaymentTerms"
+          },
+          "label": "Payment terms"
+        },
+        {
+          "key": "effective",
+          "bind": {
+            "provision": "EffectiveDate"
+          },
+          "label": "Effective date"
+        },
+        {
+          "key": "expiration",
+          "bind": {
+            "provision": "ExpirationDate"
+          },
+          "label": "Expiration date"
+        },
+        {
+          "key": "paper",
+          "type": "dropdown",
+          "label": "Whose paper?",
+          "bind": {
+            "custom": "DeskPaperSource",
+            "label": "Whose Paper",
+            "type": "Dropdown",
+            "accountWideOptions": true
+          },
+          "options": [
+            "Fontara's paper",
+            "Counterparty's paper"
+          ],
+          "required": true,
+          "description": "Our template means Fontara's standard on file. Counterparty's paper means their draft, which Legal reviews in full."
+        },
+        {
+          "key": "their_draft",
+          "type": "file",
+          "label": "Counterparty's draft",
+          "required": true,
+          "description": "Their latest version, in Word if you have it."
+        },
+        {
+          "key": "personal_data",
+          "type": "dropdown",
+          "label": "Will the vendor access or receive personal data?",
+          "bind": {
+            "custom": "DeskPersonalData",
+            "label": "Personal Data Involved",
+            "type": "Dropdown",
+            "accountWideOptions": true
+          },
+          "options": [
+            "Yes",
+            "No",
+            "Not sure"
+          ],
+          "required": true,
+          "description": "Customer, employee or prospect data. If Yes, say whether an existing DPA covers it: only new processing goes to the Data Protection Officer (Alexandra Kim). The vendor's security (SOC 2, penetration test, access) is Security/IT's vendor risk review either way."
+        },
+        {
+          "key": "existing_dpa",
+          "type": "dropdown",
+          "label": "Is this covered by an existing DPA?",
+          "options": [
+            "Yes",
+            "No"
+          ],
+          "bind": {
+            "custom": "DeskExistingDpa",
+            "label": "Existing DPA Covers It",
+            "type": "Dropdown",
+            "accountWideOptions": true
+          },
+          "description": "No, or new data categories, new sub-processors or a new cross-border transfer: the Data Protection Officer (Alexandra Kim) reviews it. Yes, with nothing new: no privacy review."
+        },
+        {
+          "key": "data_details",
+          "type": "longtext",
+          "label": "What personal data, about whom, and where will it be stored?",
+          "bind": {
+            "custom": "IntakeDataDetails",
+            "label": "Personal Data Description"
+          },
+          "description": "For example: customer contact names and emails, stored in the vendor's EU data centre."
+        },
+        {
+          "key": "data_class",
+          "type": "dropdown",
+          "label": "Data classification",
+          "bind": {
+            "custom": "DeskDataClass",
+            "label": "Data Class",
+            "type": "Dropdown",
+            "accountWideOptions": true
+          },
+          "options": [
+            "Public",
+            "Internal",
+            "Confidential",
+            "Restricted (special-category, children's or financial data)"
+          ],
+          "description": "The highest class of Fontara data involved. Restricted data needs Security/IT's vendor risk review before signature."
+        },
+        {
+          "key": "privacy_note",
+          "type": "description",
+          "text": "The Data Protection Officer (Alexandra Kim) will follow up to confirm whether personal data is involved. If it is, and no existing DPA covers it, a DPA is needed before signature."
+        },
+        {
+          "key": "ai_use",
+          "type": "dropdown",
+          "label": "Will the vendor use AI on Fontara data, or train models on it?",
+          "bind": {
+            "custom": "DeskAIUse",
+            "label": "AI on Fontara Data",
+            "type": "Dropdown",
+            "accountWideOptions": true
+          },
+          "options": [
+            "Yes",
+            "No",
+            "Unknown"
+          ],
+          "description": "Yes needs Legal to agree AI and model-training terms."
+        },
+        {
+          "key": "owner",
+          "type": "text",
+          "label": "Budget owner",
+          "bind": {
+            "custom": "BusinessOwnerName"
+          },
+          "required": true,
+          "description": "The person accountable for the vendor after signature."
+        },
+        {
+          "key": "urgency",
+          "type": "dropdown",
+          "label": "Urgency",
+          "bind": {
+            "custom": "DeskUrgency",
+            "label": "Urgency",
+            "type": "Dropdown",
+            "accountWideOptions": true
+          },
+          "options": [
+            "Standard (5 business days)",
+            "Expedited (2 business days)",
+            "Urgent (24 hours, VP approval)"
+          ],
+          "required": true,
+          "description": "Standard is five business days. Urgent needs a VP's approval: name them in the reason. Urgency changes how fast Legal Operations (Maya Patel) works the request, not who approves the deal, which follows Fontara's escalation matrix."
+        },
+        {
+          "key": "urgency_reason",
+          "type": "longtext",
+          "label": "Why is this urgent?",
+          "bind": {
+            "custom": "IntakeUrgencyReason",
+            "label": "Urgency Reason"
+          },
+          "description": "The business deadline or risk, and the VP who approved the urgency."
+        },
+        {
+          "key": "needed_by",
+          "type": "date",
+          "label": "Needed by",
+          "bind": {
+            "custom": "TargetDueDate"
+          },
+          "description": "When you need Legal's work finished. Not the contract's start or end date."
+        }
+      ]
+    }
+  ],
+  "rules": [
+    {
+      "when": [
+        {
+          "field": "paper",
+          "is": "Counterparty's paper"
+        }
+      ],
+      "then": {
+        "their_draft": "show"
+      }
+    },
+    {
+      "when": [
+        {
+          "field": "personal_data",
+          "is": "Yes"
+        }
+      ],
+      "then": {
+        "data_details": "show",
+        "data_class": "show",
+        "existing_dpa": "show"
+      }
+    },
+    {
+      "when": [
+        {
+          "field": "personal_data",
+          "is": "Not sure"
+        }
+      ],
+      "then": {
+        "privacy_note": "show"
+      }
+    },
+    {
+      "when": [
+        {
+          "field": "urgency",
+          "is": "Urgent (24 hours, VP approval)"
+        }
+      ],
+      "then": {
+        "urgency_reason": "show"
+      }
+    }
+  ]
+}

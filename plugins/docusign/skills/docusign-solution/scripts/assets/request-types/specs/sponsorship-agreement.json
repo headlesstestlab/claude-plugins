@@ -1,0 +1,325 @@
+{
+  "id": "sponsorship-agreement",
+  "name": "Sponsorship Agreement",
+  "description": "Sponsor an event or be sponsored: who pays, what it buys, hospitality, public officials and attendee data.",
+  "pages": [
+    {
+      "title": "Sponsorship Agreement",
+      "fields": [
+        {
+          "key": "party",
+          "bind": {
+            "provision": "Party"
+          },
+          "label": "Event organiser or sponsor",
+          "required": true
+        },
+        {
+          "key": "side",
+          "type": "dropdown",
+          "label": "Who pays?",
+          "bind": {
+            "custom": "DeskSponsorshipSide",
+            "label": "Sponsorship Direction",
+            "type": "Dropdown",
+            "accountWideOptions": true
+          },
+          "options": [
+            "Buying: Fontara pays the sponsorship",
+            "Selling: Fontara receives sponsorship"
+          ],
+          "required": true
+        },
+        {
+          "key": "cost_center",
+          "type": "text",
+          "label": "Cost center",
+          "bind": {
+            "custom": "IntakeCostCenter",
+            "label": "Cost Center"
+          },
+          "required": false,
+          "description": "The cost center that pays, e.g. 4100-Marketing."
+        },
+        {
+          "key": "subject_title_note",
+          "type": "description",
+          "text": "**Event name:** put it in the request title above the form."
+        },
+        {
+          "key": "event_date",
+          "bind": {
+            "provision": "EffectiveDate"
+          },
+          "label": "Event date",
+          "required": true
+        },
+        {
+          "key": "value",
+          "bind": {
+            "provision": "ContractValue"
+          },
+          "label": "Total contract value (TCV)",
+          "required": true,
+          "description": "The total sponsorship amount, excluding tax."
+        },
+        {
+          "key": "details",
+          "type": "longtext",
+          "label": "What is included?",
+          "bind": {
+            "custom": "RequestDescription"
+          },
+          "required": true,
+          "description": "Booth, speaking slot, logo placement, and any hospitality, travel or gifts with their approximate value."
+        },
+        {
+          "key": "gov_official",
+          "type": "dropdown",
+          "label": "Will government officials or public-sector employees attend or benefit?",
+          "bind": {
+            "custom": "DeskGovOfficial",
+            "label": "Government Official",
+            "type": "Dropdown",
+            "accountWideOptions": true
+          },
+          "options": [
+            "Yes",
+            "No",
+            "Not sure"
+          ],
+          "required": true,
+          "description": "Hospitality for officials needs anti-bribery pre-approval."
+        },
+        {
+          "key": "personal_data",
+          "type": "dropdown",
+          "label": "Will Fontara receive attendee lead lists or other personal data?",
+          "bind": {
+            "custom": "DeskPersonalData",
+            "label": "Personal Data Involved",
+            "type": "Dropdown",
+            "accountWideOptions": true
+          },
+          "options": [
+            "Yes",
+            "No",
+            "Not sure"
+          ],
+          "required": true,
+          "description": "Lead lists need a lawful basis and the attendees' consent."
+        },
+        {
+          "key": "data_details",
+          "type": "longtext",
+          "label": "What personal data, about whom, and where will it be stored?",
+          "bind": {
+            "custom": "IntakeDataDetails",
+            "label": "Personal Data Description"
+          },
+          "description": "For example: customer contact names and emails, stored in the vendor's EU data centre."
+        },
+        {
+          "key": "data_class",
+          "type": "dropdown",
+          "label": "Data classification",
+          "bind": {
+            "custom": "DeskDataClass",
+            "label": "Data Class",
+            "type": "Dropdown",
+            "accountWideOptions": true
+          },
+          "options": [
+            "Public",
+            "Internal",
+            "Confidential",
+            "Restricted (special-category, children's or financial data)"
+          ],
+          "description": "The highest class of Fontara data involved. Restricted data needs Security/IT's vendor risk review before signature."
+        },
+        {
+          "key": "privacy_note",
+          "type": "description",
+          "text": "The Data Protection Officer (Alexandra Kim) will follow up to confirm whether personal data is involved. If it is, and no existing DPA covers it, a DPA is needed before signature."
+        },
+        {
+          "key": "entity",
+          "type": "dropdown",
+          "label": "Fontara contracting entity",
+          "bind": {
+            "custom": "DeskFontaraEntity",
+            "label": "Contracting Entity",
+            "type": "Dropdown",
+            "accountWideOptions": true
+          },
+          "options": [
+            "Fontara, Inc.",
+            "Fontara UK Ltd",
+            "Fontara Europe Ltd"
+          ],
+          "required": true,
+          "description": "The Fontara company that signs. US business: Fontara, Inc. UK: Fontara UK Ltd. EU: Fontara Europe Ltd."
+        },
+        {
+          "key": "country",
+          "type": "dropdown",
+          "label": "Counterparty country",
+          "bind": {
+            "custom": "DeskCountry",
+            "label": "Country of Counterparty",
+            "type": "Dropdown",
+            "accountWideOptions": true
+          },
+          "options": [
+            "United States",
+            "United Kingdom",
+            "Australia",
+            "Austria",
+            "Belgium",
+            "Brazil",
+            "Bulgaria",
+            "Canada",
+            "China",
+            "Croatia",
+            "Cyprus",
+            "Czechia",
+            "Denmark",
+            "Estonia",
+            "Finland",
+            "France",
+            "Germany",
+            "Greece",
+            "Hungary",
+            "India",
+            "Ireland",
+            "Israel",
+            "Italy",
+            "Japan",
+            "Latvia",
+            "Lithuania",
+            "Luxembourg",
+            "Malta",
+            "Mexico",
+            "Netherlands",
+            "New Zealand",
+            "Norway",
+            "Poland",
+            "Portugal",
+            "Romania",
+            "Singapore",
+            "Slovakia",
+            "Slovenia",
+            "South Africa",
+            "South Korea",
+            "Spain",
+            "Sweden",
+            "Switzerland",
+            "United Arab Emirates",
+            "Other"
+          ],
+          "required": true,
+          "description": "Where the other party is established. It drives governing law, data-transfer and tax review."
+        },
+        {
+          "key": "owner",
+          "type": "text",
+          "label": "Business owner",
+          "bind": {
+            "custom": "BusinessOwnerName"
+          },
+          "required": true,
+          "description": "The person accountable for this agreement after it is signed."
+        },
+        {
+          "key": "urgency",
+          "type": "dropdown",
+          "label": "Urgency",
+          "bind": {
+            "custom": "DeskUrgency",
+            "label": "Urgency",
+            "type": "Dropdown",
+            "accountWideOptions": true
+          },
+          "options": [
+            "Standard (5 business days)",
+            "Expedited (2 business days)",
+            "Urgent (24 hours, VP approval)"
+          ],
+          "required": true,
+          "description": "Standard is five business days. Urgent needs a VP's approval: name them in the reason. Urgency changes how fast Legal Operations (Maya Patel) works the request, not who approves the deal, which follows Fontara's escalation matrix."
+        },
+        {
+          "key": "urgency_reason",
+          "type": "longtext",
+          "label": "Why is this urgent?",
+          "bind": {
+            "custom": "IntakeUrgencyReason",
+            "label": "Urgency Reason"
+          },
+          "description": "The business deadline or risk, and the VP who approved the urgency."
+        },
+        {
+          "key": "needed_by",
+          "type": "date",
+          "label": "Needed by",
+          "bind": {
+            "custom": "TargetDueDate"
+          },
+          "description": "When you need Legal's work finished. Not the contract's start or end date."
+        },
+        {
+          "key": "documents",
+          "type": "file",
+          "label": "Sponsorship prospectus"
+        }
+      ]
+    }
+  ],
+  "rules": [
+    {
+      "when": [
+        {
+          "field": "side",
+          "is": "Buying: Fontara pays the sponsorship"
+        }
+      ],
+      "then": {
+        "cost_center": "show"
+      }
+    },
+    {
+      "when": [
+        {
+          "field": "personal_data",
+          "is": "Yes"
+        }
+      ],
+      "then": {
+        "data_details": "show",
+        "data_class": "show"
+      }
+    },
+    {
+      "when": [
+        {
+          "field": "personal_data",
+          "is": "Not sure"
+        }
+      ],
+      "then": {
+        "privacy_note": "show"
+      }
+    },
+    {
+      "when": [
+        {
+          "field": "urgency",
+          "is": "Urgent (24 hours, VP approval)"
+        }
+      ],
+      "then": {
+        "urgency_reason": "show"
+      }
+    }
+  ]
+}

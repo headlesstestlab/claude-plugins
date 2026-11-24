@@ -1,0 +1,316 @@
+{
+  "id": "facility-lease",
+  "name": "Facility Lease",
+  "description": "Lease, renew, expand, sublease or surrender office, warehouse, lab or retail space.",
+  "pages": [
+    {
+      "title": "Facility Lease",
+      "fields": [
+        {
+          "key": "lease_action",
+          "type": "dropdown",
+          "label": "What is needed?",
+          "bind": {
+            "custom": "DeskLeaseAction",
+            "label": "Lease Action",
+            "type": "Dropdown",
+            "accountWideOptions": true
+          },
+          "options": [
+            "New lease",
+            "Renewal",
+            "Expansion",
+            "Sublease (Fontara is landlord)",
+            "Surrender"
+          ],
+          "required": true
+        },
+        {
+          "key": "party",
+          "bind": {
+            "provision": "Party"
+          },
+          "label": "Landlord or subtenant",
+          "required": true
+        },
+        {
+          "key": "use",
+          "type": "dropdown",
+          "label": "Property use",
+          "bind": {
+            "custom": "DeskPremisesUse",
+            "label": "Premises Use",
+            "type": "Dropdown",
+            "accountWideOptions": true
+          },
+          "options": [
+            "Office",
+            "Warehouse",
+            "Lab",
+            "Retail",
+            "Data center"
+          ],
+          "required": true
+        },
+        {
+          "key": "address",
+          "type": "text",
+          "label": "Property address",
+          "bind": {
+            "custom": "IntakeAddress",
+            "label": "Property Address"
+          },
+          "required": true
+        },
+        {
+          "key": "country",
+          "type": "dropdown",
+          "label": "Property country",
+          "bind": {
+            "custom": "DeskCountry",
+            "label": "Country of Counterparty",
+            "type": "Dropdown",
+            "accountWideOptions": true
+          },
+          "options": [
+            "United States",
+            "United Kingdom",
+            "Australia",
+            "Austria",
+            "Belgium",
+            "Brazil",
+            "Bulgaria",
+            "Canada",
+            "China",
+            "Croatia",
+            "Cyprus",
+            "Czechia",
+            "Denmark",
+            "Estonia",
+            "Finland",
+            "France",
+            "Germany",
+            "Greece",
+            "Hungary",
+            "India",
+            "Ireland",
+            "Israel",
+            "Italy",
+            "Japan",
+            "Latvia",
+            "Lithuania",
+            "Luxembourg",
+            "Malta",
+            "Mexico",
+            "Netherlands",
+            "New Zealand",
+            "Norway",
+            "Poland",
+            "Portugal",
+            "Romania",
+            "Singapore",
+            "Slovakia",
+            "Slovenia",
+            "South Africa",
+            "South Korea",
+            "Spain",
+            "Sweden",
+            "Switzerland",
+            "United Arab Emirates",
+            "Other"
+          ],
+          "required": true,
+          "description": "Lease law and tax differ by country."
+        },
+        {
+          "key": "size",
+          "type": "number",
+          "label": "Area (square feet)",
+          "bind": {
+            "custom": "IntakeQuantity",
+            "label": "Quantity"
+          },
+          "required": true,
+          "numberFormat": "commaSeparatedNumber"
+        },
+        {
+          "key": "entity",
+          "type": "dropdown",
+          "label": "Fontara contracting entity",
+          "bind": {
+            "custom": "DeskFontaraEntity",
+            "label": "Contracting Entity",
+            "type": "Dropdown",
+            "accountWideOptions": true
+          },
+          "options": [
+            "Fontara, Inc.",
+            "Fontara UK Ltd",
+            "Fontara Europe Ltd"
+          ],
+          "required": true,
+          "description": "The Fontara company that signs. US business: Fontara, Inc. UK: Fontara UK Ltd. EU: Fontara Europe Ltd."
+        },
+        {
+          "key": "effective",
+          "bind": {
+            "provision": "EffectiveDate"
+          },
+          "label": "Lease start",
+          "required": true
+        },
+        {
+          "key": "expiration",
+          "bind": {
+            "provision": "ExpirationDate"
+          },
+          "label": "Lease end",
+          "required": true
+        },
+        {
+          "key": "notice",
+          "bind": {
+            "provision": "RenewalNoticeDate"
+          },
+          "label": "Option or notice deadline",
+          "dateFormat": "dd_MM_yyyy"
+        },
+        {
+          "key": "renewal_type",
+          "bind": {
+            "provision": "RenewalType"
+          },
+          "label": "Renewal type"
+        },
+        {
+          "key": "cost_center",
+          "type": "text",
+          "label": "Cost center",
+          "bind": {
+            "custom": "IntakeCostCenter",
+            "label": "Cost Center"
+          },
+          "required": false,
+          "description": "The cost center that pays, e.g. 4100-Marketing.",
+          "default": "4300-Facilities"
+        },
+        {
+          "key": "value",
+          "bind": {
+            "provision": "ContractValue"
+          },
+          "label": "Total contract value (TCV)",
+          "required": true,
+          "description": "Total rent over the term, excluding tax. Finance needs this for IFRS 16 / ASC 842."
+        },
+        {
+          "key": "annual_rent",
+          "bind": {
+            "provision": "AnnualValue"
+          },
+          "label": "Annual rent",
+          "description": "Rent for the first year, excluding tax."
+        },
+        {
+          "key": "non_standard",
+          "type": "radio",
+          "label": "Break option, deposit, guarantee or other non-standard terms?",
+          "bind": {
+            "custom": "IntakeNonStandard",
+            "label": "Non-standard Terms Requested",
+            "type": "Text"
+          },
+          "options": [
+            "Yes",
+            "No"
+          ]
+        },
+        {
+          "key": "details",
+          "type": "longtext",
+          "label": "Which terms?",
+          "bind": {
+            "custom": "RequestDescription"
+          },
+          "description": "Break option, rent-free period, fit-out contribution, security deposit, parent guarantee or letter of credit."
+        },
+        {
+          "key": "owner",
+          "type": "text",
+          "label": "Facilities owner",
+          "bind": {
+            "custom": "BusinessOwnerName"
+          },
+          "required": true,
+          "description": "The person accountable for this agreement after it is signed."
+        },
+        {
+          "key": "urgency",
+          "type": "dropdown",
+          "label": "Urgency",
+          "bind": {
+            "custom": "DeskUrgency",
+            "label": "Urgency",
+            "type": "Dropdown",
+            "accountWideOptions": true
+          },
+          "options": [
+            "Standard (5 business days)",
+            "Expedited (2 business days)",
+            "Urgent (24 hours, VP approval)"
+          ],
+          "required": true,
+          "description": "Standard is five business days. Urgent needs a VP's approval: name them in the reason. Urgency changes how fast Legal Operations (Maya Patel) works the request, not who approves the deal, which follows Fontara's escalation matrix."
+        },
+        {
+          "key": "urgency_reason",
+          "type": "longtext",
+          "label": "Why is this urgent?",
+          "bind": {
+            "custom": "IntakeUrgencyReason",
+            "label": "Urgency Reason"
+          },
+          "description": "The business deadline or risk, and the VP who approved the urgency."
+        },
+        {
+          "key": "needed_by",
+          "type": "date",
+          "label": "Needed by",
+          "bind": {
+            "custom": "TargetDueDate"
+          },
+          "description": "When you need Legal's work finished. Not the contract's start or end date."
+        },
+        {
+          "key": "documents",
+          "type": "file",
+          "label": "Letter of intent or draft lease"
+        }
+      ]
+    }
+  ],
+  "rules": [
+    {
+      "when": [
+        {
+          "field": "non_standard",
+          "is": "Yes"
+        }
+      ],
+      "then": {
+        "details": "show"
+      }
+    },
+    {
+      "when": [
+        {
+          "field": "urgency",
+          "is": "Urgent (24 hours, VP approval)"
+        }
+      ],
+      "then": {
+        "urgency_reason": "show"
+      }
+    }
+  ]
+}
