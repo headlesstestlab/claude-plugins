@@ -43,7 +43,7 @@ export function libraryRequestTypes() {
 export const BUNDLE_AT = new Date('2026-10-21T00:00:00Z');
 const OWNER = { userId: '00000000-0000-0000-0000-000000000000', userName: 'Docusign screen gallery' };
 const APPS = { [SF_CONNECTOR]: 'Salesforce' };
-const KEYS = ['id', 'name', 'description', 'namePrefix', 'environment', 'agents', 'workflows', 'sharedRequestTypes', 'templateNames', 'namedTemplates', 'requestTypes', 'webforms', 'documentTemplates', 'esignTemplates', 'clmWorkflows', 'webformTemplates', 'clmDocgenForms', 'clmDocgenConfigs', 'clmEforms', 'deskSettings', 'prerequisites', 'gaps', 'integration', 'notBuildable'];
+const KEYS = ['id', 'name', 'description', 'namePrefix', 'environment', 'agents', 'workflows', 'sharedRequestTypes', 'templateNames', 'namedTemplates', 'requestTypes', 'webforms', 'documentTemplates', 'esignTemplates', 'clmWorkflows', 'webformTemplates', 'clmDocgenForms', 'clmDocgenConfigs', 'clmEforms', 'deskSettings', 'prerequisites', 'gaps', 'integration', 'notBuildable', 'basedOnStory'];
 export const HOW = {
     agent: 'Agent Studio ▸ Create agent: fill it in from the build sheet (.md), then Publish. After the workflow import, pick it again in each Execute AI Agent step (a hand-made agent gets a new key).',
     workflow: 'Agreements ▸ Workflows ▸ Create Workflow ▸ Import Workflow, choose the .zip; pick the account\'s connection for each connected app it asks about, then Next. It lands as a draft: review every step, then Review & Publish.',
@@ -912,7 +912,7 @@ function resolved(s, steps, wfs, specs, files, accountBound, { agreementSearch, 
         ...(s.prerequisites ?? []).filter((text) => !(placeholders.length && /@example\.(com|org|net)\b/i.test(text) && /\breplace\b/i.test(text)) && !(folders && /\bfolders?\b/i.test(text) && folders.names.some((x) => text.includes(x)))).map((text, i) => ({ id: `manifest-${i + 1}`, text, how: '', capabilities: [], check: 'manifest', for: [] })),
     ];
     return {
-        id: s.id, name: s.name, ...(s.description ? { description: s.description } : {}), builtAt: BUNDLE_AT.toISOString(), accountBound,
+        id: s.id, name: s.name, ...(s.description ? { description: s.description } : {}), ...(s.basedOnStory ? { basedOnStory: s.basedOnStory } : {}), builtAt: BUNDLE_AT.toISOString(), accountBound,
         order: steps.map((x) => ({ step: x.n, kind: x.kind, name: x.name, files: x.files.map((f) => ({ path: f, sha256: sha(files.find((y) => y.path === f).data) })) })),
         workflows: wfs,
         salesforce, customFields: [...new Set(wfs.flatMap((w) => w.customFields))].sort(), connectedApps: apps,
@@ -1023,6 +1023,8 @@ function renderReadme(s, sol, steps, builtBy, unprovenUsed = []) {
     const L = [`# ${s.name}`, ''];
     if (s.description)
         L.push(s.description, '');
+    if (s.basedOnStory)
+        L.push(`basedOnStory: ${s.basedOnStory} (the Docusign demo story it adapts)`, '');
     L.push(`Built offline from the solution manifest \`${s.id}\` by ${builtBy ?? 'the solution compiler'}. Every file passed its schema. Upload in the order below.`, '');
     L.push('Or load them all at once: **Agreements Demo Studio ▸ Assets ▸ Load a bundle**, drop this .zip. It shows what each upload creates on the connected account first, loads them in this order, and Undo deletes them.', '');
     if (s.notBuildable)
