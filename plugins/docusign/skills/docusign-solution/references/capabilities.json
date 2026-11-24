@@ -876,7 +876,7 @@
 {"id":"agent.output.number","asset":"agent","capability":"In a workflow: Number output","status":"proven","specKey":"outputs[]: {format: \"number\"}","match":{"key":"format","within":"outputs","value":"number"}},
 {"id":"agent.output.name-rule","asset":"agent","capability":"Output name is a variable name, unique","status":"refused","specKey":"outputs[].name"},
 {"id":"agent.output.description","asset":"agent","capability":"Output description required","status":"refused","specKey":"outputs[].description"},
-{"id":"agent.output.format-other","asset":"agent","capability":"Output formats other than string/boolean/number","status":"refused"},
+{"id":"agent.output.format-other","asset":"agent","capability":"In a workflow: Document output","status":"proven","specKey":"outputs[]: {format: \"document\"}","match":{"key":"format","within":"outputs","value":"document"}},
 {"id":"agent.knowledge.local-file","asset":"agent","capability":"Knowledge source: uploaded file (PDF, TXT, DOC, DOCX, CSV)","status":"proven","specKey":"knowledge: [{file, name?}]","match":{"key":"file","within":"knowledge"}},
 {"id":"agent.knowledge.needs-tool","asset":"agent","capability":"Knowledge needs at least one capability","status":"refused"},
 {"id":"agent.knowledge.format","asset":"agent","capability":"Knowledge file format check","status":"refused"},

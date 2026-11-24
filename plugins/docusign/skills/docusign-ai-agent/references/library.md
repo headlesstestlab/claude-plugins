@@ -22,6 +22,7 @@ The agents of Agreements Demo Studio's library, by the name the app shows. A pro
 | Exit Terms Reviewer | `references/library/exit-terms-reviewer.spec.json` | Can we leave this vendor, when, and at what cost? |
 | Force Majeure Reader | `references/library/force-majeure-reader.spec.json` | Does this outage count as force majeure? From the clause text. |
 | Insurance Certificate Checker | `references/library/insurance-certificate-checker.spec.json` | Lapsed, expiring, short or missing insurance certificates, per vendor. (its knowledge files are not here: add your own beside the copy, or drop `knowledge`) |
+| Key Terms Summary | `references/library/key-terms-summary.spec.json` | A key-terms summary of one agreement, handed to a workflow as a Document output. |
 | Legal Hold Builder | `references/library/legal-hold-builder.spec.json` | Who and what a legal hold must cover, from the agreements. |
 | MFN Check | `references/library/mfn-check.spec.json` | Does this discount trigger a most-favoured-customer clause? |
 | Milestone Acceptance Reader | `references/library/milestone-acceptance-reader.spec.json` | Delivered milestones: accepted, deemed accepted, or waiting — and billable? (its knowledge files are not here: add your own beside the copy, or drop `knowledge`) |

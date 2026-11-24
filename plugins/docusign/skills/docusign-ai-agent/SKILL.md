@@ -2,7 +2,7 @@
 name: docusign-ai-agent
 description: Designs a Docusign AI agent (Agent Studio, Automations ▸ Agents) and produces a validated build sheet for Agent Studio's editor - capabilities, instructions, chat starter prompts, workflow outputs and knowledge files - with optional entry in the user's signed-in browser. Use it when someone wants just the agent - a chat assistant that answers from signed agreements, or the agent of an Execute AI Agent step (triage, NDA check, obligation extraction, summaries, risk scoring) - even if they only describe what it should do. Not when the agent is one step of a process that also needs a workflow, request type or documents built - use docusign-solution.
 metadata:
-  version: "v2026.11.24"
+  version: "v2026.11.24.2"
 ---
 
 # Docusign AI agent builder

@@ -925,7 +925,7 @@ Every product capability and whether the compilers build it: **proven** (a live 
 | `agent.output.number` | In a workflow: Number output | proven | `outputs[]: {format: "number"}` |
 | `agent.output.name-rule` | Output name is a variable name, unique | refused | `outputs[].name` |
 | `agent.output.description` | Output description required | refused | `outputs[].description` |
-| `agent.output.format-other` | Output formats other than string/boolean/number | refused |  |
+| `agent.output.format-other` | In a workflow: Document output | proven | `outputs[]: {format: "document"}` |
 | `agent.knowledge.local-file` | Knowledge source: uploaded file (PDF, TXT, DOC, DOCX, CSV) | proven | `knowledge: [{file, name?}]` |
 | `agent.knowledge.needs-tool` | Knowledge needs at least one capability | refused |  |
 | `agent.knowledge.format` | Knowledge file format check | refused |  |

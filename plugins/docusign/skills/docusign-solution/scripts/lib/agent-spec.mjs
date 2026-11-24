@@ -198,6 +198,11 @@ export function forContribution(spec) {
     return { spec: s, notes };
 }
 /**
+ * What `meta.maestroOutputs[].format` stores for each format: the editor's Document is stored as "file"
+ * (a ZZ Lab draft saved in the editor, the lab account, 2026-11-24, docs/AI-AGENTS.md).
+ */
+export const STORED_OUTPUT_FORMAT = { string: 'string', boolean: 'boolean', number: 'number', document: 'file' };
+/**
  * The words a reader reads in a Test-panel answer: the panel's chart controls ("Copy CSV", "Show as chart … Visualization
  * mode" and the axis labels after it) are not the agent's words.
  */
@@ -455,8 +460,8 @@ export function validateAgent(spec) {
         if (names.has(o.name))
             w(`output "${o.name}" twice`);
         names.add(o.name);
-        if (!['string', 'boolean', 'number'].includes(o.format))
-            w(`output ${o.name}: format is string, boolean or number`);
+        if (!Object.hasOwn(STORED_OUTPUT_FORMAT, o.format))
+            w(`output ${o.name}: format is string, boolean, number or document`);
         if (!o.description.trim())
             w(`output ${o.name}: a description — it is what tells the agent what to put there`);
     }
@@ -500,7 +505,7 @@ export function compileAgent(spec, o = {}) {
         starterPrompts: spec.starterPrompts ?? [],
         iconName: spec.icon ?? 'Unity.svg',
         toolSet: caps.map((c) => c.toolSet),
-        ...((spec.outputs ?? []).length ? { maestroOutputs: spec.outputs } : {}),
+        ...((spec.outputs ?? []).length ? { maestroOutputs: spec.outputs.map((x) => ({ ...x, format: STORED_OUTPUT_FORMAT[x.format] })) } : {}),
         ...(spec.copiedFrom ? { copiedFromSystemAgent: spec.copiedFrom } : {}),
         ...(o.knowledge ? { knowledgeSourceKey: o.knowledge.name } : {}),
     };

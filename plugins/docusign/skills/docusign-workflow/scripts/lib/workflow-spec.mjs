@@ -2432,6 +2432,8 @@ export function buildWorkflow(spec, o = {}) {
                 const output = {};
                 for (const ot of as_.outputs ?? []) {
                     const type = TYPES[ot.format];
+                    if (ot.format === 'document')
+                        throw new Error(`${spec.id}: agent ${s.agent}: output ${ot.name} is a Document, and what an Execute AI Agent step stores for one is not harvested yet (capabilities row agent.workflow.boolean-to-document) — use an agent with string, boolean and number outputs in a workflow`);
                     if (!type)
                         throw new Error(`${spec.id}: agent ${s.agent}: output ${ot.name} has an unknown format ${ot.format}`);
                     outs.set(ot.name, { type });
