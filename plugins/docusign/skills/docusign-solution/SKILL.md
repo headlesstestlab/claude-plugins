@@ -2,7 +2,7 @@
 name: docusign-solution
 description: Plans and builds a complete Docusign solution from a short business-process description - the full set of uploadable files (Workflow Builder workflows, web forms, Agreement Desk request types, document templates, eSignature templates, AI agents, CLM workflows, CLM doc-gen forms and eForms) with the upload order, the upload path per file, the account prerequisites and an honest list of what cannot be built. Use it when the request needs more than one kind of asset, which is most business processes - a document filled with per-deal data (names, amounts, terms) and sent for signature, anything started from Salesforce, HubSpot, an ERP, a form, a request, a schedule or an event that also needs its document or form built, approvals plus an agreement, an AI step in a process - or a demo build. When unsure whether one asset is enough, use this skill; it hands single assets to the per-asset skills. Not for a request that clearly asks for one asset only - use that docusign-* skill.
 metadata:
-  version: "v2026.11.24.5"
+  version: "v2026.11.24.6"
 ---
 
 # Docusign solution builder
@@ -150,7 +150,7 @@ proven" lists from this compile's README** (its "Not built" and "Built, not yet 
 WARNING lines, never from memory or the references: a capability proven since is not listed there, and saying it
 is unproven misleads the customer. Point them at the bundle's
 `README.md` for the upload order, the upload path of each file and the prerequisites to confirm first.
-**Agreements Demo Studio** (Assets ▸ Load a bundle) takes this `.zip` as it is: it previews what each upload creates
+**Demo Hydrator** (Assets ▸ Load a bundle) takes this `.zip` as it is: it previews what each upload creates
 on the connected account, loads them in the README's order, and Undo deletes them; its "Load as test copies" prefixes
 every name. Never upload, publish or run anything for them unless they ask and confirm, file by file.
 
@@ -168,7 +168,7 @@ Its Test accounts are `DS_ACCOUNT=test1…testdiff`; every write is ledgered and
 
 Do this every time you finish, without being asked: the user must never have to ask where the file is.
 
-1. **Say the story.** If the user gave you a demo story's files (a `<id>-story-files` folder or .zip from Agreements Demo Studio), set `"basedOnStory": "<id>"` (the `id` in its `story.json`) in the manifest before you compile; solution.json and the README then carry it, and Load a bundle shows the story the bundle is based on.
+1. **Say the story.** If the user gave you a demo story's files (a `<id>-story-files` folder or .zip from Demo Hydrator), set `"basedOnStory": "<id>"` (the `id` in its `story.json`) in the manifest before you compile; solution.json and the README then carry it, and Load a bundle shows the story the bundle is based on.
 2. **Name it** `<customer>-<process>-bundle.zip` (lowercase words and hyphens, for example `john-deere-vendor-onboarding-bundle.zip`): pass it to `--out`. Never a bare name such as `bundle.zip`.
 3. **Share it as a file**, in each way your surface has:
    - a folder the user picked or named (Cowork): write it there;
@@ -180,7 +180,7 @@ Do this every time you finish, without being asked: the user must never have to 
 4. **End your reply with this block**, filled in (keep all three places unless you are sure which surface you are on):
 
    **Your bundle:** `<customer>-<process>-bundle.zip` — download it from the file card above (Claude app/chat) · it's in `<folder>` (Cowork) · `<absolute path>` (Claude Code).
-   **Next:** Agreements Demo Studio ▸ Assets ▸ Load a bundle, drop the .zip.
+   **Next:** Demo Hydrator ▸ Assets ▸ Load a bundle, drop the .zip.
 
 ## Files
 - `scripts/compile.mjs`: manifest + project folder → bundle `.zip`, with every check (and the ACCOUNT SETTING lines).

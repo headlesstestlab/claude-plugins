@@ -83,7 +83,7 @@ export function checkSolution(s, o) {
 }
 /**
  * A Dropdown custom field's option list is fixed once an account has the field: an import that changes it fails whole
- * (Test 4, 2026-11-15), and Demo Studio's Load a bundle refuses it ("reoption"). An account that loaded the library has
+ * (Test 4, 2026-11-15), and Demo Hydrator's Load a bundle refuses it ("reoption"). An account that loaded the library has
  * the library's lists, so a bundle's request type that binds a library field keeps that field's list exactly; its own
  * list needs a field name of its own (claude-e2e-journey 2026-11-24: Northwind's entities on C_DeskFontaraEntity).
  */

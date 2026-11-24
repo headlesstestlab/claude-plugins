@@ -2,7 +2,7 @@
 
 # The library's agents
 
-The agents of Agreements Demo Studio's library, by the name the app shows. A prompt that names one ("adapt the agent "Account Brief" …") means that spec: copy it, give the copy a new `id`, then change it. They belong to the fictional company "Fontara".
+The agents of Demo Hydrator's library, by the name the app shows. A prompt that names one ("adapt the agent "Account Brief" …") means that spec: copy it, give the copy a new `id`, then change it. They belong to the fictional company "Fontara".
 
 | Name | Spec | What it does |
 |---|---|---|

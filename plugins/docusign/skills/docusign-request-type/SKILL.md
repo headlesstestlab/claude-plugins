@@ -2,7 +2,7 @@
 name: docusign-request-type
 description: Builds Docusign Agreement Desk request types - the entries in Create Request's picker with the intake form a requester fills in - as an importable .zip, with fields stored to agreement fields or the account's custom fields and show/hide rules, with optional import in the user's signed-in browser. Use it when someone wants only the intake side of Agreement Desk - a request type, intake form, legal front door, request catalogue, or requests that arrive by email - for NDAs, contracts, legal questions, purchases or policy exceptions. Not when the request must also be handled automatically (generate, approve, send) - use docusign-solution; for CLM eForms use docusign-clm.
 metadata:
-  version: "v2026.11.24"
+  version: "v2026.11.24.2"
 ---
 
 # Docusign request type builder
@@ -113,7 +113,7 @@ Do this every time you finish, without being asked: the user must never have to 
 3. **End your reply with this block**, filled in (keep all three places unless you are sure which surface you are on):
 
    **Your request type:** `<customer>-<intake>-request-type.zip` — download it from the file card above (Claude app/chat) · it's in `<folder>` (Cowork) · `<absolute path>` (Claude Code).
-   **Next:** Agreements Demo Studio ▸ Assets ▸ Load a bundle, drop the .zip (or in Docusign: Requests ▸ Settings ▸ Request types ▸ Import).
+   **Next:** Demo Hydrator ▸ Assets ▸ Load a bundle, drop the .zip (or in Docusign: Requests ▸ Settings ▸ Request types ▸ Import).
 
 ## Files
 - `scripts/compile.mjs`: specs to import `.zip`(s), with checks.

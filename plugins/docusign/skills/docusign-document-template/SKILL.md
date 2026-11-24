@@ -2,7 +2,7 @@
 name: docusign-document-template
 description: Builds a Docusign document template, the generated-agreement kind (Templates ▸ Document Templates, Agreement Template Builder), as an importable .zip - NDAs, MSAs, SOWs, offers, leases, order forms and proposals with merge fields, conditional clauses, line-item tables, formulas and signer fields, with optional upload in the user's signed-in browser. Use it when someone asks only for the template - create, draft or convert a doc-gen template, a table of pasted rows, or rework one downloaded with Download ▸ Zip. Not when the request also says who signs in what order, who sends it, or what starts it - a generated document is sent by a workflow, so use docusign-solution. For Gen for Salesforce use docusign-gen-salesforce; for CLM Doc Gen use docusign-clm.
 metadata:
-  version: "v2026.11.24"
+  version: "v2026.11.24.2"
 ---
 
 # Docusign document template builder
@@ -123,7 +123,7 @@ Do this every time you finish, without being asked: the user must never have to 
 3. **End your reply with this block**, filled in (keep all three places unless you are sure which surface you are on):
 
    **Your template:** `<customer>-<document>-template.zip` — download it from the file card above (Claude app/chat) · it's in `<folder>` (Cowork) · `<absolute path>` (Claude Code).
-   **Next:** Agreements Demo Studio ▸ Assets ▸ Load a bundle, drop the .zip (or in Docusign: Templates ▸ Document Templates ▸ Create New).
+   **Next:** Demo Hydrator ▸ Assets ▸ Load a bundle, drop the .zip (or in Docusign: Templates ▸ Document Templates ▸ Create New).
 
 ## Files
 - `scripts/compile.mjs`: spec to `.zip`, or `--inspect` an export.

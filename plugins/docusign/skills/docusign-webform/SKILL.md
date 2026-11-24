@@ -2,7 +2,7 @@
 name: docusign-webform
 description: Builds a Docusign Web Form as an importable configuration .json (Start ▸ Web Forms ▸ Upload Configuration) - intake, registration, survey, application, onboarding or claims forms with pages, fields, uploads, validation and show/hide rules, with optional upload and activation in the user's signed-in browser. Use it when someone wants only a data-collection form - create, convert or fix a web form, a web form JSON or form config, or clean an exported form for re-upload. Not when anyone signs on or after the form, or the submission must generate a document, send an email or route approvals - that needs a template or workflow as well, so use docusign-solution.
 metadata:
-  version: "v2026.11.24"
+  version: "v2026.11.24.2"
 ---
 
 # Docusign Web Form builder
@@ -147,7 +147,7 @@ Do this every time you finish, without being asked: the user must never have to 
 3. **End your reply with this block**, filled in (keep all three places unless you are sure which surface you are on):
 
    **Your web form:** `<customer>-<form>.webform.json` — download it from the file card above (Claude app/chat) · it's in `<folder>` (Cowork) · `<absolute path>` (Claude Code).
-   **Next:** Agreements Demo Studio ▸ Assets ▸ Load a bundle, drop the .json (or in Docusign: Start ▸ Web Forms ▸ Upload Configuration).
+   **Next:** Demo Hydrator ▸ Assets ▸ Load a bundle, drop the .json (or in Docusign: Start ▸ Web Forms ▸ Upload Configuration).
 
 ## Files
 - `scripts/compile.mjs`: spec to config, with validation. `--validate` checks an existing config.
