@@ -8,18 +8,43 @@ Skills: `docusign-ai-agent`, `docusign-clm`, `docusign-document-template`, `docu
 
 ## Install
 
-In Claude Code:
+In Claude Code, one command at a time:
+
+**1. Add the catalogue**
 
 ```
 /plugin marketplace add headlesstestlab/claude-plugins
+```
+
+**2. Install**
+
+```
 /plugin install docusign@demo-studio
 ```
 
-Then run `/reload-plugins` or start a new session. The skills show as `docusign:<skill>`.
+**3. Load the skills (or start a new session)**
+
+```
+/reload-plugins
+```
+
+The skills show as `docusign:<skill>`. To check it is installed and see its version, run `/plugin`.
 
 ## Update
 
-`/plugin marketplace update demo-studio`, then `/reload-plugins`. A new version is published here when the skills change.
+A new version is published here when the skills change. To get it:
+
+**1. Update the catalogue**
+
+```
+/plugin marketplace update demo-studio
+```
+
+**2. Load the skills**
+
+```
+/reload-plugins
+```
 
 ## Notes
 
