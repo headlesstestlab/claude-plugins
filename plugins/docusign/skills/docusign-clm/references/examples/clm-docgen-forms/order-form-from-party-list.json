@@ -1,0 +1,308 @@
+{
+  "id": "order-form-from-party-list",
+  "name": "Order Form from Party List",
+  "description": "The Platform Order Form with its parties picked, not typed: the rep picks the customer from Counterparties.csv and our signing entity from Internal Entities.csv (assets/clm-data-files), and 22 fields fill from the two rows (legal names, addresses, customer number, currency, payment terms, both signers). The merge tags are the Platform Order Form's, so it launches the same Generated Order Approval. Opened from the Actions menu's New order form (assets/clm-custom-actions/specs/new-order-form.json).",
+  "fields": [
+    {
+      "kind": "heading",
+      "label": "Customer"
+    },
+    {
+      "kind": "csvDropdown",
+      "label": "Pick the Customer",
+      "csv": "Counterparties.csv",
+      "show": "Customer Name",
+      "required": true,
+      "columns": [
+        {
+          "label": "Customer Name",
+          "column": "Counterparty"
+        },
+        {
+          "label": "Customer Legal Name",
+          "column": "Legal Name"
+        },
+        {
+          "label": "Customer Street",
+          "column": "Street"
+        },
+        {
+          "label": "Customer City",
+          "column": "City"
+        },
+        {
+          "label": "Customer State",
+          "column": "State or Province"
+        },
+        {
+          "label": "Customer Postal Code",
+          "column": "Postal Code"
+        },
+        {
+          "label": "Customer Country",
+          "column": "Country"
+        },
+        {
+          "label": "Customer Number",
+          "column": "Customer Number"
+        },
+        {
+          "label": "Currency",
+          "column": "Currency"
+        },
+        {
+          "label": "Payment Terms Days",
+          "column": "Payment Terms Days"
+        },
+        {
+          "label": "Customer Signer Name",
+          "column": "Contact Name"
+        },
+        {
+          "label": "Customer Signer Title",
+          "column": "Contact Title"
+        },
+        {
+          "label": "Customer Signer Email",
+          "column": "Contact Email"
+        }
+      ]
+    },
+    {
+      "kind": "text",
+      "label": "Master Agreement",
+      "required": true,
+      "help": "The master agreement this order is placed under, with its date, e.g. Platform MSA dated 14 March 2023."
+    },
+    {
+      "kind": "csvDropdown",
+      "label": "Pick Our Entity",
+      "csv": "Internal Entities.csv",
+      "show": "Legal Entity",
+      "required": true,
+      "columns": [
+        {
+          "label": "Legal Entity",
+          "column": "Entity"
+        },
+        {
+          "label": "Entity Jurisdiction",
+          "column": "Jurisdiction"
+        },
+        {
+          "label": "Entity Street",
+          "column": "Street"
+        },
+        {
+          "label": "Entity City",
+          "column": "City"
+        },
+        {
+          "label": "Entity Postal Code",
+          "column": "Postal Code"
+        },
+        {
+          "label": "Entity Country",
+          "column": "Country"
+        },
+        {
+          "label": "Company Signer Name",
+          "column": "Signatory"
+        },
+        {
+          "label": "Company Signer Title",
+          "column": "Signatory Title"
+        },
+        {
+          "label": "Company Signer Email",
+          "column": "Signatory Email"
+        }
+      ]
+    },
+    {
+      "kind": "heading",
+      "label": "Order"
+    },
+    {
+      "kind": "text",
+      "label": "Order Number",
+      "required": true
+    },
+    {
+      "kind": "number",
+      "label": "Users",
+      "required": true
+    },
+    {
+      "kind": "currency",
+      "label": "Price per User per Month",
+      "required": true,
+      "decimals": 2
+    },
+    {
+      "kind": "number",
+      "label": "Term in Months",
+      "required": true
+    },
+    {
+      "kind": "number",
+      "label": "Total Order Value",
+      "required": true,
+      "help": "Users x price x term. Over 1,000,000 goes to the VP of Sales and the CFO."
+    },
+    {
+      "kind": "date",
+      "label": "Order Effective Date",
+      "format": "MMMM d, yyyy",
+      "required": true
+    },
+    {
+      "kind": "radio",
+      "label": "Covered by an Existing DPA",
+      "options": [
+        "Yes",
+        "No"
+      ],
+      "required": true
+    },
+    {
+      "kind": "text",
+      "label": "Triage Verdict",
+      "hidden": true,
+      "default": "Green"
+    },
+    {
+      "kind": "text",
+      "label": "Side",
+      "hidden": true,
+      "default": "Sell"
+    },
+    {
+      "kind": "heading",
+      "label": "Additional terms"
+    },
+    {
+      "kind": "radio",
+      "label": "One-Time Implementation Fee",
+      "options": [
+        "Yes",
+        "No"
+      ],
+      "help": "Yes adds a dated one-time fee for onboarding the users above (Agreement Manager's AI tracks it as a one-time payment obligation)."
+    },
+    {
+      "kind": "number",
+      "label": "Implementation Fee",
+      "mergeIf": [
+        {
+          "field": "One-Time Implementation Fee",
+          "op": "equals",
+          "value": "Yes"
+        }
+      ]
+    },
+    {
+      "kind": "date",
+      "label": "Implementation Fee Due Date",
+      "format": "MMMM d, yyyy",
+      "mergeIf": [
+        {
+          "field": "One-Time Implementation Fee",
+          "op": "equals",
+          "value": "Yes"
+        }
+      ],
+      "help": "A business day; with Net 90, 90 days after the Order Effective Date."
+    },
+    {
+      "kind": "radio",
+      "label": "Customer Termination for Convenience",
+      "options": [
+        "Yes",
+        "No"
+      ],
+      "help": "Yes lets the customer end this order on 90 days' written notice."
+    }
+  ],
+  "template": [
+    "PLATFORM ORDER FORM {{Order Number}}",
+    "This Order Form is entered into by {{Legal Entity}} (\"Provider\") and {{Customer Legal Name}}, {{Customer Street}}, {{Customer City}} {{Customer State}} {{Customer Postal Code}}, {{Customer Country}} (\"Customer\"), under the {{Master Agreement}} (the \"Agreement\"). Terms not defined here have the meanings given in the Agreement.",
+    "Customer number {{Customer Number}}. Provider: {{Legal Entity}} ({{Entity Jurisdiction}}), {{Entity Street}}, {{Entity City}} {{Entity Postal Code}}, {{Entity Country}}.",
+    "1. Subscription. Provider grants Customer access to its platform for {{Users}} named users for {{Term in Months}} months from {{Order Effective Date}} (the \"Subscription Term\").",
+    "2. Fees. The fee is {{Currency}} {{Price per User per Month}} per user per month, {{Currency}} {{Total Order Value}} for the Subscription Term, invoiced annually in advance.",
+    "3. Payment. Each invoice is payable {{Payment Terms Days}} days from the invoice date. Undisputed amounts more than 30 days overdue accrue interest at 1% per month.",
+    "4. Additional users. If Customer's active users exceed the number above for three consecutive months, Customer will place an order for the higher quantity at the same price per user.",
+    {
+      "text": "5. Data protection. Provider will process Customer Personal Data only under a Data Processing Addendum signed by the parties before any Customer Personal Data is processed under this Order Form.",
+      "when": {
+        "field": "Covered by an Existing DPA",
+        "is": "No"
+      }
+    },
+    {
+      "text": "5. Data protection. Provider processes Customer Personal Data under the Data Processing Addendum the parties have already signed.",
+      "when": {
+        "field": "Covered by an Existing DPA",
+        "is": "Yes"
+      }
+    },
+    {
+      "text": "6. Governing law. This Order Form is governed by the law that governs the Agreement.",
+      "when": {
+        "field": "Entity Country",
+        "is": "United States"
+      }
+    },
+    {
+      "text": "6. Data location. Customer Data is stored and processed in the European Union, and the Agreement's data protection terms apply under the GDPR. This Order Form is governed by the laws of Ireland.",
+      "when": {
+        "field": "Entity Country",
+        "is": "Ireland"
+      }
+    },
+    {
+      "text": "6. Governing law. This Order Form is governed by the laws of England and Wales.",
+      "when": {
+        "field": "Entity Country",
+        "is": "United Kingdom"
+      }
+    },
+    {
+      "text": "6. Data location. Customer Data is stored and processed in the European Union, and the Agreement's data protection terms apply under the GDPR. This Order Form is governed by the laws of the Federal Republic of Germany, and the courts of Munich have exclusive jurisdiction.",
+      "when": {
+        "field": "Entity Country",
+        "is": "Germany"
+      }
+    },
+    "7. Order of precedence. This Order Form is subject to the Agreement. If they conflict, this Order Form governs for the subscription it describes.",
+    {
+      "text": "8. Implementation fee. Customer will pay Provider a one-time implementation fee of {{Currency}} {{Implementation Fee}}, due on {{Implementation Fee Due Date}}, for onboarding the users above.",
+      "when": {
+        "field": "One-Time Implementation Fee",
+        "is": "Yes"
+      }
+    },
+    {
+      "text": "9. Termination for convenience. Customer may terminate this Order Form for convenience on 90 days' written notice to Provider.",
+      "when": {
+        "field": "Customer Termination for Convenience",
+        "is": "Yes"
+      }
+    },
+    "Signed for {{Customer Legal Name}}: {{Customer Signer Name}}, {{Customer Signer Title}}",
+    "Signed for {{Legal Entity}}: {{Company Signer Name}}, {{Company Signer Title}}"
+  ],
+  "sample": {
+    "Pick the Customer": "ClimbTech Financial",
+    "Pick Our Entity": "Fontara, Inc.",
+    "Master Agreement": "ClimbTech Financial Platform MSA",
+    "Order Number": "FON-OF-0399",
+    "Users": "1380",
+    "Price per User per Month": "12.50",
+    "Term in Months": "12",
+    "Total Order Value": "207000",
+    "Order Effective Date": "2/1/2027",
+    "Covered by an Existing DPA": "Yes"
+  },
+  "templateOnly": true
+}

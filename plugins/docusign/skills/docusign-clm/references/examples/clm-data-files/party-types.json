@@ -1,0 +1,15 @@
+{
+  "id": "party-types",
+  "name": "Party Types.csv",
+  "folder": "/_Custom_/System Files",
+  "description": "The list behind the Counterparty Type attribute.",
+  "values": [
+    "Customer",
+    "Prospect",
+    "Supplier",
+    "Partner",
+    "Landlord",
+    "Financial institution",
+    "Funder"
+  ]
+}

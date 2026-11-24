@@ -1276,6 +1276,7 @@ Every product capability and whether the compilers build it: **proven** (a live 
 | `clm-form.limit.table-columns` | Custom table ≤16 columns | refused |  |
 | `clm-form.limit.table-rows` | Custom table ≤100 rows | not-modelled |  |
 | `clm-form.limit.csv-size` | CSV ≤1 MB recommended; >25 MB unsupported | not-modelled |  |
+| `clm-form.binding.csv-row-fills-fields` | CSV row chooser fills its linked fields in the Doc Launcher from one pick | proven | `fields[]: {kind: 'csvDropdown', csv: <data file name>, show, columns[{label, column}]}; csvIds resolved by name at deploy (captures/clm-docgen-deploy.ts --data)` |
 
 ## clm-eform
 
@@ -1503,13 +1504,16 @@ Every product capability and whether the compilers build it: **proven** (a live 
 
 | id | capability | status | spec key |
 |---|---|---|---|
-| `clm-account.kind.attribute-group` | Attribute groups: fields (type, Required, Read Only, Repeatable, regex and error message, Relate), sets, cascading sets, dynamic dropdowns, name template, hide from search | proven | `clm-attribute-group spec: { name, fields [{ name, type String/Drop Down, required, values }] } (src/clm-admin-spec.ts); whole groups of any type travel in a component package (captures/clm-package.ts)` |
+| `clm-account.kind.attribute-group` | Attribute groups: fields (type, Required, Read Only, Repeatable, regex and error message, Relate), sets, cascading sets, dynamic dropdowns, name template, hide from search | proven | `clm-attribute-group spec: { name, fields [{ name, type String/Drop Down/Dynamic Drop Down, required, values, source }] } (src/clm-admin-spec.ts); whole groups of any type travel in a component package (captures/clm-package.ts)` |
 | `clm-account.kind.smart-rule` | Smart rules: document, chained, folder or scheduled; event, execute as (Specific User = automation admin), filters (with Exclusive), ordered actions, enabled | proven | `clm-bulk-metadata spec rule { name, nameLike } (Document Entered Folder · In Folder + Has Name Like · Bulk Attribute Import; src/clm-admin-spec.ts); rules of any shape travel in a component package (captures/clm-package.ts)` |
 | `clm-account.kind.schedule` | Schedules for scheduled smart rules: explicit or recurring, start time (CST), recurrence | not-modelled |  |
 | `clm-account.kind.auto-number` | Auto number definitions: name, prefix, suffix, width, start value, used by an Auto Number attribute | not-modelled |  |
 | `clm-account.kind.task-group` | Task groups: name, auto-assign pattern, notification target, members with the 7 task permissions | not-modelled |  |
 | `clm-account.kind.persona` | Personas: a group plus a Navigation & Actions customization (header, homepage, Actions menu) and a Documents menu | not-modelled |  |
-| `clm-account.kind.custom-action` | Custom document actions: an Actions menu entry with URL, icon, open mode and pass-user-info | not-modelled |  |
+| `clm-account.kind.custom-action` | Custom actions: an Actions menu or document My Links entry that opens a doc-gen configuration, starts a workflow or opens a URL (open mode, pass user, pass selection, icon) | proven | `clm-custom-action spec: { name, where: actionsMenu/documentActions/fileItFolder/clmFiles, does: {docGen}/{workflow}/{url}, openIn, passUser, passSelection, icon } (src/clm-custom-action.ts; captures/clm-custom-action-deploy.ts)` |
+| `clm-account.custom-action.document-workflow` | A document custom action (Document Management ▸ My Links) that starts a workflow on the selected document | proven | `clm-custom-action spec where: documentActions, does: { workflow } (src/clm-custom-action.ts)` |
+| `clm-account.kind.data-file` | CSV data files in a site folder (e.g. /_Custom_/System Files): a list for Dynamic Drop Down attributes, a table for doc-gen CSV row choosers | proven | `clm-data-file spec: { name (.csv), folder, values } / { name, folder, columns, rows } (src/clm-data-file.ts; captures/clm-data-file-deploy.ts)` |
+| `clm-account.attribute.dynamic-dropdown-csv` | Dynamic Drop Down attribute whose values come from a CSV list file (file/<path>) | proven | `clm-attribute-group spec fields[]: { type: 'Dynamic Drop Down', source: <list data file id> } (src/clm-admin-spec.ts; captures/clm-attribute-group-deploy.ts)` |
 | `clm-account.kind.delegated-permission` | Delegated permissions: a named bundle across the 10 admin areas (for example "Report author", "Contract ops") | not-modelled |  |
 | `clm-account.kind.report` | Reports: type, filters (relative dates too), grouping and frequency, columns (custom attributes), access list | not-modelled |  |
 | `clm-account.kind.saved-search` | Saved searches (modernized search): admin-shared, starred filters and columns | not-modelled |  |

@@ -1,0 +1,72 @@
+{
+  "id": "internal-entities",
+  "name": "Internal Entities.csv",
+  "folder": "/_Custom_/System Files",
+  "description": "Built 2026-11-24 from the vault's Fontara dataset (Dataset/Data/party: organization, contact_point, party_relationship contact_for, customer_account), the Counterparty register and Companies notes; every name is invented (the portfolio's marked counterparties). The company's own signing entities with their notice address and signatory.",
+  "columns": [
+    "Entity",
+    "Legal Name",
+    "Jurisdiction",
+    "Region",
+    "Street",
+    "City",
+    "State or Province",
+    "Postal Code",
+    "Country",
+    "Signatory",
+    "Signatory Title",
+    "Signatory Email",
+    "Notices Attention",
+    "Currency"
+  ],
+  "rows": [
+    [
+      "Fontara, Inc.",
+      "Fontara, Inc.",
+      "United States (DE)",
+      "North America",
+      "1500 Harbor Boulevard, Suite 1200",
+      "San Francisco",
+      "CA",
+      "94111",
+      "United States",
+      "Corey Ikso",
+      "VP of Sales",
+      "fontara.corey.ikso@example.com",
+      "General Counsel",
+      "USD"
+    ],
+    [
+      "Fontara UK Ltd",
+      "Fontara UK Ltd",
+      "United Kingdom",
+      "Europe",
+      "48 Ashcombe Street",
+      "London",
+      "",
+      "EC2A 4EN",
+      "United Kingdom",
+      "Marcus Chen",
+      "Chief Financial Officer",
+      "fontara.marcus.chen@example.com",
+      "General Counsel",
+      "GBP"
+    ],
+    [
+      "Fontara Europe Ltd",
+      "Fontara Europe Ltd",
+      "Ireland",
+      "Europe",
+      "3 Riverside Quay",
+      "Dublin 2",
+      "",
+      "D02 X285",
+      "Ireland",
+      "Marcus Chen",
+      "Chief Financial Officer",
+      "fontara.marcus.chen@example.com",
+      "General Counsel",
+      "EUR"
+    ]
+  ]
+}

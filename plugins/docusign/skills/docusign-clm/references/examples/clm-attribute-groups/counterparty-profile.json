@@ -1,0 +1,21 @@
+{
+  "id": "counterparty-profile",
+  "name": "Counterparty Profile",
+  "fields": [
+    {
+      "name": "Counterparty Region",
+      "type": "Dynamic Drop Down",
+      "source": "regions"
+    },
+    {
+      "name": "Counterparty Industry",
+      "type": "Dynamic Drop Down",
+      "source": "industries"
+    },
+    {
+      "name": "Counterparty Type",
+      "type": "Dynamic Drop Down",
+      "source": "party-types"
+    }
+  ]
+}

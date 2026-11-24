@@ -17,6 +17,8 @@
 - 8. Deploy and park
 - Clause libraries (`assets/clm-clause-libraries`)
 - Parties (`assets/clm-parties`)
+- Data files, Dynamic Drop Downs and CSV row choosers (`assets/clm-data-files`)
+- Custom actions (`assets/clm-custom-actions`)
 
 A **CLM workflow spec** is a small JSON file that describes a CLM Advanced Workflow: its name, its text
 variables and its steps with their outcome paths. `src/clm-workflow-spec.ts` compiles a spec into the file
@@ -584,3 +586,52 @@ A doc-gen form's Term field lists a library's options (row clm-form.field.term-s
 header of its own template (`PartyId,PartyName,ExternalId,BusinessContactName,PartyType,BusinessPhoneNumber,ShouldDelete`)
 and the formatting help's name rules; the same rows with each PartyId and `ShouldDelete` true are the teardown.
 Proven on Test 1 CLM 2026-11-10 by uploading the compiled CSVs by hand (create, then the ShouldDelete teardown); no verifier script yet (row clm-account.seed.parties-csv).
+
+## Data files, Dynamic Drop Downs and CSV row choosers (`assets/clm-data-files`)
+
+A CLM site keeps business lists as CSV documents in a folder, here `/_Custom_/System Files` (the layout of a legacy demo
+site, 2026-11-24). `src/clm-data-file.ts` takes two shapes:
+
+- a **list** `{ id, name, folder, values }`: one value a line, no header. A **Dynamic Drop Down** attribute reads it: in
+  an attribute group spec (`src/clm-admin-spec.ts`) a field `{ name, type: "Dynamic Drop Down", source: "<list id>" }`
+  compiles to type code 5 with `file|<folder>/<name>` in the form's values box. CLM reads the file as text each time the
+  field shows, so a value has no comma or quote; a missing file makes the field's only value `Unable to load "file|…"`.
+  The public API answers the field as `DynamicDropDown` with the file's values.
+- a **table** `{ id, name, folder, columns, rows }`: a header row, then one row a record. A doc-gen form's CSV row chooser
+  (`csvDropdown`, `csv: "<name>"`) reads it: the user picks a row by its `show` column and every linked field fills from
+  its column. Above 10 KB the chooser is a type-ahead; up to 25 MB; a new version of the file updates the list.
+
+Library: `counterparties` (28 invented portfolio counterparties, 19 columns: legal name, address, contact, customer number,
+currency, payment terms), `internal-entities` (the company's 3 signing entities with signatory), and the lists `regions`,
+`industries`, `party-types` for the attribute group `counterparty-profile`. The doc-gen form `order-form-from-party-list` is
+the Platform Order Form with its parties picked: two choosers fill 22 fields, with the same merge tags, so it launches the
+same *Generated Order Approval*.
+
+Tools (each checks the CLM root folder name before writing; `--lab` uses ZZ Lab names and deletes what it made):
+
+| Step | Tool | Proof |
+|---|---|---|
+| CSVs | `captures/clm-data-file-deploy.ts --cdp --aid= --account-id= --account= <id> …` | uploaded or a new version (REST upload host; a version needs `Content-Disposition` with a filename), read back byte for byte |
+| Attribute group | `captures/clm-attribute-group-deploy.ts <spec> --cdp --aid= --account-id= --account=` | creates the group, or adds the fields an existing group lacks; checks each list is on the site first; reads the form and the public API back |
+| Doc-gen form | `captures/clm-docgen-deploy.ts … --data="/_Custom_/System Files"` | a chooser's CSV uid is the document of that name in `--data` |
+| The pick fills | `captures/clm-docgen-fill-verify.ts <spec> --cdp --aid= --account= --folder-path=` | opens the Doc Launcher, picks the spec's `sample` rows, every linked field shows its column's value; never presses Next |
+
+## Custom actions (`assets/clm-custom-actions`)
+
+A custom action is a menu entry: `{ id, name, where, does, openIn, passUser, passSelection, icon }`
+(`src/clm-custom-action.ts`). `where`: `actionsMenu` (the header's Actions menu, on every page), `documentActions`
+(Document Management ▸ Custom Actions, the "My Links" submenu), `fileItFolder`, `clmFiles` (CLM Files in Salesforce).
+`does`: `{ docGen: "<configuration>" }` (`DocLauncher|<uid>`), `{ workflow: "<workflow>" }` (`Workflow|<uid>`; the run
+gets the selected document as `Params/Documents/Document`) or `{ url }`. Names resolve to uids on the site at deploy.
+
+There is no public API. `captures/clm-custom-action-deploy.ts --cdp --aid= --account= <id> … [--lab [--try-in=<folder>] | --delete]`
+uses the Navigation & Actions page's own calls: `MenuActions/SaveAction` saves the entry and puts it on its menu
+**disabled**; the menu is then saved back whole with that entry enabled (`SaveToolbar`), every other entry as it was;
+`GetCustomAction` reads it back; `DeleteAction` removes it. For an Actions-menu doc-gen entry it clicks the entry and
+expects the Doc Launcher. `--try-in` runs a workflow entry on a ZZ Lab document through CLM's action call
+(`POST /clm/action?name=CustomMenuItem|<uid>`, the document as the Selection) and expects its run.
+
+Where entries show (Test 4, 2026-11-24): Actions-menu entries in the header on every page. **My Links did not show** in
+Document Review (the default document viewer since July 2025), the new search's row actions or the classic folder row
+menu, also after a fresh sign-in, so a document workflow action works when called but a presenter cannot click it there.
+A header entry that starts a workflow does not pass the document on screen: its run fails without one.

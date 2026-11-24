@@ -1,0 +1,12 @@
+{
+  "id": "new-order-form",
+  "name": "New order form",
+  "description": "The global Actions menu's entry that opens the Order Form from Party List configuration's form in a new tab: pick the customer, the order fills itself.",
+  "where": "actionsMenu",
+  "does": {
+    "docGen": "Order Form from Party List"
+  },
+  "openIn": "newTab",
+  "passUser": true,
+  "icon": "edit-document-large"
+}

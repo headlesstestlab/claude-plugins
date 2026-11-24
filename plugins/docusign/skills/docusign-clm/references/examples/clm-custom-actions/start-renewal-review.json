@@ -1,0 +1,11 @@
+{
+  "id": "start-renewal-review",
+  "name": "Start renewal review",
+  "description": "A document's My Links entry that starts the Renewal review workflow (assets/clm-workflows/specs/fontara-renewal-review.json) on the selected contract: one click from the document starts the renewal.",
+  "where": "documentActions",
+  "does": {
+    "workflow": "Renewal review"
+  },
+  "openIn": "currentTab",
+  "icon": "start-approval-workflow-large"
+}

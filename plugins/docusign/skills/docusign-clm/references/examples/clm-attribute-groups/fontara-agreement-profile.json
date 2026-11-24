@@ -1,0 +1,65 @@
+{
+  "id": "fontara-agreement-profile",
+  "name": "Agreement Profile",
+  "fields": [
+    {
+      "name": "Agreement Type",
+      "type": "Drop Down",
+      "values": [
+        "Master Service Agreement",
+        "Statement Of Work",
+        "Non-Disclosure Agreement",
+        "Services Agreement",
+        "Order Form",
+        "Subscription",
+        "Amendment",
+        "Change Order",
+        "Privacy and Security",
+        "Purchase Order",
+        "Supply / Distribution",
+        "Lease",
+        "Engagement Letter",
+        "Miscellaneous"
+      ],
+      "required": true
+    },
+    {
+      "name": "Line of Business",
+      "type": "Drop Down",
+      "values": [
+        "Sales",
+        "Procurement",
+        "Human Resources"
+      ],
+      "required": true
+    },
+    {
+      "name": "Department",
+      "type": "Drop Down",
+      "values": [
+        "Sales",
+        "IT",
+        "Facilities",
+        "Marketing",
+        "Operations",
+        "Finance",
+        "Human Resources",
+        "Legal"
+      ]
+    },
+    {
+      "name": "Legal Entity",
+      "type": "Drop Down",
+      "values": [
+        "Fontara, Inc.",
+        "Fontara UK Ltd",
+        "Fontara Europe Ltd",
+        "Fontara GmbH"
+      ]
+    },
+    {
+      "name": "Counterparty",
+      "type": "String"
+    }
+  ]
+}

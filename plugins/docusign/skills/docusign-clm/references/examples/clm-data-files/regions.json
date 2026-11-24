@@ -1,0 +1,14 @@
+{
+  "id": "regions",
+  "name": "Regions.csv",
+  "folder": "/_Custom_/System Files",
+  "description": "The list behind the Counterparty Region attribute (a Dynamic Drop Down).",
+  "values": [
+    "North America",
+    "Latin America",
+    "Europe",
+    "Middle East",
+    "Africa",
+    "Asia Pacific"
+  ]
+}

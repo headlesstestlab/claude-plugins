@@ -2,7 +2,7 @@
 name: docusign-clm
 description: Builds Docusign CLM (Contract Lifecycle Management, formerly SpringCM) assets as files - Advanced Workflows as the designer's Import JSON (approvals, decisions, external review, signature, doc generation, child workflows, XPath on Params, attribute updates, folder moves), Doc Gen forms with their Word template, and classic eForms as HTML with attributes, show-if rules and the workflow each submit starts. Use it for anything that runs inside CLM - a CLM workflow, CLM intake or eForm, Doc Launcher or doc-gen form, a contract request, filing or metadata update in CLM - even if they only describe the process. Not for Workflow Builder (IAM) or Agreement Desk - use docusign-solution, docusign-workflow or docusign-request-type.
 metadata:
-  version: "v2026.11.24"
+  version: "v2026.11.24.2"
 ---
 
 # Docusign CLM builder
@@ -104,6 +104,20 @@ classification are attributes; free text, notes and one-off questions are custom
 **Doc Gen form rules:** merge tags have no spaces or special characters; a dropdown tag does not end in
 `Dropdown`; at most 50 options and 16 table columns; a condition's source is a dropdown, radio or checkbox.
 
+**Site setup: menu entries, CSV lists and row choosers** (`references/workflow-format.md`, *Data files* and *Custom
+actions*; examples in `clm-custom-actions/`, `clm-data-files/`, `clm-attribute-groups/`,
+`clm-docgen-forms/order-form-from-party-list`):
+- A **custom action** (`does`: `docGen`, `workflow` or `url`) is a menu entry. Put a "create agreement" button in
+  the header's Actions menu (`where: "actionsMenu"`, `docGen`): it shows on every page. A document entry
+  (`documentActions`, "My Links") starts a workflow on the selected document, but Document Review, the default viewer,
+  does not show My Links: don't promise a presenter that click. No API: the steps file says what to set in Admin ▸
+  Navigation & Actions; switch the entry on after saving it (a saved entry starts off).
+- A **data file** is a CSV in a folder such as `/_Custom_/System Files`: a list (`values`, one a line, no comma or
+  quote) feeds a **Dynamic Drop Down** attribute (`type: "Dynamic Drop Down"`, `source: <list id>`, compiled to
+  `file|<path>`; upload the file first, or the field shows `Unable to load`); a table (`columns`, `rows`) feeds a Doc
+  Gen **CSV row chooser** (`csvDropdown`, `csv: <file name>`): one pick fills every linked field. Compile an attribute
+  group together with its lists on one run.
+
 ### 4. Check what is supported
 Look each need up in `references/capabilities.md`:
 - **proven**: build it;
@@ -167,7 +181,7 @@ Do this every time you finish, without being asked: the user must never have to 
    **Next:** CLM, in the order of the Deliver steps above (each workflow's `<id>.setup.md` is the checklist).
 
 ## Files
-- `scripts/compile.mjs`: specs → workflow JSON, Doc Gen form files or eForm HTML, with checks.
+- `scripts/compile.mjs`: specs → workflow JSON, Doc Gen form files, eForm HTML, or site setup (custom action steps, CSV files, attribute group sheets), with checks.
 - `scripts/lib/`, `scripts/assets/`, `scripts/docs/`: the compilers and their data, generated from the
   gallery repo. Don't edit them.
 - `references/choosing.md`: which form for which need.
