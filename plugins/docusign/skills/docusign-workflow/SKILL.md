@@ -2,7 +2,7 @@
 name: docusign-workflow
 description: Builds one Docusign Workflow Builder (formerly Maestro) workflow as an Import Workflow .zip - steps, approvals, parallel reviews, branches, identity checks and the start (link, Salesforce Flow, API call, envelope event or schedule), with optional upload in the user's signed-in browser. Use it when the request is only the automation and every document already exists or is uploaded at send time - notify people when an envelope completes or is declined, route a contract through a chain of approvers (any number, in order or in parallel), send a PDF a system already produced, have someone upload a file for another to acknowledge, a scheduled reminder or report. Not when a document, agreement, form, request type or AI agent must be built as well (a policy to acknowledge, an agreement with deal data, an intake form) - use docusign-solution.
 metadata:
-  version: "v2026.11.23.6"
+  version: "v2026.11.24"
 ---
 
 # Docusign workflow builder
@@ -129,6 +129,23 @@ and groups, and Docusign Connect for an event or schedule start.
 Do this only if the user asks, and only with their explicit OK for this specific package. Follow
 `references/live-upload.md`: their own signed-in browser, never their credentials, import and
 inspect only. **Never publish or run the workflow**; those stay the user's.
+
+## Hand-off (always the last step)
+
+Do this every time you finish, without being asked: the user must never have to ask where the file is.
+
+1. **Name it** `<customer>-<process>-workflow.zip` (lowercase words and hyphens, for example `acme-contract-approval-workflow.zip`): pass it to `--out`. Never a bare name such as `bundle.zip`.
+2. **Share it as a file**, in each way your surface has:
+   - a folder the user picked or named (Cowork): write it there;
+   - `/mnt/user-data/outputs/` exists (the Claude app, claude.ai): copy it there and share it with your file-sharing
+     (present files) tool, so the chat shows a file card with a download arrow. A file only in your workspace
+     (`/home/claude/…`) cannot be downloaded;
+   - otherwise (Claude Code, on the user's computer): it is on their disk already; print its absolute path.
+   Never say a file is shared or saved where you did not put it.
+3. **End your reply with this block**, filled in (keep all three places unless you are sure which surface you are on):
+
+   **Your workflow:** `<customer>-<process>-workflow.zip` — download it from the file card above (Claude app/chat) · it's in `<folder>` (Cowork) · `<absolute path>` (Claude Code).
+   **Next:** Agreements Demo Studio ▸ Assets ▸ Load a bundle, drop the .zip (or in Docusign: Automations ▸ Workflows ▸ Create Workflow ▸ Import Workflow).
 
 ## Files
 - `scripts/compile.mjs`: spec (with its project folder) to an Import Workflow `.zip`, with checks.

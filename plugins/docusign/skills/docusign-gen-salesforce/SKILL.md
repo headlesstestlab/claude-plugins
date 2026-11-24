@@ -2,7 +2,7 @@
 name: docusign-gen-salesforce
 description: Builds Docusign Gen for Salesforce templates (Docusign Apps Launcher, namespace dfsle) as files - the Word document with every Gen merge tag (Content, TableRow, Repeat, Conditional, Signature anchors), the Object Mappings JSON (fields, lookups, related lists with SOQL filters) and the dfsle__GenTemplate__c record - and lints a Gen Word file against its mapping. Use it when someone wants to create, fix or check a Gen template, or a quote, order form, SOW or contract generated from a Salesforce record with Gen. Not for IAM document templates fed by Salesforce (docusign-document-template), CLM Doc Gen (docusign-clm), or a Salesforce process with a workflow (docusign-solution).
 metadata:
-  version: "v2026.11.23.4"
+  version: "v2026.11.24"
 ---
 
 # Docusign Gen for Salesforce builder
@@ -95,6 +95,23 @@ in the mapping (root, lookup, row, nested list), bare `&`, checkbox `'true'`, cu
 `references/deploy.md`: insert the record and the files, generate on a real record (button, Flow action
 *Generate agreement with Docusign*, or Apex), and read the output for red error text before calling it done.
 Give the user the files and the steps; don't claim a generation you did not see.
+
+## Hand-off (always the last step)
+
+Do this every time you finish, without being asked: the user must never have to ask where the file is.
+
+1. **Name it** `<customer>-<document>-gen.zip` (lowercase words and hyphens, for example `acme-quote-gen.zip`): zip every file the user uploads under that name. Never a bare name such as `bundle.zip`.
+2. **Share it as a file**, in each way your surface has:
+   - a folder the user picked or named (Cowork): write it there;
+   - `/mnt/user-data/outputs/` exists (the Claude app, claude.ai): copy it there and share it with your file-sharing
+     (present files) tool, so the chat shows a file card with a download arrow. A file only in your workspace
+     (`/home/claude/…`) cannot be downloaded;
+   - otherwise (Claude Code, on the user's computer): it is on their disk already; print its absolute path.
+   Never say a file is shared or saved where you did not put it.
+3. **End your reply with this block**, filled in (keep all three places unless you are sure which surface you are on):
+
+   **Your Gen template:** `<customer>-<document>-gen.zip` — download it from the file card above (Claude app/chat) · it's in `<folder>` (Cowork) · `<absolute path>` (Claude Code).
+   **Next:** Salesforce, as `references/deploy.md` says.
 
 ## Limits to tell the user
 - Agreement Cloud Editor (in-browser) templates are not built here; this is the Microsoft Word kind.

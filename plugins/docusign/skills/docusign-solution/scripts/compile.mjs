@@ -60,7 +60,9 @@ const r = checkSolution(manifest, {
 });
 if (r.errors.length) fail(r.errors);
 const b = r.bundle;
-const out = path.resolve(outArg ?? path.join(project, `${b.id}.bundle.zip`));
+// A bare bundle.zip is a file the user cannot tell apart in their Downloads folder (SKILL.md, Hand-off).
+if (outArg && /^bundle\.zip$/i.test(path.basename(outArg))) fail([`--out ${outArg}: name the bundle for the customer and process, for example ${b.id}-bundle.zip`]);
+const out = path.resolve(outArg ?? path.join(project, `${b.id}-bundle.zip`));
 fs.writeFileSync(out, b.zip);
 for (const w of r.warnings) console.log(`WARNING ${w}`);
 console.log(`wrote ${out}`);
@@ -69,3 +71,4 @@ for (const f of b.files) if (/esign-template.*\.json$/.test(f.path)) printAccoun
 for (const p of b.solution.prerequisites) console.log(`  ${p.check === 'counted' ? 'COUNTED' : 'CONFIRM'} ${p.text}`);
 // A gap whose `instead` starts with "built" is built, only not proven live (the README lists it so too).
 for (const g of b.solution.gaps) console.log(/^built\b/i.test(g.instead?.trim() ?? '') ? `  UNPROVEN ${g.need} — ${g.instead}` : `  NOT BUILT ${g.need}${g.instead ? ` — instead: ${g.instead}` : ''}`);
+console.log(`HAND-OFF share ${out} with the user as a file now, then end your reply with the Hand-off block (SKILL.md, Hand-off)`);

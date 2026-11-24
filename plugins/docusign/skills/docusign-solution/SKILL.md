@@ -2,7 +2,7 @@
 name: docusign-solution
 description: Plans and builds a complete Docusign solution from a short business-process description - the full set of uploadable files (Workflow Builder workflows, web forms, Agreement Desk request types, document templates, eSignature templates, AI agents, CLM workflows, CLM doc-gen forms and eForms) with the upload order, the upload path per file, the account prerequisites and an honest list of what cannot be built. Use it when the request needs more than one kind of asset, which is most business processes - a document filled with per-deal data (names, amounts, terms) and sent for signature, anything started from Salesforce, HubSpot, an ERP, a form, a request, a schedule or an event that also needs its document or form built, approvals plus an agreement, an AI step in a process - or a demo build. When unsure whether one asset is enough, use this skill; it hands single assets to the per-asset skills. Not for a request that clearly asks for one asset only - use that docusign-* skill.
 metadata:
-  version: "v2026.11.23.7"
+  version: "v2026.11.24"
 ---
 
 # Docusign solution builder
@@ -104,7 +104,7 @@ The rules that break solutions most often (the compiler refuses most of them):
 
 ### 5. Compile and check until clean
 ```bash
-node <skill-dir>/scripts/compile.mjs <project>/manifest.json [--account <project>/account.json] [--out <file.zip>]
+node <skill-dir>/scripts/compile.mjs <project>/manifest.json [--account <project>/account.json] --out <customer>-<process>-bundle.zip
 ```
 It compiles every asset, checks every file against the product's schemas, each workflow's required drawer
 fields and export-key parity, and every gap (a gap on a proven capability is refused: build it). **ERROR**
@@ -144,7 +144,7 @@ Yes/No per option instead of a multi-select, an invite with a link instead of a 
 what the prompt said an approver's comment would carry. The customer reads the README, not the chat. Never write
 a "how it differs" section in the chat that the README does not have.
 
-Give the user the bundle `.zip` and the project folder, and summarise in a few lines: what starts it, the steps,
+Hand over the bundle `.zip` as **Hand-off** below says, name the project folder, and summarise in a few lines: what starts it, the steps,
 what each upload creates, and the **Not built** list with its alternatives. **Copy the "Not built" and "not yet
 proven" lists from this compile's README** (its "Not built" and "Built, not yet proven live" sections) and its
 WARNING lines, never from memory or the references: a capability proven since is not listed there, and saying it
@@ -163,6 +163,23 @@ first and prints a plan: the connected apps each workflow needs (a missing one i
 fields to create (`--create-custom-fields`, once, before any import), the signing groups (`--create-signing-groups`)
 and the eSignature account settings (on / CAN TURN ON / NEEDS DOCUSIGN; `--enable-account-settings`, `--settings-only`).
 Its Test accounts are `DS_ACCOUNT=test1…testdiff`; every write is ledgered and the account name checked first.
+
+## Hand-off (always the last step)
+
+Do this every time you finish, without being asked: the user must never have to ask where the file is.
+
+1. **Name it** `<customer>-<process>-bundle.zip` (lowercase words and hyphens, for example `john-deere-vendor-onboarding-bundle.zip`): pass it to `--out`. Never a bare name such as `bundle.zip`.
+2. **Share it as a file**, in each way your surface has:
+   - a folder the user picked or named (Cowork): write it there;
+   - `/mnt/user-data/outputs/` exists (the Claude app, claude.ai): copy it there and share it with your file-sharing
+     (present files) tool, so the chat shows a file card with a download arrow. A file only in your workspace
+     (`/home/claude/…`) cannot be downloaded;
+   - otherwise (Claude Code, on the user's computer): it is on their disk already; print its absolute path.
+   Never say a file is shared or saved where you did not put it.
+3. **End your reply with this block**, filled in (keep all three places unless you are sure which surface you are on):
+
+   **Your bundle:** `<customer>-<process>-bundle.zip` — download it from the file card above (Claude app/chat) · it's in `<folder>` (Cowork) · `<absolute path>` (Claude Code).
+   **Next:** Agreements Demo Studio ▸ Assets ▸ Load a bundle, drop the .zip.
 
 ## Files
 - `scripts/compile.mjs`: manifest + project folder → bundle `.zip`, with every check (and the ACCOUNT SETTING lines).

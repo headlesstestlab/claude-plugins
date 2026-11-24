@@ -2,7 +2,7 @@
 name: docusign-esignature-template
 description: Builds a classic Docusign eSignature (envelope) template as the JSON that Templates ▸ Upload Template takes, with the PDF and every tab placed - signer roles and signing order, parallel signers, access codes and IDV, witnesses, notary, in-person signers, CCs, conditional and calculated fields, payment tab, PowerForm, signing groups, SMS delivery, several documents, and the account settings each needs. Use it when the request is one fixed document and who signs it, how and in what order, including bulk send to a list from a CSV, signing inside your own portal, and a classic Send with Docusign button in Salesforce. Not when each send fills the document with deal data from a person or system (names, amounts, terms), when sending starts automatically from a system, schedule or form, when there are approvals, or when something must happen around the signing (verify identity first, notify a team after) - that is a generated document plus a workflow, use docusign-solution.
 metadata:
-  version: "v2026.11.23.5"
+  version: "v2026.11.24"
 ---
 
 # Docusign eSignature template builder
@@ -127,6 +127,23 @@ who fills what, the settings, and anything not built. Then give these upload ste
 Only if the user asks, and only with their explicit OK for this file. Follow
 `references/live-upload.md`: their own signed-in browser, never their credentials, upload and inspect
 only. **Never send an envelope.**
+
+## Hand-off (always the last step)
+
+Do this every time you finish, without being asked: the user must never have to ask where the file is.
+
+1. **Name it** `<customer>-<document>.esign-template.json` (lowercase words and hyphens, for example `acme-lease.esign-template.json`): pass it to `--out`. Never a bare name such as `bundle.zip`.
+2. **Share it as a file**, in each way your surface has:
+   - a folder the user picked or named (Cowork): write it there;
+   - `/mnt/user-data/outputs/` exists (the Claude app, claude.ai): copy it there and share it with your file-sharing
+     (present files) tool, so the chat shows a file card with a download arrow. A file only in your workspace
+     (`/home/claude/…`) cannot be downloaded;
+   - otherwise (Claude Code, on the user's computer): it is on their disk already; print its absolute path.
+   Never say a file is shared or saved where you did not put it.
+3. **End your reply with this block**, filled in (keep all three places unless you are sure which surface you are on):
+
+   **Your template:** `<customer>-<document>.esign-template.json` — download it from the file card above (Claude app/chat) · it's in `<folder>` (Cowork) · `<absolute path>` (Claude Code).
+   **Next:** Agreements Demo Studio ▸ Assets ▸ Load a bundle, drop the .json (or in eSignature: Templates ▸ Upload Template).
 
 ## Files
 - `scripts/compile.mjs`: spec → PDF(s) → upload `.json`, with checks.

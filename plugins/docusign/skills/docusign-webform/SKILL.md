@@ -2,7 +2,7 @@
 name: docusign-webform
 description: Builds a Docusign Web Form as an importable configuration .json (Start ▸ Web Forms ▸ Upload Configuration) - intake, registration, survey, application, onboarding or claims forms with pages, fields, uploads, validation and show/hide rules, with optional upload and activation in the user's signed-in browser. Use it when someone wants only a data-collection form - create, convert or fix a web form, a web form JSON or form config, or clean an exported form for re-upload. Not when anyone signs on or after the form, or the submission must generate a document, send an email or route approvals - that needs a template or workflow as well, so use docusign-solution.
 metadata:
-  version: "v2026.11.23.2"
+  version: "v2026.11.24"
 ---
 
 # Docusign Web Form builder
@@ -131,6 +131,23 @@ Do this only if the user asks, and only with their explicit OK for this specific
 creates a form in their real Docusign account. Follow `references/live-upload.md`. It uses the
 user's own signed-in browser session. **Never type their credentials.** Do not activate the form
 without a second explicit OK.
+
+## Hand-off (always the last step)
+
+Do this every time you finish, without being asked: the user must never have to ask where the file is.
+
+1. **Name it** `<customer>-<form>.webform.json` (lowercase words and hyphens, for example `acme-vendor-intake.webform.json`): pass it to `--out`. Never a bare name such as `bundle.zip`.
+2. **Share it as a file**, in each way your surface has:
+   - a folder the user picked or named (Cowork): write it there;
+   - `/mnt/user-data/outputs/` exists (the Claude app, claude.ai): copy it there and share it with your file-sharing
+     (present files) tool, so the chat shows a file card with a download arrow. A file only in your workspace
+     (`/home/claude/…`) cannot be downloaded;
+   - otherwise (Claude Code, on the user's computer): it is on their disk already; print its absolute path.
+   Never say a file is shared or saved where you did not put it.
+3. **End your reply with this block**, filled in (keep all three places unless you are sure which surface you are on):
+
+   **Your web form:** `<customer>-<form>.webform.json` — download it from the file card above (Claude app/chat) · it's in `<folder>` (Cowork) · `<absolute path>` (Claude Code).
+   **Next:** Agreements Demo Studio ▸ Assets ▸ Load a bundle, drop the .json (or in Docusign: Start ▸ Web Forms ▸ Upload Configuration).
 
 ## Files
 - `scripts/compile.mjs`: spec to config, with validation. `--validate` checks an existing config.

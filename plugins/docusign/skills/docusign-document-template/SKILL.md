@@ -2,7 +2,7 @@
 name: docusign-document-template
 description: Builds a Docusign document template, the generated-agreement kind (Templates ▸ Document Templates, Agreement Template Builder), as an importable .zip - NDAs, MSAs, SOWs, offers, leases, order forms and proposals with merge fields, conditional clauses, line-item tables, formulas and signer fields, with optional upload in the user's signed-in browser. Use it when someone asks only for the template - create, draft or convert a doc-gen template, a table of pasted rows, or rework one downloaded with Download ▸ Zip. Not when the request also says who signs in what order, who sends it, or what starts it - a generated document is sent by a workflow, so use docusign-solution. For Gen for Salesforce use docusign-gen-salesforce; for CLM Doc Gen use docusign-clm.
 metadata:
-  version: "v2026.11.23.2"
+  version: "v2026.11.24"
 ---
 
 # Docusign document template builder
@@ -107,6 +107,23 @@ Read `references/gotchas.md` before answering "why does it look like…" questio
 Do this only if the user asks, and only with their explicit OK for this specific template. It
 creates a template in their real account. Follow `references/live-upload.md`: their own signed-in
 browser, never their credentials, and no publishing or sending without a second OK.
+
+## Hand-off (always the last step)
+
+Do this every time you finish, without being asked: the user must never have to ask where the file is.
+
+1. **Name it** `<customer>-<document>-template.zip` (lowercase words and hyphens, for example `acme-mutual-nda-template.zip`): pass it to `--out`. Never a bare name such as `bundle.zip`.
+2. **Share it as a file**, in each way your surface has:
+   - a folder the user picked or named (Cowork): write it there;
+   - `/mnt/user-data/outputs/` exists (the Claude app, claude.ai): copy it there and share it with your file-sharing
+     (present files) tool, so the chat shows a file card with a download arrow. A file only in your workspace
+     (`/home/claude/…`) cannot be downloaded;
+   - otherwise (Claude Code, on the user's computer): it is on their disk already; print its absolute path.
+   Never say a file is shared or saved where you did not put it.
+3. **End your reply with this block**, filled in (keep all three places unless you are sure which surface you are on):
+
+   **Your template:** `<customer>-<document>-template.zip` — download it from the file card above (Claude app/chat) · it's in `<folder>` (Cowork) · `<absolute path>` (Claude Code).
+   **Next:** Agreements Demo Studio ▸ Assets ▸ Load a bundle, drop the .zip (or in Docusign: Templates ▸ Document Templates ▸ Create New).
 
 ## Files
 - `scripts/compile.mjs`: spec to `.zip`, or `--inspect` an export.

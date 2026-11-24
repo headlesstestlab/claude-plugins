@@ -2,7 +2,7 @@
 name: docusign-clm
 description: Builds Docusign CLM (Contract Lifecycle Management, formerly SpringCM) assets as files - Advanced Workflows as the designer's Import JSON (approvals, decisions, external review, signature, doc generation, child workflows, XPath on Params, attribute updates, folder moves), Doc Gen forms with their Word template, and classic eForms as HTML with attributes, show-if rules and the workflow each submit starts. Use it for anything that runs inside CLM - a CLM workflow, CLM intake or eForm, Doc Launcher or doc-gen form, a contract request, filing or metadata update in CLM - even if they only describe the process. Not for Workflow Builder (IAM) or Agreement Desk - use docusign-solution, docusign-workflow or docusign-request-type.
 metadata:
-  version: "v2026.11.23.5"
+  version: "v2026.11.24"
 ---
 
 # Docusign CLM builder
@@ -148,6 +148,23 @@ it): it is their checklist of task groups, people, attribute values and CLM sett
 
 Never import, publish, start a workflow or submit a form for the user unless they ask and confirm each
 item; a run can send email and envelopes.
+
+## Hand-off (always the last step)
+
+Do this every time you finish, without being asked: the user must never have to ask where the file is.
+
+1. **Name it** `<customer>-<process>-clm.zip` (lowercase words and hyphens, for example `acme-contract-intake-clm.zip`): zip every file the user uploads under that name. Never a bare name such as `bundle.zip`.
+2. **Share it as a file**, in each way your surface has:
+   - a folder the user picked or named (Cowork): write it there;
+   - `/mnt/user-data/outputs/` exists (the Claude app, claude.ai): copy it there and share it with your file-sharing
+     (present files) tool, so the chat shows a file card with a download arrow. A file only in your workspace
+     (`/home/claude/…`) cannot be downloaded;
+   - otherwise (Claude Code, on the user's computer): it is on their disk already; print its absolute path.
+   Never say a file is shared or saved where you did not put it.
+3. **End your reply with this block**, filled in (keep all three places unless you are sure which surface you are on):
+
+   **Your CLM files:** `<customer>-<process>-clm.zip` — download it from the file card above (Claude app/chat) · it's in `<folder>` (Cowork) · `<absolute path>` (Claude Code).
+   **Next:** CLM, in the order of the Deliver steps above (each workflow's `<id>.setup.md` is the checklist).
 
 ## Files
 - `scripts/compile.mjs`: specs → workflow JSON, Doc Gen form files or eForm HTML, with checks.
