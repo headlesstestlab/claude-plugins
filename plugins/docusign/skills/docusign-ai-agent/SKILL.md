@@ -2,7 +2,7 @@
 name: docusign-ai-agent
 description: Designs a Docusign AI agent (Agent Studio, Automations ▸ Agents) and produces a validated build sheet for Agent Studio's editor - capabilities, instructions, chat starter prompts, workflow outputs and knowledge files - with optional entry in the user's signed-in browser. Use it when someone wants just the agent - a chat assistant that answers from signed agreements, or the agent of an Execute AI Agent step (triage, NDA check, obligation extraction, summaries, risk scoring) - even if they only describe what it should do. Not when the agent is one step of a process that also needs a workflow, request type or documents built - use docusign-solution.
 metadata:
-  version: "v2026.11.23.3"
+  version: "v2026.11.23.4"
 ---
 
 # Docusign AI agent builder
@@ -59,6 +59,10 @@ render, workflow outputs, and what the editor can't express. Start from the clos
 | `third-party-paper-triage` | writing capability, request routing |
 
 The examples belong to a fictional company, "Fontara", so write for the user's organisation instead.
+
+**A prompt that names an agent** ("adapt the agent "Account Brief" from the Docusign demo story …", as
+Agreements Demo Studio's Customize with Claude writes it) means an agent of that app's library: find it by name
+in `references/library.md` and start from its spec, under a new `id`.
 
 Conventions:
 - **Name:** letters, numbers and spaces only, 50 characters at most; no `·`, `-` or `&`.
@@ -121,4 +125,5 @@ second OK.
   repo. Don't edit it.
 - `references/spec-format.md`: fields, capabilities, instructions, outputs and limits.
 - `references/examples/*.spec.json`: four complete real specs.
+- `references/library.md` and `references/library/*.spec.json`: the Agreements Demo Studio library's agents, by name.
 - `references/live-upload.md`: filling the editor in a browser.

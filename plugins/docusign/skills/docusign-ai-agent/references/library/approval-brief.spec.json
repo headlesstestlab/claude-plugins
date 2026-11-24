@@ -1,0 +1,149 @@
+{
+  "id": "approval-brief",
+  "name": "Approval Brief",
+  "description": "Writes the brief an approver reads before deciding — what is being approved, the value and term, what deviates from standard, and a recommendation — from the agreement and the counterparty's history.",
+  "summary": "Gives an approval step something to read: a recommendation and the reasons.",
+  "testPrompt": "Write an approval brief for the Helix Learning Order Form.",
+  "capabilities": [
+    "agreements",
+    "parties"
+  ],
+  "starterPrompts": [
+    "Write an approval brief for the Helix Learning Order Form.",
+    "Is there anything to approve in the Kaltenbrunn Maschinenbau Change Order?"
+  ],
+  "instructions": [
+    "You are the Approval Brief agent for Fontara. You write approval briefs for Fontara's approvers.",
+    "Use your agreement and party tools to read the agreement or document named in the prompt; answer directly only when the prompt already holds everything you need.",
+    "## Core workflow",
+    "1. Find the agreement or document named in the prompt and read it, and the master agreement it sits under; get the counterparty's snapshot.",
+    "2. Check first whether there is anything to approve. A document is not awaiting approval when both parties' signature blocks hold a signature and a date (already signed), when its text says a later document replaced it (superseded), or when its end date is before today (ended). Then the recommendation is NOTHING_TO_APPROVE: say which, with the date, and stop after the terms in step 3.",
+    "3. State in plain words: what is being approved; total value and term; payment terms; anything that deviates from Fontara's standard (discount above 20% against the master's price, payment beyond Net 60 (Net 45 and Net 60 are standard), liability above fees paid, non-standard renewal). Compare with the master agreement where the document sits under one.",
+    "4. Recommend APPROVE, APPROVE_WITH_CONDITIONS or REJECT, with the condition or reason in one sentence. REJECT is for terms Fontara should not accept, never for a document you could not find.",
+    "5. When the document cannot be found, say so, name what you searched for, and leave the recommendation empty. When a term is missing, mark it \"Not specified\".",
+    "## Rules",
+    "- Answer in four labelled lines: Recommendation, Approving, Value and term, Deviations. Keep it under 120 words; an approver reads it on a phone.",
+    "- Write dates as 5 September 2026. Cite the clause by its number or heading, not a footnote digit, and the agreement by its name, without a file extension.",
+    "- Never invent clause text, dates, amounts or parties. When something is not in the documents, say \"Not specified\" and set the output to an empty string (or false).",
+    "## Voice and tone",
+    "- Frame findings as review support for Fontara's legal and business teams, not as legal advice.",
+    "- Plain words for a business approver."
+  ],
+  "outputs": [
+    {
+      "name": "recommendation",
+      "format": "string",
+      "description": "Exactly one of APPROVE, APPROVE_WITH_CONDITIONS, REJECT or NOTHING_TO_APPROVE (already signed, superseded or ended); empty when the document was not found."
+    },
+    {
+      "name": "has_deviations",
+      "format": "boolean",
+      "description": "True when any term deviates from Fontara's standard."
+    },
+    {
+      "name": "approval_brief",
+      "format": "string",
+      "description": "The brief itself: under 120 words, plain text."
+    }
+  ],
+  "testCases": [
+    {
+      "prompt": "Write an approval brief for the Helix Learning Order Form.",
+      "expect": [
+        "Net 90",
+        [
+          "71,250",
+          "71250"
+        ],
+        [
+          "5 September 2026",
+          "September 5, 2026",
+          "2026-09-05"
+        ],
+        [
+          "NOTHING_TO_APPROVE",
+          "nothing to approve",
+          "already signed"
+        ]
+      ],
+      "reject": [
+        "Recommendation: APPROVE",
+        "Recommendation: REJECT"
+      ],
+      "agreements": [
+        {
+          "title": "Order Form",
+          "party": "Helix Learning"
+        },
+        {
+          "title": "Master Services Agreement",
+          "party": "Helix Learning"
+        }
+      ]
+    },
+    {
+      "prompt": "Write an approval brief for the Kaltenbrunn Maschinenbau Change Order.",
+      "expect": [
+        [
+          "superseded",
+          "replaced"
+        ],
+        [
+          "140,000",
+          "140000"
+        ]
+      ],
+      "reject": [
+        "Recommendation: APPROVE",
+        "Recommendation: REJECT"
+      ],
+      "agreements": [
+        {
+          "title": "Change Order",
+          "party": "Kaltenbrunn Maschinenbau"
+        }
+      ]
+    },
+    {
+      "prompt": "Should finance approve the Kestrelpoint Aerospace Components Change Order?",
+      "expect": [
+        [
+          "superseded",
+          "replaced"
+        ],
+        [
+          "130,000",
+          "130000"
+        ]
+      ],
+      "reject": [
+        "Recommendation: APPROVE",
+        "Recommendation: REJECT"
+      ],
+      "agreements": [
+        {
+          "title": "Change Order",
+          "party": "Kestrelpoint Aerospace Components"
+        }
+      ]
+    }
+  ],
+  "testExpect": [
+    "Net 90",
+    "71,250"
+  ],
+  "testReject": [
+    "Recommendation: APPROVE",
+    "Recommendation: REJECT"
+  ],
+  "testAgreements": [
+    {
+      "title": "Order Form",
+      "party": "Helix Learning"
+    },
+    {
+      "title": "Master Services Agreement",
+      "party": "Helix Learning"
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 {
   "name": "docusign",
-  "version": "2026.1123.2347",
+  "version": "2026.1124.230",
   "description": "The Docusign Claude skills in one install: docusign-ai-agent, docusign-clm, docusign-document-template, docusign-esignature-template, docusign-gen-salesforce, docusign-request-type, docusign-solution, docusign-webform, docusign-workflow.",
   "author": {
     "name": "Steven Cooke"

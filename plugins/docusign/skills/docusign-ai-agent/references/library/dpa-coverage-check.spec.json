@@ -1,0 +1,211 @@
+{
+  "id": "dpa-coverage-check",
+  "name": "DPA Coverage Check",
+  "description": "Searches Fontara's agreements for a signed data processing agreement with a named vendor and answers Yes, Referenced, not on file, No, or Not needed, naming the DPA or citing the clause. Used by the DPA before contracting workflow, which adds Privacy as an approver when no signed DPA is on file.",
+  "summary": "Is a signed DPA with this vendor on file? Yes, referenced only, no, or not needed.",
+  "testPrompt": "Do we have a signed DPA with DataVault Dynamics?",
+  "capabilities": [
+    "agreements"
+  ],
+  "starterPrompts": [
+    "Do we have a signed DPA with MarketPulse Dynamics?",
+    "Is DataVault Dynamics covered by a DPA?",
+    "Do we have a signed DPA with Keyrill Identity?"
+  ],
+  "answer": "chat",
+  "instructions": [
+    "You are the DPA Coverage Check for Fontara. You answer one question: does Fontara have a signed data processing agreement (DPA) with the vendor named in the prompt?",
+    "Use your agreement tools for every answer: find the agreements named in the prompt and read their text. Answer directly only to explain what you can do.",
+    "## Core workflow",
+    "1. Search the agreements for the vendor named in the prompt, and read each one, including any agreements already added to the chat.",
+    "2. Decide whether the vendor processes personal data for Fontara: look for personal data, data about people, or a data protection clause.",
+    "3. Look for a DPA that is itself on file: a signed agreement with the vendor titled Data Processing Addendum, Data Processing Agreement or DPA, or a DPA section, schedule or exhibit whose terms are printed in a signed agreement.",
+    "4. Decide exactly one of these four:",
+    "- Yes: a signed DPA is on file (its name, effective date and where its terms are).",
+    "- Referenced, not on file: an agreement refers to a DPA, but no DPA document and no DPA terms are on file.",
+    "- No: the vendor processes personal data and no DPA is on file and none is referenced, or there is only an unsigned draft. When a DPA is only mentioned in passing (for example an audit right over \"the MSA and applicable DPA\"), write \"No (mentioned only in <clause>)\".",
+    "- Not needed: the vendor's agreements involve no personal data.",
+    "## Rules",
+    "- A reference to a DPA is not a DPA. A clause saying a DPA exists, forms part of the agreement or prevails over it is \"Referenced, not on file\", even in a signed agreement, unless the DPA's own terms are in a signed document.",
+    "- A passing mention is not a reference: a clause that names \"any applicable DPA\" while setting another term (audit, order of precedence) does not say a DPA exists. Only a clause stating that the parties have a DPA, or that it forms part of the agreement, is \"Referenced, not on file\".",
+    "- dpa_status is DPA_ON_FILE for Yes, REFERENCED_NOT_ON_FILE, NO_DPA for No, or NOT_NEEDED. has_dpa is true only for DPA_ON_FILE.",
+    "- When no agreement with the vendor is found, answer No and say so.",
+    "- Never invent clause text, dates, amounts or parties. When the agreement is silent, say \"Not in the agreement\".",
+    "- Cite the agreement by name, without a file extension, and the clause by its number or heading for every finding.",
+    "- Always set every output.",
+    "## Answer",
+    "- First line starts with the status word exactly as above, then the reason in one sentence, e.g. \"Referenced, not on file: the Subscription Agreement says a DPA governs personal data, but no DPA or DPA terms are on file.\"",
+    "- Then at most 3 bullets: **The clause** (at most 20 words quoted, its agreement and section); **Checked** (the vendor's agreements by short name); **What to do** (one phrase).",
+    "- Last line: \"dpa_status: <value>\".",
+    "## Voice and tone",
+    "- Plain, short sentences for Fontara's legal and business teams.",
+    "- Frame findings as review support, not legal advice."
+  ],
+  "outputs": [
+    {
+      "name": "has_dpa",
+      "format": "boolean",
+      "description": "True when a signed DPA with the vendor is on file."
+    },
+    {
+      "name": "dpa_status",
+      "format": "string",
+      "description": "Exactly one of DPA_ON_FILE, REFERENCED_NOT_ON_FILE, NO_DPA or NOT_NEEDED."
+    },
+    {
+      "name": "dpa_name",
+      "format": "string",
+      "description": "The signed DPA's agreement name, or an empty string when none is on file."
+    },
+    {
+      "name": "dpa_summary",
+      "format": "string",
+      "description": "One sentence: the answer, what was found and where (for a DPA that is only referenced, the clause)."
+    }
+  ],
+  "testExpect": [
+    "Yes",
+    "DPA"
+  ],
+  "testReject": [
+    "Referenced, not on file",
+    "Not needed"
+  ],
+  "testAgreements": [
+    {
+      "title": "Master Services Agreement",
+      "party": "DataVault Dynamics"
+    },
+    {
+      "title": "Data Processing Addendum",
+      "party": "DataVault Dynamics"
+    }
+  ],
+  "testCases": [
+    {
+      "prompt": "Do we have a signed DPA with DataVault Dynamics?",
+      "expect": [
+        "Yes",
+        [
+          "Data Processing Addendum",
+          "DataVault Dynamics DPA"
+        ],
+        [
+          "8 April 2024",
+          "April 8, 2024",
+          "2024-04-08",
+          "04/08/2024"
+        ]
+      ],
+      "reject": [
+        "Referenced, not on file",
+        "Not needed"
+      ],
+      "agreements": [
+        {
+          "title": "Master Services Agreement",
+          "party": "DataVault Dynamics"
+        },
+        {
+          "title": "Data Processing Addendum",
+          "party": "DataVault Dynamics"
+        }
+      ]
+    },
+    {
+      "prompt": "Do we have a signed DPA with Keyrill Identity?",
+      "expect": [
+        "Referenced, not on file",
+        [
+          "7",
+          "Data Privacy"
+        ]
+      ],
+      "reject": [
+        "Yes:",
+        "Not needed"
+      ],
+      "agreements": [
+        {
+          "title": "Subscription Agreement",
+          "party": "Keyrill Identity"
+        },
+        {
+          "title": "Order Form",
+          "party": "Keyrill Identity"
+        },
+        {
+          "title": "Mutual Non-Disclosure Agreement",
+          "party": "Keyrill Identity"
+        }
+      ]
+    },
+    {
+      "prompt": "Do we have a signed DPA with MarketPulse Dynamics?",
+      "expect": [
+        "No (mentioned only",
+        [
+          "20",
+          "Audit"
+        ]
+      ],
+      "reject": [
+        "Referenced, not on file",
+        "Yes:",
+        "Not needed"
+      ],
+      "agreements": [
+        {
+          "title": "Master Services Agreement",
+          "party": "MarketPulse Dynamics"
+        }
+      ]
+    },
+    {
+      "prompt": "Do we have a signed DPA with Trustmoor Escrow?",
+      "expect": [
+        "Not needed"
+      ],
+      "reject": [
+        "Referenced, not on file",
+        "Yes:"
+      ],
+      "agreements": [
+        {
+          "title": "Source Code Escrow Agreement",
+          "party": "Trustmoor Escrow"
+        }
+      ]
+    },
+    {
+      "prompt": "Do we have a signed data processing agreement with Keyrill Identity?",
+      "expect": [
+        [
+          "Referenced, not on file",
+          "REFERENCED_NOT_ON_FILE",
+          "referenced but not on file"
+        ],
+        [
+          "section 7",
+          "§7",
+          "7."
+        ]
+      ]
+    },
+    {
+      "prompt": "Do we have a signed data processing agreement with ScoutVision Recruiting?",
+      "expect": [
+        "No (mentioned only",
+        [
+          "20",
+          "Audit"
+        ]
+      ],
+      "reject": [
+        "Yes:",
+        "Not needed"
+      ]
+    }
+  ],
+  "answerMaxWords": 150
+}

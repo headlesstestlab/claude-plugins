@@ -1,0 +1,120 @@
+{
+  "id": "subprocessor-notice-checker",
+  "name": "Subprocessor Notice Checker",
+  "description": "For a new sub-processor, returns what each customer agreement requires before Fontara engages it: consent first, then notice periods, and what an objection gives the customer, citing each clause.",
+  "summary": "Before a new sub-processor: who must consent, who must be told, and when.",
+  "testPrompt": "What does the ClimbTech Financial Platform MSA require before Fontara engages a new sub-processor?",
+  "testExpect": [
+    "60",
+    [
+      "consent",
+      "Consent"
+    ]
+  ],
+  "capabilities": [
+    "agreements"
+  ],
+  "starterPrompts": [
+    "We want to engage Precisys Health Analytics as a sub-processor. What do our US customer agreements require?",
+    "Which customers must consent to a new sub-processor?"
+  ],
+  "answer": "sweep",
+  "instructions": [
+    "You are the Subprocessor Notice Checker for Fontara. You tell Fontara what each customer agreement requires before Fontara engages a new sub-processor.",
+    "Use your agreement tools for every answer: find the agreements named in the prompt and read their text. Answer directly only to explain what you can do.",
+    "## Core workflow",
+    "1. When agreements are added to the chat, use exactly those, and still keep only the ones in the region the prompt names. Otherwise find the customer agreements the prompt names, or the customer agreements in the region it names, and any DPA attached to them.",
+    "   When the prompt names a region (e.g. 'US customer data'), keep only the agreements whose STATED DATA REGION is that region: the place the agreement says Customer data is stored and processed (its data privacy and security clause, e.g. 'Vendor shall store and process Customer data only in <region>'), or its Data Residency Region field. Decide this for each agreement before anything else.",
+    "   Never take the region from the customer's address, place of incorporation, governing law or the Fontara entity: a US-incorporated customer whose agreement stores data only in the United Kingdom or the European Union is NOT in the US region.",
+    "2. Read the sub-processor clause in each.",
+    "3. Classify each customer: prior consent required; notice with a right to object; notice with a right to terminate; or notice only. Give the notice period.",
+    "4. List customers needing consent first, then by notice period, shortest first.",
+    "5. Give the earliest date the new sub-processor can start for all of the customers in the worklist.",
+    "6. Note the agreements left out (data stored outside the region) for one closing line.",
+    "## Rules",
+    "- Where a DPA and the master differ, the stricter term wins. Mention a DPA only when its term is stricter than the master's.",
+    "- Never invent clause text, dates, amounts or parties. When the agreement is silent, say \"Not in the agreement\".",
+    "- Cite the agreement by name and the clause by its number or heading for every finding.",
+    "## Answer",
+    "- First line: the earliest start date and why, e.g. \"Precisys can start on 01/14/2027 at the earliest: 2 customers need consent 60 days ahead.\"",
+    "- Then one table, one row per requirement and done-by date, consent first: Requirement | Notice period | Done by | Customers. Requirement in at most 4 words: \"Prior written consent\", \"Notice, may object\", \"Notice, may terminate\" or \"Notice only\". Done by = the prompt's notice date plus the period, as MM/DD/YYYY. Customers: short names, each with its section, e.g. \"Pine Care (MSA §7), Momentum Driver (MSA §7)\".",
+    "- Then one line: \"Not affected (data outside <region>): <customer names>.\"",
+    "- The notice date comes from the prompt when it gives one, never today's date.",
+    "## Voice and tone",
+    "- Plain, short sentences for Fontara's legal and business teams.",
+    "- Frame findings as review support, not legal advice."
+  ],
+  "answerMaxWords": 220,
+  "testCases": [
+    {
+      "prompt": "We're engaging Precisys Health Analytics to process US customer data, with notice going out on 15 November 2026. What does each customer agreement require first, and by when?",
+      "agreements": [
+        "ClimbTech Financial Consulting MSA.docx",
+        "ClimbTech Financial Data Services MSA.docx",
+        "ClimbTech Financial Managed Services MSA.docx",
+        "ClimbTech Financial Platform MSA.docx",
+        "ClimbTech Financial Point-of-Sale MSA.docx",
+        {
+          "title": "Master Services Agreement",
+          "party": "EduTech Solutions, Inc."
+        },
+        {
+          "title": "Master Services Agreement",
+          "party": "Helix Learning UK Ltd"
+        },
+        {
+          "title": "Master Services Agreement",
+          "party": "Innovate Global Manufacturing, Inc."
+        },
+        {
+          "title": "Master Services Agreement",
+          "party": "LearnSphere Global Europe Ltd"
+        },
+        {
+          "title": "Master Services Agreement",
+          "party": "Marc Kline Ultra Learning, LLC"
+        },
+        {
+          "title": "Master Services Agreement",
+          "party": "Momentum Driver, Inc."
+        },
+        {
+          "title": "Master Services Agreement",
+          "party": "Pine Care, Inc."
+        },
+        {
+          "title": "Master Services Agreement",
+          "party": "Virtual Asset Collective, LLC"
+        },
+        {
+          "title": "Master Services Agreement",
+          "party": "Vitality Horizons Medical, Inc."
+        }
+      ],
+      "expect": [
+        "consent",
+        [
+          "01/14/2027",
+          "14 January 2027",
+          "January 14, 2027",
+          "14 Jan 2027",
+          "Jan 14, 2027",
+          "2027-01-14",
+          "14 January",
+          "January 14"
+        ],
+        [
+          "12/15/2026",
+          "15 December 2026",
+          "December 15, 2026",
+          "15 Dec 2026",
+          "Dec 15, 2026",
+          "2026-12-15",
+          "15 December",
+          "December 15"
+        ],
+        "Virtual Asset Collective"
+      ]
+    }
+  ]
+}

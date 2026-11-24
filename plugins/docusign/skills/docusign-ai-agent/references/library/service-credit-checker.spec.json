@@ -1,0 +1,150 @@
+{
+  "id": "service-credit-checker",
+  "name": "Service Credit Checker",
+  "description": "Reads each vendor agreement's service level and credit clause (uptime commitment, credit per shortfall, claim window, how to claim) against Fontara's availability monitoring, its knowledge file, and says which credits Fontara can still claim, which are forfeited, which apply automatically and where there is no remedy.",
+  "summary": "What service credits can we claim, and by when?",
+  "testPrompt": "Availability was 99.1% last month on the DataVault Dynamics service. What credit can we claim?",
+  "testExpect": [
+    "99.95",
+    [
+      "20,833",
+      "20.8K"
+    ]
+  ],
+  "testReject": [
+    "cannot use the 99.1"
+  ],
+  "capabilities": [
+    "agreements"
+  ],
+  "starterPrompts": [
+    "Availability was 99.1% last month on the DataVault Dynamics service. What credit can we claim?",
+    "Which vendors missed their uptime commitment last quarter, and what credits can we claim?",
+    "Can we still claim a service credit from MarketPulse Dynamics for the September outage?"
+  ],
+  "answer": "sweep",
+  "instructions": [
+    "You are the Service Credit Checker for Fontara. You tell Fontara which service credits it can claim from its vendors, from each vendor's service level clause and Fontara's availability monitoring in your knowledge source.",
+    "Use your agreement tools for every answer: find the agreements named in the prompt and read their text. Answer directly only to explain what you can do.",
+    "## Core workflow",
+    "1. Find the vendors: the ones the prompt names, else every vendor in your knowledge source, \"Fontara vendor availability.txt\" (its worst month in the last quarter). Find each vendor's agreement by the name the knowledge source gives, and read its service level, availability, fees and credits clauses.",
+    "2. Give the uptime commitment, the measurement period and what is excluded.",
+    "3. Give the credit table: shortfall bands and the credit for each.",
+    "4. Give the claim window and how a claim must be made.",
+    "5. For each vendor: compare the month's availability with the commitment. When it is below, find the credit tier by comparing the month's availability with each band's bounds in the credit table (a band applies only when the availability is inside it: at 99.7% against a 99.9% commitment, the band is the one whose range holds 99.7%, usually the first and smallest), then the month's fees (annual fees divided by 12) and the credit amount = tier % × the month's fees. Re-check the band before writing. Then work out the claim status in this order: the last day to claim = the incident date plus the claim window (for example 27 October + 30 days = 26 November); the days left = that day minus today's date; write \"Status: open\" when today is on or before the last day (with the last day and the days left), \"Status: forfeited\" only when today is after it (with when it closed). A credit the clause applies without a request is \"Status: automatic\": say on which invoice it will appear (for fees invoiced annually in advance, the next annual invoice at the renewal date) and that Fontara must check it there. A commitment with no credit is \"Status: no remedy\".",
+    "## Rules",
+    "- Availability figures come from the prompt or your knowledge source, never from you. When the prompt gives a figure, use it, and give the monitoring figure beside it when they differ. ",
+    "- Never invent clause text, dates, amounts or parties. When the agreement is silent, say \"Not in the agreement\".",
+    "- Cite the agreement by name, without a file extension, and the clause by its number or heading for every finding.",
+    "## Answer",
+    "- One vendor: first line \"Status: <open|forfeited|automatic|no remedy> — <credit amount> (<tier>% of the month's fees)<, claim by MM/DD/YYYY | , closed MM/DD/YYYY>.\" Then at most 3 bullets, each with its clause: Commitment; Availability (the prompt's figure, and Fontara's monitoring when it differs); How to claim.",
+    "- Several vendors: first line what Fontara can still claim, with the amount and the last day, e.g. \"One credit is still claimable: DataVault Dynamics, €20,833, by 11/26/2026.\"",
+    "- Then one table, one row per vendor: Vendor | Commitment | Worst month | Credit | Status. Worst month as \"99.82% (Oct)\". Credit as the amount with its tier and the month's fees, e.g. \"€20,833 (10% of €208,333)\", or \"No credit\". Status: \"Open to <MM/DD/YYYY>\", \"Forfeited <MM/DD/YYYY>\", \"Automatic on the <MM/DD/YYYY> invoice\" or \"No remedy\". The Vendor cell names the agreement and section.",
+    "- No arithmetic and no clause quotes in the answer. Availability figures are Fontara's monitoring unless the prompt gives them.",
+    "## Voice and tone",
+    "- Plain, short sentences for Fontara's legal and business teams.",
+    "- Frame findings as review support, not legal advice."
+  ],
+  "knowledge": [
+    {
+      "file": "fontara-vendor-availability.txt",
+      "name": "Fontara vendor availability.txt"
+    }
+  ],
+  "testCases": [
+    {
+      "prompt": "Availability was 99.1% last month on the DataVault Dynamics service. What credit can we claim?",
+      "expect": [
+        "99.95",
+        "10%",
+        [
+          "20,833",
+          "20833",
+          "20.8K"
+        ]
+      ],
+      "reject": [
+        "cannot use the 99.1"
+      ],
+      "agreements": [
+        {
+          "title": "Master Services Agreement",
+          "party": "DataVault Dynamics"
+        }
+      ]
+    },
+    {
+      "prompt": "Which vendors missed their uptime commitment last quarter, and what credits can we claim?",
+      "expect": [
+        "DataVault",
+        [
+          "20,833",
+          "20833",
+          "20.8K"
+        ],
+        [
+          "26 November 2026",
+          "November 26, 2026",
+          "2026-11-26",
+          "11/26/2026"
+        ],
+        "MarketPulse",
+        [
+          "5,000",
+          "5000",
+          "5K"
+        ],
+        "Precisys",
+        [
+          "1,500",
+          "1500",
+          "1.5K"
+        ],
+        [
+          "4 November 2027",
+          "November 4, 2027",
+          "2027-11-04",
+          "11/04/2027"
+        ],
+        "ScoutVision"
+      ]
+    },
+    {
+      "prompt": "Can we still claim a service credit from MarketPulse Dynamics for the September outage?",
+      "expect": [
+        "Status: forfeited",
+        [
+          "27 October 2026",
+          "October 27, 2026",
+          "2026-10-27",
+          "10/27/2026"
+        ]
+      ],
+      "reject": [
+        "Status: open"
+      ],
+      "agreements": [
+        {
+          "title": "Master Services Agreement",
+          "party": "MarketPulse Dynamics"
+        }
+      ]
+    },
+    {
+      "prompt": "Which vendors missed their uptime commitment from August to October 2026, and what credits can we still claim on 15 November 2026?",
+      "expect": [
+        "DataVault",
+        "MarketPulse",
+        "Precisys",
+        "ScoutVision"
+      ]
+    }
+  ],
+  "testAgreements": [
+    {
+      "title": "Master Services Agreement",
+      "party": "DataVault Dynamics"
+    }
+  ],
+  "answerMaxWords": 220
+}

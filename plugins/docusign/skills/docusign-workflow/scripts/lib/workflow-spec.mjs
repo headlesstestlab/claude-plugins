@@ -759,8 +759,8 @@ export function buildWorkflow(spec, o = {}) {
             const cid = dir === 'customfield' ? fp.slice(dir.length + 1, -5) : fp.slice(dir.length + 1, -5);
             if (dir === 'customfield' && extras.some((x) => x.componentId === cid))
                 continue;
-            const body = dir === 'webform' ? { ...data, formProperties: { ...data.formProperties, name: `${pre}${data.formProperties?.name ?? rs.name}` } } : data;
-            extras.push({ componentId: cid, componentType: dirType[dir], relativePath: fp, name: cid, data: body,
+            // The type's form is named after the type, which buildRequestType already got prefixed.
+            extras.push({ componentId: cid, componentType: dirType[dir], relativePath: fp, name: cid, data,
                 dependentResources: dir === 'agreementdeskrequesttype' ? [rt.formId] : dir === 'webform' ? rt.customFields.map((f) => f.name) : [] });
         }
         carries.requestTypes.push({ id: rt.typeId, name: `${pre}${rs.name}`, formId: rt.formId, ...(via === 'create' ? { via } : {}) });

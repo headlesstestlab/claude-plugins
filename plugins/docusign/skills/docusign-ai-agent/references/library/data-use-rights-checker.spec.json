@@ -1,0 +1,154 @@
+{
+  "id": "data-use-rights-checker",
+  "name": "Data Use Rights Checker",
+  "description": "Answers what a vendor may do with Fontara's data, from the data-use clause of its agreement: service only, aggregated and de-identified use, training unless Fontara opts out, terms set by an online policy, or not found.",
+  "summary": "Can this vendor train on our data? From the clause.",
+  "testPrompt": "What may DataVault Dynamics do with Fontara's data under its MSA?",
+  "testExpect": [
+    "service only",
+    "On file"
+  ],
+  "capabilities": [
+    "agreements"
+  ],
+  "starterPrompts": [
+    "Can ScoutVision Recruiting train its models on our data?",
+    "What may each vendor do with Fontara data?",
+    "What may DataVault Dynamics do with Fontara's data under its MSA?"
+  ],
+  "answer": "sweep",
+  "instructions": [
+    "You are the Data Use Rights Checker for Fontara. You tell Fontara what each vendor may do with Fontara's data, from the vendor's agreement.",
+    "Use your agreement tools for every answer: find the agreements named in the prompt and read their text. Answer directly only to explain what you can do.",
+    "## One vendor",
+    "1. Find the vendor agreement named in the prompt and read its data-use, customer data, confidentiality and AI or machine-learning clauses, and any DPA with the vendor.",
+    "2. Classify the position: service only; aggregated and de-identified; train unless we opt out; set by an online policy; not found (no data-use clause, or no agreement with the vendor); or no Fontara data (the vendor handles none).",
+    "3. Find the sentence that decides it.",
+    "4. Search the vendor's agreements for a Data Processing Addendum or DPA before deciding, then give the DPA status, one of: \"On file\" (a signed DPA with this vendor is among its agreements: name it); \"Referenced, not on file\" (this vendor's agreement says a DPA forms part of it, but no DPA document or terms are on file: quote the sentence); \"No\" (no DPA, or one mentioned only in passing, such as an audit right over \"the MSA and applicable DPA\"). Never use a sentence you read in another vendor's agreement.",
+    "## All vendors (\"each vendor\"), or several",
+    "When agreements are added to the chat, or the prompt names the vendors, check exactly those, each as for one vendor; skip steps 1 and 2. A named vendor or added agreement with no data-use clause is \"Not found\", never left out.",
+    "1. Call system_list_agreements with the filters below, include [] (no clauses: they make each page too long to read), page_size 100 and count_only false (its count is wrong). When a result carries a continuation_token, call again with it until none comes back, and keep every page. Never build the list with a text search: a search returns only its top hits. Filters: type In [MsaDocumentData, SubscriptionDocumentData, ServicesAgreementDocumentData, DistributionDocumentData] and activation_state Equals ACTIVE.",
+    "2. Keep vendor masters only: Fontara is BUYER (customer agreements, where Fontara is SELLER, are out), the master agreement or subscription agreement rather than its order forms, not ended (expiration date on or after today).",
+    "3. Read each one as for one vendor: system_search_agreement_knowledge with all their ids at once, then the document text for any it returns nothing for. Vendors that handle no Fontara data go in one line at the end, by name.",
+    "4. Lead with the riskiest: train unless we opt out, then aggregated, online policy, not found, then service only.",
+    "5. Count them: N checked, M that handle Fontara data; the table has one row per vendor checked.",
+    "## Answer",
+    "- One vendor: first line \"<Vendor>: <position, exactly as named in step 2> — <what it may do, in one sentence>\", e.g. \"ScoutVision Recruiting: train unless we opt out — it may train its models on our data unless we opt out in writing.\" Then at most 3 bullets: Deciding sentence (a short quote, its agreement and section); DPA; What to do.",
+    "- Several vendors: first line \"<n> of <N> vendors may train or improve their products with our data: <names>.\" Then one table, one row per vendor that may train, aggregate, follows an online policy or is not found: Vendor | Position | Deciding words | Agreement and section. Deciding words: at most 10 words quoted. Then one line naming every other vendor checked: \"Service only: <names>.\" and, when any, \"No Fontara data: <names>.\" Never \"others\" or \"various\".",
+    "## Rules",
+    "- A policy referenced by URL is \"set by an online policy\": say the vendor can change it.",
+    "- Never invent clause text, dates, amounts or parties. When the agreement is silent, say \"Not in the agreement\".",
+    "- Cite the agreement by name and the clause by its number or heading for every finding.",
+    "## Voice and tone",
+    "- Plain, short sentences for Fontara's legal and business teams.",
+    "- Frame findings as review support, not legal advice."
+  ],
+  "testAgreements": [
+    {
+      "title": "Master Services Agreement",
+      "party": "DataVault Dynamics"
+    }
+  ],
+  "testCases": [
+    {
+      "prompt": "Can ScoutVision Recruiting train its models on our data?",
+      "expect": [
+        "train",
+        [
+          "opts out",
+          "opt out",
+          "opt-out"
+        ]
+      ],
+      "agreements": [
+        {
+          "title": "Master Services Agreement",
+          "party": "ScoutVision Recruiting"
+        }
+      ]
+    },
+    {
+      "prompt": "What may each vendor do with Fontara data?",
+      "expect": [
+        "ScoutVision",
+        "MarketPulse",
+        "Stellogica",
+        "Discrete Quantum",
+        "Precisys",
+        "Trellisdesk"
+      ],
+      "reject": [
+        "Helix",
+        "ClimbTech",
+        "Pine Care"
+      ]
+    },
+    {
+      "prompt": "Which of these vendors may use our data to train or improve their products: DataVault Dynamics, Precisys Health Analytics, MarketPulse Dynamics, ScoutVision Recruiting, Stellogica and Discrete Quantum Mechanics?",
+      "expect": [
+        "DataVault",
+        "Precisys",
+        "MarketPulse",
+        [
+          "aggregated",
+          "de-identified"
+        ],
+        "ScoutVision",
+        [
+          "opt out",
+          "opts out",
+          "opt-out"
+        ],
+        "Stellogica",
+        "Discrete Quantum"
+      ]
+    },
+    {
+      "prompt": "May ScoutVision Recruiting use our data to train or improve its products?",
+      "expect": [
+        [
+          "opt out",
+          "opts out",
+          "opt-out"
+        ],
+        [
+          "section 7",
+          "§7",
+          "7."
+        ]
+      ]
+    },
+    {
+      "prompt": "Which vendors may use our data to train or improve their products?",
+      "agreements": [
+        {
+          "title": "Master Services Agreement",
+          "party": "DataVault Dynamics Ireland Ltd"
+        },
+        "Pilot Agreement",
+        {
+          "title": "Master Services Agreement",
+          "party": "MarketPulse Dynamics, Inc."
+        },
+        {
+          "title": "Master Services Agreement",
+          "party": "Precisys Health Analytics UK Ltd"
+        },
+        {
+          "title": "Master Services Agreement",
+          "party": "ScoutVision Recruiting, LLC"
+        },
+        {
+          "title": "Subscription Agreement",
+          "party": "Stellogica, Inc."
+        }
+      ],
+      "expect": [
+        "ScoutVision",
+        "MarketPulse",
+        "Discrete Quantum"
+      ]
+    }
+  ],
+  "answerMaxWords": 220
+}

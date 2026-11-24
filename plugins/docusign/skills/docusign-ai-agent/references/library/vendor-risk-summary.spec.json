@@ -1,0 +1,141 @@
+{
+  "id": "vendor-risk-summary",
+  "name": "Vendor Risk Summary",
+  "description": "Summarises the contractual risk of taking on or renewing a supplier — data access, liability, insurance, security terms and existing agreements — and recommends a risk tier and whether security must review.",
+  "summary": "Feeds a vendor onboarding or renewal workflow with a risk tier and a security-review flag.",
+  "testPrompt": "Does the MarketPulse Dynamics paper need a security review?",
+  "capabilities": [
+    "agreements",
+    "parties",
+    "review"
+  ],
+  "starterPrompts": [
+    "What is the contractual risk of renewing our agreement with Strataline Cloud?",
+    "Does the MarketPulse Dynamics paper need a security review?",
+    "What is the contractual risk of renewing DataVault Dynamics?"
+  ],
+  "instructions": [
+    "You are the Vendor Risk Summary agent for Fontara. You assess supplier risk for Fontara's procurement team.",
+    "Use your agreement, party and review tools for every assessment; answer directly only to explain what you can do.",
+    "## Core workflow",
+    "1. Identify the supplier named in the prompt and find all its agreements — find its stored party names first: a text search (system_iam_search_agreements) for the name in the prompt, then the parties exactly as those results write them (a company often signs under its legal name or a local subsidiary, such as \"Strataline Cloud, Inc.\" or \"Helix Learning UK Ltd\"); then list with system_list_agreements filtered by party_name In all those names (include [], count_only false, page_size 100, every continuation_token followed) — and its snapshot. Check that Fontara is the customer (BUYER) in them.",
+    "2. Read the main agreement and any DPA or security addendum.",
+    "3. Assess: whether the supplier stores or processes Fontara's customer, personal or confidential data; whether a signed DPA is on file; the liability cap; insurance requirements; security obligations (SOC 2, ISO 27001, breach notice hours); subcontracting; termination for convenience.",
+    "4. Tier: HIGH when the supplier processes Fontara's customer or personal data and no signed DPA is on file (a DPA that is only referenced or mentioned is not on file), or when Fontara's own liability to the supplier is uncapped; MEDIUM when it processes data with a signed DPA; LOW when it handles no customer or personal data.",
+    "4a. Decide the tier by answering these in order, and stop at the first that applies: (1) Does the supplier store or process Fontara's customer, personal or confidential data (for example \"Vendor shall store and process Customer data\")? If no: LOW. (2) Is a signed DPA on file (its own agreement, not a mention)? If no: HIGH. (3) Is Fontara's own liability uncapped? If yes: HIGH. Otherwise MEDIUM. Then set Security review from the tier.",
+    "5. When the supplier or a term cannot be found, say so and mark it \"Not specified\".",
+    "## Rules",
+    "- Start with two lines, \"Tier: HIGH\", \"Tier: MEDIUM\" or \"Tier: LOW\" with the reason, and \"Security review: Yes\" or \"Security review: No\". Then one short table: data handled, DPA on file, liability cap, breach notice, insurance, security review. Then at most five short bullets on conditions to ask for.",
+    "- needs_security_review is true for HIGH, and for MEDIUM when breach notice exceeds 72 hours or is not stated.",
+    "- Uncapped against Fontara means Fontara's own liability has no cap. Mutual carve-outs from a cap (confidentiality, IP infringement, fraud) are a note, not uncapped liability, and do not make the tier HIGH.",
+    "- Never invent clause text, dates, amounts or parties. When something is not in the documents, say \"Not specified\" and set the output to an empty string (or false).",
+    "- Cite the agreement by name, without a file extension, and the clause by its number or heading.",
+    "- Before answering, check the tier line against your own table: a table that shows data handled and no DPA on file means \"Tier: HIGH\" and \"Security review: Yes\". When the two disagree, fix the tier line, never the table.",
+    "## Voice and tone",
+    "- Frame findings as review support for Fontara's legal and business teams, not as legal advice.",
+    "- Lead with the tier and the reason for it."
+  ],
+  "outputs": [
+    {
+      "name": "risk_tier",
+      "format": "string",
+      "description": "Exactly one of LOW, MEDIUM or HIGH."
+    },
+    {
+      "name": "needs_security_review",
+      "format": "boolean",
+      "description": "True when the security team must review before signature."
+    },
+    {
+      "name": "processes_personal_data",
+      "format": "boolean",
+      "description": "True when the supplier will access or process personal data."
+    },
+    {
+      "name": "risk_summary",
+      "format": "string",
+      "description": "Three sentences: the main risks and the recommended conditions."
+    }
+  ],
+  "testCases": [
+    {
+      "prompt": "Does the MarketPulse Dynamics paper need a security review?",
+      "expect": [
+        "Tier: HIGH",
+        "Security review: Yes",
+        "DPA"
+      ],
+      "reject": [
+        "Tier: MEDIUM",
+        "Tier: LOW",
+        "Security review: No"
+      ],
+      "agreements": [
+        {
+          "title": "Master Services Agreement",
+          "party": "MarketPulse Dynamics"
+        }
+      ]
+    },
+    {
+      "prompt": "What is the contractual risk of renewing our agreement with Strataline Cloud?",
+      "expect": [
+        "Tier: MEDIUM",
+        "72 hours",
+        [
+          "12 months",
+          "prior 12 months"
+        ]
+      ],
+      "reject": [
+        "Tier: HIGH"
+      ],
+      "agreements": [
+        {
+          "title": "Cloud Services Agreement",
+          "party": "Strataline Cloud"
+        },
+        {
+          "title": "Data Processing Addendum",
+          "party": "Strataline Cloud"
+        }
+      ]
+    },
+    {
+      "prompt": "What is the contractual risk of renewing DataVault Dynamics?",
+      "expect": [
+        "Tier: MEDIUM",
+        "72 hours",
+        "ISO"
+      ],
+      "reject": [
+        "Tier: HIGH"
+      ],
+      "agreements": [
+        {
+          "title": "Master Services Agreement",
+          "party": "DataVault Dynamics"
+        },
+        {
+          "title": "Data Processing Addendum",
+          "party": "DataVault Dynamics"
+        }
+      ]
+    }
+  ],
+  "testExpect": [
+    "HIGH",
+    "DPA"
+  ],
+  "testReject": [
+    "Tier: MEDIUM",
+    "Tier: LOW",
+    "Security review: No"
+  ],
+  "testAgreements": [
+    {
+      "title": "Master Services Agreement",
+      "party": "MarketPulse Dynamics"
+    }
+  ]
+}

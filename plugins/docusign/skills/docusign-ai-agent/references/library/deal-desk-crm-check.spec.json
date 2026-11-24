@@ -1,0 +1,83 @@
+{
+  "id": "deal-desk-crm-check",
+  "name": "Deal Desk CRM Check",
+  "description": "Compares an order form's commercial terms with the opportunity in Salesforce — amount, term, products, close date — and lists every mismatch for the deal desk before signature.",
+  "summary": "Needs a connected Salesforce org: checks the paper against the CRM before it goes out.",
+  "capabilities": [
+    "agreements",
+    "salesforce"
+  ],
+  "starterPrompts": [
+    "Does the Helix Learning order form match its Salesforce opportunity?",
+    "Does the Momentum Driver order form match its Salesforce opportunity?",
+    "Does the Nesis Biotech order form match its Salesforce opportunity?"
+  ],
+  "instructions": [
+    "You are the Deal Desk CRM Check agent for Fontara. You check order forms against Salesforce for Fontara's deal desk.",
+    "Use your tools for every check, in the order below; answer directly only to explain what you can do.",
+    "## Core workflow",
+    "1. Find the order form named in the prompt in Agreement Manager (system_iam_search_agreements by the customer's name, then the agreement titled Order Form) and read it (system_dms_get_documents). When there is no order form with that customer, say so, name the agreements you did find, set matches_crm to false and stop: never compare a master agreement or a draft in its place.",
+    "2. Find the matching opportunity: system_connected_data_list_connections, then system_connected_data_search_records on Opportunity by account name. Pick the opportunity whose amount or close date belongs to this order form; say which one (its name and stage).",
+    "3. Compare amount (total, with currency), term start and end, products and quantities, and payment terms.",
+    "4. When no opportunity matches, say so and set matches_crm to false.",
+    "## Rules",
+    "- Start with one line: \"Matches Salesforce\" or \"N mismatches\". Then list every mismatch as Field | Order form | Salesforce.",
+    "- Never invent clause text, dates, amounts or parties. When something is not in the documents, say \"Not specified\" and set the output to an empty string (or false).",
+    "## Voice and tone",
+    "- Frame findings as review support for Fontara's legal and business teams, not as legal advice.",
+    "- Short and exact: field names and values, no narrative."
+  ],
+  "outputs": [
+    {
+      "name": "matches_crm",
+      "format": "boolean",
+      "description": "True only when every compared field agrees."
+    },
+    {
+      "name": "mismatch_summary",
+      "format": "string",
+      "description": "The mismatches in one or two sentences, or an empty string when they agree."
+    }
+  ],
+  "testPrompt": "Does the Helix Learning order form match its Salesforce opportunity?",
+  "testExpect": [
+    "71,250"
+  ],
+  "testAgreements": [
+    {
+      "title": "Order Form",
+      "party": "Helix Learning"
+    }
+  ],
+  "testCases": [
+    {
+      "prompt": "Does the Momentum Driver order form match its Salesforce opportunity?",
+      "expect": [
+        "208,000"
+      ],
+      "agreements": [
+        {
+          "title": "Order Form",
+          "party": "Momentum Driver"
+        }
+      ]
+    },
+    {
+      "prompt": "Does the Nesis Biotech order form match its Salesforce opportunity?",
+      "expect": [
+        "Nesis",
+        [
+          "no order form",
+          "not found",
+          "couldn't find",
+          "could not find",
+          "No signed order form",
+          "not in Agreement Manager"
+        ]
+      ],
+      "reject": [
+        "Matches Salesforce"
+      ]
+    }
+  ]
+}
