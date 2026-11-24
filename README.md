@@ -30,6 +30,28 @@ In Claude Code, one command at a time:
 
 The skills show as `docusign:<skill>`. To check it is installed and see its version, run `/plugin`.
 
+### Step by step
+
+The whole install, recorded in Claude Code (90 seconds, no sound):
+
+![The install in Claude Code: start it, add the catalogue, install docusign, check it, try a prompt, update and remove](docs/install.gif)
+
+After step 1, Claude Code says **Added marketplace: demo-studio**:
+
+![Claude Code after /plugin marketplace add headlesstestlab/claude-plugins: Added marketplace: demo-studio](docs/catalogue-added.png)
+
+Step 2 shows the plugin, its version and its skills. Pick **Install for you** and press Enter:
+
+![The docusign plugin from demo-studio, with Install for you (user scope) selected](docs/install-for-you.png)
+
+![Claude Code after /plugin install docusign@demo-studio: Installed docusign. Plugin is now active.](docs/installed.png)
+
+`/skills` lists them, each as `docusign:<skill>`:
+
+![/skills lists the docusign skills, each locked by plugin](docs/skills.png)
+
+Or use the menu instead of step 2: type `/plugin`, search `docusign`, press Enter twice, then **Install for you**.
+
 ## Update
 
 A new version is published here when the skills change. To get it:
@@ -45,6 +67,10 @@ A new version is published here when the skills change. To get it:
 ```
 /reload-plugins
 ```
+
+![Claude Code after /plugin marketplace update demo-studio: Updated 1 marketplace, then Reloaded: 1 plugin](docs/update.png)
+
+To remove it: `/plugin uninstall docusign@demo-studio`.
 
 ## Notes
 
