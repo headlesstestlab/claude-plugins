@@ -2,7 +2,7 @@
 name: docusign-solution
 description: Plans and builds a complete Docusign solution from a short business-process description - the full set of uploadable files (Workflow Builder workflows, web forms, Agreement Desk request types, document templates, eSignature templates, AI agents, CLM workflows, CLM doc-gen forms and eForms) with the upload order, the upload path per file, the account prerequisites and an honest list of what cannot be built. Use it when the request needs more than one kind of asset, which is most business processes - a document filled with per-deal data (names, amounts, terms) and sent for signature, anything started from Salesforce, HubSpot, an ERP, a form, a request, a schedule or an event that also needs its document or form built, approvals plus an agreement, an AI step in a process - or a demo build. When unsure whether one asset is enough, use this skill; it hands single assets to the per-asset skills. Not for a request that clearly asks for one asset only - use that docusign-* skill.
 metadata:
-  version: "v2026.11.24.7"
+  version: "v2026.11.24.8"
 ---
 
 # Docusign solution builder
@@ -150,7 +150,7 @@ proven" lists from this compile's README** (its "Not built" and "Built, not yet 
 WARNING lines, never from memory or the references: a capability proven since is not listed there, and saying it
 is unproven misleads the customer. Point them at the bundle's
 `README.md` for the upload order, the upload path of each file and the prerequisites to confirm first.
-**Demo Hydrator** (Assets ▸ Load a bundle) takes this `.zip` as it is: it previews what each upload creates
+**Demo Hydrator** (Asset exchange ▸ Load a bundle) takes this `.zip` as it is: it previews what each upload creates
 on the connected account, loads them in the README's order, and Undo deletes them; its "Load as test copies" prefixes
 every name. Never upload, publish or run anything for them unless they ask and confirm, file by file.
 

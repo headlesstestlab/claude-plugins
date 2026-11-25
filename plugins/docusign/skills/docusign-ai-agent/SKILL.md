@@ -2,7 +2,7 @@
 name: docusign-ai-agent
 description: Designs a Docusign AI agent (Agent Studio, Automations ▸ Agents) and produces a validated build sheet for Agent Studio's editor - capabilities, instructions, chat starter prompts, workflow outputs and knowledge files - with optional entry in the user's signed-in browser. Use it when someone wants just the agent - a chat assistant that answers from signed agreements, or the agent of an Execute AI Agent step (triage, NDA check, obligation extraction, summaries, risk scoring) - even if they only describe what it should do. Not when the agent is one step of a process that also needs a workflow, request type or documents built - use docusign-solution.
 metadata:
-  version: "v2026.11.24.3"
+  version: "v2026.11.24.4"
 ---
 
 # Docusign AI agent builder
@@ -134,7 +134,7 @@ Do this every time you finish, without being asked: the user must never have to 
 3. **End your reply with this block**, filled in (keep all three places unless you are sure which surface you are on):
 
    **Your build sheet:** `<customer>-<agent>.build-sheet.md` — download it from the file card above (Claude app/chat) · it's in `<folder>` (Cowork) · `<absolute path>` (Claude Code).
-   **Next:** Docusign: Automations ▸ Agents, then follow the build sheet.
+   **Next:** Docusign: Automations ▸ Agents ▸ Create New, then follow the build sheet.
 
 ## Files
 - `scripts/compile.mjs`: spec to a validated build sheet.
