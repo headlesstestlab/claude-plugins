@@ -237,7 +237,7 @@
     },
     "7. Order of precedence. This Order Form is subject to the Agreement. If they conflict, this Order Form governs for the subscription it describes.",
     {
-      "text": "8. Implementation fee. Customer will pay Fontara a one-time implementation fee of {{Currency}} {{Implementation Fee}}, due on {{Implementation Fee Due Date}}, for onboarding the users above.",
+      "text": "8. One-Time Implementation Fee. Customer will pay Fontara a one-time implementation fee of {{Currency}} {{Implementation Fee}}, due on {{Implementation Fee Due Date}}, for onboarding the users above. This fee is payable once and is separate from the recurring subscription fees in section 2.",
       "when": {
         "field": "One-Time Implementation Fee",
         "is": "Yes"
