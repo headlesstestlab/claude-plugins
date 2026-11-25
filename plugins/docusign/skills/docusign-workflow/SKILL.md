@@ -2,7 +2,7 @@
 name: docusign-workflow
 description: Builds one Docusign Workflow Builder (formerly Maestro) workflow as an Import Workflow .zip - steps, approvals, parallel reviews, branches, identity checks and the start (link, Salesforce Flow, API call, envelope event or schedule), with optional upload in the user's signed-in browser. Use it when the request is only the automation and every document already exists or is uploaded at send time - notify people when an envelope completes or is declined, route a contract through a chain of approvers (any number, in order or in parallel), send a PDF a system already produced, have someone upload a file for another to acknowledge, a scheduled reminder or report. Not when a document, agreement, form, request type or AI agent must be built as well (a policy to acknowledge, an agreement with deal data, an intake form) - use docusign-solution.
 metadata:
-  version: "v2026.11.24.3"
+  version: "v2026.11.24.4"
 ---
 
 # Docusign workflow builder
@@ -145,7 +145,7 @@ Do this every time you finish, without being asked: the user must never have to 
 3. **End your reply with this block**, filled in (keep all three places unless you are sure which surface you are on):
 
    **Your workflow:** `<customer>-<process>-workflow.zip` — download it from the file card above (Claude app/chat) · it's in `<folder>` (Cowork) · `<absolute path>` (Claude Code).
-   **Next:** Demo Hydrator ▸ Assets ▸ Load a bundle, drop the .zip (or in Docusign: Automations ▸ Workflows ▸ Create Workflow ▸ Import Workflow).
+   **Next:** Demo Hydrator ▸ Asset exchange ▸ Load a bundle, drop the .zip (or in Docusign: Automations ▸ Workflows ▸ Create Workflow ▸ Import Workflow).
 
 ## Files
 - `scripts/compile.mjs`: spec (with its project folder) to an Import Workflow `.zip`, with checks.

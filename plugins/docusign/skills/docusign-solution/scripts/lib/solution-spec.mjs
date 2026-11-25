@@ -1026,7 +1026,7 @@ function renderReadme(s, sol, steps, builtBy, unprovenUsed = []) {
     if (s.basedOnStory)
         L.push(`basedOnStory: ${s.basedOnStory} (the Docusign demo story it adapts)`, '');
     L.push(`Built offline from the solution manifest \`${s.id}\` by ${builtBy ?? 'the solution compiler'}. Every file passed its schema. Upload in the order below.`, '');
-    L.push('Or load them all at once: **Demo Hydrator ▸ Assets ▸ Load a bundle**, drop this .zip. It shows what each upload creates on the connected account first, loads them in this order, and Undo deletes them.', '');
+    L.push('Or load them all at once: **Demo Hydrator ▸ Asset exchange ▸ Load a bundle**, drop this .zip. It shows what each upload creates on the connected account first, loads them in this order, and Undo deletes them.', '');
     if (s.notBuildable)
         L.push('## Not buildable as asked', '', s.notBuildable, '');
     // A gap whose `instead` starts "built" is built, only not proven live: listed as such, never as not built (acceptance 4, bug 9).

@@ -2,7 +2,7 @@
 name: docusign-esignature-template
 description: Builds a classic Docusign eSignature (envelope) template as the JSON that Templates ▸ Upload Template takes, with the PDF and every tab placed - signer roles and signing order, parallel signers, access codes and IDV, witnesses, notary, in-person signers, CCs, conditional and calculated fields, payment tab, PowerForm, signing groups, SMS delivery, several documents, and the account settings each needs. Use it when the request is one fixed document and who signs it, how and in what order, including bulk send to a list from a CSV, signing inside your own portal, and a classic Send with Docusign button in Salesforce. Not when each send fills the document with deal data from a person or system (names, amounts, terms), when sending starts automatically from a system, schedule or form, when there are approvals, or when something must happen around the signing (verify identity first, notify a team after) - that is a generated document plus a workflow, use docusign-solution.
 metadata:
-  version: "v2026.11.24.2"
+  version: "v2026.11.24.3"
 ---
 
 # Docusign eSignature template builder
@@ -143,7 +143,7 @@ Do this every time you finish, without being asked: the user must never have to 
 3. **End your reply with this block**, filled in (keep all three places unless you are sure which surface you are on):
 
    **Your template:** `<customer>-<document>.esign-template.json` — download it from the file card above (Claude app/chat) · it's in `<folder>` (Cowork) · `<absolute path>` (Claude Code).
-   **Next:** Demo Hydrator ▸ Assets ▸ Load a bundle, drop the .json (or in eSignature: Templates ▸ Upload Template).
+   **Next:** Demo Hydrator ▸ Asset exchange ▸ Load a bundle, drop the .json (or in eSignature: Templates ▸ Upload Template).
 
 ## Files
 - `scripts/compile.mjs`: spec → PDF(s) → upload `.json`, with checks.
