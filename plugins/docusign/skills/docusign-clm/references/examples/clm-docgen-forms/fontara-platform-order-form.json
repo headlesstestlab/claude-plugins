@@ -244,7 +244,7 @@
       }
     },
     {
-      "text": "9. Termination for convenience. Customer may terminate this Order Form for convenience on 90 days' written notice to Fontara.",
+      "text": "9. Termination for Convenience — Notice. Customer may terminate this Order Form for convenience by giving Fontara 90 days' written notice before the end of the Subscription Term.",
       "when": {
         "field": "Customer Termination for Convenience",
         "is": "Yes"

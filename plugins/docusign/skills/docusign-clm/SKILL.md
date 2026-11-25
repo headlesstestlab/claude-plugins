@@ -2,7 +2,7 @@
 name: docusign-clm
 description: Builds Docusign CLM (Contract Lifecycle Management, formerly SpringCM) assets as files - Advanced Workflows as the designer's Import JSON (approvals, decisions, external review, signature, doc generation, child workflows, XPath on Params, attribute updates, folder moves), Doc Gen forms with their Word template, and classic eForms as HTML with attributes, show-if rules and the workflow each submit starts. Use it for anything that runs inside CLM - a CLM workflow, CLM intake or eForm, Doc Launcher or doc-gen form, a contract request, filing or metadata update in CLM - even if they only describe the process. Not for Workflow Builder (IAM) or Agreement Desk - use docusign-solution, docusign-workflow or docusign-request-type.
 metadata:
-  version: "v2026.11.24.3"
+  version: "v2026.11.24.4"
 ---
 
 # Docusign CLM builder
