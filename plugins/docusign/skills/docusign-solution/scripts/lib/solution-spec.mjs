@@ -23,7 +23,7 @@ import { buildRequestType, requestTypeZip } from './request-type-spec.mjs';
 import { buildWebformConfig } from './webform-spec.mjs';
 import { buildDocumentTemplate, documentTemplateBulkCsv, documentTemplateZip, SF_CONNECTOR } from './document-template-spec.mjs';
 import { buildEsignTemplate, compileEsignTemplate, esignPdfPath, setEsignRoots } from './esign-template-spec.mjs';
-import { compileClmWorkflow } from './clm-workflow-spec.mjs';
+import { clmWorkflowNeeds, compileClmWorkflow } from './clm-workflow-spec.mjs';
 import { refuseMadeUpId } from './made-up-id.mjs';
 import { templateFormFields, validateTemplateForm } from './webform-template-spec.mjs';
 import { compileDocgenForm, docgenMergeTags, docgenSheet, docgenTemplateDocx } from './clm-docgen-form.mjs';
@@ -778,7 +778,7 @@ function compile(s, v, root, builtBy, caps = []) {
     if (!steps.length && !s.notBuildable)
         throw new Error(`${s.id}: the bundle has no assets — build the nearest pattern, or say why it cannot be built as asked (notBuildable)`);
     const placeholders = placeholderPlaces(pkgs.map(({ pkg }) => ({ name: String(pkg.compiled.definition.workflowName), definition: pkg.compiled.definition })));
-    const solution = resolved(s, steps, derived, wfSpecs.map((w) => w.spec), files, Object.keys(v).length > 0, { clmSteps: (s.clmWorkflows ?? []).flatMap((r) => read('clm-workflows', refId(r)).steps.map((x) => x.kind)), agreementSearch: agentSpecs.some(({ spec }) => spec.capabilities.some((c) => c === 'agreements' || c === 'parties')), obligations: agentSpecs.filter(({ spec }) => agentUsesObligations(spec)).map(({ id }) => id) }, compileWarnings, placeholders, clmFolders(s, read));
+    const solution = resolved(s, steps, derived, wfSpecs.map((w) => w.spec), files, Object.keys(v).length > 0, { clmSteps: (s.clmWorkflows ?? []).flatMap((r) => read('clm-workflows', refId(r)).steps.map((x) => x.kind)), agreementSearch: agentSpecs.some(({ spec }) => spec.capabilities.some((c) => c === 'agreements' || c === 'parties')), obligations: agentSpecs.filter(({ spec }) => agentUsesObligations(spec)).map(({ id }) => id) }, compileWarnings, placeholders, clmFolders(s, read), clmTaskGroups(s, read));
     const readme = renderReadme(s, solution, steps, builtBy, unprovenUses([...used.values()], caps));
     const anchors = new Set([...steps.map((x) => GUIDE_ANCHOR[x.kind]), ...(derived.some((w) => w.statuses.created.length) ? ['request-statuses'] : []), ...[...readme.matchAll(/guides\/UPLOAD-GUIDES\.md#([a-z0-9-]+)/g)].map((m) => m[1])]);
     const all = [{ path: 'README.md', data: Buffer.from(readme) }, { path: 'solution.json', data: json(solution) }, ...files, ...bundleGuides(anchors)];
@@ -861,6 +861,22 @@ function clmPeople(cs) {
 /** A CLM folder path as one spelling: no leading or trailing slash. */
 const folderName = (p) => p.trim().replace(/^\/+|\/+$/g, '');
 /**
+ * The CLM task groups the bundle's CLM workflows assign tasks to, as one prerequisite (the owner 11-25, clm-stories-review #23):
+ * the import leaves each one empty, so they must exist, by these names, before the steps can pick them.
+ */
+function clmTaskGroups(s, read) {
+    const uses = new Map();
+    for (const r of s.clmWorkflows ?? []) {
+        const cs = read('clm-workflows', refId(r));
+        for (const [g, at] of clmWorkflowNeeds(cs).taskGroups)
+            uses.set(g, [...(uses.get(g) ?? []), `"${cs.name}" ${at.join(', ')}`]);
+    }
+    if (!uses.size)
+        return undefined;
+    return { id: 'clm-task-groups', text: `The CLM site has ${uses.size > 1 ? `these ${uses.size} task groups` : 'this task group'}, by name, each with its members: ${[...uses].map(([g, at]) => `${g} (${at.join('; ')})`).join('; ')}`,
+        how: 'CLM ▸ Admin ▸ Task Groups lists each name; after Import, pick each group in the steps named here', capabilities: ['clm-account.kind.task-group'], check: 'confirm', for: [] };
+}
+/**
  * The CLM folders the configurations and eForms pick, as one prerequisite (acceptance 4, bug 3): one spelling, where each
  * is picked, and that their place in the tree is free (the pickers store the folder, not its path).
  */
@@ -874,6 +890,11 @@ function clmFolders(s, read) {
         const es = read('clm-eforms', refId(r));
         use(es.submitFolder, `where the eForm "${es.name}" stores each submission: its Routing ▸ Set Submit Folder`);
     }
+    for (const r of s.clmWorkflows ?? []) {
+        const cs = read('clm-workflows', refId(r));
+        for (const [f, at] of clmWorkflowNeeds(cs).folders)
+            use(f, `the CLM workflow "${cs.name}" picks it in ${at.join(', ')}`);
+    }
     if (!uses.size)
         return undefined;
     const paths = [...uses.keys()];
@@ -886,7 +907,7 @@ function clmFolders(s, read) {
         : `Create ${paths.length > 1 ? 'these CLM folders' : 'this CLM folder'} (anywhere in the folder tree): ${list}`;
     return { line: { id: 'clm-folders', text, how: 'CLM ▸ Documents: the folders exist; other names work too, as long as each step below picks the right one', capabilities: [], check: 'confirm', for: [] }, names: paths.flatMap((p) => [p, leaf(p)]) };
 }
-function resolved(s, steps, wfs, specs, files, accountBound, { agreementSearch, obligations, clmSteps }, compileWarnings = [], placeholders = [], folders) {
+function resolved(s, steps, wfs, specs, files, accountBound, { agreementSearch, obligations, clmSteps }, compileWarnings = [], placeholders = [], folders, taskGroups) {
     const wfName = new Map(wfs.map((w) => [w.id, w.name]));
     const salesforce = [...new Set(wfs.flatMap((w) => w.salesforce))].sort();
     const created = [...new Set(wfs.flatMap((w) => w.statuses.created))];
@@ -908,6 +929,7 @@ function resolved(s, steps, wfs, specs, files, accountBound, { agreementSearch, 
         ...(placeholders.some((p) => p.account) ? [{ id: 'account-people', text: `The people who approve, follow or own the requests are users (or groups) of your account with Agreement Desk: ${placeholders.filter((p) => p.account).map((p) => `"${p.address}"`).join(', ')} are placeholders for them`, how: 'ask your account admin for each person\'s Docusign user, and that they have Agreement Desk', capabilities: [], check: 'confirm', for: [] }] : []),
         // The manifest's own lines; a hand-written "replace <placeholder>" line is left out: the placeholder lines above are derived from the packages.
         ...(folders ? [folders.line] : []),
+        ...(taskGroups ? [taskGroups] : []),
         // A hand-written folder line is left out too: the folders line above is derived from the configurations and eForms.
         ...(s.prerequisites ?? []).filter((text) => !(placeholders.length && /@example\.(com|org|net)\b/i.test(text) && /\breplace\b/i.test(text)) && !(folders && /\bfolders?\b/i.test(text) && folders.names.some((x) => text.includes(x)))).map((text, i) => ({ id: `manifest-${i + 1}`, text, how: '', capabilities: [], check: 'manifest', for: [] })),
     ];

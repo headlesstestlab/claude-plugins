@@ -2,7 +2,7 @@
 name: docusign-clm
 description: Builds Docusign CLM (Contract Lifecycle Management, formerly SpringCM) assets as files - Advanced Workflows as the designer's Import JSON (approvals, decisions, external review, signature, doc generation, child workflows, XPath on Params, attribute updates, folder moves), Doc Gen forms with their Word template, and classic eForms as HTML with attributes, show-if rules and the workflow each submit starts. Use it for anything that runs inside CLM - a CLM workflow, CLM intake or eForm, Doc Launcher or doc-gen form, a contract request, filing or metadata update in CLM - even if they only describe the process. Not for Workflow Builder (IAM) or Agreement Desk - use docusign-solution, docusign-workflow or docusign-request-type.
 metadata:
-  version: "v2026.11.24.4"
+  version: "v2026.11.25"
 ---
 
 # Docusign CLM builder
@@ -27,7 +27,11 @@ Pin down:
   timed out, failed);
 - which answers a form collects, and what each one is for.
 
-Infer the obvious. Ask only what changes a file.
+Infer the obvious. Ask only what changes a file. Before building any CLM workflow, ask in the same message:
+- **Does the account have a CLM site?** Without one nothing here can be loaded: offer the docusign-solution skill to
+  build it on IAM instead (Workflow Builder, Agreement Desk, document templates).
+- **Which task groups does it have, by name?** (CLM ▸ Admin ▸ Task Groups.) Assign tasks to those names; the import
+  leaves each group empty to pick, and each workflow's `<id>.setup.md` lists the task groups and folders it needs.
 
 ### 2. Pick the asset
 `references/choosing.md` is the decision table. In short:

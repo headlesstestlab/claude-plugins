@@ -32,7 +32,22 @@ compilers build; "Proven" levels and limits are in each asset's spec reference. 
 | CLM, Advanced Workflow, CLM doc-gen form, external review in CLM | `clmWorkflows` ([CLM-WORKFLOW-SPEC.md](CLM-WORKFLOW-SPEC.md)); a CLM doc-gen form `clmDocgenForms`; a CLM intake or task form ("eForm", "a form in CLM") `clmEforms` (§3b) |
 | Workflow Builder, requests, web forms, eSignature, Salesforce, nothing specific | Workflow Builder (IAM): `workflows` and what they carry |
 | Both ("draft in CLM, approve in Workflow Builder") | both, each its own asset; the hand-off between them is a gap unless a row below covers it |
+| "without CLM", "on IAM", or the account has no CLM site, for a process (or a demo story's files) told in CLM | Workflow Builder (IAM), each CLM part as its IAM equivalent (table below); never a CLM asset |
 | a Gen for Salesforce template (a Word file with `<# … #>` tags, generated from a Salesforce record's Generate button) | not a bundle asset: build it with the **docusign-gen-salesforce** skill (its own spec and compile), hand its files over beside the bundle and say so in the summary. An eSignature for Salesforce envelope template it sends with is still an `esignTemplates` entry |
+
+**Rebuilding a CLM process on IAM** (no CLM site; Demo Hydrator's Customize with Claude asks for it when the account
+can't run a story told in CLM). Keep what the story shows (one record, approvals by a matrix, a person checks the AI);
+reuse the library's items by name where they fit (`references/library.md`):
+
+| In CLM | On IAM |
+|---|---|
+| a Doc Gen form + Doc Launcher, or an eForm intake | an Agreement Desk request type for the intake, and a document template the workflow generates from its answers |
+| approvals by CLM task groups (an escalation matrix) | Workflow Builder approvals by Docusign groups, one approval per row of the matrix, each a `decision` on the request's values |
+| a CLM clause library (Standard / Acceptable / Fallback) | not a bundle asset: an AI-Assisted Review playbook, made by hand; the document template carries the Standard wording |
+| the CLM repository, folders and attributes | Agreement Manager: the signed envelope becomes one agreement by itself |
+| CLM reports, dashboards, reminders | not a bundle asset: Agreement Manager's views and dates, by hand; a `schedule` workflow for a reminder |
+
+Each CLM part with no IAM row is a `gaps` entry with `instead`. The README's summary names the CLM story it rebuilds.
 
 **CLM with IAM** (a CLM site integrated with Agreement Manager): CLM workflows, attributes and folders are built as on
 classic CLM; what reaches Agreement Manager, and what does not, is in the CLM workflow spec (*CLM with IAM*). Plan the
@@ -381,6 +396,11 @@ Both bulk lists are proven (`esign-template.setting.powerforms-bulk`, `doc-templ
 account (which CLM users, folders, attributes) or the wording of a document the customer owns. Ask in one message, with
 the default for each, and wait for the answer; build with placeholders only when the user says so (acceptance 4: the
 skill asked nothing and shipped `legal@example.com`, `vp-procurement@example.com` and its own wording).
+
+**Before any CLM asset, ask about the CLM site:** does the account have a CLM site (default: yes when the prompt asks for CLM; else no, and
+build on IAM as §1 says), and which task groups it has, by name (default: the teams the prompt names, as task groups the README lists
+to make in Admin ▸ Task Groups). A CLM workflow assigns its tasks to task groups by name, and the import leaves each one
+empty to pick; without the site nothing in the CLM files can be loaded.
 
 Ask only questions whose answer changes the output, each with the default you will use if nobody answers.
 The corpus' questions, grouped, are in the skill's `references/questions.md`. Typical ones: who signs (and in

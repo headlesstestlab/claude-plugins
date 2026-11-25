@@ -6,6 +6,7 @@
 - agent
 - agent + request-type + workflow
 - agent + workflow
+- clm (any CLM asset: ask first)
 - clm-eform
 - clm-eform + clm-form + clm-word-template + clm-workflow
 - clm-eform + clm-form + clm-word-template + clm-workflow + esign-template
@@ -56,6 +57,13 @@ The prompt corpus' clarifying questions, grouped by the asset set the prompt nee
 |---|---|
 | Which agreement if several? | the latest active MSA |
 | One request per obligation or one per agreement? | one per agreement |
+
+## clm (any CLM asset: ask first)
+
+| Question | Default |
+|---|---|
+| Does the account have a CLM site? | Yes when the prompt asks for CLM; else no, and build it on IAM (Workflow Builder, Agreement Desk, document templates) |
+| Which CLM task groups does the site have, by name? | The teams the prompt names, as task groups the README lists to make in Admin ▸ Task Groups |
 
 ## clm-eform
 

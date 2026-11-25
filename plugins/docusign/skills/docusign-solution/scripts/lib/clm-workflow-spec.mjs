@@ -1924,11 +1924,11 @@ export function compileClmWorkflow(spec, opts = {}) {
     return { cells: [...boxes, ...links, ...cells] };
 }
 /**
- * The setup sheet a CLM workflow needs beside its import file (acceptance 8: the skill's compile wrote the JSON only, so the
- * customer had no list of the task groups, users, attribute values and CLM settings the workflow relies on).
- * Read off the spec: nothing here is an account value.
+ * What a CLM workflow needs of the account, by the steps that use it ("<step name>"): its task groups, CLM users and
+ * account folders ({ name } or { path }; a folder in a variable is the run's own). Read off the spec. The setup sheet
+ * (clmWorkflowSetup) and the solution bundle's prerequisites (src/solution-spec.ts) list them.
  */
-export function clmWorkflowSetup(spec, name = spec.name) {
+export function clmWorkflowNeeds(spec) {
     const steps = [];
     const walk = (v) => {
         if (Array.isArray(v)) {
@@ -1944,8 +1944,10 @@ export function clmWorkflowSetup(spec, name = spec.name) {
     };
     walk(spec.steps);
     const label = (s) => `"${s.name ?? s.id}"`;
-    const groups = new Map();
+    const taskGroups = new Map();
     const users = new Map();
+    const folders = new Map();
+    const add = (m, k, s) => { m.set(k, [...new Set([...(m.get(k) ?? []), label(s)])]); };
     const who = (w, s) => {
         if (!w || typeof w !== 'object')
             return;
@@ -1955,15 +1957,31 @@ export function clmWorkflowSetup(spec, name = spec.name) {
         }
         const o = w;
         if (typeof o.taskGroup === 'string') {
-            groups.set(o.taskGroup, [...(groups.get(o.taskGroup) ?? []), label(s)]);
+            add(taskGroups, o.taskGroup, s);
             who(o.member, s);
         }
         if (typeof o.user === 'string')
-            users.set(o.user, [...(users.get(o.user) ?? []), label(s)]);
+            add(users, o.user, s);
     };
     for (const s of steps)
         for (const k of ['assignee', 'assignees', 'to', 'from', 'users'])
             who(s[k], s);
+    for (const s of steps)
+        for (const k of ['folder', 'parent', 'to']) {
+            const f = s[k];
+            const at = f && typeof f === 'object' ? (typeof f.name === 'string' ? f.name : typeof f.path === 'string' ? f.path : '') : '';
+            if (at)
+                add(folders, at, s);
+        }
+    return { steps, label, taskGroups, users, folders };
+}
+/**
+ * The setup sheet a CLM workflow needs beside its import file (acceptance 8: the skill's compile wrote the JSON only, so the
+ * customer had no list of the task groups, users, attribute values and CLM settings the workflow relies on).
+ * Read off the spec: nothing here is an account value.
+ */
+export function clmWorkflowSetup(spec, name = spec.name) {
+    const { steps, label, taskGroups: groups, users, folders } = clmWorkflowNeeds(spec);
     const attrs = new Map();
     for (const s of steps.filter((x) => x.kind === 'updateMetadata'))
         for (const a of (s.set ?? [])) {
@@ -1983,9 +2001,11 @@ export function clmWorkflowSetup(spec, name = spec.name) {
     ].filter(Boolean);
     const L = [`# ${name}: setup`, '', 'What the account needs before this CLM workflow runs, read off its spec. CLM Admin makes each item.', ''];
     if (groups.size)
-        L.push('## Task groups', '', 'Each must exist (Admin ▸ Task Groups) with its members. After Import, open each step and pick the group (Assignee(s) ▸ Assigned Task Group), then Save.', '', ...[...groups].map(([g, at]) => `- **${g}**: ${[...new Set(at)].join(', ')}`), '');
+        L.push('## Task groups', '', 'Each must exist (Admin ▸ Task Groups) with its members. After Import, open each step and pick the group (Assignee(s) ▸ Assigned Task Group), then Save.', '', ...[...groups].map(([g, at]) => `- **${g}**: ${at.join(', ')}`), '');
+    if (folders.size)
+        L.push('## Folders', '', 'Each must exist in the CLM site (Documents) before the workflow runs. After Import, open each step and pick the folder (the file leaves it empty unless it was compiled with --folders).', '', ...[...folders].map(([f, at]) => `- **${f}**: ${at.join(', ')}`), '');
     if (users.size)
-        L.push('## People', '', 'Each is a CLM user of the account; after Import, open each step and pick the person (the file holds no user ids unless it was compiled with --users).', '', ...[...users].map(([u, at]) => `- ${u}: ${[...new Set(at)].join(', ')}`), '');
+        L.push('## People', '', 'Each is a CLM user of the account; after Import, open each step and pick the person (the file holds no user ids unless it was compiled with --users).', '', ...[...users].map(([u, at]) => `- ${u}: ${at.join(', ')}`), '');
     if (attrs.size)
         L.push('## Attributes the workflow writes', '', 'Each must exist in an attribute group (Admin ▸ Attributes), and a list attribute must offer every value below, or the step fails at run time. This skill never creates attributes.', '', ...[...attrs].map(([a, v]) => `- **${a}**: ${[...v].map((x) => `"${x}"`).join(', ')}`), '');
     if (settings.length)
