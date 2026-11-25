@@ -22,7 +22,7 @@ In Claude Code, one command at a time:
 /plugin install docusign@demo-studio
 ```
 
-**3. Load the skills (or start a new session)**
+**3. Load the skills**
 
 ```
 /reload-plugins
@@ -62,7 +62,7 @@ A new version is published here when the skills change. To get it:
 /plugin marketplace update demo-studio
 ```
 
-**2. Load the skills**
+**2. Load the new version**
 
 ```
 /reload-plugins
