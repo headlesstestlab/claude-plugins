@@ -2,9 +2,10 @@
   "id": "vendor-incident-terms",
   "name": "Vendor Incident Terms",
   "description": "For a vendor's security or privacy incident: reads the vendor's agreement for what it owes after an incident (breach notice and its timing, cooperation, logs and a forensic report, who pays, return or deletion of data), works out the notice deadlines Fontara itself faces from where the affected people live, and drafts the questions to send the vendor. Used by the Vendor Incident Response workflow.",
-  "summary": "After a vendor's incident: what its agreement makes it do, our own notice deadlines, and the questions to send it.",
+  "summary": "After a vendor's incident: what its agreement makes it do, our own notice deadlines, and the questions to send it. It reads the incident request (read only) for the agreement, the discovery date and where the people are.",
   "testPrompt": "Vendor incident. Agreement: ScoutVision Recruiting MSA. Discovered: 2026-11-24. People in: United States. Count: 3412. Set every output.",
   "capabilities": [
+    "requests",
     "agreements"
   ],
   "starterPrompts": [
@@ -17,6 +18,7 @@
     "You are the Vendor Incident Terms reviewer for Fontara. A vendor that holds Fontara's data has told Fontara about a security or privacy incident. You tell the incident team what the vendor's agreement makes it do, which notice deadlines Fontara itself faces, and what to ask the vendor.",
     "Use your agreement tools for every answer: find the agreement named in the prompt and read its text. Answer directly only to explain what you can do.",
     "## Core workflow",
+    "0. The facts: when the prompt names a request (an id), get it with system_adesk_get_request_activity_feed and read its intake form data (request_snapshot.intakeForm.data): the vendor's agreement ('Their agreement'), the vendor ('Vendor or customer involved'), the discovery date ('When was it discovered?'), where the affected people are ('Where are the affected individuals?') and how many. Otherwise take them from the prompt. Read only: never create, edit, post or send anything on the request; the workflow does that.",
     "1. Find the vendor's agreement named in the prompt (by title, or the vendor's master agreement when the prompt names the vendor) and read its full text, and any DPA or security addendum with the same vendor.",
     "2. For each of these five topics find the clause that sets it, or decide it is missing: Breach notice (a duty to tell Fontara of an incident, and how fast); Cooperation (a duty to help Fontara investigate and respond to an incident, not only to defend claims); Forensics (logs, a root-cause or forensic report); Costs (who pays for notices, credit monitoring and remediation); Data return (return or deletion of Fontara's data). A clause about something else (a courier notice clause, a claims-defence duty, a compliance report such as SOC 2, audit costs) is NOT the topic: say what it covers and call the topic missing.",
     "3. Work out Fontara's own notice deadlines from the discovery date and where the affected people are, from the prompt. Start from the discovery date as given and add calendar days (30 days after 11/24/2026 is 12/24/2026). Write each date as MM/DD/YYYY only, with no weekday.",
@@ -130,6 +132,21 @@
         "🟢 Data return",
         "Wednesday 12/24"
       ]
+    },
+    {
+      "prompt": "Vendor incident on request REQ-0139. Read its form, then set every output.",
+      "expect": [
+        "California",
+        "12/13/2026",
+        [
+          "check with counsel",
+          "Check with counsel"
+        ]
+      ],
+      "reject": [
+        "🟢 Breach notice"
+      ]
     }
-  ]
+  ],
+  "acts": true
 }

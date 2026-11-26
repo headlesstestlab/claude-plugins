@@ -2416,6 +2416,14 @@ export function buildWorkflow(spec, o = {}) {
                 const promptLen = s.prompt.replace(/\{\{[^}]+\}\}/g, '').length + 20 * merges;
                 if (promptLen > 200)
                     throw new Error(`${spec.id}: agent ${s.agent}: the prompt takes at most 200 characters as the drawer counts them (has ${promptLen}, each merge counted as 20)`);
+                // The step takes TEXT values only: a request Date or Number merged into its prompt failed the run at once,
+                // 'BadRequest' at Invoke_AI_Agent (Test 4 run 74122f93, 2026-11-26). Give the agent the request id and let it read the form.
+                for (const m of s.prompt.matchAll(/\{\{\s*([^}]+?)\s*\}\}/g)) {
+                    const cn = [...requestProps.keys()].find((k) => k === m[1] || k.startsWith(`${m[1]}_`));
+                    const rp = cn ? requestProps.get(cn) : undefined;
+                    if (rp && (rp.type === 'Date' || rp.number))
+                        throw new Error(`${spec.id}: agent ${s.agent}: {{${m[1]}}} is a request ${rp.type === 'Date' ? 'date' : 'number'}, and an Execute AI Agent prompt takes text values only (the run fails BadRequest) — pass {{TicketId}} and let the agent read the request's form`);
+                }
                 const as_ = loadSpec('agents', s.agent);
                 if (as_.inWorkflow === false)
                     throw new Error(`${spec.id}: agent ${s.agent} is chat-only ("inWorkflow": false), so the Execute AI Agent step does not offer it — remove that key from the agent spec, or use another agent`);
