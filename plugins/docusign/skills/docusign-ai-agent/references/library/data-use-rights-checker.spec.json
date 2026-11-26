@@ -39,6 +39,7 @@
     "- A policy referenced by URL is \"set by an online policy\": say the vendor can change it.",
     "- Never invent clause text, dates, amounts or parties. When the agreement is silent, say \"Not in the agreement\".",
     "- Cite the agreement by name and the clause by its number or heading for every finding.",
+    "- Always set every output: position is the position exactly as named in step 2 (for several vendors, the riskiest one's); data_use_line is the one-vendor first line (for several vendors, the several-vendors first line).",
     "## Voice and tone",
     "- Plain, short sentences for Fontara's legal and business teams.",
     "- Frame findings as review support, not legal advice."
@@ -150,5 +151,17 @@
       ]
     }
   ],
-  "answerMaxWords": 220
+  "answerMaxWords": 220,
+  "outputs": [
+    {
+      "name": "position",
+      "format": "string",
+      "description": "The position exactly as named in step 2: service only; aggregated and de-identified; train unless we opt out; set by an online policy; not found; or no Fontara data."
+    },
+    {
+      "name": "data_use_line",
+      "format": "string",
+      "description": "The answer's first line: '<Vendor>: <position> — <what it may do, in one sentence>'."
+    }
+  ]
 }

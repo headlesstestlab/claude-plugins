@@ -215,7 +215,7 @@ a user or group by name: a package with another account's group id imports and r
 | Orange (`warning`) | Waiting for an approver's decision | Pending Approval, Awaiting Approval | Someone named has to decide; Docusign's own Pending Approval is orange. |
 | Purple (`purple`) | Waiting on someone outside: the counterparty, signers or a vendor | Waiting on Counterparty, Waiting for Signature, Sent for Signature | The ball is in another court; nobody inside can move it. |
 | Green (`success`) | Good to go, or done | Ready to Finalize, Ready for Signature, Approved, Completed | Green reads as approved or finished, so only those stages get it (not New). |
-| Red (`alert`) | Stopped, sent back, or needs attention now | Renewal Declined, Rejected, Escalated to VP, Hold Notice Urgent | Red reads as rejected, blocked or urgent, so a normal review never gets it. |
+| Red (`alert`) | Stopped, sent back, or needs attention now | Renewal Declined, Rejected, Escalated to VP, Hold Notice Urgent, Notice Clock Running | Red reads as rejected, blocked or urgent, so a normal review never gets it. |
 <!-- status-colors:end -->
 
 Docusign's own Get Started statuses do not follow this (New green, In Progress orange, Legal Review and Business Review grey, Waiting for Signature red); the lab accounts are recoloured to the rule, and the Agreements app's Account setup recolours an SC's account. `gold`, `cactus`, `maroon` and `teal` are not used. test/status-colors.test.ts pins every library, seed and prompt-corpus status to the file (corpus specs a live run pins by hash keep their colours until their next live run).

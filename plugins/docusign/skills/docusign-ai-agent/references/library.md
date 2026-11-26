@@ -41,4 +41,5 @@ The agents of Demo Hydrator's library, by the name the app shows. A prompt that 
 | Template Drafter | `references/library/template-drafter.spec.json` | Generate Documents (an acting capability): it lists and selects templates freely, and generates a document only after the person confirms. |
 | Third Party Paper Triage | `references/examples/third-party-paper-triage.spec.json` | Classifies inbound third-party paper on a request and routes it — the agent behind a request-triggered triage workflow. |
 | Usage Terms Reader | `references/library/usage-terms-reader.spec.json` | Usage commitments, tiers, overage and true-up, from the clause. |
+| Vendor Incident Terms | `references/library/vendor-incident-terms.spec.json` | After a vendor's incident: what its agreement makes it do, our own notice deadlines, and the questions to send it. |
 | Vendor Risk Summary | `references/library/vendor-risk-summary.spec.json` | Feeds a vendor onboarding or renewal workflow with a risk tier and a security-review flag. |

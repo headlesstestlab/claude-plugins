@@ -2,7 +2,7 @@
 name: docusign-workflow
 description: Builds one Docusign Workflow Builder (formerly Maestro) workflow as an Import Workflow .zip - steps, approvals, parallel reviews, branches, identity checks and the start (link, Salesforce Flow, API call, envelope event or schedule), with optional upload in the user's signed-in browser. Use it when the request is only the automation and every document already exists or is uploaded at send time - notify people when an envelope completes or is declined, route a contract through a chain of approvers (any number, in order or in parallel), send a PDF a system already produced, have someone upload a file for another to acknowledge, a scheduled reminder or report. Not when a document, agreement, form, request type or AI agent must be built as well (a policy to acknowledge, an agreement with deal data, an intake form) - use docusign-solution.
 metadata:
-  version: "v2026.11.25"
+  version: "v2026.11.25.2"
 ---
 
 # Docusign workflow builder
