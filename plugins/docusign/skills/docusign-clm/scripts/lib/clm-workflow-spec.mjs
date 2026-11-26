@@ -101,6 +101,29 @@ const REVIEW_ATTRIBUTES = ['Document Type', 'Party', 'Total Contract Value', 'Ef
     'Renewal Term', 'Termination Notice', 'Renewal Notice Period', 'Limitation of Liability', 'Assignable', 'Indemnity', 'Termination Cause', 'Termination Convenience'];
 /** Condition operators → the comparisonOperator CLM stores (the designer's =, <>, Contains, >, >=, <, <=). */
 const OPS = { equals: 'equals', notEquals: 'notEquals', contains: 'contains', greaterThan: 'gt', greaterOrEqual: 'gtoet', lessThan: 'lt', lessOrEqual: 'ltoet' };
+/** The variable that holds a task group's name (taskGroupsByName). */
+export const taskGroupVar = (group) => `TaskGroup${group.replace(/[^A-Za-z0-9]/g, '')}`;
+/**
+ * The spec with its task groups by name: one text variable per group, a first Set Variable step 'Name the task groups'
+ * that writes the names, and every task group assignee reading its variable. Unchanged without `taskGroupsByName`.
+ */
+export function taskGroupsByName(spec) {
+    if (!spec.taskGroupsByName || !spec.steps.length)
+        return spec;
+    const groups = new Set();
+    const steps = spec.steps.map((st) => {
+        const a = st.assignee;
+        if (!a || typeof a !== 'object' || !('taskGroup' in a))
+            return st;
+        groups.add(a.taskGroup);
+        return { ...st, assignee: { ...a, var: taskGroupVar(a.taskGroup) } };
+    });
+    if (!groups.size)
+        return spec;
+    const set = Object.fromEntries([...groups].map((g) => [taskGroupVar(g), g]));
+    const first = { id: 'taskGroupNames', name: 'Name the task groups', kind: 'setVariable', set, next: spec.steps[0].id };
+    return { ...spec, variables: [...(spec.variables ?? []), ...Object.keys(set)], steps: [first, ...steps] };
+}
 /** Outcome label → the link `output` value CLM writes (E11). */
 const OUTCOMES = {
     externalReview: { sent: 'action Completed - External Review Sent by Sender', rejected: 'action Completed - External Review Rejected by Sender', canceled: 'action canceled', failure: 'failure' },
@@ -1041,6 +1064,7 @@ export function validateClmSpec(spec) {
  * Task groups work as folders do: `taskGroups` (name → uid) or, without it, an empty group listed in `unresolvedTaskGroups`.
  */
 export function compileClmWorkflow(spec, opts = {}) {
+    spec = taskGroupsByName(spec);
     const errs = validateClmSpec(spec);
     if (errs.length)
         throw new Error(`${spec.id}: ${errs.join('; ')}`);
@@ -1070,6 +1094,9 @@ export function compileClmWorkflow(spec, opts = {}) {
         const where = `${spec.id}/${step}`;
         if (typeof a === 'string' || !('taskGroup' in a))
             return { assigneeType: s('user'), assignedUsers: participant(a, users, where, opts.unresolved) };
+        const member = a.member ? participant(a.member, users, where, opts.unresolved) : { type: 'Participant', value: [] };
+        if (a.var)
+            return { assigneeType: s('workerpool'), assignedWorkerPools: { type: 'WorkerPool', value: [vref(a.var)] }, assignedWorkerPoolUsers: member };
         const uid = opts.taskGroups?.[a.taskGroup];
         if (uid)
             refuseMadeUpId(uid, `the task group uid for "${a.taskGroup}"`, where, 'CLM ▸ Admin ▸ Task Groups');

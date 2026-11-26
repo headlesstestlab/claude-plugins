@@ -8,6 +8,6 @@
     { "owner": "submitter" },
     { "if": { "field": "C_DeskHoldTrigger", "is": "Claim filed" },
       "then": [ { "status": "Hold Notice Urgent", "color": "alert" }, { "due": { "days": 0 } } ],
-      "else": [ { "status": "Hold Notice Pending", "color": "warning" }, { "due": { "days": 1 } } ] }
+      "else": [ { "status": "Hold Notice Pending", "color": "blue" }, { "due": { "days": 1 } } ] }
   ]
 }

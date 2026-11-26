@@ -32,6 +32,7 @@
     }
   ],
   "paramsSchema": "<Params><Documents><Document><Id/><Name/></Document></Documents><Side/><DealValue/><PaymentTermsDays/><TriageVerdict/><CoveredByDPA/><VendorTouchesData/><SignerEmail/><SignerName/></Params>",
+  "taskGroupsByName": true,
   "steps": [
     {
       "id": "intake",

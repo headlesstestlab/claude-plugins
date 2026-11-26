@@ -39,9 +39,14 @@
       "name": "Party",
       "type": "xml",
       "schema": "<Parties><CLMPartyData><CLMPartyId/><ExternalId/><Name/><BusinessContactName/><BusinessType/><Source/></CLMPartyData></Parties>"
+    },
+    {
+      "name": "FilingFolder",
+      "type": "folder"
     }
   ],
   "paramsSchema": "<Params><Documents><Document><Id/><Name/></Document></Documents><TemplateFieldData><Customer_Legal_Name/><Legal_Entity/><Order_Number/><Total_Order_Value/><Payment_Terms_Days/><Covered_by_an_Existing_DPA/><Triage_Verdict/><Side/><Customer_Signer_Name/><Customer_Signer_Email/><Company_Signer_Name/><Company_Signer_Email/><Customer_Termination_for_Convenience/></TemplateFieldData></Params>",
+  "taskGroupsByName": true,
   "steps": [
     {
       "id": "intake",
@@ -223,7 +228,20 @@
       "kind": "renameDocument",
       "newName": "<%#XmlVariables.Params.TemplateFieldData.Customer_Legal_Name%> Order Form <%#XmlVariables.Params.TemplateFieldData.Order_Number%>.docx",
       "on": {
-        "success": "file"
+        "success": "fileFolder"
+      }
+    },
+    {
+      "id": "fileFolder",
+      "name": "Find the department folder",
+      "kind": "findFolder",
+      "folder": {
+        "path": "/Contracts/Sales"
+      },
+      "output": "FilingFolder",
+      "on": {
+        "success": "file",
+        "failure": "file"
       }
     },
     {
@@ -232,7 +250,7 @@
       "kind": "copyOrMoveDocument",
       "action": "move",
       "folder": {
-        "uid": "28db6609-b7d9-f111-aeaf-fdd8e4e0fb99"
+        "var": "FilingFolder"
       },
       "on": {
         "success": "inReview"

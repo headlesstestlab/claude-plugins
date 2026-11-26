@@ -3,6 +3,7 @@
   "name": "Renewal review",
   "description": "Fontara's renewal review of an executed contract (the owner 11-21; no Salesforce). It starts 90 business days before the contract expires: the CLM reminder template 'Renewal review due' (Expiration Date, 18 weeks before = 90 business days) fires, and the smart rule 'Start renewal review' (Document Reminder Processed, In Subfolder /Parties, Contract Process ▸ Renewal Status = Scheduled, set when the reminders were scheduled; assets/clm-smart-rules/specs/fontara-renewals.json) starts this workflow on the document; a contract already inside the window when it is filed is started at once (captures/clm-renewals.ts). The run marks Renewal Status Under review, gives the contract owner's team (task group Sales Leadership) one choice: Renew, Renegotiate or Let expire, and writes the answer to Renewal Status, so the renewals report and dashboard show what was decided. The later reminders (notice date, expiry) do not start it again: the rule only takes Renewal Status = Scheduled.",
   "variables": [],
+  "taskGroupsByName": true,
   "steps": [
     {
       "id": "name",

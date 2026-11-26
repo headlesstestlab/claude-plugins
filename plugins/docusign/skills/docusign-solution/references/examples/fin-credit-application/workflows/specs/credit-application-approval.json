@@ -13,7 +13,7 @@
     },
     {
       "status": "Credit Review",
-      "color": "warning"
+      "color": "blue"
     },
     {
       "due": {

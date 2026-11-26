@@ -39,6 +39,7 @@
     },
     "AgreementType"
   ],
+  "taskGroupsByName": true,
   "steps": [
     {
       "id": "name",

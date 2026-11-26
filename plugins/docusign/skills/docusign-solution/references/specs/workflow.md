@@ -205,6 +205,21 @@ a user or group by name: a package with another account's group id imports and r
 **Request-start steps** (`owner`, `status`, `due`, `approval`, `followers`, `message`, `permission`,
 `changeTitle`, `getDocument`) need a `request` or `statusChanged` trigger.
 
+**Status colours by meaning** (2026-11-25). A status names a stage, not a verdict: the red/yellow/green verdict goes in the request's title, message and owner, so a red paper waiting with legal is *In Legal Review* in blue, not red. Pick the colour by what the stage means. The one source is `assets/request-types/status-colors.json` (its `statuses` list names every status the library uses); the table below is generated from it (`npx tsx src/status-colors.ts`):
+
+<!-- status-colors:start -->
+| Color | Meaning | Example statuses | Why |
+|---|---|---|---|
+| Grey (`neutral`) | Not started yet, or closed with nothing wrong | New, Draft, Closed, Cancelled | Nothing to do yet, or nothing left to do: grey draws no attention. |
+| Blue (`blue`) | Our side is working on it (any review, triage or drafting) | In Progress, In Legal Review, Business Review, In Review – Finance | Work in progress is normal, not a warning: In Legal Review is a stage, whatever the paper's verdict. |
+| Orange (`warning`) | Waiting for an approver's decision | Pending Approval, Awaiting Approval | Someone named has to decide; Docusign's own Pending Approval is orange. |
+| Purple (`purple`) | Waiting on someone outside: the counterparty, signers or a vendor | Waiting on Counterparty, Waiting for Signature, Sent for Signature | The ball is in another court; nobody inside can move it. |
+| Green (`success`) | Good to go, or done | Ready to Finalize, Ready for Signature, Approved, Completed | Green reads as approved or finished, so only those stages get it (not New). |
+| Red (`alert`) | Stopped, sent back, or needs attention now | Renewal Declined, Rejected, Escalated to VP, Hold Notice Urgent | Red reads as rejected, blocked or urgent, so a normal review never gets it. |
+<!-- status-colors:end -->
+
+Docusign's own Get Started statuses do not follow this (New green, In Progress orange, Legal Review and Business Review grey, Waiting for Signature red); the lab accounts are recoloured to the rule, and the Agreements app's Account setup recolours an SC's account. `gold`, `cactus`, `maroon` and `teal` are not used. test/status-colors.test.ts pins every library, seed and prompt-corpus status to the file (corpus specs a live run pins by hash keep their colours until their next live run).
+
 ## Branch operators
 
 | Field | Operators the spec writes | What the product offers (guide jaf1716918359288) |
@@ -430,5 +445,5 @@ The help wins unless a lab run proved otherwise. Run-proven exceptions are kept 
 - **Apply template settings** on a standalone document in the redesigned Send step: the step stays InProgress and the template's signers are listed twice (2 tries, a second lab account, 2026-11-01). Not compiled. Re-test 2026-11-09 (the lab account, lab 4ae20d1a): the drawer ('Apply template setting' in the document's ⋮ menu) lists each signer once and stores `appliedTemplates[<file variable>]` with the template's anchored tabs, but the step's `input.recipients.signers` holds every role three times and stays InProgress. Still not compiled: it needs a run, which needs a person to submit the web form.
 - **Email sender name** (lab 54576da9, 2026-10-29): the builder still writes `sender_name: "Docusign Maestro"`, `sender_alias: "Maestro"` for Send an Email (`MaestroEmailConfigurator`) and Set Up Invite, and neither drawer offers a sender name. Recipients see "Docusign Workflows" as the sender. The only change is that an invite is now saved with `templateVersion: 2`; the compiler writes that too (a run delivered both emails).
 - **Multi Branch AND/OR** (eSignature 26.3.01 release notes): not in this demo account's builder yet. On lab 7825438f (2026-10-29) a branch still offers one value with a fixed "equals" (options: Move down, Delete). The compiler keeps equals-only `switch`; use nested `if` rules for AND/OR.
-- **Status colours**: Agreement Desk has 10 (success, warning, alert, neutral, purple, blue, gold, cactus, maroon, teal; its own bundle). Any other value displays as success, so the compiler refuses it.
+- **Status colours**: Agreement Desk has 10 (success, warning, alert, neutral, purple, blue, gold, cactus, maroon, teal; its own bundle). Any other value displays as success, so the compiler refuses it. Which one to pick: Status colours by meaning, above.
 

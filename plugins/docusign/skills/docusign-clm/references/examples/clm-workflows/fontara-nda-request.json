@@ -14,9 +14,14 @@
       "name": "Party",
       "type": "xml",
       "schema": "<Parties><CLMPartyData><CLMPartyId/><ExternalId/><Name/><BusinessContactName/><BusinessType/><Source/></CLMPartyData></Parties>"
+    },
+    {
+      "name": "FilingFolder",
+      "type": "folder"
     }
   ],
   "paramsSchema": "<Params><Documents><Document><Id/><Name/></Document></Documents><TemplateFieldData><Counterparty_Legal_Name/><Legal_Entity/><Counterparty_Signer_Name/><Counterparty_Signer_Email/></TemplateFieldData></Params>",
+  "taskGroupsByName": true,
   "steps": [
     {
       "id": "intake",
@@ -151,6 +156,19 @@
       "kind": "renameDocument",
       "newName": "<%#XmlVariables.Params.TemplateFieldData.Counterparty_Legal_Name%> Mutual NDA.docx",
       "on": {
+        "success": "fileFolder",
+        "failure": "logFailed"
+      }
+    },
+    {
+      "id": "fileFolder",
+      "name": "Find the department folder",
+      "kind": "findFolder",
+      "folder": {
+        "path": "/Contracts/Legal"
+      },
+      "output": "FilingFolder",
+      "on": {
         "success": "file",
         "failure": "logFailed"
       }
@@ -161,7 +179,7 @@
       "kind": "copyOrMoveDocument",
       "action": "move",
       "folder": {
-        "uid": "03299d15-b7d9-f111-aeaf-fdd8e4e0fb99"
+        "var": "FilingFolder"
       },
       "on": {
         "success": "negotiate",

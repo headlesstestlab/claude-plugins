@@ -23,6 +23,7 @@
   "errorNotify": [
     "submitter"
   ],
+  "taskGroupsByName": true,
   "steps": [
     {
       "id": "read",

@@ -44,7 +44,7 @@
           "then": [
             {
               "status": "Legal Review",
-              "color": "warning"
+              "color": "blue"
             },
             {
               "message": {
@@ -94,7 +94,7 @@
           "else": [
             {
               "status": "Legal Review",
-              "color": "alert"
+              "color": "blue"
             },
             {
               "message": {
